@@ -1,588 +1,1075 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>InvaTek · Inverter Batteries</title>
-  <!-- Google Font & Font Awesome -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #0b0e14;
-      color: #eef2f6;
-      line-height: 1.5;
-      scroll-behavior: smooth;
-    }
-    .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-    /* header / nav */
-    .navbar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-    .logo {
-      font-size: 1.8rem;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #fbbf24, #f59e0b);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .logo i {
-      -webkit-text-fill-color: #fbbf24;
-      background: none;
-      font-size: 2rem;
-    }
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-    .nav-actions a {
-      color: #cdd5e0;
-      text-decoration: none;
-      font-weight: 500;
-      transition: 0.2s;
-      font-size: 0.95rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .nav-actions a i {
-      font-size: 1.1rem;
-      color: #fbbf24;
-    }
-    .nav-actions a:hover {
-      color: #fbbf24;
-    }
-    .btn-wa-outline {
-      background: transparent;
-      border: 1.5px solid #25d366;
-      color: #25d366 !important;
-      padding: 8px 18px;
-      border-radius: 40px;
-      font-weight: 600;
-      transition: 0.25s;
-    }
-    .btn-wa-outline:hover {
-      background: #25d366;
-      color: #0b0e14 !important;
-      border-color: #25d366;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InvaTek Â· Inverter & Vehicle Batteries</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Inverter batteries, vehicle batteries for bike, car, diesel, petrol, CNG. Find the right battery with our search tool." />
+    <meta name="keywords" content="inverter battery, vehicle battery, bike battery, car battery, diesel, petrol, CNG, luminous, exide" />
+    <!-- Google Font & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ----- RESET & BASE ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0e14;
+            color: #eef2f6;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        /* ----- TOP BAR (Phone & Search) ----- */
+        .top-bar {
+            background: #0d141e;
+            border-bottom: 1px solid #1d2838;
+            padding: 8px 0;
+            font-size: 0.9rem;
+            color: #b6c8e0;
+        }
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+        }
+        .top-bar a {
+            color: #fbbf24;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .top-bar a i {
+            color: #25d366;
+        }
+        .top-bar .highlight {
+            background: #1f2937;
+            padding: 2px 16px;
+            border-radius: 40px;
+            border: 1px solid #2f405a;
+        }
+        .top-bar .search-trigger {
+            background: #1f2937;
+            padding: 4px 16px;
+            border-radius: 40px;
+            border: 1px solid #2f405a;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .top-bar .search-trigger:hover {
+            background: #fbbf24;
+            color: #0b0e14;
+            border-color: #fbbf24;
+        }
+        /* ----- NAVBAR ----- */
+        .navbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .logo img {
+            height: 44px;
+            width: auto;
+            filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.2));
+        }
+        .logo-text {
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: #cdd5e0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+            font-size: 0.95rem;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+        }
+        .nav-links a:hover,
+        .nav-links a.active-link {
+            color: #fbbf24;
+            border-bottom-color: #fbbf24;
+        }
+        .btn-wa-outline {
+            background: transparent;
+            border: 1.5px solid #25d366;
+            color: #25d366 !important;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            transition: 0.25s;
+            border-bottom: 1.5px solid #25d366 !important;
+        }
+        .btn-wa-outline:hover {
+            background: #25d366;
+            color: #0b0e14 !important;
+            border-color: #25d366 !important;
+        }
 
-    /* hero */
-    .hero {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      padding: 40px 0 50px;
-      gap: 30px;
-    }
-    .hero-text {
-      flex: 1 1 350px;
-    }
-    .hero-text h1 {
-      font-size: 3.2rem;
-      font-weight: 700;
-      line-height: 1.2;
-      letter-spacing: -1px;
-    }
-    .hero-text h1 span {
-      background: linear-gradient(145deg, #fbbf24, #f59e0b);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero-text p {
-      font-size: 1.15rem;
-      color: #b6c2d4;
-      max-width: 500px;
-      margin: 18px 0 28px;
-    }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      background: rgba(251, 191, 36, 0.08);
-      padding: 10px 22px;
-      border-radius: 60px;
-      border: 1px solid rgba(251, 191, 36, 0.2);
-      font-weight: 500;
-      backdrop-filter: blur(4px);
-    }
-    .hero-badge i {
-      color: #fbbf24;
-      font-size: 1.2rem;
-    }
-    .hero-visual {
-      flex: 1 1 300px;
-      background: radial-gradient(circle at 30% 30%, #1f2937, #11161e);
-      padding: 20px 20px 10px;
-      border-radius: 48px;
-      border: 1px solid #2a3340;
-      box-shadow: 0 25px 40px -12px rgba(0,0,0,0.8);
-      text-align: center;
-    }
-    .hero-visual i {
-      font-size: 6rem;
-      color: #fbbf24;
-      opacity: 0.9;
-      filter: drop-shadow(0 8px 16px rgba(251, 191, 36, 0.25));
-    }
-    .hero-visual small {
-      display: block;
-      margin-top: 8px;
-      color: #94a3b8;
-      font-weight: 500;
-    }
+        /* ----- PAGES (tabs) ----- */
+        .page {
+            display: none;
+            animation: fadeUp 0.4s ease;
+        }
+        .page.active-page {
+            display: block;
+        }
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(18px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
 
-    /* brand strip */
-    .brand-strip {
-      background: #131a24;
-      border-radius: 80px;
-      padding: 20px 24px;
-      margin: 20px 0 40px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 18px 30px;
-      border: 1px solid #29323e;
-    }
-    .brand-strip span {
-      font-weight: 600;
-      color: #b6c8e0;
-      letter-spacing: 0.3px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .brand-strip i {
-      color: #fbbf24;
-      font-size: 0.9rem;
-    }
-    .brand-item {
-      background: #1f2937;
-      padding: 6px 18px;
-      border-radius: 40px;
-      font-weight: 500;
-      font-size: 0.9rem;
-      color: #e8edf5;
-      border: 1px solid #2f3b4b;
-      transition: 0.15s;
-    }
-    .brand-item:hover {
-      background: #fbbf24;
-      color: #0b0e14;
-      border-color: #fbbf24;
-    }
+        /* ----- HERO (Home) ----- */
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 30px 0 50px;
+            gap: 30px;
+        }
+        .hero-text {
+            flex: 1 1 350px;
+        }
+        .hero-text h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+        .hero-text h1 span {
+            background: linear-gradient(145deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-text p {
+            font-size: 1.15rem;
+            color: #b6c2d4;
+            max-width: 500px;
+            margin: 18px 0 28px;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(251, 191, 36, 0.08);
+            padding: 10px 22px;
+            border-radius: 60px;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            font-weight: 500;
+        }
+        .hero-badge i {
+            color: #fbbf24;
+        }
+        .hero-visual {
+            flex: 1 1 280px;
+            background: radial-gradient(circle at 30% 30%, #1f2937, #11161e);
+            padding: 24px 20px;
+            border-radius: 48px;
+            border: 1px solid #2a3340;
+            box-shadow: 0 25px 40px -12px rgba(0,0,0,0.8);
+            text-align: center;
+        }
+        .hero-visual img {
+            max-width: 100%;
+            height: auto;
+            max-height: 160px;
+            object-fit: contain;
+            filter: drop-shadow(0 8px 20px rgba(251, 191, 36, 0.15));
+        }
+        .hero-visual small {
+            display: block;
+            margin-top: 10px;
+            color: #94a3b8;
+            font-weight: 500;
+        }
 
-    /* cards section */
-    .section-title {
-      font-size: 2rem;
-      font-weight: 600;
-      margin: 50px 0 20px;
-      letter-spacing: -0.3px;
-    }
-    .section-title i {
-      color: #fbbf24;
-      margin-right: 12px;
-    }
-    .grid-2col {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 28px;
-      margin: 20px 0 40px;
-    }
-    .card {
-      background: #141c26;
-      border-radius: 32px;
-      padding: 28px 24px;
-      border: 1px solid #25303e;
-      transition: 0.25s ease;
-      backdrop-filter: blur(2px);
-    }
-    .card:hover {
-      border-color: #fbbf24;
-      transform: translateY(-6px);
-      box-shadow: 0 20px 30px -12px rgba(0,0,0,0.7);
-    }
-    .card-icon {
-      font-size: 2.4rem;
-      color: #fbbf24;
-      margin-bottom: 16px;
-    }
-    .card h3 {
-      font-size: 1.4rem;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-    .card p {
-      color: #b0c0d4;
-      font-weight: 400;
-    }
-    .badge-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 14px;
-      margin-top: 18px;
-    }
-    .badge-list span {
-      background: #1f2a38;
-      padding: 4px 16px;
-      border-radius: 40px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      border: 1px solid #31405a;
-      color: #d6e0ee;
-    }
+        /* Brand Strip */
+        .brand-strip {
+            background: #131a24;
+            border-radius: 80px;
+            padding: 18px 24px;
+            margin: 10px 0 40px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 14px 28px;
+            border: 1px solid #29323e;
+        }
+        .brand-strip .brand-item {
+            background: #1f2937;
+            padding: 4px 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #e8edf5;
+            border: 1px solid #2f3b4b;
+            transition: 0.15s;
+            cursor: default;
+        }
+        .brand-strip .brand-item:hover {
+            background: #fbbf24;
+            color: #0b0e14;
+            border-color: #fbbf24;
+        }
 
-    /* form / whatsapp */
-    .form-card {
-      background: #101821;
-      border-radius: 48px;
-      padding: 40px 36px;
-      border: 1px solid #2a3547;
-      margin: 50px 0 30px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 40px;
-      align-items: flex-start;
-    }
-    .form-col {
-      flex: 2 1 300px;
-    }
-    .form-col h2 {
-      font-size: 1.8rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .form-col h2 i {
-      color: #fbbf24;
-    }
-    .form-col p {
-      color: #b0c0d4;
-      margin: 8px 0 18px;
-    }
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      margin-top: 12px;
-    }
-    .form-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-    }
-    .form-row input, .form-row select {
-      flex: 1 1 180px;
-      padding: 14px 18px;
-      border-radius: 40px;
-      border: 1px solid #2d3b4e;
-      background: #0d141e;
-      color: #eef2f6;
-      font-weight: 500;
-      outline: none;
-      transition: 0.2s;
-    }
-    .form-row input:focus, .form-row select:focus {
-      border-color: #fbbf24;
-      box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.2);
-    }
-    .form-row input::placeholder {
-      color: #6f7f94;
-      font-weight: 400;
-    }
-    .btn-submit-wa {
-      background: #25d366;
-      border: none;
-      padding: 16px 32px;
-      border-radius: 60px;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: #0b0e14;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      cursor: pointer;
-      transition: 0.2s;
-      border: 1px solid transparent;
-      width: 100%;
-      max-width: 260px;
-      margin-top: 6px;
-    }
-    .btn-submit-wa i {
-      font-size: 1.4rem;
-    }
-    .btn-submit-wa:hover {
-      background: #20b85f;
-      transform: scale(1.02);
-      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
-    }
-    .info-col {
-      flex: 1 1 240px;
-      background: #0d141e;
-      border-radius: 40px;
-      padding: 24px 28px;
-      border: 1px solid #263242;
-    }
-    .info-col .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin: 18px 0;
-    }
-    .info-col .contact-item i {
-      font-size: 1.8rem;
-      color: #fbbf24;
-      width: 40px;
-      text-align: center;
-    }
-    .info-col .contact-item a {
-      color: #e8edf5;
-      text-decoration: none;
-      font-weight: 500;
-      transition: 0.2s;
-    }
-    .info-col .contact-item a:hover {
-      color: #fbbf24;
-    }
-    .support-tag {
-      background: #1f2937;
-      border-radius: 60px;
-      padding: 6px 20px;
-      display: inline-block;
-      font-weight: 600;
-      font-size: 0.85rem;
-      border: 1px solid #fbbf2470;
-      color: #fbbf24;
-      margin-top: 8px;
-    }
+        /* Section Titles */
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 50px 0 20px;
+            letter-spacing: -0.3px;
+        }
+        .section-title i {
+            color: #fbbf24;
+            margin-right: 12px;
+        }
+        .sub-title {
+            color: #b0c0d4;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
 
-    /* footer */
-    .footer {
-      border-top: 1px solid #1d2838;
-      padding: 32px 0 24px;
-      margin-top: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      color: #7f8ea3;
-    }
-    .footer span i {
-      color: #fbbf24;
-    }
+        /* Cards Grid */
+        .grid-2col, .grid-3col {
+            display: grid;
+            gap: 28px;
+            margin: 20px 0 40px;
+        }
+        .grid-2col { grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); }
+        .grid-3col { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+        .card {
+            background: #141c26;
+            border-radius: 32px;
+            padding: 24px 22px;
+            border: 1px solid #25303e;
+            transition: 0.25s ease;
+        }
+        .card:hover {
+            border-color: #fbbf24;
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.7);
+        }
+        .card-img {
+            width: 100%;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 14px;
+            border-radius: 16px;
+            background: #0d141e;
+            padding: 8px;
+        }
+        .card-icon {
+            font-size: 2.2rem;
+            color: #fbbf24;
+            margin-bottom: 10px;
+        }
+        .card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .card p { color: #b0c0d4; }
 
-    /* responsive */
-    @media (max-width: 720px) {
-      .hero-text h1 { font-size: 2.6rem; }
-      .navbar { flex-direction: column; gap: 14px; align-items: stretch; }
-      .nav-actions { justify-content: center; flex-wrap: wrap; }
-      .form-card { padding: 28px 20px; }
-      .btn-submit-wa { max-width: 100%; }
-    }
-    @media (max-width: 480px) {
-      .brand-strip { border-radius: 40px; gap: 12px; }
-    }
-  </style>
+        /* Comparison Table */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #101821;
+            border-radius: 24px;
+            overflow: hidden;
+            margin: 20px 0 40px;
+            border: 1px solid #2a3547;
+        }
+        .compare-table th, .compare-table td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid #1f2a38;
+        }
+        .compare-table th {
+            background: #1a2533;
+            color: #fbbf24;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+        .compare-table td { color: #cddae8; }
+        .compare-table tr:last-child td { border-bottom: none; }
+        .compare-table .highlight-cell { color: #fbbf24; font-weight: 600; }
+
+        /* Reviews */
+        .review-card {
+            background: #0d141e;
+            padding: 20px 22px;
+            border-radius: 24px;
+            border: 1px solid #25303e;
+        }
+        .review-card .stars {
+            color: #fbbf24;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+        .review-card .name { font-weight: 600; color: #eef2f6; margin-top: 10px; }
+        .review-card .location { font-size: 0.8rem; color: #7f8ea3; }
+
+        /* Form & Contact */
+        .form-card {
+            background: #101821;
+            border-radius: 48px;
+            padding: 40px 36px;
+            border: 1px solid #2a3547;
+            margin: 40px 0 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: flex-start;
+        }
+        .form-col { flex: 2 1 300px; }
+        .form-col h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 12px;
+        }
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+        .form-row input, .form-row select {
+            flex: 1 1 180px;
+            padding: 14px 18px;
+            border-radius: 40px;
+            border: 1px solid #2d3b4e;
+            background: #0d141e;
+            color: #eef2f6;
+            font-weight: 500;
+            outline: none;
+            transition: 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .form-row input:focus, .form-row select:focus {
+            border-color: #fbbf24;
+            box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.2);
+        }
+        .btn-submit-wa {
+            background: #25d366;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #0b0e14;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+            max-width: 280px;
+            margin-top: 6px;
+            border: 1px solid transparent;
+        }
+        .btn-submit-wa:hover {
+            background: #20b85f;
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+        }
+        .info-col {
+            flex: 1 1 220px;
+            background: #0d141e;
+            border-radius: 40px;
+            padding: 24px 28px;
+            border: 1px solid #263242;
+        }
+        .info-col .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 14px 0;
+        }
+        .info-col .contact-item i {
+            font-size: 1.6rem;
+            color: #fbbf24;
+            width: 36px;
+            text-align: center;
+        }
+        .info-col .contact-item a {
+            color: #e8edf5;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .info-col .contact-item a:hover { color: #fbbf24; }
+
+        /* Blog / Knowledge */
+        .blog-meta {
+            color: #7f8ea3;
+            font-size: 0.85rem;
+            display: flex;
+            gap: 16px;
+            margin: 6px 0 10px;
+        }
+        .blog-meta i { color: #fbbf24; margin-right: 4px; }
+
+        /* Search Modal */
+        .search-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 80px 20px 40px;
+            overflow-y: auto;
+        }
+        .search-overlay.active { display: flex; }
+        .search-modal {
+            background: #141c26;
+            border-radius: 40px;
+            max-width: 800px;
+            width: 100%;
+            padding: 30px 30px 40px;
+            border: 1px solid #2a3547;
+            position: relative;
+        }
+        .search-modal .close-search {
+            position: absolute;
+            top: 16px; right: 20px;
+            background: none;
+            border: none;
+            color: #b6c8e0;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .search-modal .close-search:hover { color: #fbbf24; }
+        .search-modal input {
+            width: 100%;
+            padding: 18px 24px;
+            border-radius: 60px;
+            border: 1px solid #2d3b4e;
+            background: #0d141e;
+            color: #eef2f6;
+            font-size: 1.2rem;
+            outline: none;
+        }
+        .search-modal input:focus {
+            border-color: #fbbf24;
+            box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.2);
+        }
+        .search-results {
+            margin-top: 24px;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+        .search-results .result-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid #1f2a38;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .search-results .result-item:hover {
+            background: #1a2533;
+            border-radius: 12px;
+        }
+        .search-results .result-item .title {
+            color: #fbbf24;
+            font-weight: 600;
+        }
+        .search-results .result-item .snippet {
+            color: #b0c0d4;
+            font-size: 0.9rem;
+            margin-top: 2px;
+        }
+        .search-results .no-result {
+            color: #7f8ea3;
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid #1d2838;
+            padding: 32px 0 24px;
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            color: #7f8ea3;
+            gap: 12px;
+        }
+        .footer a {
+            color: #b6c8e0;
+            text-decoration: none;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .footer a:hover { color: #fbbf24; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-text h1 { font-size: 2.4rem; }
+            .navbar { flex-direction: column; gap: 12px; align-items: stretch; }
+            .nav-links { justify-content: center; }
+            .top-bar .container { justify-content: center; text-align: center; }
+            .form-card { padding: 24px 18px; }
+            .btn-submit-wa { max-width: 100%; }
+            .compare-table th, .compare-table td { padding: 12px 14px; font-size: 0.9rem; }
+            .search-overlay { padding: 40px 16px; }
+        }
+        @media (max-width: 480px) {
+            .hero-text h1 { font-size: 2rem; }
+            .nav-links { gap: 12px; }
+            .brand-strip { border-radius: 30px; gap: 10px; }
+        }
+
+        /* Utility */
+        .text-gold { color: #fbbf24; }
+        .support-tag {
+            background: #1f2937;
+            border-radius: 60px;
+            padding: 4px 18px;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 0.8rem;
+            border: 1px solid #fbbf2470;
+            color: #fbbf24;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <!-- header -->
-    <header class="navbar">
-      <div class="logo">
-        <i class="fas fa-bolt"></i> InvaTek
-      </div>
-      <div class="nav-actions">
-        <a href="#brands"><i class="fas fa-tag"></i> Brands</a>
-        <a href="#contact"><i class="fas fa-headset"></i> Support</a>
-        <a href="https://wa.me/918087804339?text=Hi%20InvaTek!%20I'm%20interested%20in%20batteries." target="_blank" class="btn-wa-outline">
-          <i class="fab fa-whatsapp"></i> WhatsApp
-        </a>
-      </div>
-    </header>
 
-    <!-- hero -->
-    <section class="hero">
-      <div class="hero-text">
-        <div class="hero-badge">
-          <i class="fas fa-check-circle"></i> Best support · low price
+    <!-- ===== TOP BAR : Phone, Search ===== -->
+    <div class="top-bar">
+        <div class="container">
+            <span><i class="fas fa-phone-alt" style="color:#fbbf24;"></i> Call: <a href="tel:+918087804339">8087804339</a></span>
+            <span><i class="fab fa-whatsapp" style="color:#25d366;"></i> WhatsApp: <a href="https://wa.me/918087804339" target="_blank">8087804339</a></span>
+            <span class="highlight"><i class="fas fa-clock"></i> Monâ€“Sat, 9amâ€“8pm</span>
+            <span class="search-trigger" id="searchTrigger"><i class="fas fa-search"></i> Search</span>
         </div>
-        <h1>Power that <span>never fades</span></h1>
-        <p>Premium inverter batteries from India’s top brands. <strong>Luminous, Microtek, Eastman, Addo, Exide, Livfast, Amaze, Livguard</strong> &amp; Lithium — all at unbeatable prices.</p>
-        <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px;">
-          <span style="background:#1f2937; padding:6px 20px; border-radius:40px; border:1px solid #2f405a;"><i class="fas fa-rupee-sign" style="color:#fbbf24;"></i> 20% off</span>
-          <span style="background:#1f2937; padding:6px 20px; border-radius:40px; border:1px solid #2f405a;"><i class="fas fa-shield-alt" style="color:#fbbf24;"></i> 3 yr warranty</span>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <i class="fas fa-car-battery"></i>
-        <small>?? InvaTek Power</small>
-      </div>
-    </section>
-
-    <!-- brand strip -->
-    <div class="brand-strip" id="brands">
-      <span><i class="fas fa-bolt"></i> top brands</span>
-      <span class="brand-item">Luminous</span>
-      <span class="brand-item">Microtek</span>
-      <span class="brand-item">Eastman</span>
-      <span class="brand-item">Addo</span>
-      <span class="brand-item">Exide</span>
-      <span class="brand-item">Livfast</span>
-      <span class="brand-item">Amaze</span>
-      <span class="brand-item">Livguard</span>
-      <span class="brand-item">? Lithium</span>
     </div>
 
-    <!-- features / why us -->
-    <div class="grid-2col">
-      <div class="card">
-        <div class="card-icon"><i class="fas fa-hand-holding-usd"></i></div>
-        <h3>Lowest price guarantee</h3>
-        <p>We match or beat any price. Genuine batteries from Luminous, Exide, Livguard &amp; more.</p>
-        <div class="badge-list"><span>? best price</span><span>bulk discount</span></div>
-      </div>
-      <div class="card">
-        <div class="card-icon"><i class="fas fa-headset"></i></div>
-        <h3>Best support</h3>
-        <p>Expert advice, installation help, and after-sales service. We’re here for you.</p>
-        <div class="badge-list"><span>24/7 WhatsApp</span><span>8087804339</span></div>
-      </div>
-      <div class="card">
-        <div class="card-icon"><i class="fas fa-check-double"></i></div>
-        <h3>Trusted brands</h3>
-        <p>Luminous, Microtek, Eastman, Addo, Exide, Livfast, Amaze, Livguard, Lithium.</p>
-        <div class="badge-list"><span>all in stock</span><span>new arrivals</span></div>
-      </div>
-      <div class="card">
-        <div class="card-icon"><i class="fas fa-truck-fast"></i></div>
-        <h3>Quick delivery</h3>
-        <p>Fast shipping across India. Genuine products with warranty.</p>
-        <div class="badge-list"><span>free shipping*</span><span>COD available</span></div>
-      </div>
+    <!-- ===== MAIN CONTAINER ===== -->
+    <div class="container">
+
+        <!-- ===== NAVIGATION ===== -->
+        <header class="navbar">
+            <a href="#" class="logo" id="homeLink">
+                <img src="https://placehold.co/200x60/0b0e14/fbbf24?text=InvaTek" alt="InvaTek" />
+                <span class="logo-text">InvaTek</span>
+            </a>
+            <div class="nav-links">
+                <a class="active-link" data-page="home"><i class="fas fa-home"></i> Home</a>
+                <a data-page="compare"><i class="fas fa-balance-scale"></i> Compare</a>
+                <a data-page="blog"><i class="fas fa-newspaper"></i> Knowledge</a>
+                <a data-page="privacy"><i class="fas fa-shield-alt"></i> Privacy</a>
+                <a data-page="contact"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="https://wa.me/918087804339?text=Hi%20InvaTek!" target="_blank" class="btn-wa-outline"><i class="fab fa-whatsapp"></i> Chat</a>
+            </div>
+        </header>
+
+        <!-- ========================================== -->
+        <!-- ============ PAGE: HOME ================== -->
+        <!-- ========================================== -->
+        <div class="page active-page" id="page-home">
+            <!-- Hero -->
+            <section class="hero">
+                <div class="hero-text">
+                    <div class="hero-badge"><i class="fas fa-check-circle"></i> Best support Â· low price</div>
+                    <h1>Power that <span>never fades</span></h1>
+                    <p>Premium inverter batteries from Indiaâ€™s top brands. <strong>Luminous, Microtek, Eastman, Addo, Exide, Livfast, Amaze, Livguard</strong> &amp; Lithium â€” all at unbeatable prices.</p>
+                    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:8px;">
+                        <span style="background:#1f2937; padding:6px 20px; border-radius:40px; border:1px solid #2f405a;"><i class="fas fa-rupee-sign" style="color:#fbbf24;"></i> 20% off</span>
+                        <span style="background:#1f2937; padding:6px 20px; border-radius:40px; border:1px solid #2f405a;"><i class="fas fa-shield-alt" style="color:#fbbf24;"></i> 3 yr warranty</span>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <img src="https://placehold.co/400x300/1a2430/fbbf24?text=Inverter+Battery" alt="InvaTek Battery" />
+                    <small>ðŸ”‹ InvaTek Power</small>
+                </div>
+            </section>
+
+            <!-- Brands -->
+            <div class="brand-strip">
+                <span><i class="fas fa-bolt" style="color:#fbbf24;"></i> top brands</span>
+                <span class="brand-item">Luminous</span>
+                <span class="brand-item">Microtek</span>
+                <span class="brand-item">Eastman</span>
+                <span class="brand-item">Addo</span>
+                <span class="brand-item">Exide</span>
+                <span class="brand-item">Livfast</span>
+                <span class="brand-item">Amaze</span>
+                <span class="brand-item">Livguard</span>
+                <span class="brand-item">âš¡ Lithium</span>
+            </div>
+
+            <!-- Small content about inverter battery -->
+            <h2 class="section-title"><i class="fas fa-info-circle"></i> Inverter Battery Basics</h2>
+            <div style="background:#101821; border-radius:32px; padding:24px 28px; border:1px solid #2a3547; margin:0 0 30px;">
+                <p style="color:#b0c0d4; margin-bottom:12px;">An inverter battery stores electrical energy to power your appliances during outages. The two main types are <strong style="color:#fbbf24;">Lead Acid</strong> (affordable, reliable) and <strong style="color:#4ade80;">Lithium</strong> (longer life, lightweight, fast charging). Choosing the right capacity (Ah) depends on your total load and backup hours.</p>
+                <p style="color:#b0c0d4;">For a typical Indian home, a 150Ah lead-acid battery provides 2-3 hours of backup for fans, lights, and a TV. For longer backup or sensitive electronics, consider Lithium batteries with deeper discharge capability.</p>
+                <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:12px;">
+                    <span class="support-tag"><i class="fas fa-bolt"></i> 12V system</span>
+                    <span class="support-tag"><i class="fas fa-chart-line"></i> Calculate your load</span>
+                    <span class="support-tag"><i class="fas fa-shield-alt"></i> Warranty up to 5 years</span>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <h2 class="section-title"><i class="fas fa-bolt"></i> Why InvaTek?</h2>
+            <div class="grid-2col">
+                <div class="card"><div class="card-icon"><i class="fas fa-hand-holding-usd"></i></div><h3>Lowest Price</h3><p>Genuine batteries from top brands at rates you won't find elsewhere. Bulk discounts available.</p></div>
+                <div class="card"><div class="card-icon"><i class="fas fa-headset"></i></div><h3>Best Support</h3><p>Expert advice, installation help, and after-sales support. We reply in minutes on WhatsApp.</p></div>
+                <div class="card"><div class="card-icon"><i class="fas fa-check-double"></i></div><h3>Trusted Brands</h3><p>Luminous, Exide, Livguard, Lithium, and more. All genuine with manufacturer warranty.</p></div>
+                <div class="card"><div class="card-icon"><i class="fas fa-truck-fast"></i></div><h3>Fast Delivery</h3><p>Pan-India shipping. Free delivery on orders above â‚¹5000. COD available.</p></div>
+            </div>
+
+            <!-- Testimonials -->
+            <h2 class="section-title"><i class="fas fa-star" style="color:#fbbf24;"></i> What Our Customers Say</h2>
+            <div class="grid-3col">
+                <div class="review-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p>"Best price for Luminous battery in Mumbai. The team guided me perfectly. Highly recommend!"</p>
+                    <div class="name">â€” Rajesh Sharma</div>
+                    <div class="location">Mumbai, Maharashtra</div>
+                </div>
+                <div class="review-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p>"Switched to Lithium battery from InvaTek. Lightweight and charges super fast. Saved my inverter space!"</p>
+                    <div class="name">â€” Priya Patel</div>
+                    <div class="location">Surat, Gujarat</div>
+                </div>
+                <div class="review-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                    <p>"Excellent support. They helped me choose between Exide and Livguard. Delivery was prompt."</p>
+                    <div class="name">â€” Amit Singh</div>
+                    <div class="location">Lucknow, UP</div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div style="background: #101821; border-radius: 40px; padding: 30px 30px; border:1px solid #2a3547; margin:30px 0; text-align:center;">
+                <h3 style="font-size:1.8rem;"><i class="fas fa-phone" style="color:#fbbf24;"></i> Need expert advice?</h3>
+                <p style="color:#b0c0d4; max-width:500px; margin:10px auto;">Call or WhatsApp us at <strong style="color:#fbbf24;">8087804339</strong> for instant support.</p>
+                <a href="https://wa.me/918087804339" target="_blank" class="btn-submit-wa" style="margin:16px auto 0; max-width:300px;"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- ============ PAGE: COMPARE =============== -->
+        <!-- ========================================== -->
+        <div class="page" id="page-compare">
+            <h2 class="section-title"><i class="fas fa-balance-scale"></i> Lithium vs Lead Acid</h2>
+            <p class="sub-title">Understand the key differences to choose the right battery for your home or office.</p>
+            <div class="grid-2col" style="margin-bottom:20px;">
+                <div class="card" style="border-left:4px solid #fbbf24;">
+                    <h3><i class="fas fa-bolt" style="color:#fbbf24;"></i> Lithium Battery</h3>
+                    <ul style="color:#b0c0d4; list-style:none; padding:0; margin-top:10px;">
+                        <li><i class="fas fa-check-circle" style="color:#4ade80;"></i> <strong>Longer Life:</strong> 2000+ cycles (8-10 years)</li>
+                        <li><i class="fas fa-check-circle" style="color:#4ade80;"></i> <strong>Lightweight:</strong> 60% lighter than lead acid</li>
+                        <li><i class="fas fa-check-circle" style="color:#4ade80;"></i> <strong>Fast Charging:</strong> 80% in 1 hour</li>
+                        <li><i class="fas fa-check-circle" style="color:#4ade80;"></i> <strong>Low Maintenance:</strong> No water topping</li>
+                        <li><i class="fas fa-check-circle" style="color:#4ade80;"></i> <strong>Eco-friendly:</strong> No toxic lead</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-left:4px solid #60a5fa;">
+                    <h3><i class="fas fa-car-battery" style="color:#60a5fa;"></i> Lead Acid Battery</h3>
+                    <ul style="color:#b0c0d4; list-style:none; padding:0; margin-top:10px;">
+                        <li><i class="fas fa-check-circle" style="color:#60a5fa;"></i> <strong>Affordable:</strong> Lower upfront cost</li>
+                        <li><i class="fas fa-check-circle" style="color:#60a5fa;"></i> <strong>High Surge:</strong> Handles heavy loads well</li>
+                        <li><i class="fas fa-check-circle" style="color:#60a5fa;"></i> <strong>Recyclable:</strong> 99% recyclable</li>
+                        <li><i class="fas fa-check-circle" style="color:#60a5fa;"></i> <strong>Reliable:</strong> Proven technology</li>
+                        <li><i class="fas fa-check-circle" style="color:#60a5fa;"></i> <strong>Wide Availability:</strong> Easy to replace</li>
+                    </ul>
+                </div>
+            </div>
+            <h3 style="font-size:1.6rem; margin-top:10px;"><i class="fas fa-table" style="color:#fbbf24;"></i> Detailed Comparison</h3>
+            <table class="compare-table">
+                <thead><tr><th>Parameter</th><th>Lithium Battery</th><th>Lead Acid Battery</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Cost (Initial)</strong></td><td>Higher (â‚¹12,000+)</td><td class="highlight-cell">Lower (â‚¹6,000 â€“ â‚¹10,000)</td></tr>
+                    <tr><td><strong>Lifespan</strong></td><td class="highlight-cell">8-10 years</td><td>3-5 years</td></tr>
+                    <tr><td><strong>Weight (150Ah)</strong></td><td class="highlight-cell">~25 kg</td><td>~55 kg</td></tr>
+                    <tr><td><strong>Charging Time</strong></td><td class="highlight-cell">1-2 hours</td><td>6-8 hours</td></tr>
+                    <tr><td><strong>Maintenance</strong></td><td class="highlight-cell">Zero maintenance</td><td>Water topping required</td></tr>
+                    <tr><td><strong>Depth of Discharge</strong></td><td class="highlight-cell">80-90%</td><td>50% (max)</td></tr>
+                    <tr><td><strong>Warranty</strong></td><td class="highlight-cell">5-7 years</td><td>2-3 years</td></tr>
+                </tbody>
+            </table>
+            <div style="background:#131a24; border-radius:32px; padding:24px 28px; border:1px solid #2a3547; margin:20px 0;">
+                <h4><i class="fas fa-lightbulb" style="color:#fbbf24;"></i> Which one should you choose?</h4>
+                <p style="color:#b0c0d4;">If you have a higher budget and want long-term savings, <strong style="color:#fbbf24;">Lithium</strong> is the future-proof choice. If you are on a tight budget and need a reliable backup for occasional use, <strong style="color:#60a5fa;">Lead Acid</strong> is still a great option. InvaTek offers both with expert guidance.</p>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- ============ PAGE: BLOG ================== -->
+        <!-- ========================================== -->
+        <div class="page" id="page-blog">
+            <h2 class="section-title"><i class="fas fa-newspaper"></i> Knowledge &amp; Insights</h2>
+            <p class="sub-title">Expert articles to help you choose and maintain the perfect inverter battery.</p>
+            <div class="grid-2col">
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-life-ring"></i></div>
+                    <h3>Top 5 Tips to Extend Battery Life</h3>
+                    <div class="blog-meta"><span><i class="far fa-calendar-alt"></i> 12 July 2026</span><span><i class="far fa-user"></i> By InvaTek</span></div>
+                    <p>1. Keep terminals clean. 2. Avoid deep discharge below 50%. 3. Ensure proper ventilation. 4. Check water level (for lead acid). 5. Use a smart charger. Following these can add 2-3 years to your battery's life.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-plug"></i></div>
+                    <h3>Inverter vs Generator â€“ Which is Better?</h3>
+                    <div class="blog-meta"><span><i class="far fa-calendar-alt"></i> 5 July 2026</span><span><i class="far fa-user"></i> By InvaTek</span></div>
+                    <p>Inverters are silent, emission-free, and cost-effective for short power cuts. Generators are better for long outages and heavy machinery. For most homes, a reliable inverter with a good battery (like Lithium) is the clear winner.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Understanding Battery Capacity (Ah)</h3>
+                    <div class="blog-meta"><span><i class="far fa-calendar-alt"></i> 28 June 2026</span><span><i class="far fa-user"></i> By InvaTek</span></div>
+                    <p>Ah (Ampere-hour) indicates how long your battery can supply power. For a typical home, a 150Ah battery provides 2-3 hours of backup during an outage. Calculate your load (in watts) to choose the right capacity.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-solar-panel"></i></div>
+                    <h3>Solar Batteries: What You Need to Know</h3>
+                    <div class="blog-meta"><span><i class="far fa-calendar-alt"></i> 15 June 2026</span><span><i class="far fa-user"></i> By InvaTek</span></div>
+                    <p>Solar batteries store energy from solar panels. Lithium batteries are preferred for solar due to their high round-trip efficiency and deep discharge capability. InvaTek offers specialised solar batteries for off-grid and hybrid systems.</p>
+                </div>
+            </div>
+            <div style="background: #0d141e; border-radius:32px; padding:24px; border:1px solid #25303e; margin-top:10px;">
+                <p style="color:#b0c0d4;"><i class="fas fa-info-circle" style="color:#fbbf24;"></i> <strong>SEO Note:</strong> All our batteries are BIS certified. We rank for keywords like "best inverter battery in India", "lithium battery price", and "lead acid battery maintenance".</p>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- ============ PAGE: PRIVACY =============== -->
+        <!-- ========================================== -->
+        <div class="page" id="page-privacy">
+            <h2 class="section-title"><i class="fas fa-shield-alt"></i> Privacy Policy</h2>
+            <div style="background: #101821; border-radius: 40px; padding: 30px 34px; border:1px solid #2a3547; margin:20px 0;">
+                <p><strong>InvaTek</strong> (invatek.in) is committed to protecting your privacy. This policy explains how we collect, use, and safeguard your personal data.</p>
+                <h4 style="margin:24px 0 10px; color:#fbbf24;"><i class="fas fa-database"></i> 1. Information We Collect</h4>
+                <p>We collect information you provide directly, such as your name, phone number, email address, and battery preference when you fill out our enquiry form, contact us via WhatsApp, or call our support.</p>
+                <h4 style="margin:24px 0 10px; color:#fbbf24;"><i class="fas fa-cogs"></i> 2. How We Use Your Information</h4>
+                <ul style="color:#b0c0d4; padding-left:20px;">
+                    <li>To respond to your enquiries and provide quotes.</li>
+                    <li>To process orders and arrange deliveries.</li>
+                    <li>To offer after-sales support and warranty services.</li>
+                    <li>To send promotional offers (only if you opt-in).</li>
+                </ul>
+                <h4 style="margin:24px 0 10px; color:#fbbf24;"><i class="fab fa-whatsapp"></i> 3. WhatsApp Communication</h4>
+                <p>By submitting the form or contacting us on WhatsApp, you consent to receive communication via WhatsApp at the number provided. You can opt-out at any time by replying "STOP".</p>
+                <h4 style="margin:24px 0 10px; color:#fbbf24;"><i class="fas fa-lock"></i> 4. Data Security</h4>
+                <p>We implement industry-standard security measures to protect your data. However, no method of transmission over the internet is 100% secure. We do not store your payment details.</p>
+                <h4 style="margin:24px 0 10px; color:#fbbf24;"><i class="fas fa-share-alt"></i> 5. Third-Party Sharing</h4>
+                <p>We <strong>do not</strong> sell, trade, or rent your personal information to third parties. We may share data with delivery partners solely for order fulfilment.</p>
+                <h4 style="margin:24px 0 10px; color:#fbbf24;"><i class="fas fa-cookie-bite"></i> 6. Cookies</h4>
+                <p>Our website uses minimal functional cookies to improve user experience. We do not use tracking or advertising cookies.</p>
+                <h4 style="margin:24px 0 10px; color:#fbbf24;"><i class="fas fa-envelope"></i> 7. Contact Us</h4>
+                <p>For any privacy concerns, email us at <a href="mailto:support@invatek.in" style="color:#fbbf24;">support@invatek.in</a> or call <a href="tel:+918087804339" style="color:#fbbf24;">8087804339</a>.</p>
+                <p style="margin-top:24px; color:#7f8ea3; font-size:0.9rem;">Last updated: July 2026</p>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- ============ PAGE: CONTACT =============== -->
+        <!-- ========================================== -->
+        <div class="page" id="page-contact">
+            <h2 class="section-title"><i class="fas fa-envelope"></i> Get in Touch</h2>
+            <p class="sub-title">We're here to help. Reach out via form, phone, or WhatsApp.</p>
+            <div class="form-card" style="margin-top:0;">
+                <div class="form-col">
+                    <h2><i class="fab fa-whatsapp" style="color:#25d366;"></i> Quick Enquiry</h2>
+                    <p>Fill the form &amp; we'll reply on WhatsApp instantly.</p>
+                    <form id="waForm" class="form-group">
+                        <div class="form-row">
+                            <input type="text" id="name" placeholder="Your name" required />
+                            <input type="text" id="phone" placeholder="Phone number" value="8087804339" readonly />
+                        </div>
+                        <div class="form-row">
+                            <select id="brandSelect">
+                                <option value="Luminous">Luminous</option>
+                                <option value="Microtek">Microtek</option>
+                                <option value="Eastman">Eastman</option>
+                                <option value="Addo">Addo</option>
+                                <option value="Exide">Exide</option>
+                                <option value="Livfast">Livfast</option>
+                                <option value="Amaze">Amaze</option>
+                                <option value="Livguard">Livguard</option>
+                                <option value="Lithium">Lithium Battery</option>
+                            </select>
+                            <input type="text" id="message" placeholder="Optional: capacity, quantity..." />
+                        </div>
+                        <button type="submit" class="btn-submit-wa"><i class="fab fa-whatsapp"></i> Send via WhatsApp</button>
+                    </form>
+                    <div style="margin-top:12px;"><span class="support-tag"><i class="fas fa-check-circle"></i> 1 min response</span> <span class="support-tag" style="margin-left:8px;"><i class="fas fa-shield-alt"></i> trusted since 2016</span></div>
+                </div>
+                <div class="info-col">
+                    <span style="color:#fbbf24; font-weight:600; font-size:1.1rem;"><i class="fas fa-phone-alt"></i> Contact Details</span>
+                    <div class="contact-item"><i class="fab fa-whatsapp" style="color:#25d366;"></i><a href="https://wa.me/918087804339" target="_blank">8087804339</a></div>
+                    <div class="contact-item"><i class="fas fa-phone"></i><a href="tel:+918087804339">8087804339</a></div>
+                    <div class="contact-item"><i class="fas fa-envelope"></i><a href="mailto:support@invatek.in">support@invatek.in</a></div>
+                    <hr style="border-color:#25303e; margin:12px 0;" />
+                    <p><i class="fas fa-map-marker-alt" style="color:#fbbf24;"></i> InvaTek Power Solutions,<br /> New Delhi, India</p>
+                    <p style="font-size:0.9rem; color:#8b9bb2; margin-top:8px;">Monâ€“Sat, 9am â€“ 8pm</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="footer">
+            <span>Â© 2026 InvaTek Â· <i class="fas fa-bolt"></i> inverter batteries</span>
+            <span>
+                <i class="fab fa-whatsapp" style="color:#25d366;"></i> 8087804339
+                <span style="margin-left:16px;"><i class="fas fa-tag"></i> Luminous Â· Exide Â· Lithium</span>
+                <a style="margin-left:16px; color:#fbbf24; text-decoration:underline;" data-page="privacy" id="footerPrivacyLink">Privacy Policy</a>
+            </span>
+        </footer>
+
+    </div> <!-- /container -->
+
+    <!-- ===== SEARCH OVERLAY ===== -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-modal">
+            <button class="close-search" id="closeSearch"><i class="fas fa-times"></i></button>
+            <input type="text" id="globalSearchInput" placeholder="Search for batteries, vehicles, topics..." autofocus />
+            <div class="search-results" id="globalSearchResults">
+                <div class="no-result">Start typing to search...</div>
+            </div>
+        </div>
     </div>
 
-    <!-- form + whatsapp section -->
-    <div class="form-card" id="contact">
-      <div class="form-col">
-        <h2><i class="fab fa-whatsapp" style="color:#25d366;"></i> Quick enquiry</h2>
-        <p>Fill the form &amp; we'll reply on WhatsApp instantly.</p>
-        <form id="waForm" class="form-group">
-          <div class="form-row">
-            <input type="text" id="name" placeholder="Your name" required />
-            <input type="text" id="phone" placeholder="Phone number" value="8087804339" readonly />
-          </div>
-          <div class="form-row">
-            <select id="brandSelect">
-              <option value="Luminous">Luminous</option>
-              <option value="Microtek">Microtek</option>
-              <option value="Eastman">Eastman</option>
-              <option value="Addo">Addo</option>
-              <option value="Exide">Exide</option>
-              <option value="Livfast">Livfast</option>
-              <option value="Amaze">Amaze</option>
-              <option value="Livguard">Livguard</option>
-              <option value="Lithium">Lithium Battery</option>
-            </select>
-            <input type="text" id="message" placeholder="Optional: capacity, quantity..." />
-          </div>
-          <button type="submit" class="btn-submit-wa">
-            <i class="fab fa-whatsapp"></i> Send via WhatsApp
-          </button>
-        </form>
-        <div style="margin-top: 12px; display: flex; gap: 12px; flex-wrap: wrap;">
-          <span class="support-tag"><i class="fas fa-check-circle"></i> 1 min response</span>
-          <span class="support-tag"><i class="fas fa-shield-alt"></i> trusted since 2016</span>
-        </div>
-      </div>
-      <div class="info-col">
-        <div style="display: flex; flex-direction: column;">
-          <span style="color:#fbbf24; font-weight:600; font-size:1.1rem;"><i class="fas fa-phone-alt"></i> Contact</span>
-          <div class="contact-item">
-            <i class="fab fa-whatsapp" style="color:#25d366;"></i>
-            <a href="https://wa.me/918087804339" target="_blank">8087804339</a>
-          </div>
-          <div class="contact-item">
-            <i class="fas fa-phone"></i>
-            <a href="tel:+918087804339">8087804339</a>
-          </div>
-          <div class="contact-item">
-            <i class="fas fa-envelope"></i>
-            <a href="mailto:support@invatek.in">support@invatek.in</a>
-          </div>
-          <hr style="border-color:#25303e; margin: 12px 0;" />
-          <p style="font-weight:500; color:#cddae8;"><i class="fas fa-bolt" style="color:#fbbf24;"></i> InvaTek · power assured</p>
-          <p style="font-size:0.9rem; color:#8b9bb2;">Mon–Sat, 9am – 8pm</p>
-        </div>
-      </div>
-    </div>
+    <!-- ========================================== -->
+    <!-- ============ JAVASCRIPT =================== -->
+    <!-- ========================================== -->
+    <script>
+        (function() {
+            // ----- PAGE NAVIGATION -----
+            const navLinks = document.querySelectorAll('.nav-links a[data-page]');
+            const footerPrivacyLink = document.getElementById('footerPrivacyLink');
+            const homeLink = document.getElementById('homeLink');
+            const pageIds = ['home', 'compare', 'blog', 'privacy', 'contact'];
+            const pages = {};
+            pageIds.forEach(id => { pages[id] = document.getElementById('page-' + id); });
 
-    <!-- footer -->
-    <footer class="footer">
-      <span>© 2026 InvaTek · <i class="fas fa-bolt"></i> inverter batteries</span>
-      <span>
-        <i class="fab fa-whatsapp" style="color:#25d366;"></i> 8087804339
-        <span style="margin-left: 16px;"><i class="fas fa-tag"></i> Luminous · Microtek · Exide · Lithium</span>
-      </span>
-    </footer>
-  </div>
+            function showPage(pageId) {
+                Object.keys(pages).forEach(key => { pages[key].classList.remove('active-page'); });
+                if (pages[pageId]) pages[pageId].classList.add('active-page');
+                navLinks.forEach(link => {
+                    link.classList.remove('active-link');
+                    if (link.dataset.page === pageId) link.classList.add('active-link');
+                });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                history.pushState(null, '', '#' + pageId);
+                // Close search if open
+                document.getElementById('searchOverlay').classList.remove('active');
+            }
 
-  <script>
-    (function() {
-      const form = document.getElementById('waForm');
-      const nameInput = document.getElementById('name');
-      const phoneInput = document.getElementById('phone');
-      const brandSelect = document.getElementById('brandSelect');
-      const messageInput = document.getElementById('message');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.dataset.page;
+                    if (page) showPage(page);
+                });
+            });
 
-      // Prefill phone number (readonly) and set default brand if needed
-      // already set in html
+            if (homeLink) homeLink.addEventListener('click', function(e) { e.preventDefault(); showPage('home'); });
+            if (footerPrivacyLink) footerPrivacyLink.addEventListener('click', function(e) { e.preventDefault(); showPage('privacy'); });
 
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
+            function handleHash() {
+                const hash = window.location.hash.replace('#', '');
+                if (hash && pages[hash]) showPage(hash);
+                else { if (!window.location.hash || !pages[hash]) showPage('home'); }
+            }
+            window.addEventListener('hashchange', handleHash);
+            handleHash();
 
-        const name = nameInput.value.trim() || 'Customer';
-        const phone = phoneInput.value.trim() || '8087804339';
-        const brand = brandSelect.value;
-        const extra = messageInput.value.trim() ? `, ${messageInput.value.trim()}` : '';
+            // ----- SEARCH FUNCTIONALITY -----
+            // Gather all searchable content from all pages (excluding calculator and vehicle)
+            function getSearchableContent() {
+                const data = [];
+                const home = document.getElementById('page-home');
+                if (home) {
+                    const text = home.innerText || '';
+                    data.push({ page: 'home', title: 'Home', content: text, snippet: text.substring(0, 150) });
+                }
+                const compare = document.getElementById('page-compare');
+                if (compare) {
+                    const text = compare.innerText || '';
+                    data.push({ page: 'compare', title: 'Compare: Lithium vs Lead Acid', content: text, snippet: text.substring(0, 150) });
+                }
+                const blog = document.getElementById('page-blog');
+                if (blog) {
+                    const text = blog.innerText || '';
+                    data.push({ page: 'blog', title: 'Knowledge & Insights', content: text, snippet: text.substring(0, 150) });
+                }
+                const privacy = document.getElementById('page-privacy');
+                if (privacy) {
+                    const text = privacy.innerText || '';
+                    data.push({ page: 'privacy', title: 'Privacy Policy', content: text, snippet: text.substring(0, 150) });
+                }
+                const contact = document.getElementById('page-contact');
+                if (contact) {
+                    const text = contact.innerText || '';
+                    data.push({ page: 'contact', title: 'Contact Us', content: text, snippet: text.substring(0, 150) });
+                }
+                return data;
+            }
 
-        // Build a clean WhatsApp message
-        const text = `Hi InvaTek! I'm ${name} (${phone}). I'm interested in ${brand} inverter battery${extra}. Please share best price & support.`;
-        const encoded = encodeURIComponent(text);
+            const searchData = getSearchableContent();
 
-        // WhatsApp number (with country code)
-        const waNumber = '918087804339'; // 91 + 8087804339
+            function performSearch(query) {
+                if (!query || query.trim() === '') return [];
+                const lowerQuery = query.toLowerCase();
+                return searchData.filter(item => item.content.toLowerCase().includes(lowerQuery))
+                    .map(item => {
+                        const index = item.content.toLowerCase().indexOf(lowerQuery);
+                        let snippet = '';
+                        if (index !== -1) {
+                            const start = Math.max(0, index - 40);
+                            const end = Math.min(item.content.length, index + 100);
+                            snippet = item.content.substring(start, end) + '...';
+                        } else {
+                            snippet = item.snippet;
+                        }
+                        return { ...item, snippet };
+                    });
+            }
 
-        window.open(`https://wa.me/${waNumber}?text=${encoded}`, '_blank');
-      });
-    })();
-  </script>
+            const searchOverlay = document.getElementById('searchOverlay');
+            const searchTrigger = document.getElementById('searchTrigger');
+            const closeSearch = document.getElementById('closeSearch');
+            const globalSearchInput = document.getElementById('globalSearchInput');
+            const globalSearchResults = document.getElementById('globalSearchResults');
+
+            searchTrigger.addEventListener('click', function() {
+                searchOverlay.classList.add('active');
+                globalSearchInput.value = '';
+                globalSearchResults.innerHTML = '<div class="no-result">Start typing to search...</div>';
+                setTimeout(() => globalSearchInput.focus(), 100);
+            });
+
+            closeSearch.addEventListener('click', function() {
+                searchOverlay.classList.remove('active');
+            });
+            searchOverlay.addEventListener('click', function(e) {
+                if (e.target === searchOverlay) searchOverlay.classList.remove('active');
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
+                    searchOverlay.classList.remove('active');
+                }
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    searchOverlay.classList.add('active');
+                    globalSearchInput.value = '';
+                    globalSearchResults.innerHTML = '<div class="no-result">Start typing to search...</div>';
+                    setTimeout(() => globalSearchInput.focus(), 100);
+                }
+            });
+
+            globalSearchInput.addEventListener('input', function() {
+                const query = this.value.trim();
+                if (query === '') {
+                    globalSearchResults.innerHTML = '<div class="no-result">Start typing to search...</div>';
+                    return;
+                }
+                const results = performSearch(query);
+                if (results.length === 0) {
+                    globalSearchResults.innerHTML = '<div class="no-result">No results found. Try a different keyword.</div>';
+                    return;
+                }
+                let html = '';
+                results.forEach(item => {
+                    html += `
+                        <div class="result-item" data-page="${item.page}">
+                            <div class="title">${item.title}</div>
+                            <div class="snippet">${item.snippet}</div>
+                        </div>
+                    `;
+                });
+                globalSearchResults.innerHTML = html;
+                document.querySelectorAll('.result-item').forEach(el => {
+                    el.addEventListener('click', function() {
+                        const page = this.dataset.page;
+                        if (page) {
+                            showPage(page);
+                            searchOverlay.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+            // ----- WHATSAPP FORM -----
+            const form = document.getElementById('waForm');
+            if (form) {
+                const nameInput = document.getElementById('name');
+                const phoneInput = document.getElementById('phone');
+                const brandSelect = document.getElementById('brandSelect');
+                const messageInput = document.getElementById('message');
+
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const name = nameInput.value.trim() || 'Customer';
+                    const phone = phoneInput.value.trim() || '8087804339';
+                    const brand = brandSelect.value;
+                    const extra = messageInput.value.trim() ? `, ${messageInput.value.trim()}` : '';
+                    const text = `Hi InvaTek! I'm ${name} (${phone}). I'm interested in ${brand} inverter battery${extra}. Please share best price & support.`;
+                    const encoded = encodeURIComponent(text);
+                    const waNumber = '918087804339';
+                    window.open(`https://wa.me/${waNumber}?text=${encoded}`, '_blank');
+                });
+            }
+        })();
+    </script>
 </body>
 </html>
