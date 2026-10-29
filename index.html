@@ -104,7 +104,11 @@ html { scroll-behavior: smooth; }
     <span class="privacy">Files stay on your device. Nothing is uploaded.</span>
   </header>
 
-  <div class="ad" id="adTop" aria-label="Advertisement"></div>
+  <div class="ad" id="adTop" aria-label="Advertisement">
+    <small>Advertisement</small>
+    <script async="async" data-cfasync="false" src="https://bauval.org/21/0eb44c7a4ec17c8a3679d306f9e7e770"></script>
+    <div id="container-0eb44c7a4ec17c8a3679d306f9e7e770"></div>
+  </div>
 
   <nav class="fnav topnav" aria-label="Sections"><a href="#tools-top">Tools</a><a href="#guides">Guides</a><a href="#about">About</a><a href="#privacy">Privacy</a><a href="#terms">Terms</a><a href="#contact">Contact</a></nav>
 
@@ -113,7 +117,11 @@ html { scroll-behavior: smooth; }
 
   <section class="panel" id="panel" aria-live="polite"></section>
 
-  <div class="ad" id="adBottom" aria-label="Advertisement"></div>
+  <div class="ad" id="adBottom" aria-label="Advertisement">
+    <small>Advertisement</small>
+    <script async="async" data-cfasync="false" src="https://bauval.org/21/0eb44c7a4ec17c8a3679d306f9e7e770"></script>
+    <div id="container-0eb44c7a4ec17c8a3679d306f9e7e770"></div>
+  </div>
 
   <nav class="fnav" aria-label="Sections"><a href="#tools-top">Tools</a><a href="#guides">Guides</a><a href="#about">About</a><a href="#privacy">Privacy Policy</a><a href="#terms">Terms</a><a href="#contact">Contact</a></nav>
 
@@ -491,33 +499,6 @@ html { scroll-behavior: smooth; }
     return o;
   }
 
-  /* ---------- ads ----------
-     1. Create a Google AdSense account and get your site approved.
-     2. Paste your publisher ID below (looks like "ca-pub-1234567890123456").
-     3. Create two display ad units in AdSense and paste their slot numbers.
-     Until then, a labelled empty box shows. Ads sit away from the buttons on purpose:
-     AdSense can ban sites that put ads where people may tap them by mistake. */
-  var ADS = { client: "", topSlot: "", bottomSlot: "" };
-  function mountAd(id, slot) {
-    var box = $(id); if (!box) return;
-    box.innerHTML = "";
-    box.appendChild(el("small", null, "Advertisement"));
-    if (!ADS.client || !slot) { box.appendChild(el("span", "ph", "Ad space. Add your AdSense ID in the ADS settings in this file.")); return; }
-    var ins = document.createElement("ins"); ins.className = "adsbygoogle";
-    ins.setAttribute("data-ad-client", ADS.client); ins.setAttribute("data-ad-slot", slot);
-    ins.setAttribute("data-ad-format", "auto"); ins.setAttribute("data-full-width-responsive", "true");
-    box.appendChild(ins);
-    try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
-  }
-  function startAds() {
-    if (ADS.client) {
-      var sc = document.createElement("script"); sc.async = true; sc.crossOrigin = "anonymous";
-      sc.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=" + encodeURIComponent(ADS.client);
-      document.head.appendChild(sc);
-    }
-    mountAd("adTop", ADS.topSlot); mountAd("adBottom", ADS.bottomSlot);
-  }
-
   document.addEventListener("click", function (e) {
     var a = e.target.closest ? e.target.closest("a[data-tool]") : null;
     if (!a) return;
@@ -527,7 +508,7 @@ html { scroll-behavior: smooth; }
     var top = document.getElementById("tools-top"); if (top && top.scrollIntoView) top.scrollIntoView();
   });
 
-  renderTools(); renderPanel(); startAds();
+  renderTools(); renderPanel();
 })();
 </script>
 </body></html>
