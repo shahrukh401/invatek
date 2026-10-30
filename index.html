@@ -1,4 +1,9 @@
-<!doctype html><html lang="en"><head><title>PDF Sathi | Free PDF Tools: Merge, Split, Rotate</title>
+<!doctype html><html lang="en"><head><title>Invatek | Free PDF Tools: Merge, Split, Rotate</title>
+<link rel="canonical" href="https://invatek.in/">
+<meta property="og:title" content="Invatek: Free PDF Tools">
+<meta property="og:description" content="Merge, split, rotate and create PDFs in your browser. Files are never uploaded.">
+<meta property="og:url" content="https://invatek.in/">
+<meta property="og:type" content="website">
 <meta name="description" content="Free PDF tools that work in your browser. Merge PDFs, split pages, remove pages, rotate and turn photos into a PDF. Your files are never uploaded.">
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
@@ -86,6 +91,8 @@ html { scroll-behavior: smooth; }
 .doc .gbody h3:first-child { margin-top: 0; }
 .topnav { margin-top: -8px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+.tgroup { grid-column: 1 / -1; margin: 6px 0 0; font-family: var(--font-body); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.ad[hidden] { display: none; }
 .fnav { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14px; }
 .fnav a { color: var(--accent); font-weight: 600; }
 .foot { color: var(--muted); font-size: 13px; }
@@ -99,16 +106,12 @@ html { scroll-behavior: smooth; }
 
 <div class="wrap">
   <header>
-    <h1>PDF <span>Sathi</span></h1>
-    <p class="lead">Merge, split, rotate and clean up PDFs, or turn photos into a PDF. Pick a tool, add your files, save the result.</p>
+    <h1>Inva<span>tek</span></h1>
+    <p class="lead">Free PDF tools. Merge, split, rotate and clean up PDFs. Convert Word, Excel and photos to PDF, or PDF to Word and Excel. Pick a tool, choose your file, save the result.</p>
     <span class="privacy">Files stay on your device. Nothing is uploaded.</span>
   </header>
 
-  <div class="ad" id="adTop" aria-label="Advertisement">
-    <small>Advertisement</small>
-    <script async="async" data-cfasync="false" src="https://bauval.org/21/0eb44c7a4ec17c8a3679d306f9e7e770"></script>
-    <div id="container-0eb44c7a4ec17c8a3679d306f9e7e770"></div>
-  </div>
+  <div class="ad" id="adTop" aria-label="Advertisement"></div>
 
   <nav class="fnav topnav" aria-label="Sections"><a href="#tools-top">Tools</a><a href="#guides">Guides</a><a href="#about">About</a><a href="#privacy">Privacy</a><a href="#terms">Terms</a><a href="#contact">Contact</a></nav>
 
@@ -117,12 +120,7 @@ html { scroll-behavior: smooth; }
 
   <section class="panel" id="panel" aria-live="polite"></section>
 
-  <div class="ad" id="adBottom" aria-label="Advertisement">
-    <small>Advertisement</small>
-    <script async="async" data-cfasync="false" src="https://bauval.org/21/0eb44c7a4ec17c8a3679d306f9e7e770"></script>
-    <div id="container-0eb44c7a4ec17c8a3679d306f9e7e770"></div>
-  </div>
-
+  
   <nav class="fnav" aria-label="Sections"><a href="#tools-top">Tools</a><a href="#guides">Guides</a><a href="#about">About</a><a href="#privacy">Privacy Policy</a><a href="#terms">Terms</a><a href="#contact">Contact</a></nav>
 
   <section class="panel doc" id="guides"><h2>PDF guides</h2><p>Short, step by step guides for common PDF jobs. Tap a guide to open it.</p>
@@ -181,36 +179,42 @@ html { scroll-behavior: smooth; }
 <p><strong>Can I mix portrait and landscape photos?</strong><br>Yes. Each photo is fitted on its own A4 page.</p>
 <p><strong>Is there a limit on photos?</strong><br>No fixed limit. Very many large photos can be slow on an older phone, so try in smaller batches.</p>
 <p><a href="#tools" data-tool="images"><strong>Open Photos to PDF</strong></a></p></div></details>
+<details><summary>How to convert Word to PDF</summary><div class="gbody"><p>Sending a resume or letter as a PDF keeps it looking the same on every phone. Invatek converts a Word .docx file right in your browser.</p><h3>Steps</h3><ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px"><li>Open the <a href="#tools" data-tool="word2pdf">Word to PDF tool</a> and choose your .docx file.</li><li>Press Convert to PDF.</li><li>Press Save file.</li></ol><h3>Good to know</h3><p>Text, headings, bullet lists, tables and pictures are kept. Fonts and page layout are simplified, so check the result before you send it. Hindi and other non-English letters are not supported in this tool yet. If your file is an old .doc, open it in Word and use Save As .docx first.</p><p><a href="#tools" data-tool="word2pdf"><strong>Open Word to PDF</strong></a></p></div></details>
+<details><summary>How to convert Excel to PDF</summary><div class="gbody"><p>Turn a spreadsheet into a PDF that anyone can open. Each sheet becomes its own section.</p><h3>Steps</h3><ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px"><li>Open the <a href="#tools" data-tool="excel2pdf">Excel to PDF tool</a> and choose your .xlsx, .xls or .csv file.</li><li>Press Convert to PDF.</li><li>Press Save file.</li></ol><h3>Good to know</h3><p>Very wide sheets are split into parts so the text stays readable. Colours, charts and merged cells are not kept, only the cell text. Only the first 5000 rows of a sheet are used.</p><p><a href="#tools" data-tool="excel2pdf"><strong>Open Excel to PDF</strong></a></p></div></details>
+<details><summary>How to convert PDF to Excel</summary><div class="gbody"><p>Move a table from a PDF into Excel so you can sort and calculate.</p><h3>Steps</h3><ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px"><li>Open the <a href="#tools" data-tool="pdf2excel">PDF to Excel tool</a> and choose your PDF.</li><li>Press Convert to Excel.</li><li>Press Save file and open it in Excel.</li></ol><h3>Good to know</h3><p>This works when the PDF has real text, such as a bank statement downloaded from a website. It does not work on scanned pages or photos, because those are pictures. You get one sheet per page. Always check the columns, since tables in PDFs do not always line up perfectly.</p><p><a href="#tools" data-tool="pdf2excel"><strong>Open PDF to Excel</strong></a></p></div></details>
+<details><summary>How to convert PDF to Word</summary><div class="gbody"><p>Get the text from a PDF into a Word file so you can edit it.</p><h3>Steps</h3><ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px"><li>Open the <a href="#tools" data-tool="pdf2word">PDF to Word tool</a> and choose your PDF.</li><li>Press Convert to Word.</li><li>Press Save file and open it in Word.</li></ol><h3>Good to know</h3><p>You get the text, ready to edit. The page design, columns and pictures are not kept. It does not work on scanned pages, because those need text reading (OCR), which Invatek does not have yet.</p><p><a href="#tools" data-tool="pdf2word"><strong>Open PDF to Word</strong></a></p></div></details>
+
 </section>
-  <section class="panel doc" id="about"><h2>About PDF Sathi</h2><p>PDF Sathi is a set of free tools for everyday PDF jobs. You can merge PDFs, split a PDF, remove pages, rotate pages and turn photos into a PDF.</p>
+  <section class="panel doc" id="about"><h2>About Invatek</h2><p>Invatek is a set of free tools for everyday PDF jobs. You can merge PDFs, split a PDF, remove pages, rotate pages, turn photos, Word files and Excel files into PDF, and turn PDFs into Word or Excel files.</p>
 <h3>Your files stay with you</h3>
 <p>All the work happens inside your own browser, on your phone or computer. Your files are never uploaded to our servers, so we cannot see them or keep them.</p>
 <h3>Why we made it</h3>
-<p>Students, shopkeepers and office workers often need to join a few scanned pages, cut out a page, or fix a sideways scan. Most websites ask you to upload private documents to do this. PDF Sathi does it on your device instead.</p>
+<p>Students, shopkeepers and office workers often need to join a few scanned pages, cut out a page, or fix a sideways scan. Most websites ask you to upload private documents to do this. Invatek does it on your device instead.</p>
 <h3>What it cannot do yet</h3>
-<ul><li>Open password protected PDFs</li><li>Reduce file size (compress)</li><li>Convert Word, Excel or PowerPoint files</li></ul>
+<ul><li>Open password protected PDFs</li><li>Reduce file size (compress)</li><li>Read scanned pages (OCR), so scanned PDFs cannot become Word or Excel files</li><li>Keep the exact look of a page when converting PDF to Word</li></ul>
 <p>We plan to add more tools over time. Tell us what you need on the <a href="#contact">contact page</a>.</p>
 <p>The site is supported by advertising so the tools can stay free.</p></section>
   <section class="panel doc" id="privacy"><h2>Privacy Policy</h2><p class="updated">Last updated: 29 October 2026</p><h3>Your files</h3>
-<p>PDF Sathi processes your files inside your browser. They are not uploaded to our servers. We do not receive, store or read your documents or photos.</p>
+<p>Invatek processes your files inside your browser. They are not uploaded to our servers. We do not receive, store or read your documents or photos.</p>
 <h3>Information we collect</h3>
 <p>We do not ask you to create an account and we do not collect your name, phone number or email address through the tools. Our hosting provider may keep standard server logs such as IP address, browser type and the time of a visit, for security and to run the site.</p>
 <h3>Advertising and cookies</h3>
-<p>This site shows ads from Google AdSense. Google and its partners use cookies to show ads based on your visits to this and other websites. Google's use of advertising cookies lets it and its partners show ads to you based on your visit to our site and other sites on the internet.</p>
+<p>This site shows ads from third-party advertising networks, including Adsterra. These networks may use cookies and similar technologies to show ads and measure how they perform. Their handling of data is covered by their own privacy policies.</p>
+<p>If Google AdSense ads are shown, Google and its partners use cookies to show ads based on your visits to this and other websites. Google's use of advertising cookies lets it and its partners show ads to you based on your visit to our site and other sites on the internet.</p>
 <ul>
 <li>You can opt out of personalised advertising at <a href="https://adssettings.google.com" rel="noopener">adssettings.google.com</a>.</li>
 <li>You can learn how Google uses data from sites that use its services at <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">policies.google.com/technologies/partner-sites</a>.</li>
 <li>Where the law requires it, we ask for your consent before using non-essential cookies for ads.</li>
 </ul>
 <h3>Third-party code</h3>
-<p>The page loads fonts from Google Fonts and software libraries (pdf-lib and JSZip) from the cdnjs content network. These providers may receive your IP address when your browser fetches those files.</p>
+<p>The page loads fonts from Google Fonts and software libraries (pdf-lib, JSZip, pdf.js, SheetJS, mammoth and docx) from public content networks such as cdnjs and jsDelivr. These providers may receive your IP address when your browser fetches those files.</p>
 <h3>Children</h3>
 <p>This site is not directed at children under 13 and we do not knowingly collect their information.</p>
 <h3>Changes</h3>
 <p>We may update this policy. The date at the top shows the latest version.</p>
 <h3>Contact</h3>
 <p>Questions about this policy: see the <a href="#contact">contact page</a>.</p></section>
-  <section class="panel doc" id="terms"><h2>Terms of Use</h2><p class="updated">Last updated: 29 October 2026</p><p>By using PDF Sathi you agree to these terms.</p>
+  <section class="panel doc" id="terms"><h2>Terms of Use</h2><p class="updated">Last updated: 29 October 2026</p><p>By using Invatek you agree to these terms.</p>
 <h3>Use of the tools</h3>
 <p>The tools are free to use for personal and business documents. Use them only with files you have the right to use. Do not use the site for anything illegal.</p>
 <h3>No warranty</h3>
@@ -225,6 +229,10 @@ html { scroll-behavior: smooth; }
 <p><strong>Email:</strong> <a href="mailto:REPLACE-WITH-YOUR-EMAIL@example.com">REPLACE-WITH-YOUR-EMAIL@example.com</a></p>
 <p>We usually reply within a few days. Please do not send private documents by email. Describe the problem in words instead.</p></section>
 
+  <div class="ad" id="adBottom" aria-label="Advertisement"><small>Advertisement</small>
+<script async="async" data-cfasync="false" src="https://bauval.org/21/0eb44c7a4ec17c8a3679d306f9e7e770"></script>
+<div id="container-0eb44c7a4ec17c8a3679d306f9e7e770"></div></div>
+
   <p class="foot">Password-protected PDFs cannot be opened. Compressing file size is not available in this version.</p>
 </div>
 
@@ -232,12 +240,18 @@ html { scroll-behavior: smooth; }
 (function () {
   var PDF = window.PDFLib;
   var TOOLS = [
-    { id: "merge", name: "Merge PDF", desc: "Join several PDFs into one, in the order you choose.", accept: ".pdf,application/pdf", multi: true, icon: '<path d="M4 4h7v7H4zM13 13h7v7h-7zM11 7.5h2.5a2 2 0 0 1 2 2V13"/>' },
-    { id: "split", name: "Split PDF", desc: "Pull out pages, or save every page as its own file.", accept: ".pdf,application/pdf", multi: false, icon: '<path d="M12 3v18M5 8l-2 4 2 4M19 8l2 4-2 4"/>' },
-    { id: "remove", name: "Remove pages", desc: "Delete the pages you do not want.", accept: ".pdf,application/pdf", multi: false, icon: '<path d="M6 7h12M9 7V4h6v3M8 7l1 13h6l1-13"/>' },
-    { id: "rotate", name: "Rotate PDF", desc: "Turn all pages, or only some, by 90, 180 or 270 degrees.", accept: ".pdf,application/pdf", multi: false, icon: '<path d="M20 12a8 8 0 1 1-3-6.2M20 4v4h-4"/>' },
-    { id: "images", name: "Photos to PDF", desc: "Put JPG, PNG or WebP photos into one PDF, one per page.", accept: "image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp", multi: true, icon: '<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M4 18l5-5 4 4 3-3 4 4"/>' }
+    { id: "merge", group: "edit", badge: "PDF", name: "Merge PDF", desc: "Join several PDFs into one, in the order you choose.", accept: ".pdf,application/pdf", ext: /\.pdf$/i, pdf: true, multi: true, icon: '<path d="M4 4h7v7H4zM13 13h7v7h-7zM11 7.5h2.5a2 2 0 0 1 2 2V13"/>' },
+    { id: "split", group: "edit", badge: "PDF", name: "Split PDF", desc: "Pull out pages, or save every page as its own file.", accept: ".pdf,application/pdf", ext: /\.pdf$/i, pdf: true, multi: false, icon: '<path d="M12 3v18M5 8l-2 4 2 4M19 8l2 4-2 4"/>' },
+    { id: "remove", group: "edit", badge: "PDF", name: "Remove pages", desc: "Delete the pages you do not want.", accept: ".pdf,application/pdf", ext: /\.pdf$/i, pdf: true, multi: false, icon: '<path d="M6 7h12M9 7V4h6v3M8 7l1 13h6l1-13"/>' },
+    { id: "rotate", group: "edit", badge: "PDF", name: "Rotate PDF", desc: "Turn all pages, or only some, by 90, 180 or 270 degrees.", accept: ".pdf,application/pdf", ext: /\.pdf$/i, pdf: true, multi: false, icon: '<path d="M20 12a8 8 0 1 1-3-6.2M20 4v4h-4"/>' },
+    { id: "images", group: "convert", badge: "IMG", name: "Photos to PDF", desc: "Put JPG, PNG or WebP photos into one PDF, one per page.", accept: "image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp", ext: /\.(jpe?g|png|webp)$/i, kind: "JPG, PNG or WebP photo", multi: true, icon: '<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M4 18l5-5 4 4 3-3 4 4"/>' },
+    { id: "word2pdf", group: "convert", badge: "DOC", name: "Word to PDF", desc: "Turn a Word file (.docx) into a PDF.", note: "Text, headings, lists, tables and pictures are kept. Fonts and page layout are simplified. Old .doc files: save as .docx in Word first.", accept: ".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document", ext: /\.docx$/i, kind: "Word .docx file", multi: false, icon: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12l1.5 5 1.5-4 1.5 4 1.5-5"/>' },
+    { id: "excel2pdf", group: "convert", badge: "XLS", name: "Excel to PDF", desc: "Turn an Excel or CSV file into a PDF, one section per sheet.", note: "Wide sheets are split over several pages so the text stays readable.", accept: ".xlsx,.xls,.csv", ext: /\.(xlsx|xls|csv)$/i, kind: "Excel (.xlsx, .xls) or CSV file", multi: false, icon: '<rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 10h16M4 15h16M10 4v16"/>' },
+    { id: "pdf2excel", group: "convert", badge: "PDF", name: "PDF to Excel", desc: "Pull tables and text from a PDF into an Excel file.", note: "Works with PDFs that have real text. Scanned pages and photos of documents will not convert.", accept: ".pdf,application/pdf", ext: /\.pdf$/i, pdf: true, multi: false, icon: '<rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 10h16M10 4v16M13 13l4 4M17 13l-4 4"/>' },
+    { id: "pdf2word", group: "convert", badge: "PDF", name: "PDF to Word", desc: "Get the text of a PDF as a Word file you can edit.", note: "You get the text, ready to edit. Page layout, columns and pictures are not kept. Scanned pages will not convert.", accept: ".pdf,application/pdf", ext: /\.pdf$/i, pdf: true, multi: false, icon: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 15h6M9 18h4"/>' }
   ];
+  var GROUPS = { edit: "Edit PDF", convert: "Convert" };
+  var lastInput = null;
   var tool = TOOLS[0];
   var files = [];
   var result = null;
@@ -252,16 +266,22 @@ html { scroll-behavior: smooth; }
   function baseName(n) { return n.replace(/\.[^.]+$/, ""); }
 
   /* ---------- tool picker ---------- */
+  function openPicker() { if (lastInput) { try { lastInput.click(); } catch (e) {} } }
+  function selectTool(t) {
+    var same = tool.id === t.id;
+    if (!same) { tool = t; files = []; result = null; error = ""; renderTools(); renderPanel(); }
+    var p = $("panel"); if (p && p.scrollIntoView) p.scrollIntoView({ block: "start" });
+    openPicker();
+  }
   function renderTools() {
     var box = $("tools"); box.innerHTML = "";
+    var lastGroup = "";
     TOOLS.forEach(function (t) {
+      if (t.group !== lastGroup) { lastGroup = t.group; box.appendChild(el("h3", "tgroup", GROUPS[t.group])); }
       var b = el("button", "tool"); b.type = "button"; b.setAttribute("aria-pressed", t.id === tool.id ? "true" : "false");
       b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + t.icon + "</svg>";
       b.appendChild(el("b", null, t.name)); b.appendChild(el("small", null, t.desc));
-      b.addEventListener("click", function () {
-        if (tool.id === t.id) return;
-        tool = t; files = []; result = null; error = ""; renderTools(); renderPanel();
-      });
+      b.addEventListener("click", function () { selectTool(t); });
       box.appendChild(b);
     });
   }
@@ -291,13 +311,12 @@ html { scroll-behavior: smooth; }
     if (!tool.multi) arr = arr.slice(0, 1);
     for (var i = 0; i < arr.length; i++) {
       var f = arr[i];
-      var isPdf = /\.pdf$/i.test(f.name) || f.type === "application/pdf";
-      var isImg = /^image\/(jpeg|png|webp)$/.test(f.type) || /\.(jpe?g|png|webp)$/i.test(f.name);
-      if (tool.id === "images" ? !isImg : !isPdf) { error = f.name + " is not a " + (tool.id === "images" ? "JPG, PNG or WebP photo." : "PDF file."); continue; }
+      var okFile = tool.ext.test(f.name) || (tool.pdf && f.type === "application/pdf");
+      if (!okFile) { error = f.name + " is not a " + (tool.pdf ? "PDF file." : tool.kind + "."); continue; }
       try {
         var buf = await readBuf(f);
         var item = { id: ++seq, name: f.name, buf: buf, bytes: f.size, pages: 0, type: f.type };
-        if (isPdf) {
+        if (tool.pdf) {
           var doc = await PDF.PDFDocument.load(buf);
           item.pages = doc.getPageCount();
         }
@@ -321,6 +340,386 @@ html { scroll-behavior: smooth; }
       return await b.arrayBuffer();
     } finally { URL.revokeObjectURL(url); }
   }
+
+  /* CONVERT START */
+  var WORKER_URL = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  var LIBS = {
+    pdfjs: { url: "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js", get: function () { return window.pdfjsLib; } },
+    xlsx: { url: "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js", get: function () { return window.XLSX; } },
+    mammoth: { url: "https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js", get: function () { return window.mammoth; } },
+    docx: { url: "https://cdn.jsdelivr.net/npm/docx@9.8.1/dist/index.iife.js", get: function () { return window.docx; } }
+  };
+  var libPromises = {};
+  function loadLib(name) {
+    var L = LIBS[name];
+    if (L.get()) return Promise.resolve(L.get());
+    if (!libPromises[name]) {
+      libPromises[name] = new Promise(function (res, rej) {
+        var s = document.createElement("script"); s.src = L.url;
+        s.onload = function () { if (L.get()) res(L.get()); else rej(new Error("missing")); };
+        s.onerror = function () { rej(new Error("blocked")); };
+        document.head.appendChild(s);
+      }).catch(function () {
+        libPromises[name] = null;
+        throw new Error("Could not load a needed component. Check your internet connection and try again.");
+      });
+    }
+    return libPromises[name];
+  }
+
+  /* text that a standard PDF font can show; everything else becomes ? */
+  function makeSafe(font) {
+    var set = null;
+    try { set = new Set(font.getCharacterSet()); } catch (e) {}
+    var state = { lost: 0 };
+    function safe(s) {
+      s = String(s == null ? "" : s).replace(/₹/g, "Rs ").replace(/[\r\n\t ]+/g, " ");
+      var o = "";
+      for (var i = 0; i < s.length; i++) {
+        var cp = s.charCodeAt(i);
+        if (cp >= 0xD800 && cp <= 0xDBFF && i + 1 < s.length) { i++; o += "?"; state.lost++; continue; }
+        if (cp < 32) continue;
+        if (set ? set.has(cp) : cp < 256) o += s.charAt(i); else { o += "?"; state.lost++; }
+      }
+      return o;
+    }
+    return { safe: safe, state: state };
+  }
+  function lostNote(n) { return n ? ". " + n + " characters this font cannot show (such as Hindi letters) were replaced with ?" : ""; }
+
+  function wrapText(text, font, size, maxW) {
+    var words = text.split(" "), lines = [], cur = "";
+    words.forEach(function (w) {
+      var t = cur ? cur + " " + w : w;
+      if (font.widthOfTextAtSize(t, size) <= maxW) { cur = t; return; }
+      if (cur) lines.push(cur);
+      while (w.length > 1 && font.widthOfTextAtSize(w, size) > maxW) {
+        var k = w.length; while (k > 1 && font.widthOfTextAtSize(w.slice(0, k), size) > maxW) k--;
+        lines.push(w.slice(0, k)); w = w.slice(k);
+      }
+      cur = w;
+    });
+    if (cur || !lines.length) lines.push(cur);
+    return lines;
+  }
+
+  /* ---------- Word to PDF ---------- */
+  async function wordToPdf(f) {
+    var M = await loadLib("mammoth");
+    var res = await M.convertToHtml({ arrayBuffer: f.buf }, {
+      convertImage: M.images.imgElement(function (image) {
+        return image.read("base64").then(function (b) { return { src: "data:" + image.contentType + ";base64," + b }; });
+      })
+    });
+    var body = new DOMParser().parseFromString(res.value, "text/html").body;
+
+    var doc = await PDF.PDFDocument.create();
+    var fR = await doc.embedFont(PDF.StandardFonts.Helvetica), fB = await doc.embedFont(PDF.StandardFonts.HelveticaBold);
+    var fI = await doc.embedFont(PDF.StandardFonts.HelveticaOblique), fBI = await doc.embedFont(PDF.StandardFonts.HelveticaBoldOblique);
+    var sf = makeSafe(fR), safe = sf.safe;
+    function fontFor(b, i) { return b && i ? fBI : b ? fB : i ? fI : fR; }
+
+    function runsOf(node, st, out) {
+      Array.prototype.forEach.call(node.childNodes, function (n) {
+        if (n.nodeType === 3) out.push({ t: n.nodeValue, b: st.b, i: st.i });
+        else if (n.nodeType === 1) {
+          var tag = n.tagName.toLowerCase();
+          if (tag === "br") out.push({ br: true });
+          else if (tag === "img") out.push({ img: n.getAttribute("src") });
+          else runsOf(n, { b: st.b || tag === "strong" || tag === "b", i: st.i || tag === "em" || tag === "i" }, out);
+        }
+      });
+      return out;
+    }
+    var blocks = [];
+    function pushText(runs, size, before, after, indent, bold) {
+      var imgs = runs.filter(function (r) { return r.img; });
+      var txt = runs.filter(function (r) { return !r.img; });
+      if (bold) txt.forEach(function (r) { r.b = true; });
+      if (txt.some(function (r) { return r.br || (r.t && r.t.trim()); })) blocks.push({ k: "t", runs: txt, size: size, before: before, after: after, indent: indent });
+      imgs.forEach(function (r) { blocks.push({ k: "img", src: r.img }); });
+    }
+    function walk(node, indent) {
+      Array.prototype.forEach.call(node.childNodes, function (n) {
+        if (n.nodeType === 3) { if (n.nodeValue.trim()) pushText([{ t: n.nodeValue }], 11, 0, 6, indent); return; }
+        if (n.nodeType !== 1) return;
+        var tag = n.tagName.toLowerCase(), m = /^h([1-6])$/.exec(tag);
+        if (m) pushText(runsOf(n, { b: true, i: false }, []), [22, 18, 15, 13, 12, 11][+m[1] - 1], 10, 4, indent, true);
+        else if (tag === "p") pushText(runsOf(n, { b: false, i: false }, []), 11, 0, 6, indent);
+        else if (tag === "ul" || tag === "ol") {
+          var num = 0;
+          Array.prototype.forEach.call(n.children, function (li) {
+            num++;
+            var runs = [{ t: tag === "ol" ? num + ". " : "• " }], nested = [];
+            Array.prototype.forEach.call(li.childNodes, function (c) {
+              if (c.nodeType === 1 && /^(ul|ol)$/i.test(c.tagName)) nested.push(c);
+              else if (c.nodeType === 1) runsOf({ childNodes: [c] }, { b: false, i: false }, runs);
+              else if (c.nodeType === 3) runs.push({ t: c.nodeValue });
+            });
+            pushText(runs, 11, 0, 3, indent + 16);
+            nested.forEach(function (nl) { walk({ childNodes: [nl] }, indent + 16); });
+          });
+        } else if (tag === "table") {
+          var rows = [];
+          Array.prototype.forEach.call(n.querySelectorAll("tr"), function (tr) {
+            var cells = [];
+            Array.prototype.forEach.call(tr.children, function (td) { cells.push(runsOf(td, { b: td.tagName.toLowerCase() === "th", i: false }, []).filter(function (r) { return !r.img; })); });
+            if (cells.length) rows.push(cells);
+          });
+          if (rows.length) blocks.push({ k: "tbl", rows: rows });
+        } else walk(n, indent);
+      });
+    }
+    walk(body, 0);
+    if (!blocks.length) throw new Error("No readable content was found in this Word file.");
+
+    var PW = 595.28, PH = 841.89, MG = 56, CW = PW - 2 * MG;
+    var page = doc.addPage([PW, PH]), y = PH - MG;
+    function need(h) { if (y - h < MG) { page = doc.addPage([PW, PH]); y = PH - MG; } }
+    function layout(runs, size, maxW) {
+      var lines = [[]], w = 0;
+      runs.forEach(function (r) {
+        if (r.br) { lines.push([]); w = 0; return; }
+        var font = fontFor(r.b, r.i);
+        safe(r.t).split(/(\s+)/).forEach(function (p) {
+          if (!p) return;
+          if (/^\s+$/.test(p)) { if (w > 0) { lines[lines.length - 1].push({ text: " ", font: font }); w += font.widthOfTextAtSize(" ", size); } return; }
+          var pw = font.widthOfTextAtSize(p, size);
+          if (w + pw > maxW && w > 0) { lines.push([]); w = 0; }
+          while (pw > maxW && p.length > 1) {
+            var k = p.length; while (k > 1 && font.widthOfTextAtSize(p.slice(0, k), size) > maxW) k--;
+            lines[lines.length - 1].push({ text: p.slice(0, k), font: font }); lines.push([]); w = 0;
+            p = p.slice(k); pw = font.widthOfTextAtSize(p, size);
+          }
+          lines[lines.length - 1].push({ text: p, font: font }); w += pw;
+        });
+      });
+      return lines;
+    }
+    var black = PDF.rgb(0, 0, 0);
+    for (var bi = 0; bi < blocks.length; bi++) {
+      var bl = blocks[bi];
+      if (bl.k === "t") {
+        y -= bl.before;
+        var lines = layout(bl.runs, bl.size, CW - bl.indent), lh = bl.size * 1.35;
+        lines.forEach(function (ln) {
+          need(lh); var x = MG + bl.indent;
+          ln.forEach(function (pc) { page.drawText(pc.text, { x: x, y: y - bl.size, font: pc.font, size: bl.size, color: black }); x += pc.font.widthOfTextAtSize(pc.text, bl.size); });
+          y -= lh;
+        });
+        y -= bl.after;
+      } else if (bl.k === "tbl") {
+        var ncols = Math.max.apply(null, bl.rows.map(function (r) { return r.length; })), cw = CW / ncols, fs = 9.5;
+        bl.rows.forEach(function (row) {
+          var cl = row.map(function (c) { return layout(c, fs, cw - 8); });
+          var nl = Math.max.apply(null, cl.map(function (l) { return l.length; }));
+          var rh = nl * fs * 1.3 + 8; need(rh);
+          for (var c = 0; c < ncols; c++) {
+            var cx = MG + c * cw;
+            page.drawRectangle({ x: cx, y: y - rh, width: cw, height: rh, borderWidth: 0.5, borderColor: PDF.rgb(0.6, 0.6, 0.6) });
+            (cl[c] || []).forEach(function (ln, li) {
+              var x = cx + 4;
+              ln.forEach(function (pc) { page.drawText(pc.text, { x: x, y: y - 4 - fs - li * fs * 1.3, font: pc.font, size: fs, color: black }); x += pc.font.widthOfTextAtSize(pc.text, fs); });
+            });
+          }
+          y -= rh;
+        });
+        y -= 8;
+      } else if (bl.k === "img") {
+        try {
+          var mm = /^data:image\/(png|jpe?g);base64,(.+)$/i.exec(bl.src || "");
+          if (!mm) continue;
+          var bin = atob(mm[2]), bytes = new Uint8Array(bin.length);
+          for (var q = 0; q < bin.length; q++) bytes[q] = bin.charCodeAt(q);
+          var im = /png/i.test(mm[1]) ? await doc.embedPng(bytes) : await doc.embedJpg(bytes);
+          var s = Math.min(CW / im.width, (PH / 2) / im.height, 1);
+          var iw = im.width * s, ih = im.height * s; need(ih + 8);
+          page.drawImage(im, { x: MG, y: y - ih, width: iw, height: ih }); y -= ih + 8;
+        } catch (e) { /* skip pictures that cannot be read */ }
+      }
+    }
+    setResult(await doc.save(), baseName(f.name) + ".pdf", doc.getPageCount() + " pages" + lostNote(sf.state.lost) + ". Fonts and layout are simplified.");
+  }
+
+  /* ---------- Excel to PDF ---------- */
+  async function excelToPdf(f) {
+    var X = await loadLib("xlsx");
+    var wb = X.read(f.buf, { type: "array" });
+    var doc = await PDF.PDFDocument.create();
+    var font = await doc.embedFont(PDF.StandardFonts.Helvetica), bold = await doc.embedFont(PDF.StandardFonts.HelveticaBold);
+    var sf = makeSafe(font), safe = sf.safe;
+    var PW = 841.89, PH = 595.28, MG = 30, AW = PW - 2 * MG, fs = 9, pad = 3, lh = 11, MAXROWS = 5000, cut = false, pages = 0;
+    var grey = PDF.rgb(0.65, 0.65, 0.65), black = PDF.rgb(0, 0, 0);
+    wb.SheetNames.forEach(function (name) {
+      var rows = X.utils.sheet_to_json(wb.Sheets[name], { header: 1, raw: false, defval: "" });
+      while (rows.length && rows[rows.length - 1].every(function (c) { return String(c).trim() === ""; })) rows.pop();
+      if (!rows.length) return;
+      if (rows.length > MAXROWS) { rows = rows.slice(0, MAXROWS); cut = true; }
+      var ncols = Math.max.apply(null, rows.map(function (r) { return r.length; }));
+      var cells = rows.map(function (r) { var o = []; for (var c = 0; c < ncols; c++) o.push(safe(r[c])); return o; });
+      var wd = [];
+      for (var c = 0; c < ncols; c++) {
+        var mx = 30;
+        for (var r = 0; r < Math.min(cells.length, 300); r++) mx = Math.max(mx, (r === 0 ? bold : font).widthOfTextAtSize(cells[r][c], fs) + 2 * pad + 4);
+        wd.push(Math.min(mx, 190));
+      }
+      var groups = [], cur = [], sum = 0;
+      for (var c2 = 0; c2 < ncols; c2++) {
+        if (cur.length && sum + wd[c2] > AW) { groups.push(cur); cur = []; sum = 0; }
+        cur.push(c2); sum += wd[c2];
+      }
+      if (cur.length) groups.push(cur);
+      groups.forEach(function (g, gi) {
+        var page = doc.addPage([PW, PH]); pages++;
+        var y = PH - MG;
+        page.drawText(safe(name) + (groups.length > 1 ? " (part " + (gi + 1) + " of " + groups.length + ")" : ""), { x: MG, y: y - 11, font: bold, size: 11, color: black });
+        y -= 24;
+        cells.forEach(function (row, ri) {
+          var cl = g.map(function (c) { return wrapText(row[c], ri === 0 && cells.length > 1 ? bold : font, fs, wd[c] - 2 * pad).slice(0, 6); });
+          var rh = Math.max.apply(null, cl.map(function (l) { return l.length; })) * lh + 2 * pad;
+          if (y - rh < MG) { page = doc.addPage([PW, PH]); pages++; y = PH - MG; }
+          var x = MG;
+          g.forEach(function (c, k) {
+            var isHead = ri === 0 && cells.length > 1;
+            var opt = { x: x, y: y - rh, width: wd[c], height: rh, borderWidth: 0.4, borderColor: grey };
+            if (isHead) opt.color = PDF.rgb(0.92, 0.94, 0.93);
+            page.drawRectangle(opt);
+            cl[k].forEach(function (ln, li) { if (ln) page.drawText(ln, { x: x + pad, y: y - pad - fs - li * lh + 1, font: isHead ? bold : font, size: fs, color: black }); });
+            x += wd[c];
+          });
+          y -= rh;
+        });
+      });
+    });
+    if (!pages) throw new Error("This Excel file has no data to print.");
+    setResult(await doc.save(), baseName(f.name) + ".pdf", pages + " pages, one section per sheet" + (cut ? ". Only the first " + MAXROWS + " rows of a large sheet were used" : "") + lostNote(sf.state.lost));
+  }
+
+  /* ---------- reading text from a PDF ---------- */
+  async function extractPages(buf) {
+    var lib = await loadLib("pdfjs");
+    lib.GlobalWorkerOptions.workerSrc = WORKER_URL;
+    var pdf = await lib.getDocument({ data: new Uint8Array(buf.slice(0)) }).promise;
+    var pages = [];
+    for (var n = 1; n <= pdf.numPages; n++) {
+      var pg = await pdf.getPage(n), tc = await pg.getTextContent(), items = [];
+      tc.items.forEach(function (it) {
+        if (!it.str || !it.str.trim()) return;
+        items.push({ s: it.str, x: it.transform[4], y: it.transform[5], w: it.width, h: Math.abs(it.height) || Math.abs(it.transform[3]) || 10 });
+      });
+      pages.push(groupLines(items));
+    }
+    return pages;
+  }
+  function groupLines(items) {
+    items.sort(function (a, b) { return b.y - a.y || a.x - b.x; });
+    var lines = [];
+    items.forEach(function (it) {
+      var last = lines[lines.length - 1];
+      if (last && Math.abs(last.y - it.y) <= Math.max(2, it.h * 0.4)) last.items.push(it);
+      else lines.push({ y: it.y, items: [it] });
+    });
+    lines.forEach(function (l) {
+      l.items.sort(function (a, b) { return a.x - b.x; });
+      l.h = Math.max.apply(null, l.items.map(function (i) { return i.h; }));
+      var cells = [], cur = null, prevEnd = null;
+      l.items.forEach(function (it) {
+        var gap = prevEnd == null ? 0 : it.x - prevEnd;
+        if (cur && gap <= it.h * 1.2) {
+          var sp = gap > it.h * 0.12 && !/\s$/.test(cur.s) && !/^\s/.test(it.s);
+          cur.s += (sp ? " " : "") + it.s;
+        } else { cur = { s: it.s, x: it.x }; cells.push(cur); }
+        prevEnd = it.x + it.w;
+      });
+      cells.forEach(function (c) { c.s = c.s.replace(/\s+/g, " ").trim(); });
+      l.cells = cells.filter(function (c) { return c.s; });
+    });
+    return lines.filter(function (l) { return l.cells.length; });
+  }
+  function hasText(pages) { return pages.some(function (p) { return p.length; }); }
+
+  /* ---------- PDF to Excel ---------- */
+  async function pdfToExcel(f) {
+    var pages = await extractPages(f.buf);
+    if (!hasText(pages)) throw new Error("This PDF has no selectable text. It looks like a scan. Reading scanned pages (OCR) is not available yet.");
+    var X = await loadLib("xlsx");
+    var wb = X.utils.book_new(), sheets = 0;
+    pages.forEach(function (lines, pi) {
+      if (!lines.length) return;
+      var xs = []; lines.forEach(function (l) { l.cells.forEach(function (c) { xs.push(c.x); }); });
+      xs.sort(function (a, b) { return a - b; });
+      var anchors = [];
+      xs.forEach(function (x) { if (!anchors.length || x - anchors[anchors.length - 1] > 6) anchors.push(x); });
+      var aoa = lines.map(function (l) {
+        var row = [];
+        l.cells.forEach(function (c) {
+          var idx = 0; for (var a = 0; a < anchors.length; a++) if (anchors[a] <= c.x + 4) idx = a;
+          var v = c.s;
+          if (/^-?\d{1,3}(,\d{3})*(\.\d+)?$|^-?\d+(\.\d+)?$/.test(v) && !/^-?0\d/.test(v)) v = Number(v.replace(/,/g, ""));
+          if (row[idx] !== undefined && row[idx] !== "") row[idx] = String(row[idx]) + " " + c.s; else row[idx] = v;
+        });
+        for (var k = 0; k < row.length; k++) if (row[k] === undefined) row[k] = "";
+        return row;
+      });
+      var ws = X.utils.aoa_to_sheet(aoa);
+      var widths = []; aoa.forEach(function (r) { r.forEach(function (v, i) { widths[i] = Math.min(60, Math.max(widths[i] || 8, String(v).length + 2)); }); });
+      ws["!cols"] = widths.map(function (w) { return { wch: w }; });
+      X.utils.book_append_sheet(wb, ws, "Page " + (pi + 1)); sheets++;
+    });
+    var out = X.write(wb, { type: "array", bookType: "xlsx" });
+    setResult(new Uint8Array(out), baseName(f.name) + ".xlsx", sheets + (sheets === 1 ? " sheet" : " sheets (one per page)") + ". Check the columns, tables in PDFs do not always convert cleanly");
+  }
+
+  /* ---------- PDF to Word ---------- */
+  async function pdfToWord(f) {
+    var pages = await extractPages(f.buf);
+    if (!hasText(pages)) throw new Error("This PDF has no selectable text. It looks like a scan. Reading scanned pages (OCR) is not available yet.");
+    var heights = []; pages.forEach(function (p) { p.forEach(function (l) { heights.push(l.h); }); });
+    heights.sort(function (a, b) { return a - b; });
+    var body = heights[Math.floor(heights.length / 2)] || 11;
+    var paras = [];
+    pages.forEach(function (lines, pi) {
+      var gaps = []; for (var i = 1; i < lines.length; i++) gaps.push(lines[i - 1].y - lines[i].y);
+      gaps.sort(function (a, b) { return a - b; });
+      var typical = gaps.length ? gaps[Math.floor(gaps.length / 2)] : body * 1.3;
+      var prev = null, first = true;
+      lines.forEach(function (l) {
+        var isRow = l.cells.length > 1, text = l.cells.map(function (c) { return c.s; }).join("\t");
+        var head = l.h > body * 1.25;
+        var gap = prev ? prev.y - l.y : 0;
+        var join = prev && !isRow && !prev.row && !head && !prev.head && gap <= typical * 1.6 && gap > 0;
+        if (join) { prev.text += " " + text; prev.y = l.y; }
+        else {
+          prev = { text: text, size: Math.round(Math.min(40, Math.max(18, (head ? l.h : body) * 2))), bold: head, row: isRow, head: head, y: l.y, newPage: first && pi > 0 };
+          paras.push(prev); first = false;
+        }
+      });
+    });
+    function clean(t) { return t.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, ""); }
+    var bytes, name = baseName(f.name) + ".docx", extra = "";
+    try {
+      var D = await loadLib("docx");
+      var children = paras.map(function (p) {
+        var runs = [];
+        clean(p.text).split("\t").forEach(function (seg, i) {
+          if (i > 0) runs.push(new D.TextRun({ children: [new D.Tab()] }));
+          if (seg) runs.push(new D.TextRun({ text: seg, bold: p.bold, size: p.size }));
+        });
+        return new D.Paragraph({ children: runs, pageBreakBefore: p.newPage, spacing: { after: 120 } });
+      });
+      var wdoc = new D.Document({ sections: [{ children: children }] });
+      var blob = await D.Packer.toBlob(wdoc);
+      bytes = new Uint8Array(await blob.arrayBuffer());
+    } catch (e) {
+      var esc = function (s) { return clean(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\t/g, "&emsp;&emsp;"); };
+      var html = '<html><head><meta charset="utf-8"></head><body>' + paras.map(function (p) {
+        return '<p style="font-size:' + (p.size / 2) + 'pt;' + (p.bold ? "font-weight:bold;" : "") + (p.newPage ? "page-break-before:always;" : "") + '">' + esc(p.text) + "</p>";
+      }).join("") + "</body></html>";
+      bytes = new TextEncoder().encode(html); name = baseName(f.name) + ".doc"; extra = " (saved as a Word-compatible .doc file)";
+    }
+    setResult(bytes, name, paras.length + " paragraphs" + extra + ". Layout, columns and pictures are not kept, only the text");
+  }
+  /* CONVERT END */
 
   async function run() {
     error = ""; result = null; busy = true; renderPanel();
@@ -383,6 +782,18 @@ html { scroll-behavior: smooth; }
           pg5.drawImage(emb, { x: (W - w) / 2, y: (H - h) / 2, width: w, height: h });
         }
         setResult(await doc5.save(), "photos.pdf", files.length + " photos on A4 pages");
+      } else if (tool.id === "word2pdf") {
+        if (!files[0]) throw new Error("Add a Word file first.");
+        await wordToPdf(files[0]);
+      } else if (tool.id === "excel2pdf") {
+        if (!files[0]) throw new Error("Add an Excel file first.");
+        await excelToPdf(files[0]);
+      } else if (tool.id === "pdf2excel") {
+        if (!files[0]) throw new Error("Add a PDF first.");
+        await pdfToExcel(files[0]);
+      } else if (tool.id === "pdf2word") {
+        if (!files[0]) throw new Error("Add a PDF first.");
+        await pdfToWord(files[0]);
       }
     } catch (e) {
       error = e && e.message ? e.message : "Something went wrong. Try again.";
@@ -395,7 +806,8 @@ html { scroll-behavior: smooth; }
   async function save() {
     if (!result) return;
     try {
-      var blob = new Blob([result.bytes], { type: /\.zip$/.test(result.name) ? "application/zip" : "application/pdf" });
+      var MIME = { zip: "application/zip", xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document", doc: "application/msword", pdf: "application/pdf" };
+      var blob = new Blob([result.bytes], { type: MIME[result.name.split(".").pop().toLowerCase()] || "application/octet-stream" });
       var url = URL.createObjectURL(blob);
       var a = document.createElement("a"); a.href = url; a.download = result.name;
       document.body.appendChild(a); a.click(); a.remove();
@@ -408,12 +820,12 @@ html { scroll-behavior: smooth; }
   /* ---------- workspace ---------- */
   function renderPanel() {
     var p = $("panel"); p.innerHTML = "";
-    var head = el("div"); head.appendChild(el("h2", null, tool.name)); head.appendChild(el("p", "sub", tool.desc)); p.appendChild(head);
+    var head = el("div"); head.appendChild(el("h2", null, tool.name)); head.appendChild(el("p", "sub", tool.desc)); if (tool.note) head.appendChild(el("p", "sub", tool.note)); p.appendChild(head);
 
     var drop = el("div", "drop");
     drop.appendChild(el("p", null, tool.multi ? "Drop files here, or" : "Drop a file here, or"));
     var pick = el("button", "btn", files.length && !tool.multi ? "Choose a different file" : (tool.multi ? "Choose files" : "Choose file")); pick.type = "button";
-    var inp = document.createElement("input"); inp.type = "file"; inp.id = "fileIn"; inp.accept = tool.accept; inp.multiple = tool.multi; inp.hidden = true;
+    var inp = document.createElement("input"); inp.type = "file"; inp.id = "fileIn"; inp.accept = tool.accept; inp.multiple = tool.multi; inp.hidden = true; lastInput = inp;
     pick.addEventListener("click", function () { inp.click(); });
     inp.addEventListener("change", function () { if (inp.files.length) addFiles(inp.files); });
     drop.appendChild(pick); drop.appendChild(inp);
@@ -426,7 +838,7 @@ html { scroll-behavior: smooth; }
       var ul = el("ul", "files");
       files.forEach(function (f, i) {
         var li = el("li", "file");
-        li.appendChild(el("span", "ext", tool.id === "images" ? "IMG" : "PDF"));
+        li.appendChild(el("span", "ext", tool.badge));
         var mid = el("div"); mid.appendChild(el("div", "nm", f.name));
         mid.appendChild(el("div", "meta", size(f.bytes) + (f.pages ? " · " + f.pages + (f.pages === 1 ? " page" : " pages") : "")));
         li.appendChild(mid);
@@ -467,7 +879,7 @@ html { scroll-behavior: smooth; }
   }
 
   function actionLabel() {
-    return { merge: "Merge PDFs", split: opts.mode === "each" ? "Split into single pages" : "Extract pages", remove: "Remove pages", rotate: "Rotate pages", images: "Create PDF" }[tool.id];
+    return { merge: "Merge PDFs", split: opts.mode === "each" ? "Split into single pages" : "Extract pages", remove: "Remove pages", rotate: "Rotate pages", images: "Create PDF", word2pdf: "Convert to PDF", excel2pdf: "Convert to PDF", pdf2excel: "Convert to Excel", pdf2word: "Convert to Word" }[tool.id];
   }
 
   function optionsView() {
@@ -499,16 +911,42 @@ html { scroll-behavior: smooth; }
     return o;
   }
 
+  /* ---------- ads ----------
+     1. Create a Google AdSense account and get your site approved.
+     2. Paste your publisher ID below (looks like "ca-pub-1234567890123456").
+     3. Create two display ad units in AdSense and paste their slot numbers.
+     Until then, a labelled empty box shows. Ads sit away from the buttons on purpose:
+     AdSense can ban sites that put ads where people may tap them by mistake. */
+  var ADS = { client: "", topSlot: "", bottomSlot: "" };
+  function mountAd(id, slot) {
+    var box = $(id); if (!box) return;
+    box.innerHTML = "";
+    box.appendChild(el("small", null, "Advertisement"));
+    if (!ADS.client || !slot) { box.hidden = true; return; }
+    var ins = document.createElement("ins"); ins.className = "adsbygoogle";
+    ins.setAttribute("data-ad-client", ADS.client); ins.setAttribute("data-ad-slot", slot);
+    ins.setAttribute("data-ad-format", "auto"); ins.setAttribute("data-full-width-responsive", "true");
+    box.appendChild(ins);
+    try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+  }
+  function startAds() {
+    if (ADS.client) {
+      var sc = document.createElement("script"); sc.async = true; sc.crossOrigin = "anonymous";
+      sc.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=" + encodeURIComponent(ADS.client);
+      document.head.appendChild(sc);
+    }
+    mountAd("adTop", ADS.topSlot);
+  }
+
   document.addEventListener("click", function (e) {
     var a = e.target.closest ? e.target.closest("a[data-tool]") : null;
     if (!a) return;
     e.preventDefault();
     var t = TOOLS.filter(function (x) { return x.id === a.getAttribute("data-tool"); })[0];
-    if (t) { tool = t; files = []; result = null; error = ""; renderTools(); renderPanel(); }
-    var top = document.getElementById("tools-top"); if (top && top.scrollIntoView) top.scrollIntoView();
+    if (t) { if (tool.id === t.id) { files = []; result = null; error = ""; renderPanel(); } selectTool(t); }
   });
 
-  renderTools(); renderPanel();
+  renderTools(); renderPanel(); startAds();
 })();
 </script>
 </body></html>
