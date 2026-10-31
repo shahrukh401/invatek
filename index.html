@@ -93,6 +93,34 @@ html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 .tgroup { grid-column: 1 / -1; margin: 6px 0 0; font-family: var(--font-body); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
 .ad[hidden] { display: none; }
+[hidden] { display: none !important; }
+.hint { margin: 0; color: var(--muted); font-size: 13px; }
+.btn.sm { padding: 7px 12px; font-size: 14px; border-radius: 10px; }
+.rotwrap, .editor { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.rotbar, .etools, .eopts, .enav { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.thumb { border: 1px solid var(--line); border-radius: 12px; background: var(--bg); padding: 10px; display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 0; }
+.timg { width: 100%; height: 150px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--surface); border-radius: 8px; }
+.timg img { max-width: 140px; max-height: 140px; width: auto; height: auto; box-shadow: 0 1px 4px rgba(0,0,0,0.25); background: #fff; transition: transform 0.2s; }
+.tlab { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; text-align: center; }
+.trow { display: flex; gap: 8px; }
+.trow .icon { width: 44px; height: 38px; font-size: 20px; }
+.etool { border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; background: var(--surface); font-weight: 600; font-size: 14px; }
+.etool[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.swatches { display: flex; gap: 6px; }
+.swatch { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--line); padding: 0; }
+.swatch[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--accent); }
+.eopts select { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px; }
+.sigpad { display: flex; flex-direction: column; gap: 8px; }
+.sigcanvas { width: 100%; max-width: 420px; aspect-ratio: 3 / 1; background: #fff; border: 1px dashed var(--line); border-radius: 10px; touch-action: none; }
+.stagewrap { overflow-x: auto; max-width: 100%; }
+.stage { position: relative; margin: 0 auto; background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,0.3); max-width: 100%; }
+.stage .bg { display: block; }
+.stage .ov { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; }
+.stage .ov[data-tool="move"] { cursor: default; }
+.stage .ov g.ann { pointer-events: none; }
+.stage .ov[data-tool="move"] g.ann { pointer-events: all; cursor: move; touch-action: none; }
+.stage .tin { position: absolute; z-index: 2; font-family: Helvetica, Arial, sans-serif; line-height: 1.2; background: rgba(255,255,255,0.85); border: 1px dashed #1A73E8; outline: none; padding: 0; margin: 0; resize: none; min-width: 120px; overflow: hidden; field-sizing: content; }
 .fnav { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14px; }
 .fnav a { color: var(--accent); font-weight: 600; }
 .foot { color: var(--muted); font-size: 13px; }
@@ -157,17 +185,7 @@ html { scroll-behavior: smooth; }
 <p><strong>Does this lower the quality?</strong><br>No. The remaining pages are copied as they are.</p>
 <p><strong>Can I get a deleted page back?</strong><br>Only from your original file, so keep it.</p>
 <p><a href="#tools" data-tool="remove"><strong>Open Remove pages</strong></a></p></div></details>
-<details><summary>How to rotate PDF pages</summary><div class="gbody"><p>Scanners and phone apps often save pages sideways. Rotating the pages fixes how the file opens everywhere, not just on your screen.</p>
-<h3>Steps</h3>
-<ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px"><li>Open the <a href="#tools" data-tool="rotate">Rotate PDF tool</a> and add your PDF.</li><li>Choose the angle. 90 turns the page clockwise, 270 turns it anticlockwise, 180 flips it upside down.</li><li>To turn only some pages, type them in the pages box, for example 3, 7-9. Leave it empty to turn all pages.</li><li>Press Rotate pages, then Save file.</li></ol>
-<h3>Which angle do I need?</h3>
-<ul><li>Page lies on its left side: choose 90</li><li>Page lies on its right side: choose 270</li><li>Page is upside down: choose 180</li></ul>
-<h3>Tip</h3>
-<ul><li>If the result is still wrong, run the tool again. Turns add up, so 90 then 90 makes 180.</li></ul>
-<h3>Questions</h3>
-<p><strong>Will the text still be searchable?</strong><br>Yes. Rotation only changes how the page is shown.</p>
-<p><strong>Can I rotate one page only?</strong><br>Yes. Type its number in the pages box.</p>
-<p><a href="#tools" data-tool="rotate"><strong>Open Rotate PDF</strong></a></p></div></details>
+<details><summary>How to rotate PDF pages</summary><div class="gbody"><p>Scanners and phone apps often save pages sideways. Rotating the pages fixes how the file opens everywhere, not just on your screen.</p><h3>Steps</h3><ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px"><li>Open the <a href="#tools" data-tool="rotate">Rotate PDF tool</a> and choose your PDF.</li><li>You will see a small picture of every page. Press the arrow under a page to turn just that page left or right.</li><li>To turn every page, press Turn all right or Turn all left. Reset puts everything back.</li><li>Press Save rotated PDF, then Save file.</li></ol><h3>Good to know</h3><ul><li>Turns add up: pressing right twice gives 180 degrees.</li><li>The text stays searchable. Rotation only changes how the page is shown.</li></ul><p><a href="#tools" data-tool="rotate"><strong>Open Rotate PDF</strong></a></p></div></details>
 <details><summary>How to convert photos to PDF</summary><div class="gbody"><p>A PDF is easier to send than ten separate photos. This is handy for scanned documents taken with a phone camera, handwritten notes, or ID cards.</p>
 <h3>Steps</h3>
 <ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px"><li>Open the <a href="#tools" data-tool="images">Photos to PDF tool</a>.</li><li>Choose your photos. On a phone you can pick several from the gallery at once.</li><li>Arrange them with the up and down arrows. The first photo is page 1.</li><li>Press Create PDF, then Save file.</li></ol>
@@ -183,9 +201,10 @@ html { scroll-behavior: smooth; }
 <details><summary>How to convert Excel to PDF</summary><div class="gbody"><p>Turn a spreadsheet into a PDF that anyone can open. Each sheet becomes its own section.</p><h3>Steps</h3><ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px"><li>Open the <a href="#tools" data-tool="excel2pdf">Excel to PDF tool</a> and choose your .xlsx, .xls or .csv file.</li><li>Press Convert to PDF.</li><li>Press Save file.</li></ol><h3>Good to know</h3><p>Very wide sheets are split into parts so the text stays readable. Colours, charts and merged cells are not kept, only the cell text. Only the first 5000 rows of a sheet are used.</p><p><a href="#tools" data-tool="excel2pdf"><strong>Open Excel to PDF</strong></a></p></div></details>
 <details><summary>How to convert PDF to Excel</summary><div class="gbody"><p>Move a table from a PDF into Excel so you can sort and calculate.</p><h3>Steps</h3><ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px"><li>Open the <a href="#tools" data-tool="pdf2excel">PDF to Excel tool</a> and choose your PDF.</li><li>Press Convert to Excel.</li><li>Press Save file and open it in Excel.</li></ol><h3>Good to know</h3><p>This works best when the PDF has real text, such as a bank statement downloaded from a website. Scanned PDFs and photos also work, because the text is read by OCR. Choose the right language (English, Hindi or both) and use a clear, straight scan. You get one sheet per page. Always check the columns, since tables in PDFs do not always line up perfectly.</p><p><a href="#tools" data-tool="pdf2excel"><strong>Open PDF to Excel</strong></a></p></div></details>
 <details><summary>How to convert PDF to Word</summary><div class="gbody"><p>Get the text from a PDF into a Word file so you can edit it.</p><h3>Steps</h3><ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px"><li>Open the <a href="#tools" data-tool="pdf2word">PDF to Word tool</a> and choose your PDF.</li><li>Press Convert to Word.</li><li>Press Save file and open it in Word.</li></ol><h3>Good to know</h3><p>You get the text, ready to edit. The page design, columns and pictures are not kept. Scanned PDFs and photos also work, because the text is read by OCR. Choose the right language (English, Hindi or both). The first scan takes longer because the language data is downloaded once. Always check spelling and numbers afterwards.</p><p><a href="#tools" data-tool="pdf2word"><strong>Open PDF to Word</strong></a></p></div></details>
+<details><summary>How to edit a PDF: add text, sign and draw</summary><div class="gbody"><p>Fill in a form, add your name, sign a document or mark something on a page without printing it.</p><h3>Steps</h3><ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px"><li>Open the <a href="#tools" data-tool="edit">Edit PDF tool</a> and choose your PDF.</li><li>Pick Text, tap on the page where the words should go, type, then tap outside the box.</li><li>For a signature, pick Signature, sign in the box, press Place on page, then drag it into position. Use Bigger or Smaller to resize it.</li><li>Use Draw, Line, Box, Circle or Highlight for marks. Pick a colour first.</li><li>Use Next and Previous to change pages. Press Save edited PDF when done, then Save file.</li></ol><h3>Good to know</h3><ul><li>You can move, resize or delete anything you added. Undo takes back the last change.</li><li>You cannot change text that is already in the PDF. Whiteout covers it with a white box, but the hidden text can still be copied by others, so do not use it to hide private details.</li><li>Hindi text works too.</li></ul><p><a href="#tools" data-tool="edit"><strong>Open Edit PDF</strong></a></p></div></details>
 
 </section>
-  <section class="panel doc" id="about"><h2>About Invatek</h2><p>Invatek is a set of free tools for everyday PDF jobs. You can merge PDFs, split a PDF, remove pages, rotate pages, turn photos, Word files and Excel files into PDF, and turn PDFs into Word or Excel files.</p>
+  <section class="panel doc" id="about"><h2>About Invatek</h2><p>Invatek is a set of free tools for everyday PDF jobs. You can merge PDFs, split a PDF, remove pages, rotate pages, add text and signatures to a PDF, turn photos, Word files and Excel files into PDF, and turn PDFs into Word or Excel files.</p>
 <h3>Your files stay with you</h3>
 <p>All the work happens inside your own browser, on your phone or computer. Your files are never uploaded to our servers, so we cannot see them or keep them.</p>
 <h3>Why we made it</h3>
@@ -244,7 +263,8 @@ html { scroll-behavior: smooth; }
     { id: "merge", group: "edit", badge: "PDF", name: "Merge PDF", desc: "Join several PDFs into one, in the order you choose.", accept: ".pdf,application/pdf", ext: /\.pdf$/i, pdf: true, multi: true, icon: '<path d="M4 4h7v7H4zM13 13h7v7h-7zM11 7.5h2.5a2 2 0 0 1 2 2V13"/>' },
     { id: "split", group: "edit", badge: "PDF", name: "Split PDF", desc: "Pull out pages, or save every page as its own file.", accept: ".pdf,application/pdf", ext: /\.pdf$/i, pdf: true, multi: false, icon: '<path d="M12 3v18M5 8l-2 4 2 4M19 8l2 4-2 4"/>' },
     { id: "remove", group: "edit", badge: "PDF", name: "Remove pages", desc: "Delete the pages you do not want.", accept: ".pdf,application/pdf", ext: /\.pdf$/i, pdf: true, multi: false, icon: '<path d="M6 7h12M9 7V4h6v3M8 7l1 13h6l1-13"/>' },
-    { id: "rotate", group: "edit", badge: "PDF", name: "Rotate PDF", desc: "Turn all pages, or only some, by 90, 180 or 270 degrees.", accept: ".pdf,application/pdf", ext: /\.pdf$/i, pdf: true, multi: false, icon: '<path d="M20 12a8 8 0 1 1-3-6.2M20 4v4h-4"/>' },
+    { id: "rotate", group: "edit", badge: "PDF", name: "Rotate PDF", desc: "See every page and turn it with a button, one by one or all together.", accept: ".pdf,application/pdf", ext: /\.pdf$/i, pdf: true, multi: false, icon: '<path d="M20 12a8 8 0 1 1-3-6.2M20 4v4h-4"/>' },
+    { id: "edit", group: "edit", badge: "PDF", name: "Edit PDF", desc: "Add text, a signature, drawings and shapes to a PDF page.", note: "Write on the page, sign, draw, highlight or cover things with a white box. Text already in the PDF cannot be changed.", accept: ".pdf,application/pdf", ext: /\.pdf$/i, pdf: true, multi: false, icon: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>' },
     { id: "images", group: "convert", badge: "IMG", name: "Photos to PDF", desc: "Put JPG, PNG or WebP photos into one PDF, one per page.", accept: "image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp", ext: /\.(jpe?g|png|webp)$/i, kind: "JPG, PNG or WebP photo", multi: true, icon: '<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M4 18l5-5 4 4 3-3 4 4"/>' },
     { id: "word2pdf", group: "convert", badge: "DOC", name: "Word to PDF", desc: "Turn a Word file (.docx) into a PDF.", note: "Text, headings, lists, tables and pictures are kept. Fonts and page layout are simplified. Old .doc files: save as .docx in Word first.", accept: ".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document", ext: /\.docx$/i, kind: "Word .docx file", multi: false, icon: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12l1.5 5 1.5-4 1.5 4 1.5-5"/>' },
     { id: "excel2pdf", group: "convert", badge: "XLS", name: "Excel to PDF", desc: "Turn an Excel or CSV file into a PDF, one section per sheet.", note: "Wide sheets are split over several pages so the text stays readable.", accept: ".xlsx,.xls,.csv", ext: /\.(xlsx|xls|csv)$/i, kind: "Excel (.xlsx, .xls) or CSV file", multi: false, icon: '<rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 10h16M4 15h16M10 4v16"/>' },
@@ -343,6 +363,433 @@ html { scroll-behavior: smooth; }
       return await b.arrayBuffer();
     } finally { URL.revokeObjectURL(url); }
   }
+
+  /* PREVIEW START */
+  var pdfDocs = {};
+  function getPdfJsDoc(f) {
+    if (!pdfDocs[f.id]) {
+      pdfDocs[f.id] = loadLib("pdfjs").then(function (lib) {
+        lib.GlobalWorkerOptions.workerSrc = WORKER_URL;
+        return lib.getDocument({ data: new Uint8Array(f.buf.slice(0)) }).promise;
+      });
+      pdfDocs[f.id].catch(function () { delete pdfDocs[f.id]; });
+    }
+    return pdfDocs[f.id];
+  }
+  async function renderPageCanvas(f, n, cssWidth) {
+    var pdf = await getPdfJsDoc(f), pg = await pdf.getPage(n);
+    var v1 = pg.getViewport({ scale: 1 });
+    var dpr = Math.min(2, window.devicePixelRatio || 1);
+    var vp = pg.getViewport({ scale: (cssWidth / v1.width) * dpr });
+    var c = document.createElement("canvas"); c.width = Math.round(vp.width); c.height = Math.round(vp.height);
+    var ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, c.width, c.height);
+    await pg.render({ canvasContext: ctx, viewport: vp }).promise;
+    return { canvas: c, ptW: v1.width, ptH: v1.height };
+  }
+  function clearResult() { var r = document.querySelector("#panel .result"); if (r) r.remove(); result = null; }
+
+  /* ---------- Rotate: page previews with turn buttons ---------- */
+  function rotateView(f) {
+    f.rot = f.rot || [];
+    var wrap = el("div", "rotwrap");
+    var bar = el("div", "rotbar");
+    var grid = el("div", "thumbs");
+    var cells = [];
+    function norm(v) { return ((v % 360) + 360) % 360; }
+    function paint(i) {
+      var r = norm(f.rot[i] || 0), c = cells[i];
+      c.img.style.transform = "rotate(" + r + "deg)";
+      c.lab.textContent = "Page " + (i + 1) + (r ? " · turned " + r + "°" : "");
+    }
+    function turn(i, d) { f.rot[i] = norm((f.rot[i] || 0) + d); paint(i); clearResult(); }
+    function mk(label, fn, cls) { var b = el("button", cls || "btn ghost", label); b.type = "button"; b.addEventListener("click", fn); return b; }
+    bar.appendChild(mk("Turn all right ↻", function () { for (var i = 0; i < f.pages; i++) turn(i, 90); }));
+    bar.appendChild(mk("Turn all left ↺", function () { for (var i = 0; i < f.pages; i++) turn(i, -90); }));
+    bar.appendChild(mk("Reset", function () { for (var i = 0; i < f.pages; i++) { f.rot[i] = 0; paint(i); } clearResult(); }));
+    for (var i = 0; i < f.pages; i++) {
+      (function (i) {
+        var cell = el("div", "thumb"), box = el("div", "timg"), img = document.createElement("img");
+        img.alt = "Page " + (i + 1) + " preview"; box.appendChild(img);
+        var lab = el("div", "tlab");
+        var row = el("div", "trow");
+        var l = mk("↺", function () { turn(i, -90); }, "icon"); l.setAttribute("aria-label", "Turn page " + (i + 1) + " left");
+        var r = mk("↻", function () { turn(i, 90); }, "icon"); r.setAttribute("aria-label", "Turn page " + (i + 1) + " right");
+        row.appendChild(l); row.appendChild(r);
+        cell.appendChild(box); cell.appendChild(lab); cell.appendChild(row); grid.appendChild(cell);
+        cells.push({ img: img, lab: lab });
+        if (f.thumbs && f.thumbs[i]) img.src = f.thumbs[i];
+        paint(i);
+      })(i);
+    }
+    wrap.appendChild(bar); wrap.appendChild(grid);
+    wrap.appendChild(el("p", "hint", "Use the arrows under each page, or turn all pages together. Then press Save rotated PDF."));
+    (async function () {
+      await new Promise(function (r) { setTimeout(r, 0); });
+      f.thumbs = f.thumbs || [];
+      for (var i = 0; i < Math.min(f.pages, 150); i++) {
+        if (!grid.isConnected) return;
+        if (!f.thumbs[i]) {
+          try { var rr = await renderPageCanvas(f, i + 1, 150); f.thumbs[i] = rr.canvas.toDataURL("image/jpeg", 0.7); }
+          catch (e) { if (i === 0) wrap.appendChild(el("p", "hint", "Previews are not available, but the turn buttons still work.")); return; }
+        }
+        cells[i].img.src = f.thumbs[i];
+      }
+    })();
+    return wrap;
+  }
+  /* PREVIEW END */
+
+  /* EDIT START */
+  var ED_COLORS = ["#111111", "#D32F2F", "#1565C0", "#2E7D32"];
+  var ED_SIZES = [{ n: "Small", t: 12, w: 1.2 }, { n: "Medium", t: 18, w: 2.4 }, { n: "Large", t: 28, w: 4.5 }];
+  var ED_TOOLS = [["move", "Move"], ["text", "Text"], ["pen", "Draw"], ["line", "Line"], ["rect", "Box"], ["ellipse", "Circle"], ["highlight", "Highlight"], ["whiteout", "Whiteout"], ["sig", "Signature"]];
+  var ED_HINTS = {
+    move: "Tap an item to select it, then drag to move it. Use Bigger, Smaller or Delete for the selected item.",
+    text: "Tap on the page where the text should go, type, then tap outside the box.",
+    pen: "Draw freely with your finger or mouse.", line: "Drag to draw a line.", rect: "Drag to draw a box.", ellipse: "Drag to draw a circle or oval.",
+    highlight: "Drag over text to highlight it.",
+    whiteout: "Drag to cover something with a white box. It only hides the text. Anyone can still select or copy the text underneath, so do not use it for private details.",
+    sig: "Sign in the box below, then press Place on page. You can move and resize it afterwards."
+  };
+  var SVGNS = "http://www.w3.org/2000/svg";
+  function sv(tag, attrs) { var e = document.createElementNS(SVGNS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); return e; }
+  function hexRgb(h) { var n = parseInt(h.slice(1), 16); return PDF.rgb(((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255); }
+  var measureCtx = null;
+  function textWidth(t, size) {
+    if (!measureCtx) measureCtx = document.createElement("canvas").getContext("2d");
+    measureCtx.font = size + "px Helvetica, Arial, sans-serif";
+    return measureCtx.measureText(t).width;
+  }
+  function bboxOf(a) {
+    if (a.type === "pen") {
+      var xs = [], ys = [];
+      a.strokes.forEach(function (s) { s.forEach(function (p) { xs.push(p[0]); ys.push(p[1]); }); });
+      var x0 = Math.min.apply(null, xs), y0 = Math.min.apply(null, ys);
+      return { x: x0, y: y0, w: Math.max.apply(null, xs) - x0, h: Math.max.apply(null, ys) - y0 };
+    }
+    if (a.type === "line") return { x: Math.min(a.x1, a.x2), y: Math.min(a.y1, a.y2), w: Math.abs(a.x2 - a.x1), h: Math.abs(a.y2 - a.y1) };
+    if (a.type === "text") {
+      var ls = a.text.split("\n"), w = 0;
+      ls.forEach(function (l) { w = Math.max(w, textWidth(l, a.size)); });
+      return { x: a.x, y: a.y, w: Math.max(w, 6), h: ls.length * a.size * 1.2 };
+    }
+    return { x: a.x, y: a.y, w: a.w, h: a.h };
+  }
+  function moveAnn(a, dx, dy) {
+    if (a.type === "pen") a.strokes.forEach(function (s) { s.forEach(function (p) { p[0] += dx; p[1] += dy; }); });
+    else if (a.type === "line") { a.x1 += dx; a.x2 += dx; a.y1 += dy; a.y2 += dy; }
+    else { a.x += dx; a.y += dy; }
+  }
+  function scaleAnn(a, k) {
+    var b = bboxOf(a);
+    if (a.type === "pen") { a.strokes.forEach(function (s) { s.forEach(function (p) { p[0] = b.x + (p[0] - b.x) * k; p[1] = b.y + (p[1] - b.y) * k; }); }); a.sw = Math.max(0.6, a.sw * k); }
+    else if (a.type === "line") { a.x2 = a.x1 + (a.x2 - a.x1) * k; a.y2 = a.y1 + (a.y2 - a.y1) * k; }
+    else if (a.type === "text") a.size = Math.min(150, Math.max(6, a.size * k));
+    else { a.w *= k; a.h *= k; }
+  }
+  function drawAnn(a) {
+    var g = sv("g", { "class": "ann", "data-id": a.id });
+    function stroke(e) { e.setAttribute("stroke", a.color); e.setAttribute("stroke-width", a.sw); e.setAttribute("stroke-linecap", "round"); e.setAttribute("stroke-linejoin", "round"); e.setAttribute("fill", "none"); return e; }
+    var b = bboxOf(a);
+    if (a.type === "text") {
+      var t = sv("text", { fill: a.color, "font-size": a.size, "font-family": "Helvetica, Arial, sans-serif", style: "white-space:pre" });
+      a.text.split("\n").forEach(function (ln, i) { var ts = sv("tspan", { x: a.x, y: a.y + a.size * (0.8 + 1.2 * i) }); ts.textContent = ln || " "; t.appendChild(ts); });
+      g.appendChild(t);
+    } else if (a.type === "pen") {
+      a.strokes.forEach(function (s) { g.appendChild(stroke(sv("polyline", { points: s.map(function (p) { return p[0].toFixed(1) + "," + p[1].toFixed(1); }).join(" ") }))); });
+    } else if (a.type === "line") {
+      g.appendChild(stroke(sv("line", { x1: a.x1, y1: a.y1, x2: a.x2, y2: a.y2 })));
+    } else if (a.type === "rect") {
+      g.appendChild(stroke(sv("rect", { x: a.x, y: a.y, width: a.w, height: a.h })));
+    } else if (a.type === "ellipse") {
+      g.appendChild(stroke(sv("ellipse", { cx: a.x + a.w / 2, cy: a.y + a.h / 2, rx: a.w / 2, ry: a.h / 2 })));
+    } else if (a.type === "highlight") {
+      g.appendChild(sv("rect", { x: a.x, y: a.y, width: a.w, height: a.h, fill: "#FFD400", "fill-opacity": "0.4" }));
+    } else if (a.type === "whiteout") {
+      g.appendChild(sv("rect", { x: a.x, y: a.y, width: a.w, height: a.h, fill: "#FFFFFF", stroke: "#BBBBBB", "stroke-width": "0.4" }));
+    }
+    var pad = 4;
+    g.appendChild(sv("rect", { "class": "hit", x: b.x - pad, y: b.y - pad, width: b.w + 2 * pad, height: b.h + 2 * pad, fill: "transparent", stroke: "none" }));
+    return g;
+  }
+
+  function editorView(f) {
+    var ed = f.ed = f.ed || { page: 0, anns: {}, tool: "move", color: ED_COLORS[0], size: 1, sel: null, undo: [], nid: 0 };
+    var W = Math.min(720, Math.max(240, ($("panel").clientWidth || 320) - 42));
+    var dim = null, token = 0, drag = null, creating = null;
+    var wrap = el("div", "editor");
+
+    /* toolbar */
+    var tools = el("div", "etools"); tools.setAttribute("role", "group"); tools.setAttribute("aria-label", "Editing tools");
+    var toolBtns = {};
+    ED_TOOLS.forEach(function (t) {
+      var b = el("button", "etool", t[1]); b.type = "button"; b.addEventListener("click", function () { setTool(t[0]); });
+      toolBtns[t[0]] = b; tools.appendChild(b);
+    });
+    var opts2 = el("div", "eopts");
+    var sw = el("div", "swatches"); sw.setAttribute("role", "group"); sw.setAttribute("aria-label", "Colour");
+    var swBtns = ED_COLORS.map(function (c) {
+      var b = el("button", "swatch"); b.type = "button"; b.style.background = c; b.setAttribute("aria-label", "Colour " + c);
+      b.addEventListener("click", function () {
+        ed.color = c; paintSwatches();
+        var a = selected(); if (a && a.type !== "highlight" && a.type !== "whiteout") { snapshot(); a.color = c; drawAll(); }
+      });
+      sw.appendChild(b); return b;
+    });
+    function paintSwatches() { swBtns.forEach(function (b, i) { b.setAttribute("aria-pressed", ED_COLORS[i] === ed.color ? "true" : "false"); }); }
+    var sizeSel = document.createElement("select"); sizeSel.id = "edSize"; sizeSel.setAttribute("aria-label", "Size");
+    ED_SIZES.forEach(function (s, i) { var o = el("option", null, s.n); o.value = i; if (i === ed.size) o.selected = true; sizeSel.appendChild(o); });
+    sizeSel.addEventListener("change", function () { ed.size = parseInt(sizeSel.value, 10); });
+    function sbtn(label, fn) { var b = el("button", "btn ghost sm", label); b.type = "button"; b.addEventListener("click", fn); return b; }
+    var bigger = sbtn("Bigger", function () { var a = selected(); if (a) { snapshot(); scaleAnn(a, 1.15); drawAll(); } });
+    var smaller = sbtn("Smaller", function () { var a = selected(); if (a) { snapshot(); scaleAnn(a, 1 / 1.15); drawAll(); } });
+    var editTxt = sbtn("Edit text", function () { var a = selected(); if (a && a.type === "text") openTextEditor(a); });
+    var del = sbtn("Delete", function () { delSel(); });
+    var undoB = sbtn("Undo", function () { undo(); });
+    [sw, sizeSel, bigger, smaller, editTxt, del, undoB].forEach(function (x) { opts2.appendChild(x); });
+
+    /* signature pad */
+    var pad = el("div", "sigpad"); pad.hidden = true;
+    var pc = document.createElement("canvas"); pc.width = 600; pc.height = 200; pc.className = "sigcanvas";
+    pc.setAttribute("aria-label", "Signature box");
+    var padStrokes = [], padCur = null;
+    var pctx = pc.getContext("2d");
+    function padRedraw() {
+      pctx.clearRect(0, 0, pc.width, pc.height); pctx.strokeStyle = ed.color; pctx.lineWidth = 5; pctx.lineCap = "round"; pctx.lineJoin = "round";
+      padStrokes.forEach(function (s) { pctx.beginPath(); s.forEach(function (p, i) { if (i) pctx.lineTo(p[0], p[1]); else pctx.moveTo(p[0], p[1]); }); if (s.length === 1) pctx.lineTo(s[0][0] + 0.1, s[0][1]); pctx.stroke(); });
+    }
+    function padPt(e) { var r = pc.getBoundingClientRect(); return [(e.clientX - r.left) * pc.width / r.width, (e.clientY - r.top) * pc.height / r.height]; }
+    pc.addEventListener("pointerdown", function (e) { e.preventDefault(); pc.setPointerCapture(e.pointerId); padCur = [padPt(e)]; padStrokes.push(padCur); padRedraw(); });
+    pc.addEventListener("pointermove", function (e) { if (padCur) { padCur.push(padPt(e)); padRedraw(); } });
+    ["pointerup", "pointercancel"].forEach(function (n) { pc.addEventListener(n, function () { padCur = null; }); });
+    var padBar = el("div", "etools");
+    padBar.appendChild(sbtn("Clear", function () { padStrokes = []; padRedraw(); }));
+    padBar.appendChild(sbtn("Place on page", function () {
+      if (!padStrokes.length || !dim) return;
+      var xs = [], ys = [];
+      padStrokes.forEach(function (s) { s.forEach(function (p) { xs.push(p[0]); ys.push(p[1]); }); });
+      var x0 = Math.min.apply(null, xs), y0 = Math.min.apply(null, ys), bw = Math.max(Math.max.apply(null, xs) - x0, 20), bh = Math.max(Math.max.apply(null, ys) - y0, 10);
+      var k = Math.min(150 / bw, 90 / bh), w = bw * k, h = bh * k, ox = (dim.w - w) / 2, oy = dim.h * 0.7 - h / 2;
+      snapshot();
+      var a = { id: ++ed.nid, type: "pen", color: ed.color, sw: Math.max(1.2, 5 * k), strokes: padStrokes.map(function (s) { return s.map(function (p) { return [ox + (p[0] - x0) * k, oy + (p[1] - y0) * k]; }); }) };
+      list().push(a); ed.sel = a.id; padStrokes = []; padRedraw(); setTool("move"); drawAll();
+    }));
+    pad.appendChild(pc); pad.appendChild(padBar);
+
+    /* page navigation */
+    var nav = el("div", "enav");
+    var prev = sbtn("Previous", function () { go(-1); }), next = sbtn("Next", function () { go(1); });
+    var plabel = el("span", "plabel");
+    nav.appendChild(prev); nav.appendChild(plabel); nav.appendChild(next);
+
+    /* stage */
+    var stage = el("div", "stage"); stage.style.width = W + "px"; stage.style.minHeight = "200px";
+    var bg = document.createElement("canvas"); bg.className = "bg";
+    var svg = sv("svg", { "class": "ov", "data-tool": ed.tool, preserveAspectRatio: "none" });
+    stage.appendChild(bg); stage.appendChild(svg);
+    var hint = el("p", "hint");
+    var scroller = el("div", "stagewrap"); scroller.appendChild(stage);
+
+    [tools, opts2, pad, nav, scroller, hint].forEach(function (x) { wrap.appendChild(x); });
+
+    function list() { return ed.anns[ed.page] || (ed.anns[ed.page] = []); }
+    function selected() { var l = list(); for (var i = 0; i < l.length; i++) if (l[i].id === ed.sel) return l[i]; return null; }
+    function snapshot() { ed.undo.push(JSON.stringify(ed.anns)); if (ed.undo.length > 60) ed.undo.shift(); clearResult(); }
+    function undo() { if (!ed.undo.length) return; ed.anns = JSON.parse(ed.undo.pop()); ed.sel = null; drawAll(); }
+    function delSel() { var a = selected(); if (!a) return; snapshot(); ed.anns[ed.page] = list().filter(function (x) { return x.id !== a.id; }); ed.sel = null; drawAll(); }
+    function setTool(t) {
+      closeTextEditor(); ed.tool = t; svg.setAttribute("data-tool", t);
+      Object.keys(toolBtns).forEach(function (k) { toolBtns[k].setAttribute("aria-pressed", k === t ? "true" : "false"); });
+      pad.hidden = t !== "sig"; hint.textContent = ED_HINTS[t]; if (t === "sig") padRedraw();
+      if (t !== "move") ed.sel = null;
+      drawAll();
+    }
+    function drawAll() {
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      list().forEach(function (a) { svg.appendChild(drawAnn(a)); });
+      var a = selected();
+      if (a) {
+        var g = Array.prototype.filter.call(svg.querySelectorAll("g.ann"), function (x) { return x.getAttribute("data-id") == a.id; })[0];
+        var b = bboxOf(a);
+        svg.appendChild(sv("rect", { "class": "selbox", x: b.x - 3, y: b.y - 3, width: b.w + 6, height: b.h + 6, fill: "none", stroke: "#1A73E8", "stroke-width": "1.2", "stroke-dasharray": "4 3", "vector-effect": "non-scaling-stroke", "pointer-events": "none" }));
+      }
+      var isSel = !!a, isTxt = a && a.type === "text";
+      bigger.disabled = smaller.disabled = del.disabled = !isSel; editTxt.hidden = !isTxt;
+      undoB.disabled = !ed.undo.length;
+    }
+    function toPt(e) { var r = svg.getBoundingClientRect(); return { x: (e.clientX - r.left) * dim.w / r.width, y: (e.clientY - r.top) * dim.h / r.height }; }
+    function curSize() { return ED_SIZES[ed.size]; }
+
+    /* text input box */
+    var textBox = null;
+    function closeTextEditor() { if (textBox && textBox.commit) textBox.commit(false); textBox = null; }
+    function openTextEditor(a, pt) {
+      if (!dim) return;
+      closeTextEditor();
+      var k = W / dim.w, size = a ? a.size : curSize().t, x = a ? a.x : pt.x, y = a ? a.y : pt.y, color = a ? a.color : ed.color;
+      var ta = document.createElement("textarea"); ta.className = "tin"; ta.value = a ? a.text : ""; ta.setAttribute("aria-label", "Type your text");
+      ta.style.left = (x * k) + "px"; ta.style.top = (y * k) + "px"; ta.style.fontSize = (size * k) + "px"; ta.style.color = color;
+      ta.rows = 1; ta.wrap = "off";
+      function grow() { ta.style.height = "auto"; ta.style.height = ta.scrollHeight + "px"; ta.style.width = "auto"; ta.style.width = Math.max(120, ta.scrollWidth + 8) + "px"; }
+      ta.addEventListener("input", grow);
+      stage.appendChild(ta); grow(); ta.focus();
+      var done = false;
+      function commit(cancel) {
+        if (done) return; done = true; var v = ta.value; ta.remove(); textBox = null;
+        if (cancel) return;
+        if (a) { if (v === a.text) return; snapshot(); if (!v.trim()) { ed.anns[ed.page] = list().filter(function (z) { return z.id !== a.id; }); ed.sel = null; } else a.text = v; drawAll(); return; }
+        if (!v.trim()) return;
+        snapshot();
+        var n = { id: ++ed.nid, type: "text", x: x, y: y, text: v, size: size, color: color };
+        list().push(n); ed.sel = n.id; setTool("move");
+      }
+      ta.addEventListener("blur", function () { commit(false); });
+      ta.addEventListener("keydown", function (e) { if (e.key === "Escape") commit(true); });
+      textBox = { commit: commit };
+    }
+
+    /* pointer handling */
+    svg.addEventListener("click", function (e) { if (ed.tool === "text" && dim) openTextEditor(null, toPt(e)); });
+    svg.addEventListener("dblclick", function (e) {
+      if (ed.tool !== "move") return;
+      var g = e.target.closest ? e.target.closest("g.ann") : null; if (!g) return;
+      var a = list().filter(function (x) { return x.id == g.getAttribute("data-id"); })[0];
+      if (a && a.type === "text") { ed.sel = a.id; drawAll(); openTextEditor(a); }
+    });
+    svg.addEventListener("pointerdown", function (e) {
+      if (!dim || ed.tool === "text" || ed.tool === "sig") return;
+      var pt = toPt(e);
+      if (ed.tool === "move") {
+        var g = e.target.closest ? e.target.closest("g.ann") : null;
+        if (!g) { ed.sel = null; drawAll(); return; }
+        var id = parseInt(g.getAttribute("data-id"), 10);
+        ed.sel = id; var a = selected(); drawAll();
+        drag = { start: pt, orig: JSON.stringify(a), moved: false, pre: JSON.stringify(ed.anns) };
+        svg.setPointerCapture(e.pointerId); e.preventDefault(); return;
+      }
+      e.preventDefault(); svg.setPointerCapture(e.pointerId);
+      var sz = curSize(), id2 = ++ed.nid, t = ed.tool, a2;
+      if (t === "pen") a2 = { id: id2, type: "pen", color: ed.color, sw: sz.w, strokes: [[[pt.x, pt.y]]] };
+      else if (t === "line") a2 = { id: id2, type: "line", color: ed.color, sw: sz.w, x1: pt.x, y1: pt.y, x2: pt.x, y2: pt.y };
+      else a2 = { id: id2, type: t, color: ed.color, sw: sz.w, x: pt.x, y: pt.y, w: 0, h: 0 };
+      creating = { a: a2, start: pt, pre: JSON.stringify(ed.anns) };
+      list().push(a2); drawAll();
+    });
+    svg.addEventListener("pointermove", function (e) {
+      if (!dim) return;
+      var pt = toPt(e);
+      if (drag) {
+        var a = selected(); if (!a) return;
+        var o = JSON.parse(drag.orig), dx = pt.x - drag.start.x, dy = pt.y - drag.start.y;
+        if (!drag.moved && Math.abs(dx) + Math.abs(dy) < 1.5) return;
+        drag.moved = true;
+        var copy = JSON.parse(JSON.stringify(o)); moveAnn(copy, dx, dy);
+        var l = list(); for (var i = 0; i < l.length; i++) if (l[i].id === a.id) l[i] = copy;
+        drawAll(); return;
+      }
+      if (creating) {
+        var c = creating.a;
+        if (c.type === "pen") { var s = c.strokes[0], last = s[s.length - 1]; if (Math.hypot(pt.x - last[0], pt.y - last[1]) > 0.6) s.push([pt.x, pt.y]); }
+        else if (c.type === "line") { c.x2 = pt.x; c.y2 = pt.y; }
+        else { c.x = Math.min(creating.start.x, pt.x); c.y = Math.min(creating.start.y, pt.y); c.w = Math.abs(pt.x - creating.start.x); c.h = Math.abs(pt.y - creating.start.y); }
+        drawAll();
+      }
+    });
+    function endPointer() {
+      if (drag) { if (drag.moved) { ed.undo.push(drag.pre); if (ed.undo.length > 60) ed.undo.shift(); clearResult(); } drag = null; drawAll(); return; }
+      if (creating) {
+        var c = creating.a, b = bboxOf(c), tiny = (c.type === "pen") ? false : (b.w < 3 && b.h < 3);
+        if (c.type === "pen" && c.strokes[0].length === 1) c.strokes[0].push([c.strokes[0][0][0] + 0.1, c.strokes[0][0][1]]);
+        if (tiny) { ed.anns = JSON.parse(creating.pre); }
+        else { ed.undo.push(creating.pre); if (ed.undo.length > 60) ed.undo.shift(); clearResult(); }
+        creating = null; drawAll();
+      }
+    }
+    ["pointerup", "pointercancel"].forEach(function (n) { svg.addEventListener(n, endPointer); });
+
+    var keyH = function (e) {
+      if (!stage.isConnected) { document.removeEventListener("keydown", keyH); return; }
+      if ((e.key === "Delete" || e.key === "Backspace") && ed.sel && !(e.target && /^(TEXTAREA|INPUT|SELECT)$/.test(e.target.tagName))) { e.preventDefault(); delSel(); }
+    };
+    document.addEventListener("keydown", keyH);
+
+    function go(d) { var n = ed.page + d; if (n < 0 || n >= f.pages) return; closeTextEditor(); ed.page = n; ed.sel = null; showPage(); }
+    async function showPage() {
+      var my = ++token; plabel.textContent = "Page " + (ed.page + 1) + " of " + f.pages;
+      prev.disabled = ed.page === 0; next.disabled = ed.page >= f.pages - 1;
+      try {
+        var r = await renderPageCanvas(f, ed.page + 1, W);
+        if (my !== token || !stage.isConnected) return;
+        dim = { w: r.ptW, h: r.ptH };
+        bg.width = r.canvas.width; bg.height = r.canvas.height; bg.getContext("2d").drawImage(r.canvas, 0, 0);
+        var H = W * dim.h / dim.w;
+        bg.style.width = W + "px"; bg.style.height = H + "px"; stage.style.height = H + "px"; stage.style.minHeight = "0";
+        svg.setAttribute("viewBox", "0 0 " + dim.w + " " + dim.h);
+        drawAll();
+      } catch (e) { stage.appendChild(el("p", "err", "The page preview could not be loaded.")); }
+    }
+    paintSwatches(); setTool(ed.tool); showPage();
+    return wrap;
+  }
+
+  function readableText(s, charset) { for (var i = 0; i < s.length; i++) { var c = s.charCodeAt(i); if (c >= 32 && !(charset ? charset.has(c) : c < 256)) return false; } return true; }
+  async function editPdf(f) {
+    var ed = f.ed, doc = await PDF.PDFDocument.load(f.buf);
+    var font = await doc.embedFont(PDF.StandardFonts.Helvetica), charset = null;
+    try { charset = new Set(font.getCharacterSet()); } catch (e) {}
+    var count = 0;
+    for (var key in ed.anns) {
+      var list = ed.anns[key]; if (!list || !list.length) continue;
+      var page = doc.getPage(parseInt(key, 10)), W = page.getWidth(), H = page.getHeight(), rot = ((page.getRotation().angle % 360) + 360) % 360;
+      var map = function (vx, vy) { return rot === 90 ? [vy, vx] : rot === 180 ? [W - vx, vy] : rot === 270 ? [W - vy, H - vx] : [vx, H - vy]; };
+      for (var i = 0; i < list.length; i++) {
+        var a = list[i], col = a.color ? hexRgb(a.color) : null;
+        if (a.type === "rect" || a.type === "highlight" || a.type === "whiteout" || a.type === "ellipse") {
+          var p1 = map(a.x, a.y), p2 = map(a.x + a.w, a.y + a.h);
+          var X = Math.min(p1[0], p2[0]), Y = Math.min(p1[1], p2[1]), w = Math.abs(p2[0] - p1[0]), h = Math.abs(p2[1] - p1[1]);
+          if (a.type === "ellipse") page.drawEllipse({ x: X + w / 2, y: Y + h / 2, xScale: w / 2, yScale: h / 2, borderColor: col, borderWidth: a.sw });
+          else if (a.type === "rect") page.drawRectangle({ x: X, y: Y, width: w, height: h, borderColor: col, borderWidth: a.sw });
+          else if (a.type === "highlight") page.drawRectangle({ x: X, y: Y, width: w, height: h, color: PDF.rgb(1, 0.83, 0), opacity: 0.4 });
+          else page.drawRectangle({ x: X, y: Y, width: w, height: h, color: PDF.rgb(1, 1, 1) });
+        } else if (a.type === "line") {
+          var s = map(a.x1, a.y1), e2 = map(a.x2, a.y2);
+          page.drawLine({ start: { x: s[0], y: s[1] }, end: { x: e2[0], y: e2[1] }, thickness: a.sw, color: col, lineCap: PDF.LineCapStyle.Round });
+        } else if (a.type === "pen") {
+          a.strokes.forEach(function (st) {
+            for (var j = 1; j < st.length; j++) {
+              var q1 = map(st[j - 1][0], st[j - 1][1]), q2 = map(st[j][0], st[j][1]);
+              page.drawLine({ start: { x: q1[0], y: q1[1] }, end: { x: q2[0], y: q2[1] }, thickness: a.sw, color: col, lineCap: PDF.LineCapStyle.Round });
+            }
+          });
+        } else if (a.type === "text") {
+          var lines = a.text.split("\n");
+          if (readableText(a.text.replace(/\n/g, " "), charset)) {
+            lines.forEach(function (ln, li) {
+              if (!ln.trim()) return;
+              var bp = map(a.x, a.y + a.size * (0.8 + 1.2 * li));
+              page.drawText(ln, { x: bp[0], y: bp[1], size: a.size, font: font, color: col, rotate: PDF.degrees(rot) });
+            });
+          } else {
+            /* letters a standard PDF font cannot show (such as Hindi) are drawn as a picture */
+            var K = 4, cv = document.createElement("canvas"), cx = cv.getContext("2d"), fs = a.size * K, mw = 10;
+            cx.font = fs + 'px "Noto Sans Devanagari", "Mangal", "Nirmala UI", sans-serif';
+            lines.forEach(function (ln) { mw = Math.max(mw, cx.measureText(ln).width); });
+            cv.width = Math.ceil(mw) + 8; cv.height = Math.ceil(lines.length * fs * 1.3) + 8;
+            cx = cv.getContext("2d"); cx.font = fs + 'px "Noto Sans Devanagari", "Mangal", "Nirmala UI", sans-serif'; cx.fillStyle = a.color; cx.textBaseline = "top";
+            lines.forEach(function (ln, li) { cx.fillText(ln, 4, 4 + li * fs * 1.3); });
+            var blob = await new Promise(function (r) { cv.toBlob(r, "image/png"); });
+            var im = await doc.embedPng(await blob.arrayBuffer());
+            var vw = cv.width / K, vh = cv.height / K, bl = map(a.x, a.y + vh);
+            page.drawImage(im, { x: bl[0], y: bl[1], width: vw, height: vh, rotate: PDF.degrees(rot) });
+          }
+        }
+        count++;
+      }
+    }
+    if (!count) throw new Error("Add some text, a signature or a shape first, then press Save edited PDF.");
+    setResult(await doc.save(), baseName(f.name) + "-edited.pdf", count + (count === 1 ? " item" : " items") + " added");
+  }
+  /* EDIT END */
 
   /* CONVERT START */
   var WORKER_URL = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
@@ -831,11 +1278,16 @@ html { scroll-behavior: smooth; }
         setResult(await doc3.save(), baseName(f3.name) + "-edited.pdf", rm.length + " pages removed, " + doc3.getPageCount() + " left");
       } else if (tool.id === "rotate") {
         var f4 = files[0]; if (!f4) throw new Error("Add a PDF first.");
-        var doc4 = await PDF.PDFDocument.load(f4.buf);
-        var which = opts.rotRange.trim() ? parseRange(opts.rotRange, f4.pages) : doc4.getPageIndices();
-        var ang = parseInt(opts.angle, 10);
-        which.forEach(function (n) { var pg = doc4.getPage(n); pg.setRotation(PDF.degrees((pg.getRotation().angle + ang) % 360)); });
-        setResult(await doc4.save(), baseName(f4.name) + "-rotated.pdf", which.length + " pages turned " + ang + " degrees");
+        var doc4 = await PDF.PDFDocument.load(f4.buf), n4 = 0;
+        for (var i4 = 0; i4 < f4.pages; i4++) {
+          var add4 = (f4.rot && f4.rot[i4]) || 0;
+          if (add4) { var pg4 = doc4.getPage(i4); pg4.setRotation(PDF.degrees((pg4.getRotation().angle + add4) % 360)); n4++; }
+        }
+        if (!n4) throw new Error("Turn at least one page first. Use the arrow buttons under a page.");
+        setResult(await doc4.save(), baseName(f4.name) + "-rotated.pdf", n4 + (n4 === 1 ? " page" : " pages") + " turned");
+      } else if (tool.id === "edit") {
+        if (!files[0]) throw new Error("Add a PDF first.");
+        await editPdf(files[0]);
       } else if (tool.id === "images") {
         if (!files.length) throw new Error("Add at least one photo.");
         var doc5 = await PDF.PDFDocument.create();
@@ -948,10 +1400,12 @@ html { scroll-behavior: smooth; }
   }
 
   function actionLabel() {
-    return { merge: "Merge PDFs", split: opts.mode === "each" ? "Split into single pages" : "Extract pages", remove: "Remove pages", rotate: "Rotate pages", images: "Create PDF", word2pdf: "Convert to PDF", excel2pdf: "Convert to PDF", pdf2excel: "Convert to Excel", pdf2word: "Convert to Word" }[tool.id];
+    return { merge: "Merge PDFs", split: opts.mode === "each" ? "Split into single pages" : "Extract pages", remove: "Remove pages", rotate: "Save rotated PDF", images: "Create PDF", edit: "Save edited PDF", word2pdf: "Convert to PDF", excel2pdf: "Convert to PDF", pdf2excel: "Convert to Excel", pdf2word: "Convert to Word" }[tool.id];
   }
 
   function optionsView() {
+    if (tool.id === "rotate") return rotateView(files[0]);
+    if (tool.id === "edit") return editorView(files[0]);
     var o = el("div", "opts");
     function textField(id, label, key, hint, ph) {
       var f = el("div", "field"); var l = el("label", null, label); l.htmlFor = id;
