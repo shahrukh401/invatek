@@ -92,7 +92,6 @@ html { scroll-behavior: smooth; }
 .topnav { margin-top: -8px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 .tgroup { grid-column: 1 / -1; margin: 6px 0 0; font-family: var(--font-body); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-.ad[hidden] { display: none; }
 [hidden] { display: none !important; }
 .hint { margin: 0; color: var(--muted); font-size: 13px; }
 .btn.sm { padding: 7px 12px; font-size: 14px; border-radius: 10px; }
@@ -124,10 +123,6 @@ html { scroll-behavior: smooth; }
 .fnav { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14px; }
 .fnav a { color: var(--accent); font-weight: 600; }
 .foot { color: var(--muted); font-size: 13px; }
-.ad { border: 1px dashed var(--line); border-radius: 12px; padding: 8px; display: flex; flex-direction: column; gap: 4px; align-items: center; min-height: 110px; justify-content: center; overflow: hidden; }
-.ad small { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-.ad .ph { color: var(--muted); font-size: 13px; text-align: center; }
-.ad ins { display: block; width: 100%; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
 </head><body>
@@ -138,8 +133,6 @@ html { scroll-behavior: smooth; }
     <p class="lead">Free PDF tools. Merge, split, rotate and clean up PDFs. Convert Word, Excel and photos to PDF, or PDF to Word and Excel. Pick a tool, choose your file, save the result.</p>
     <span class="privacy">Files stay on your device. Nothing is uploaded.</span>
   </header>
-
-  <div class="ad" id="adTop" aria-label="Advertisement"></div>
 
   <nav class="fnav topnav" aria-label="Sections"><a href="#tools-top">Tools</a><a href="#guides">Guides</a><a href="#about">About</a><a href="#privacy">Privacy</a><a href="#terms">Terms</a><a href="#contact">Contact</a></nav>
 
@@ -212,19 +205,11 @@ html { scroll-behavior: smooth; }
 <h3>What it cannot do yet</h3>
 <ul><li>Open password protected PDFs</li><li>Reduce file size (compress)</li><li>Read handwriting, or very blurry scans, with full accuracy</li><li>Keep the exact look of a page when converting PDF to Word</li></ul>
 <p>We plan to add more tools over time. Tell us what you need on the <a href="#contact">contact page</a>.</p>
-<p>The site is supported by advertising so the tools can stay free.</p></section>
+</section>
   <section class="panel doc" id="privacy"><h2>Privacy Policy</h2><p class="updated">Last updated: 29 October 2026</p><h3>Your files</h3>
 <p>Invatek processes your files inside your browser. They are not uploaded to our servers. We do not receive, store or read your documents or photos.</p>
 <h3>Information we collect</h3>
 <p>We do not ask you to create an account and we do not collect your name, phone number or email address through the tools. Our hosting provider may keep standard server logs such as IP address, browser type and the time of a visit, for security and to run the site.</p>
-<h3>Advertising and cookies</h3>
-<p>This site shows ads from third-party advertising networks, including Adsterra. These networks may use cookies and similar technologies to show ads and measure how they perform. Their handling of data is covered by their own privacy policies.</p>
-<p>If Google AdSense ads are shown, Google and its partners use cookies to show ads based on your visits to this and other websites. Google's use of advertising cookies lets it and its partners show ads to you based on your visit to our site and other sites on the internet.</p>
-<ul>
-<li>You can opt out of personalised advertising at <a href="https://adssettings.google.com" rel="noopener">adssettings.google.com</a>.</li>
-<li>You can learn how Google uses data from sites that use its services at <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">policies.google.com/technologies/partner-sites</a>.</li>
-<li>Where the law requires it, we ask for your consent before using non-essential cookies for ads.</li>
-</ul>
 <h3>Third-party code</h3>
 <p>When you convert a scan or photo, the language data for text reading is downloaded from a public server. Your file itself is still read only on your device.</p>
 <p>The page loads fonts from Google Fonts and software libraries (pdf-lib, JSZip, pdf.js, SheetJS, mammoth, docx and Tesseract.js) from public content networks such as cdnjs and jsDelivr. These providers may receive your IP address when your browser fetches those files.</p>
@@ -241,17 +226,11 @@ html { scroll-behavior: smooth; }
 <p>The tools are provided as they are. We try to make them reliable, but we cannot promise the output is free of errors. Always keep your original files and check the result before you rely on it.</p>
 <h3>Limit of responsibility</h3>
 <p>To the extent the law allows, we are not responsible for any loss caused by using the site, including lost or damaged files.</p>
-<h3>Advertising</h3>
-<p>The site shows third-party ads. We are not responsible for the content of those ads or the sites they link to.</p>
 <h3>Changes</h3>
 <p>We may change the site or these terms at any time. Continued use means you accept the changes.</p></section>
   <section class="panel doc" id="contact"><h2>Contact</h2><p>Found a problem, or want a new tool? Write to us.</p>
-<p><strong>Email:</strong> <a href="mailto:REPLACE-WITH-YOUR-EMAIL@example.com">REPLACE-WITH-YOUR-EMAIL@example.com</a></p>
+<p><strong>Email:</strong> <a href="mailto:vistavibes007@gmail.com">mail us</a></p>
 <p>We usually reply within a few days. Please do not send private documents by email. Describe the problem in words instead.</p></section>
-
-  <div class="ad" id="adBottom" aria-label="Advertisement"><small>Advertisement</small>
-<script async="async" data-cfasync="false" src="https://bauval.org/21/0eb44c7a4ec17c8a3679d306f9e7e770"></script>
-<div id="container-0eb44c7a4ec17c8a3679d306f9e7e770"></div></div>
 
   <p class="foot">Password-protected PDFs cannot be opened. Compressing file size is not available in this version.</p>
 </div>
@@ -1441,33 +1420,6 @@ html { scroll-behavior: smooth; }
     return o;
   }
 
-  /* ---------- ads ----------
-     1. Create a Google AdSense account and get your site approved.
-     2. Paste your publisher ID below (looks like "ca-pub-1234567890123456").
-     3. Create two display ad units in AdSense and paste their slot numbers.
-     Until then, a labelled empty box shows. Ads sit away from the buttons on purpose:
-     AdSense can ban sites that put ads where people may tap them by mistake. */
-  var ADS = { client: "", topSlot: "", bottomSlot: "" };
-  function mountAd(id, slot) {
-    var box = $(id); if (!box) return;
-    box.innerHTML = "";
-    box.appendChild(el("small", null, "Advertisement"));
-    if (!ADS.client || !slot) { box.hidden = true; return; }
-    var ins = document.createElement("ins"); ins.className = "adsbygoogle";
-    ins.setAttribute("data-ad-client", ADS.client); ins.setAttribute("data-ad-slot", slot);
-    ins.setAttribute("data-ad-format", "auto"); ins.setAttribute("data-full-width-responsive", "true");
-    box.appendChild(ins);
-    try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
-  }
-  function startAds() {
-    if (ADS.client) {
-      var sc = document.createElement("script"); sc.async = true; sc.crossOrigin = "anonymous";
-      sc.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=" + encodeURIComponent(ADS.client);
-      document.head.appendChild(sc);
-    }
-    mountAd("adTop", ADS.topSlot);
-  }
-
   document.addEventListener("click", function (e) {
     var a = e.target.closest ? e.target.closest("a[data-tool]") : null;
     if (!a) return;
@@ -1476,7 +1428,7 @@ html { scroll-behavior: smooth; }
     if (t) { if (tool.id === t.id) { files = []; result = null; error = ""; renderPanel(); } selectTool(t); }
   });
 
-  renderTools(); renderPanel(); startAds();
+  renderTools(); renderPanel();
 })();
 </script>
 </body></html>
