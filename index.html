@@ -1,11 +1,17 @@
 <!doctype html><html lang="en"><head><title>Invatek | Free PDF Tools: Merge, Split, Rotate</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0F6B5C">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png" type="image/png">
 <link rel="canonical" href="https://invatek.in/">
 <meta property="og:title" content="Invatek: Free PDF Tools">
 <meta property="og:description" content="Merge, split, rotate and create PDFs in your browser. Files are never uploaded.">
 <meta property="og:url" content="https://invatek.in/">
 <meta property="og:type" content="website">
 <meta name="description" content="Free PDF tools that work in your browser. Merge PDFs, split pages, remove pages, rotate and turn photos into a PDF. Your files are never uploaded.">
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>(function(){try{var m=localStorage.getItem("inv-theme");if(m==="light"||m==="dark")document.documentElement.setAttribute("data-theme",m);}catch(e){}})();</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7642828173825963" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -35,12 +41,13 @@
   --accent: #5FD0B5; --on-accent: #06211B; --accent-soft: #1A3A33; --warn: #FF9A70; color-scheme: dark;
 }
 * { box-sizing: border-box; }
-body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 16px; line-height: 1.5;
-  padding-block: 24px 56px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 16px; line-height: 1.5; margin: 0; padding: 0 0 56px;
+  -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
 button, input, select { font: inherit; color: inherit; }
 button { cursor: pointer; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-.wrap { max-width: 880px; margin: 0 auto; display: flex; flex-direction: column; gap: 26px; }
+.wrap { max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: 26px; padding: 22px max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px)); }
+.wrap > .doc, .wrap > .fnav, .wrap > .foot { max-width: 880px; width: 100%; margin-inline: auto; }
 h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(34px, 8vw, 52px); letter-spacing: -0.035em; line-height: 1.02; margin: 0; text-wrap: balance; }
 h1 span { color: var(--accent); }
 .lead { margin: 10px 0 0; color: var(--muted); max-width: 52ch; }
@@ -93,6 +100,7 @@ html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 .tgroup { grid-column: 1 / -1; margin: 6px 0 0; font-family: var(--font-body); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
 [hidden] { display: none !important; }
+
 .hint { margin: 0; color: var(--muted); font-size: 13px; }
 .btn.sm { padding: 7px 12px; font-size: 14px; border-radius: 10px; }
 .rotwrap, .editor { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
@@ -124,12 +132,63 @@ html { scroll-behavior: smooth; }
 .fnav a { color: var(--accent); font-weight: 600; }
 .foot { color: var(--muted); font-size: 13px; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
-</style>
-</head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7642828173825963"
-     crossorigin="anonymous"></script>
-  <body>
 
+/* ---- app bar, theme button, bottom tabs, tablet and desktop layout ---- */
+.appbar { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--surface) 90%, transparent); -webkit-backdrop-filter: saturate(1.4) blur(10px); backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid var(--line); padding: calc(8px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) 8px max(16px, env(safe-area-inset-left, 0px));
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--fg); font-family: var(--font-display); font-weight: 800; font-size: 20px; letter-spacing: -0.02em; }
+.brand img { width: 30px; height: 30px; border-radius: 8px; display: block; }
+.barbtns { display: flex; align-items: center; gap: 8px; }
+.themebtn { display: inline-flex; align-items: center; gap: 6px; height: 38px; min-width: 38px; padding: 0 10px; justify-content: center; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); font-weight: 600; font-size: 14px; }
+.themebtn svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.themebtn .tl { display: none; }
+.tool, .btn, .etool, .icon, .themebtn { transition: transform .12s ease, background-color .15s ease, border-color .15s ease; }
+.tool:active, .btn:active, .etool:active, .icon:active, .themebtn:active { transform: scale(.97); }
+.tool { border-radius: 18px; }
+.tabbar { display: none; }
+.wrap > .fnav.topnav { max-width: none; margin-inline: 0; }
+@media (max-width: 899px) {
+  body { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+  .topnav { display: none; }
+  .tabbar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; background: color-mix(in srgb, var(--surface) 94%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    border-top: 1px solid var(--line); padding: 6px max(8px, env(safe-area-inset-right, 0px)) calc(6px + env(safe-area-inset-bottom, 0px)) max(8px, env(safe-area-inset-left, 0px)); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 4px; border-radius: 14px; text-decoration: none; color: var(--muted); font-size: 12px; font-weight: 600; }
+  .tabbar a svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .tabbar a.on { color: var(--accent); background: var(--accent-soft); }
+  .panel .btn, .drop .btn { min-height: 46px; }
+}
+@media (min-width: 600px) {
+  .themebtn .tl { display: inline; }
+  .tools { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .tool { padding: 18px; }
+  .tool svg { width: 30px; height: 30px; }
+  .panel { padding: 26px; border-radius: 22px; }
+}
+@media (min-width: 900px) {
+  .appgrid { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 22px; align-items: start; }
+  .appgrid .tools { grid-template-columns: 1fr; gap: 8px; position: sticky; top: 76px; max-height: calc(100vh - 92px); overflow-y: auto; padding-right: 2px; }
+  .appgrid .tool { display: grid; grid-template-columns: 34px 1fr; column-gap: 12px; align-items: center; padding: 12px 14px; border-radius: 14px; }
+  .appgrid .tool svg { grid-row: 1 / span 2; margin: 0; width: 28px; height: 28px; }
+  .appgrid .tool small { display: none; }
+  .appgrid .tool b { font-size: 16px; }
+  .appgrid .tool:hover { border-color: var(--accent); }
+  .appgrid .panel { min-height: 420px; }
+}
+@media (display-mode: standalone) {
+  body { -webkit-user-select: none; user-select: none; }
+  input, textarea, .doc, .doc * { -webkit-user-select: text; user-select: text; }
+  .privacy { display: none; }
+}
+</style>
+</head><body>
+<div class="appbar">
+  <a class="brand" href="#tools-top" aria-label="Invatek home"><img src="icon-192.png" alt="" width="30" height="30"><span>Invatek</span></a>
+  <div class="barbtns">
+    <button type="button" class="btn sm" id="installBtn" hidden>Install app</button>
+    <button type="button" class="themebtn" id="themeBtn" aria-label="Switch theme" title="Switch theme"><span id="themeIcon"></span><span class="tl" id="themeLbl">Light</span></button>
+  </div>
+</div>
 <div class="wrap">
   <header>
     <h1>Inva<span>tek</span></h1>
@@ -140,9 +199,11 @@ html { scroll-behavior: smooth; }
   <nav class="fnav topnav" aria-label="Sections"><a href="#tools-top">Tools</a><a href="#guides">Guides</a><a href="#about">About</a><a href="#privacy">Privacy</a><a href="#terms">Terms</a><a href="#contact">Contact</a></nav>
 
   <div id="tools-top"></div>
+  <div class="appgrid">
   <div class="tools" id="tools" role="group" aria-label="Tools"></div>
 
   <section class="panel" id="panel" aria-live="polite"></section>
+  </div>
 
   
   <nav class="fnav" aria-label="Sections"><a href="#tools-top">Tools</a><a href="#guides">Guides</a><a href="#about">About</a><a href="#privacy">Privacy Policy</a><a href="#terms">Terms</a><a href="#contact">Contact</a></nav>
@@ -232,12 +293,18 @@ html { scroll-behavior: smooth; }
 <h3>Changes</h3>
 <p>We may change the site or these terms at any time. Continued use means you accept the changes.</p></section>
   <section class="panel doc" id="contact"><h2>Contact</h2><p>Found a problem, or want a new tool? Write to us.</p>
-<p><strong>Email:</strong> <a href="mailto:vistavibes007@gmail.com">mail us</a></p>
+<p><strong>Email:</strong> <a href="mailto:vistavibes007@gmail.com">vistavibes007@gmail.com</a></p>
 <p>We usually reply within a few days. Please do not send private documents by email. Describe the problem in words instead.</p></section>
 
   <p class="foot">Password-protected PDFs cannot be opened. Compressing file size is not available in this version.</p>
 </div>
 
+<nav class="tabbar" id="tabbar" aria-label="Main">
+  <a href="#tools-top" class="on" data-sec="tools-top"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>Tools</a>
+  <a href="#guides" data-sec="guides"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 21.5V5.5"/><path d="M9 8h7"/></svg>Guides</a>
+  <a href="#about" data-sec="about"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="7.8" r=".6"/></svg>About</a>
+  <a href="#contact" data-sec="contact"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg>Contact</a>
+</nav>
 <script>
 (function () {
   var PDF = window.PDFLib;
@@ -1335,103 +1402,4 @@ html { scroll-behavior: smooth; }
     ["dragenter", "dragover"].forEach(function (n) { drop.addEventListener(n, function (e) { e.preventDefault(); drop.classList.add("over"); }); });
     ["dragleave", "drop"].forEach(function (n) { drop.addEventListener(n, function (e) { e.preventDefault(); drop.classList.remove("over"); }); });
     drop.addEventListener("drop", function (e) { if (e.dataTransfer && e.dataTransfer.files.length) addFiles(e.dataTransfer.files); });
-    p.appendChild(drop);
-
-    if (files.length) {
-      var ul = el("ul", "files");
-      files.forEach(function (f, i) {
-        var li = el("li", "file");
-        li.appendChild(el("span", "ext", f.isImage ? "IMG" : tool.badge));
-        var mid = el("div"); mid.appendChild(el("div", "nm", f.name));
-        mid.appendChild(el("div", "meta", size(f.bytes) + (f.pages ? " · " + f.pages + (f.pages === 1 ? " page" : " pages") : "")));
-        li.appendChild(mid);
-        var acts = el("div", "acts");
-        if (tool.multi && files.length > 1) {
-          var up = el("button", "icon", "↑"); up.type = "button"; up.setAttribute("aria-label", "Move up"); up.disabled = i === 0;
-          up.addEventListener("click", function () { var t = files[i - 1]; files[i - 1] = files[i]; files[i] = t; result = null; renderPanel(); });
-          var dn = el("button", "icon", "↓"); dn.type = "button"; dn.setAttribute("aria-label", "Move down"); dn.disabled = i === files.length - 1;
-          dn.addEventListener("click", function () { var t = files[i + 1]; files[i + 1] = files[i]; files[i] = t; result = null; renderPanel(); });
-          acts.appendChild(up); acts.appendChild(dn);
-        }
-        var x = el("button", "icon", "×"); x.type = "button"; x.setAttribute("aria-label", "Remove " + f.name);
-        x.addEventListener("click", function () { files.splice(i, 1); result = null; renderPanel(); });
-        acts.appendChild(x); li.appendChild(acts); ul.appendChild(li);
-      });
-      p.appendChild(ul);
-    }
-
-    if (files.length) p.appendChild(optionsView());
-
-    if (error) p.appendChild(el("p", "err", error));
-
-    if (files.length) {
-      var go = el("button", "btn", busy ? (statusText || "Working...") : actionLabel()); go.type = "button"; go.disabled = busy; goBtn = go;
-      go.addEventListener("click", run); p.appendChild(go);
-    }
-
-    if (result) {
-      var r = el("div", "result");
-      r.appendChild(el("b", null, "Your file is ready"));
-      r.appendChild(el("span", null, result.name + " · " + size(result.bytes.byteLength) + " · " + result.note));
-      var row = el("div", "row");
-      var sv = el("button", "btn", result.saved ? "Save again" : "Save file"); sv.type = "button"; sv.addEventListener("click", save);
-      row.appendChild(sv);
-      if (result.msg) row.appendChild(el("span", null, result.msg));
-      r.appendChild(row); p.appendChild(r);
-    }
-  }
-
-  function actionLabel() {
-    return { merge: "Merge PDFs", split: opts.mode === "each" ? "Split into single pages" : "Extract pages", remove: "Remove pages", rotate: "Save rotated PDF", images: "Create PDF", edit: "Save edited PDF", word2pdf: "Convert to PDF", excel2pdf: "Convert to PDF", pdf2excel: "Convert to Excel", pdf2word: "Convert to Word" }[tool.id];
-  }
-
-  function optionsView() {
-    if (tool.id === "rotate") return rotateView(files[0]);
-    if (tool.id === "edit") return editorView(files[0]);
-    var o = el("div", "opts");
-    function textField(id, label, key, hint, ph) {
-      var f = el("div", "field"); var l = el("label", null, label); l.htmlFor = id;
-      var i = document.createElement("input"); i.type = "text"; i.id = id; i.value = opts[key]; i.placeholder = ph || ""; i.autocomplete = "off";
-      i.addEventListener("input", function () { opts[key] = i.value; });
-      f.appendChild(l); f.appendChild(i); if (hint) f.appendChild(el("span", "hint", hint)); return f;
-    }
-    var total = files[0] && files[0].pages;
-    if (tool.ocr) {
-      var f3 = el("div", "field"); var l3 = el("label", null, "Language of the text (used for scans and photos)"); l3.htmlFor = "langSel";
-      var s3 = document.createElement("select"); s3.id = "langSel";
-      [["eng", "English"], ["hin", "Hindi"], ["hin+eng", "Hindi and English"]].forEach(function (v) { var op = el("option", null, v[1]); op.value = v[0]; if (opts.ocrLang === v[0]) op.selected = true; s3.appendChild(op); });
-      s3.addEventListener("change", function () { opts.ocrLang = s3.value; });
-      f3.appendChild(l3); f3.appendChild(s3); o.appendChild(f3);
-    }
-    if (tool.id === "split") {
-      var f1 = el("div", "field"); var l1 = el("label", null, "What to do"); l1.htmlFor = "modeSel";
-      var s = document.createElement("select"); s.id = "modeSel";
-      [["pages", "Extract chosen pages into one PDF"], ["each", "Save every page as a separate PDF (ZIP)"]].forEach(function (v) { var op = el("option", null, v[1]); op.value = v[0]; if (opts.mode === v[0]) op.selected = true; s.appendChild(op); });
-      s.addEventListener("change", function () { opts.mode = s.value; result = null; renderPanel(); });
-      f1.appendChild(l1); f1.appendChild(s); o.appendChild(f1);
-      if (opts.mode === "pages") o.appendChild(textField("rangeIn", "Pages to extract (this file has " + total + ")", "range", "Example: 1-3, 5, 8-", "1-3, 5"));
-    } else if (tool.id === "remove") {
-      o.appendChild(textField("rangeIn", "Pages to remove (this file has " + total + ")", "range", "Example: 2, 4-6", "2, 4-6"));
-    } else if (tool.id === "rotate") {
-      var f2 = el("div", "field"); var l2 = el("label", null, "Turn clockwise by"); l2.htmlFor = "angSel";
-      var s2 = document.createElement("select"); s2.id = "angSel";
-      [["90", "90 degrees"], ["180", "180 degrees"], ["270", "270 degrees (90 anticlockwise)"]].forEach(function (v) { var op = el("option", null, v[1]); op.value = v[0]; if (opts.angle === v[0]) op.selected = true; s2.appendChild(op); });
-      s2.addEventListener("change", function () { opts.angle = s2.value; });
-      f2.appendChild(l2); f2.appendChild(s2); o.appendChild(f2);
-      o.appendChild(textField("rotIn", "Only these pages (optional, " + total + " in file)", "rotRange", "Leave empty to turn every page.", "all pages"));
-    }
-    return o;
-  }
-
-  document.addEventListener("click", function (e) {
-    var a = e.target.closest ? e.target.closest("a[data-tool]") : null;
-    if (!a) return;
-    e.preventDefault();
-    var t = TOOLS.filter(function (x) { return x.id === a.getAttribute("data-tool"); })[0];
-    if (t) { if (tool.id === t.id) { files = []; result = null; error = ""; renderPanel(); } selectTool(t); }
-  });
-
-  renderTools(); renderPanel();
-})();
-</script>
-</body></html>
+    p.appen
