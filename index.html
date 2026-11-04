@@ -1402,4 +1402,151 @@ html { scroll-behavior: smooth; }
     ["dragenter", "dragover"].forEach(function (n) { drop.addEventListener(n, function (e) { e.preventDefault(); drop.classList.add("over"); }); });
     ["dragleave", "drop"].forEach(function (n) { drop.addEventListener(n, function (e) { e.preventDefault(); drop.classList.remove("over"); }); });
     drop.addEventListener("drop", function (e) { if (e.dataTransfer && e.dataTransfer.files.length) addFiles(e.dataTransfer.files); });
-    p.appen
+    p.appendChild(drop);
+
+    if (files.length) {
+      var ul = el("ul", "files");
+      files.forEach(function (f, i) {
+        var li = el("li", "file");
+        li.appendChild(el("span", "ext", f.isImage ? "IMG" : tool.badge));
+        var mid = el("div"); mid.appendChild(el("div", "nm", f.name));
+        mid.appendChild(el("div", "meta", size(f.bytes) + (f.pages ? " · " + f.pages + (f.pages === 1 ? " page" : " pages") : "")));
+        li.appendChild(mid);
+        var acts = el("div", "acts");
+        if (tool.multi && files.length > 1) {
+          var up = el("button", "icon", "↑"); up.type = "button"; up.setAttribute("aria-label", "Move up"); up.disabled = i === 0;
+          up.addEventListener("click", function () { var t = files[i - 1]; files[i - 1] = files[i]; files[i] = t; result = null; renderPanel(); });
+          var dn = el("button", "icon", "↓"); dn.type = "button"; dn.setAttribute("aria-label", "Move down"); dn.disabled = i === files.length - 1;
+          dn.addEventListener("click", function () { var t = files[i + 1]; files[i + 1] = files[i]; files[i] = t; result = null; renderPanel(); });
+          acts.appendChild(up); acts.appendChild(dn);
+        }
+        var x = el("button", "icon", "×"); x.type = "button"; x.setAttribute("aria-label", "Remove " + f.name);
+        x.addEventListener("click", function () { files.splice(i, 1); result = null; renderPanel(); });
+        acts.appendChild(x); li.appendChild(acts); ul.appendChild(li);
+      });
+      p.appendChild(ul);
+    }
+
+    if (files.length) p.appendChild(optionsView());
+
+    if (error) p.appendChild(el("p", "err", error));
+
+    if (files.length) {
+      var go = el("button", "btn", busy ? (statusText || "Working...") : actionLabel()); go.type = "button"; go.disabled = busy; goBtn = go;
+      go.addEventListener("click", run); p.appendChild(go);
+    }
+
+    if (result) {
+      var r = el("div", "result");
+      r.appendChild(el("b", null, "Your file is ready"));
+      r.appendChild(el("span", null, result.name + " · " + size(result.bytes.byteLength) + " · " + result.note));
+      var row = el("div", "row");
+      var sv = el("button", "btn", result.saved ? "Save again" : "Save file"); sv.type = "button"; sv.addEventListener("click", save);
+      row.appendChild(sv);
+      if (result.msg) row.appendChild(el("span", null, result.msg));
+      r.appendChild(row); p.appendChild(r);
+    }
+  }
+
+  function actionLabel() {
+    return { merge: "Merge PDFs", split: opts.mode === "each" ? "Split into single pages" : "Extract pages", remove: "Remove pages", rotate: "Save rotated PDF", images: "Create PDF", edit: "Save edited PDF", word2pdf: "Convert to PDF", excel2pdf: "Convert to PDF", pdf2excel: "Convert to Excel", pdf2word: "Convert to Word" }[tool.id];
+  }
+
+  function optionsView() {
+    if (tool.id === "rotate") return rotateView(files[0]);
+    if (tool.id === "edit") return editorView(files[0]);
+    var o = el("div", "opts");
+    function textField(id, label, key, hint, ph) {
+      var f = el("div", "field"); var l = el("label", null, label); l.htmlFor = id;
+      var i = document.createElement("input"); i.type = "text"; i.id = id; i.value = opts[key]; i.placeholder = ph || ""; i.autocomplete = "off";
+      i.addEventListener("input", function () { opts[key] = i.value; });
+      f.appendChild(l); f.appendChild(i); if (hint) f.appendChild(el("span", "hint", hint)); return f;
+    }
+    var total = files[0] && files[0].pages;
+    if (tool.ocr) {
+      var f3 = el("div", "field"); var l3 = el("label", null, "Language of the text (used for scans and photos)"); l3.htmlFor = "langSel";
+      var s3 = document.createElement("select"); s3.id = "langSel";
+      [["eng", "English"], ["hin", "Hindi"], ["hin+eng", "Hindi and English"]].forEach(function (v) { var op = el("option", null, v[1]); op.value = v[0]; if (opts.ocrLang === v[0]) op.selected = true; s3.appendChild(op); });
+      s3.addEventListener("change", function () { opts.ocrLang = s3.value; });
+      f3.appendChild(l3); f3.appendChild(s3); o.appendChild(f3);
+    }
+    if (tool.id === "split") {
+      var f1 = el("div", "field"); var l1 = el("label", null, "What to do"); l1.htmlFor = "modeSel";
+      var s = document.createElement("select"); s.id = "modeSel";
+      [["pages", "Extract chosen pages into one PDF"], ["each", "Save every page as a separate PDF (ZIP)"]].forEach(function (v) { var op = el("option", null, v[1]); op.value = v[0]; if (opts.mode === v[0]) op.selected = true; s.appendChild(op); });
+      s.addEventListener("change", function () { opts.mode = s.value; result = null; renderPanel(); });
+      f1.appendChild(l1); f1.appendChild(s); o.appendChild(f1);
+      if (opts.mode === "pages") o.appendChild(textField("rangeIn", "Pages to extract (this file has " + total + ")", "range", "Example: 1-3, 5, 8-", "1-3, 5"));
+    } else if (tool.id === "remove") {
+      o.appendChild(textField("rangeIn", "Pages to remove (this file has " + total + ")", "range", "Example: 2, 4-6", "2, 4-6"));
+    } else if (tool.id === "rotate") {
+      var f2 = el("div", "field"); var l2 = el("label", null, "Turn clockwise by"); l2.htmlFor = "angSel";
+      var s2 = document.createElement("select"); s2.id = "angSel";
+      [["90", "90 degrees"], ["180", "180 degrees"], ["270", "270 degrees (90 anticlockwise)"]].forEach(function (v) { var op = el("option", null, v[1]); op.value = v[0]; if (opts.angle === v[0]) op.selected = true; s2.appendChild(op); });
+      s2.addEventListener("change", function () { opts.angle = s2.value; });
+      f2.appendChild(l2); f2.appendChild(s2); o.appendChild(f2);
+      o.appendChild(textField("rotIn", "Only these pages (optional, " + total + " in file)", "rotRange", "Leave empty to turn every page.", "all pages"));
+    }
+    return o;
+  }
+
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest ? e.target.closest("a[data-tool]") : null;
+    if (!a) return;
+    e.preventDefault();
+    var t = TOOLS.filter(function (x) { return x.id === a.getAttribute("data-tool"); })[0];
+    if (t) { if (tool.id === t.id) { files = []; result = null; error = ""; renderPanel(); } selectTool(t); }
+  });
+
+  /* app install and offline support */
+  var installEvt = null;
+  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); installEvt = e; $("installBtn").hidden = false; });
+  $("installBtn").addEventListener("click", function () {
+    if (!installEvt) return;
+    installEvt.prompt(); installEvt.userChoice.then(function () { installEvt = null; $("installBtn").hidden = true; }).catch(function () {});
+  });
+  window.addEventListener("appinstalled", function () { $("installBtn").hidden = true; });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+    window.addEventListener("load", function () { try { navigator.serviceWorker.register("sw.js"); } catch (e) {} });
+  }
+  try {
+    var wanted = new URLSearchParams(location.search).get("tool");
+    var wt = TOOLS.filter(function (x) { return x.id === wanted; })[0];
+    if (wt) tool = wt;
+  } catch (e) {}
+
+  renderTools(); renderPanel();
+
+  /* theme: Light / Dark (first visit follows the phone setting, then remembers the choice) */
+  (function () {
+    var KEY = "inv-theme", names = { light: "Light", dark: "Dark" };
+    var ICONS = {
+      light: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>',
+      dark: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>' };
+    function system() { return window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; }
+    function get() { try { var m = localStorage.getItem(KEY); if (m === "light" || m === "dark") return m; } catch (e) {} return system(); }
+    function apply(m) {
+      document.documentElement.setAttribute("data-theme", m);
+      var t = document.querySelector('meta[name="theme-color"]'); if (t) t.setAttribute("content", m === "dark" ? "#0C1613" : "#0F6B5C");
+      var b = $("themeBtn"); if (!b) return;
+      $("themeIcon").innerHTML = ICONS[m]; $("themeLbl").textContent = names[m];
+      b.setAttribute("aria-label", "Theme: " + names[m] + ". Tap to switch.");
+    }
+    apply(get());
+    $("themeBtn").addEventListener("click", function () {
+      var m = get() === "dark" ? "light" : "dark";
+      try { localStorage.setItem(KEY, m); } catch (e) {}
+      apply(m);
+    });
+  })();
+
+  /* bottom tab highlight */
+  (function () {
+    var links = document.querySelectorAll("#tabbar a"); if (!links.length || !("IntersectionObserver" in window)) return;
+    function mark(id) { for (var i = 0; i < links.length; i++) links[i].classList.toggle("on", links[i].getAttribute("data-sec") === id); }
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) mark(e.target.id === "panel" ? "tools-top" : e.target.id); }); }, { rootMargin: "-40% 0px -50% 0px" });
+    ["panel", "guides", "about", "contact"].forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
+  })();
+})();
+</script>
+</body></html>
