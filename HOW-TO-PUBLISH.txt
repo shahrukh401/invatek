@@ -1,0 +1,5 @@
+Invatek upload steps
+1. GitHub repo me "Add file" > "Upload files" se is zip ki SAARI files ek saath upload karo (zip khol kar).
+2. ".github" folder (static.yml) KABHI delete mat karna, wahi site ko publish karta hai.
+3. Purani files apne aap replace ho jayengi. Purani extra files (jaise app.js agar pehle thi) bhi replace hongi.
+4. Deploy ke baad Search Console me sitemap.xml dobara submit karo.
