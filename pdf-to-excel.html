@@ -219,6 +219,17 @@ html { scroll-behavior: smooth; }
 .artlist a { display: block; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); font-weight: 600; text-decoration: none; }
 .cta { display: inline-block; align-self: flex-start; background: var(--accent); color: var(--on-accent) !important; text-decoration: none; font-weight: 700; padding: 12px 18px; border-radius: 12px; }
 .meta { color: var(--muted); font-size: 13px; }
+/* phone and tablet: one row of tool chips so the tool panel is right below */
+@media (max-width: 899px) {
+  .appgrid { display: flex; flex-direction: column; gap: 14px; }
+  .appgrid .tools { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 8px; padding: 2px 2px 8px; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .appgrid .tools::-webkit-scrollbar { display: none; }
+  .appgrid .tgroup { display: none; }
+  .appgrid .tool { flex: 0 0 auto; flex-direction: row; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 999px; scroll-snap-align: start; }
+  .appgrid .tool svg { margin: 0; width: 20px; height: 20px; }
+  .appgrid .tool b { font-size: 14px; white-space: nowrap; }
+  .appgrid .tool small { display: none; }
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Invatek PDF to Excel", "url": "https://invatek.in/pdf-to-excel", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does it work on scanned PDFs?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. It uses OCR for pages that have no selectable text."}}, {"@type": "Question", "name": "Why are some cells wrong?", "acceptedAnswer": {"@type": "Answer", "text": "OCR can misread blurry or small text. Rescan in better light to improve it."}}, {"@type": "Question", "name": "Is my file uploaded?", "acceptedAnswer": {"@type": "Answer", "text": "No. The reading is done in your browser. The first time, the language data is downloaded."}}]}]}</script>
 
@@ -318,6 +329,10 @@ html { scroll-behavior: smooth; }
       b.addEventListener("click", function () { selectTool(t); });
       box.appendChild(b);
     });
+    try {
+      var on = box.querySelector('.tool[aria-pressed="true"]');
+      if (on && box.scrollWidth > box.clientWidth) { var r1 = on.getBoundingClientRect(), r2 = box.getBoundingClientRect(); box.scrollLeft += r1.left - r2.left - (box.clientWidth - r1.width) / 2; }
+    } catch (e) {}
   }
 
   /* ---------- page ranges ---------- */

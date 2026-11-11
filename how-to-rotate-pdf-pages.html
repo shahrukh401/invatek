@@ -217,6 +217,17 @@ html { scroll-behavior: smooth; }
 .artlist a { display: block; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); font-weight: 600; text-decoration: none; }
 .cta { display: inline-block; align-self: flex-start; background: var(--accent); color: var(--on-accent) !important; text-decoration: none; font-weight: 700; padding: 12px 18px; border-radius: 12px; }
 .meta { color: var(--muted); font-size: 13px; }
+/* phone and tablet: one row of tool chips so the tool panel is right below */
+@media (max-width: 899px) {
+  .appgrid { display: flex; flex-direction: column; gap: 14px; }
+  .appgrid .tools { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 8px; padding: 2px 2px 8px; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .appgrid .tools::-webkit-scrollbar { display: none; }
+  .appgrid .tgroup { display: none; }
+  .appgrid .tool { flex: 0 0 auto; flex-direction: row; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 999px; scroll-snap-align: start; }
+  .appgrid .tool svg { margin: 0; width: 20px; height: 20px; }
+  .appgrid .tool b { font-size: 14px; white-space: nowrap; }
+  .appgrid .tool small { display: none; }
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "How to rotate PDF pages", "description": "Fix sideways or upside down PDF pages and save the corrected file. Free, with a preview of every page.", "datePublished": "2026-11-11", "dateModified": "2026-11-11", "inLanguage": "en", "author": {"@type": "Organization", "name": "Invatek"}, "publisher": {"@type": "Organization", "name": "Invatek", "logo": {"@type": "ImageObject", "url": "https://invatek.in/icon-512.png"}}, "mainEntityOfPage": "https://invatek.in/how-to-rotate-pdf-pages"}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does rotating lower quality?", "acceptedAnswer": {"@type": "Answer", "text": "No. Pages are turned, not redrawn."}}, {"@type": "Question", "name": "Can I rotate by 180 degrees?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Turn the page twice."}}]}]}</script>
 
