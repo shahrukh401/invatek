@@ -1,5 +1,5 @@
 /* Invatek service worker: keeps the app working offline after the first visit. */
-var VERSION = "invatek-v2";
+var VERSION = "invatek-v6";
 var SHELL = ["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png"];
 var CDN = ["cdnjs.cloudflare.com", "cdn.jsdelivr.net", "fonts.googleapis.com", "fonts.gstatic.com", "tessdata.projectnaptha.com"];
 
