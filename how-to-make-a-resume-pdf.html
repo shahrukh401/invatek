@@ -80,7 +80,7 @@ h1 span { color: var(--accent); }
 .opts { display: flex; flex-wrap: wrap; gap: 14px; }
 .field { display: flex; flex-direction: column; gap: 5px; flex: 1 1 220px; min-width: 0; }
 .field label, .field .lab { font-size: 13px; font-weight: 600; color: var(--muted); }
-.field input[type="text"], .field select { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; width: 100%; min-width: 0; }
+.field input[type="text"], .field input[type="url"], .field input[type="password"], .field select { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; width: 100%; min-width: 0; }
 .field .hint { font-size: 12px; color: var(--muted); }
 .err { color: var(--warn); font-weight: 600; font-size: 14px; margin: 0; }
 .result { border: 1px solid var(--accent); background: var(--accent-soft); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
@@ -228,6 +228,36 @@ html { scroll-behavior: smooth; }
   .appgrid .tool b { font-size: 14px; white-space: nowrap; }
   .appgrid .tool small { display: none; }
 }
+/* site search */
+.srch { position: fixed; inset: 0; z-index: 90; background: rgba(0, 0, 0, .45); display: flex; align-items: flex-start; justify-content: center; padding: max(16px, env(safe-area-inset-top, 0px)) 12px 12px; }
+.srchbox { width: min(640px, 100%); max-height: calc(100vh - 32px); display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 18px 50px rgba(0, 0, 0, .35); overflow: hidden; }
+.srchrow { display: flex; gap: 8px; align-items: center; padding: 12px; border-bottom: 1px solid var(--line); }
+.srchrow input { flex: 1; min-width: 0; font: inherit; font-size: 16px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
+.srchlist { list-style: none; margin: 0; padding: 6px; overflow-y: auto; }
+.srchlist a { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 10px; text-decoration: none; color: var(--fg); }
+.srchlist a:hover, .srchlist a:focus { background: var(--accent-soft); outline: none; }
+.srchlist small { color: var(--muted); font-size: 13px; line-height: 1.35; }
+.srchhint { padding: 8px 12px 10px; color: var(--muted); font-size: 13px; }
+.slider { width: 100%; accent-color: var(--accent); margin: 6px 0 0; }
+.sliderlbl { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+/* QR layout, mobile friendly */
+.qrform { flex-direction: column; flex-wrap: nowrap; gap: 14px; }
+.qrform .field { flex: none; width: 100%; }
+.qrform .qrbox { margin: 0 auto; padding: 14px; background: #fff; border: 1px solid var(--line); border-radius: 16px; width: fit-content; max-width: 100%; line-height: 0; }
+.qrform .qrbox[hidden] { display: none; }
+.qrform .qrcanvas { width: 260px; transition: width .08s; max-width: 100%; height: auto; aspect-ratio: 1; display: block; }
+.qrform .qrmsg { text-align: center; margin: -4px 0 0; }
+.qrgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.qrgrid .field { min-width: 0; }
+.qrinfo { font-size: 13px; color: var(--muted); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+.qrinfo summary { cursor: pointer; font-weight: 600; color: var(--fg); }
+.qrinfo p { margin: 8px 0 0; line-height: 1.5; }
+.qrbtns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.qrbtns .btn { width: 100%; justify-content: center; padding-left: 8px; padding-right: 8px; }
+.qrform textarea { font-size: 16px; }
+@media (max-width: 380px) { .qrgrid { grid-template-columns: 1fr; } }
+.qrform .slider { touch-action: pan-y; height: 28px; }
+.qrform .qrbox { min-width: 120px; min-height: 120px; }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "How to make a resume PDF that looks professional", "description": "Save your resume as a clean PDF that opens the same on every phone and computer. Tips on file name, size and layout.", "datePublished": "2026-11-11", "dateModified": "2026-11-11", "inLanguage": "en", "author": {"@type": "Organization", "name": "Invatek"}, "publisher": {"@type": "Organization", "name": "Invatek", "logo": {"@type": "ImageObject", "url": "https://invatek.in/icon-512.png"}}, "mainEntityOfPage": "https://invatek.in/how-to-make-a-resume-pdf"}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Should I send Word or PDF?", "acceptedAnswer": {"@type": "Answer", "text": "PDF, unless the employer asks for Word. It keeps the layout fixed."}}, {"@type": "Question", "name": "Can I write the resume in Hindi?", "acceptedAnswer": {"@type": "Answer", "text": "Use Text to PDF for Hindi text, since it draws Hindi letters correctly."}}]}]}</script>
 
@@ -236,6 +266,7 @@ html { scroll-behavior: smooth; }
   <a class="brand" href="/" aria-label="Invatek home"><img src="icon-192.png" alt="" width="30" height="30"><span>Invatek</span></a>
   <div class="barbtns">
     <button type="button" class="btn sm" id="installBtn" hidden>Install app</button>
+    <button type="button" class="themebtn" id="searchBtn" aria-label="Search tools and guides" title="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><span class="tl">Search</span></button>
     <button type="button" class="themebtn" id="shareBtn" aria-label="Share Invatek" title="Share Invatek"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.4M8.2 13.2l7.6 4.4"/></svg></button>
     <button type="button" class="themebtn" id="themeBtn" aria-label="Switch theme" title="Switch theme"><span id="themeIcon"></span><span class="tl" id="themeLbl">Light</span></button>
   </div>
@@ -249,7 +280,7 @@ html { scroll-behavior: smooth; }
 
   <section class="panel doc seo"><h2>Read next</h2><ul class="artlist"><li><a href="/send-documents-as-one-pdf-for-job-applications">How to send all documents as one PDF</a></li><li><a href="/how-to-convert-pdf-table-to-excel">How to convert a PDF table to Excel</a></li><li><a href="/how-to-add-text-to-a-pdf-form">How to fill a PDF form on your phone</a></li></ul></section>
 
-  <section class="panel doc seo"><h2>PDF tools</h2><ul class="toolslist"><li><a href="/scan-to-pdf">Scan to PDF</a></li><li><a href="/text-to-pdf">Text to PDF</a></li><li><a href="/merge-pdf">Merge PDF</a></li><li><a href="/split-pdf">Split PDF</a></li><li><a href="/remove-pdf-pages">Remove pages</a></li><li><a href="/rotate-pdf">Rotate PDF</a></li><li><a href="/compress-pdf">Compress PDF</a></li><li><a href="/edit-pdf">Edit PDF</a></li><li><a href="/protect-pdf">Protect PDF</a></li><li><a href="/photos-to-pdf">Photos to PDF</a></li><li><a href="/word-to-pdf">Word to PDF</a></li><li><a href="/excel-to-pdf">Excel to PDF</a></li><li><a href="/pdf-to-excel">PDF to Excel</a></li><li><a href="/pdf-to-word">PDF to Word</a></li></ul></section>
+  <section class="panel doc seo"><h2>PDF tools</h2><ul class="toolslist"><li><a href="/scan-to-pdf">Scan to PDF</a></li><li><a href="/text-to-pdf">Text to PDF</a></li><li><a href="/merge-pdf">Merge PDF</a></li><li><a href="/split-pdf">Split PDF</a></li><li><a href="/remove-pdf-pages">Remove pages</a></li><li><a href="/rotate-pdf">Rotate PDF</a></li><li><a href="/compress-pdf">Compress PDF</a></li><li><a href="/edit-pdf">Edit PDF</a></li><li><a href="/protect-pdf">Protect PDF</a></li><li><a href="/photos-to-pdf">Photos to PDF</a></li><li><a href="/word-to-pdf">Word to PDF</a></li><li><a href="/excel-to-pdf">Excel to PDF</a></li><li><a href="/pdf-to-excel">PDF to Excel</a></li><li><a href="/pdf-to-word">PDF to Word</a></li><li><a href="/qr-code-generator">QR Code</a></li></ul></section>
 
   <nav class="fnav" aria-label="Sections"><a href="/">All tools</a><a href="/articles">Articles</a><a href="/#guides">Guides</a><a href="/about">About</a><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms</a><a href="/contact">Contact</a></nav>
 
@@ -263,6 +294,52 @@ html { scroll-behavior: smooth; }
   <a href="/contact" data-sec="contact"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg>Contact</a>
 </nav>
 <script>
+window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "k": "home tools"}, {"t": "Scan to PDF", "u": "/scan-to-pdf", "d": "Scan documents to PDF with your phone camera. Removes shadows, keeps colour, lets you crop each page. Free, no sign up, files never uploaded.", "k": "camera scanner document photo scan tool"}, {"t": "Text to PDF", "u": "/text-to-pdf", "d": "Type or paste text and save it as a PDF. Works with English and Hindi. Free, no sign up, and nothing is uploaded.", "k": "type write note letter hindi tool"}, {"t": "Merge PDF", "u": "/merge-pdf", "d": "Combine several PDF files into one in the order you choose. Free, no sign up, and your files never leave your device.", "k": "combine join pdf files one tool"}, {"t": "Split PDF", "u": "/split-pdf", "d": "Extract chosen pages from a PDF, or save every page as its own file. Free, no sign up, and nothing is uploaded.", "k": "extract pages separate cut tool"}, {"t": "Remove pages", "u": "/remove-pdf-pages", "d": "Delete unwanted pages from a PDF in seconds. Free, no sign up, and your file is never uploaded.", "k": "delete pages blank tool"}, {"t": "Rotate PDF", "u": "/rotate-pdf", "d": "Turn PDF pages left or right with a preview of every page. Free, no sign up, and your file never leaves your device.", "k": "turn sideways upside down tool"}, {"t": "Compress PDF", "u": "/compress-pdf", "d": "Make a PDF smaller for email, WhatsApp or online forms. Three levels, shows the new size, free, no sign up, and your file is never uploaded.", "k": "reduce size smaller shrink kb mb 100kb 200kb 500kb upload form tool"}, {"t": "Edit PDF", "u": "/edit-pdf", "d": "Change text in a PDF, add your signature, write, draw, highlight or cover text. Free, no sign up, and your file stays on your device.", "k": "change text sign signature fill form draw highlight tool"}, {"t": "Protect PDF", "u": "/protect-pdf", "d": "Lock a PDF with a password so only people who know it can open it. Strong AES 256 encryption, free, no sign up, and your file never leaves your device.", "k": "password lock secure encrypt tool"}, {"t": "Photos to PDF", "u": "/photos-to-pdf", "d": "Turn JPG, PNG or WebP photos into one PDF, one photo per page. Free, no sign up, and nothing is uploaded.", "k": "jpg png image picture convert tool"}, {"t": "Word to PDF", "u": "/word-to-pdf", "d": "Convert a Word (.docx) file to PDF in your browser. Free, no sign up, and your document is never uploaded.", "k": "docx doc convert tool"}, {"t": "Excel to PDF", "u": "/excel-to-pdf", "d": "Convert Excel (.xlsx, .xls) or CSV files to PDF, one section per sheet. Free, no sign up, and nothing is uploaded.", "k": "xlsx csv sheet convert tool"}, {"t": "PDF to Excel", "u": "/pdf-to-excel", "d": "Pull tables and text from a PDF or a photo into an Excel file. Reads scanned pages with OCR in English and Hindi. Free and private.", "k": "table ocr convert xlsx tool"}, {"t": "PDF to Word", "u": "/pdf-to-word", "d": "Turn a PDF or a photo into an editable Word file. Reads scans with OCR in English and Hindi. Free, no sign up, and private.", "k": "docx ocr editable convert tool"}, {"t": "QR Code", "u": "/qr-code-generator", "d": "Make a QR code from any link or text and save it as PNG or SVG. Free, no sign up, and everything happens on your device.", "k": "qr barcode link scan generate code tool"}, {"t": "PDF guides and articles", "u": "/articles", "d": "How to guides for everyday PDF jobs", "k": "articles blog help how to"}, {"t": "How to merge PDF files on your phone", "u": "/how-to-merge-pdf-files-on-phone", "d": "Learn how to combine several PDF files into one on Android or iPhone without installing an app. Step by step, free, and private.", "k": "guide article how to"}, {"t": "How to compress a PDF without losing quality", "u": "/how-to-compress-pdf-without-losing-quality", "d": "Make a PDF smaller for email, WhatsApp or online forms. Learn what changes the size of a PDF and how to compress it free on your phone.", "k": "guide article how to"}, {"t": "Reduce PDF size for online forms and uploads", "u": "/reduce-pdf-size-for-online-forms", "d": "Upload failed because the file is too big? Learn how to bring a PDF under a form's size limit using free tools on your phone.", "k": "guide article how to"}, {"t": "How to convert photos to PDF on your phone", "u": "/convert-photos-to-pdf-on-android", "d": "Turn JPG or PNG photos into one PDF file on your phone. No app needed, free, and your photos stay private.", "k": "guide article how to"}, {"t": "How to scan documents to PDF with your phone", "u": "/scan-documents-to-pdf-with-phone", "d": "Use your phone camera as a scanner. Remove shadows, crop pages and save a clean PDF. Free and private, no app needed.", "k": "guide article how to"}, {"t": "How to password protect a PDF", "u": "/how-to-password-protect-a-pdf", "d": "Lock a PDF with a password before you share it. Learn how password protection works and how to do it free, without uploading your file.", "k": "guide article how to"}, {"t": "How to split a PDF and extract pages", "u": "/how-to-split-pdf-and-extract-pages", "d": "Pull out only the pages you need from a PDF, or save every page as its own file. Free, private and works on your phone.", "k": "guide article how to"}, {"t": "How to rotate PDF pages", "u": "/how-to-rotate-pdf-pages", "d": "Fix sideways or upside down PDF pages and save the corrected file. Free, with a preview of every page.", "k": "guide article how to"}, {"t": "How to convert Word to PDF", "u": "/how-to-convert-word-to-pdf", "d": "Turn a Word (.docx) file into a PDF that looks the same on every device. Free and private, nothing is uploaded.", "k": "guide article how to"}, {"t": "How to convert Excel to PDF", "u": "/how-to-convert-excel-to-pdf", "d": "Turn an Excel or CSV spreadsheet into a PDF anyone can open. Free, private and works on your phone.", "k": "guide article how to"}, {"t": "How to convert PDF to Word", "u": "/how-to-convert-pdf-to-word", "d": "Get the text out of a PDF, even a scan, into a Word file you can edit. Works in English and Hindi, free and private.", "k": "guide article how to"}, {"t": "How to sign a PDF on your phone", "u": "/how-to-sign-a-pdf-on-your-phone", "d": "Add your signature, text and dates to a PDF on your phone. No printer, no scanner and no app needed.", "k": "guide article how to"}, {"t": "How to remove pages from a PDF", "u": "/how-to-remove-pages-from-a-pdf", "d": "Delete blank, duplicate or private pages from a PDF and save a clean copy. Free and nothing is uploaded.", "k": "guide article how to"}, {"t": "Are online PDF tools safe to use?", "u": "/are-online-pdf-tools-safe", "d": "Many PDF websites upload your files to a server. Learn the risks, how to spot safer tools, and what to do with private documents.", "k": "guide article how to"}, {"t": "PDF vs JPG: which one should you use?", "u": "/pdf-vs-jpg-which-format-to-use", "d": "Understand the difference between PDF and JPG, when each is better, and how to convert between them for forms and sharing.", "k": "guide article how to"}, {"t": "How to make a resume PDF that looks professional", "u": "/how-to-make-a-resume-pdf", "d": "Save your resume as a clean PDF that opens the same on every phone and computer. Tips on file name, size and layout.", "k": "guide article how to"}, {"t": "How to send all documents as one PDF", "u": "/send-documents-as-one-pdf-for-job-applications", "d": "Combine resume, certificates and ID proof into a single tidy PDF for job and college applications. Free, on your phone.", "k": "guide article how to"}, {"t": "How to convert a PDF table to Excel", "u": "/how-to-convert-pdf-table-to-excel", "d": "Move a table from a PDF or a photo into Excel so you can sort and calculate. Reads scans with OCR, free and private.", "k": "guide article how to"}, {"t": "How to fill a PDF form on your phone", "u": "/how-to-add-text-to-a-pdf-form", "d": "Type your answers on top of a PDF form, add ticks and a date, and save the filled form. Free, no app needed.", "k": "guide article how to"}, {"t": "How to send a large PDF on WhatsApp and email", "u": "/how-to-send-large-pdf-on-whatsapp-and-email", "d": "PDF too big to send? Learn how to shrink it, split it or share it in parts so it goes through on WhatsApp and email.", "k": "guide article how to"}, {"t": "How to turn text into a PDF", "u": "/text-to-pdf-write-notes-and-letters", "d": "Type or paste text and save it as a neat A4 PDF. Works for English and Hindi. Free and private.", "k": "guide article how to"}, {"t": "How to edit text in a PDF", "u": "/how-to-edit-text-in-a-pdf", "d": "Change a name, date or number in a PDF without special software. Learn how to edit PDF text online for free and what limits to expect.", "k": "guide article how to"}, {"t": "How to make a QR code for a link", "u": "/how-to-make-a-qr-code-for-a-link", "d": "Create a QR code for a website, WhatsApp link or any text, test it, and print or share it. Simple steps and tips for scannable codes.", "k": "guide article how to"}, {"t": "About Invatek", "u": "/about", "d": "Invatek is a set of free PDF tools that work in your browser. Learn who we are and how your files stay private.", "k": "legal info"}, {"t": "Privacy Policy", "u": "/privacy-policy", "d": "How Invatek handles your files, cookies and advertising. Your files are processed in your browser and are not uploaded.", "k": "legal info"}, {"t": "Terms of Use", "u": "/terms", "d": "The terms for using Invatek's free PDF tools.", "k": "legal info"}, {"t": "Contact Invatek", "u": "/contact", "d": "How to reach Invatek for help, feedback or tool requests.", "k": "legal info"}];
+
+(function () {
+  var D = window.INV_INDEX || [], btn = document.getElementById("searchBtn"); if (!btn) return;
+  var STOP = { a: 1, an: 1, the: 1, to: 1, of: 1, for: 1, in: 1, on: 1, my: 1, how: 1, do: 1, i: 1, and: 1, is: 1, it: 1, me: 1, with: 1 };
+  var box = null, inp = null, list = null, lastFocus = null;
+  function words(q) { return (q || "").toLowerCase().split(/[^a-z0-9\u0900-\u097f]+/).filter(function (w) { return w && !STOP[w]; }); }
+  function rank(q) {
+    var ws = words(q); if (!ws.length) return [];
+    return D.map(function (e) {
+      var t = e.t.toLowerCase(), h = t + " " + (e.k || "").toLowerCase() + " " + (e.d || "").toLowerCase(), sc = 0;
+      ws.forEach(function (w) { if (t.indexOf(w) >= 0) sc += 3; else if (h.indexOf(w) >= 0) sc += 1; });
+      return { e: e, s: sc };
+    }).filter(function (r) { return r.s > 0; }).sort(function (a, b) { return b.s - a.s; }).slice(0, 8).map(function (r) { return r.e; });
+  }
+  function show(q) {
+    list.innerHTML = "";
+    var items = q.trim() ? rank(q) : D.filter(function (e) { return ["/compress-pdf", "/merge-pdf", "/scan-to-pdf", "/qr-code-generator", "/protect-pdf"].indexOf(e.u) >= 0; });
+    if (!items.length) { var li0 = document.createElement("li"); li0.className = "srchhint"; li0.textContent = "No match. Try a word like compress, merge, scan, password or QR."; list.appendChild(li0); return; }
+    if (!q.trim()) { var h = document.createElement("li"); h.className = "srchhint"; h.textContent = "Popular tools"; list.appendChild(h); }
+    items.forEach(function (e) {
+      var li = document.createElement("li"), a = document.createElement("a"), b = document.createElement("b"), s = document.createElement("small");
+      a.href = e.u; b.textContent = e.t; s.textContent = e.d; a.appendChild(b); a.appendChild(s); li.appendChild(a); list.appendChild(li);
+    });
+  }
+  function close() { if (box) { box.remove(); box = null; document.body.style.overflow = ""; if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch (e) {} } } }
+  function open() {
+    if (box) return; lastFocus = document.activeElement;
+    box = document.createElement("div"); box.className = "srch"; box.setAttribute("role", "dialog"); box.setAttribute("aria-modal", "true"); box.setAttribute("aria-label", "Search");
+    var card = document.createElement("div"); card.className = "srchbox"; var row = document.createElement("div"); row.className = "srchrow";
+    inp = document.createElement("input"); inp.type = "search"; inp.setAttribute("aria-label", "Search tools and guides"); inp.autocomplete = "off"; inp.spellcheck = false; inp.setAttribute("enterkeyhint", "search");
+    inp.placeholder = "Search, e.g. compress pdf to 200 KB";
+    var x = document.createElement("button"); x.type = "button"; x.className = "btn ghost sm"; x.textContent = "Close"; x.addEventListener("click", close);
+    row.appendChild(inp); row.appendChild(x); list = document.createElement("ul"); list.className = "srchlist";
+    card.appendChild(row); card.appendChild(list); box.appendChild(card); document.body.appendChild(box); document.body.style.overflow = "hidden";
+    box.addEventListener("click", function (e) { if (e.target === box) close(); });
+    inp.addEventListener("input", function () { show(inp.value); });
+    inp.addEventListener("keydown", function (e) { if (e.key === "Enter") { var f = list.querySelector("a"); if (f) location.href = f.getAttribute("href"); } });
+    show(""); inp.focus();
+  }
+  btn.addEventListener("click", open);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") close();
+    else if (e.key === "/" && !box && !/^(INPUT|TEXTAREA|SELECT)$/.test((e.target && e.target.tagName) || "")) { e.preventDefault(); open(); }
+  });
+})();
 (function () {
   function $(id) { return document.getElementById(id); }
   var toastTimer;
