@@ -1,4 +1,5 @@
-<!doctype html><html lang="en"><head><title>Merge PDF Online Free: Combine PDF Files | Invatek</title>
+<!doctype html><html lang="en"><head>
+<meta name="monetag" content="779d3137f1779692a55c8ff906274719"><title>Merge PDF Online Free: Combine PDF Files | Invatek</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0F6B5C">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -260,6 +261,11 @@ html { scroll-behavior: smooth; }
 @media (max-width: 380px) { .qrgrid { grid-template-columns: 1fr; } }
 .qrform .slider { touch-action: pan-y; height: 28px; }
 .qrform .qrbox { min-width: 120px; min-height: 120px; }
+/* ad slot: fixed height so the page never jumps */
+.adslot { max-width: 760px; margin: 22px auto 8px; text-align: center; }
+.adlbl { display: block; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.adbox { min-height: 50px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.adbox iframe { max-width: 100%; }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Invatek Merge PDF", "url": "https://invatek.in/merge-pdf", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Are my files uploaded?", "acceptedAnswer": {"@type": "Answer", "text": "No. The merge happens inside your browser."}}, {"@type": "Question", "name": "Can I merge a password protected PDF?", "acceptedAnswer": {"@type": "Answer", "text": "Not yet. Remove the password in the app that made it, then merge."}}, {"@type": "Question", "name": "How many files can I merge?", "acceptedAnswer": {"@type": "Answer", "text": "There is no set limit, but very large files may be slow on older phones."}}]}]}</script>
 
@@ -294,6 +300,25 @@ html { scroll-behavior: smooth; }
 
   <section class="panel doc seo" id="alltools"><h2>More PDF tools</h2><ul class="toolslist"><li><a href="/scan-to-pdf">Scan to PDF</a></li><li><a href="/text-to-pdf">Text to PDF</a></li><li><a href="/split-pdf">Split PDF</a></li><li><a href="/remove-pdf-pages">Remove pages</a></li><li><a href="/rotate-pdf">Rotate PDF</a></li><li><a href="/compress-pdf">Compress PDF</a></li><li><a href="/edit-pdf">Edit PDF</a></li><li><a href="/protect-pdf">Protect PDF</a></li><li><a href="/photos-to-pdf">Photos to PDF</a></li><li><a href="/word-to-pdf">Word to PDF</a></li><li><a href="/excel-to-pdf">Excel to PDF</a></li><li><a href="/pdf-to-excel">PDF to Excel</a></li><li><a href="/pdf-to-word">PDF to Word</a></li><li><a href="/qr-code-generator">QR Code</a></li></ul></section>
 
+  <div class="adslot" id="adslot" aria-label="Advertisement"><span class="adlbl">Advertisement</span><div class="adbox" id="adbox"></div></div>
+<script>
+(function () {
+  var box = document.getElementById("adbox"), done = false;
+  function load() {
+    if (done || !box) return; done = true;
+    try {
+      var s1 = document.createElement("script"); s1.text = "atOptions = {'key':'a8ae29113e4da3424d0735fcef04b494','format':'iframe','height':50,'width':320,'params':{}};";
+      var s2 = document.createElement("script"); s2.src = "https://bauval.org/22/a8ae29113e4da3424d0735fcef04b494"; s2.async = true;
+      box.appendChild(s1); box.appendChild(s2);
+    } catch (e) {}
+  }
+  function arm() {
+    if ("IntersectionObserver" in window) { var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { io.disconnect(); load(); } }, { rootMargin: "300px" }); io.observe(box); }
+    else load();
+  }
+  if (document.readyState === "complete") setTimeout(arm, 600); else window.addEventListener("load", function () { setTimeout(arm, 600); });
+})();
+</script>
   <p class="foot">Password-protected PDFs cannot be opened here. To open a locked PDF, remove its password in the app that locked it first.</p>
 </div>
 

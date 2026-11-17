@@ -1,4 +1,5 @@
-<!doctype html><html lang="en"><head><title>About Invatek | Free PDF Tools</title>
+<!doctype html><html lang="en"><head>
+<meta name="monetag" content="779d3137f1779692a55c8ff906274719"><title>About Invatek | Free PDF Tools</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0F6B5C">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -258,6 +259,11 @@ html { scroll-behavior: smooth; }
 @media (max-width: 380px) { .qrgrid { grid-template-columns: 1fr; } }
 .qrform .slider { touch-action: pan-y; height: 28px; }
 .qrform .qrbox { min-width: 120px; min-height: 120px; }
+/* ad slot: fixed height so the page never jumps */
+.adslot { max-width: 760px; margin: 22px auto 8px; text-align: center; }
+.adlbl { display: block; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.adbox { min-height: 50px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.adbox iframe { max-width: 100%; }
 </style>
 
 </head><body>
@@ -287,6 +293,25 @@ html { scroll-behavior: smooth; }
 
   <nav class="fnav" aria-label="Sections"><a href="/">All tools</a><a href="/articles">Articles</a><a href="/#guides">Guides</a><a href="/about">About</a><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms</a><a href="/contact">Contact</a></nav>
 
+  <div class="adslot" id="adslot" aria-label="Advertisement"><span class="adlbl">Advertisement</span><div class="adbox" id="adbox"></div></div>
+<script>
+(function () {
+  var box = document.getElementById("adbox"), done = false;
+  function load() {
+    if (done || !box) return; done = true;
+    try {
+      var s1 = document.createElement("script"); s1.text = "atOptions = {'key':'a8ae29113e4da3424d0735fcef04b494','format':'iframe','height':50,'width':320,'params':{}};";
+      var s2 = document.createElement("script"); s2.src = "https://bauval.org/22/a8ae29113e4da3424d0735fcef04b494"; s2.async = true;
+      box.appendChild(s1); box.appendChild(s2);
+    } catch (e) {}
+  }
+  function arm() {
+    if ("IntersectionObserver" in window) { var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { io.disconnect(); load(); } }, { rootMargin: "300px" }); io.observe(box); }
+    else load();
+  }
+  if (document.readyState === "complete") setTimeout(arm, 600); else window.addEventListener("load", function () { setTimeout(arm, 600); });
+})();
+</script>
   <p class="foot">Password-protected PDFs cannot be opened here. To open a locked PDF, remove its password in the app that locked it first.</p>
 </div>
 
