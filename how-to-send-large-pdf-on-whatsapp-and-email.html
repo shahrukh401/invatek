@@ -1,5 +1,4 @@
-<!doctype html><html lang="en"><head>
-<meta name="monetag" content="779d3137f1779692a55c8ff906274719"><title>How to Send a Large PDF on WhatsApp and Email</title>
+<!doctype html><html lang="en"><head><title>How to Send a Large PDF on WhatsApp and Email</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0F6B5C">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -259,11 +258,21 @@ html { scroll-behavior: smooth; }
 @media (max-width: 380px) { .qrgrid { grid-template-columns: 1fr; } }
 .qrform .slider { touch-action: pan-y; height: 28px; }
 .qrform .qrbox { min-width: 120px; min-height: 120px; }
-/* ad slot: fixed height so the page never jumps */
-.adslot { max-width: 760px; margin: 22px auto 8px; text-align: center; }
 .adlbl { display: block; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
-.adbox { min-height: 50px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.adbox iframe { max-width: 100%; }
+/* support + sponsor boxes */
+.support { max-width: 760px; margin: 26px auto 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.scard { border: 1px solid var(--line); border-radius: 16px; padding: 16px; text-align: center; background: var(--surface); display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 0; }
+.scard p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.scard .stitle { color: var(--fg); font-weight: 700; font-size: 16px; }
+.scard small { color: var(--muted); font-size: 12px; }
+.upiqr { width: 100%; max-width: 200px; height: auto; aspect-ratio: 1; background: #fff; border-radius: 12px; padding: 6px; object-fit: contain; }
+.sponsor { border: 2px dashed var(--accent); justify-content: center; position: relative; min-height: 200px; }
+.sponsor .adlbl { position: absolute; top: 8px; left: 12px; margin: 0; }
+.sponsorbox { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; }
+.sponsorbox .btn { max-width: 100%; white-space: normal; word-break: break-all; text-decoration: none; }
+.sponsorimg { max-width: 100%; max-height: 180px; height: auto; border-radius: 10px; display: block; margin: 0 auto; }
+@media (max-width: 640px) { .support { grid-template-columns: 1fr; } .sponsor { min-height: 150px; } }
+p a, .foot a { overflow-wrap: anywhere; }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "How to send a large PDF on WhatsApp and email", "description": "PDF too big to send? Learn how to shrink it, split it or share it in parts so it goes through on WhatsApp and email.", "datePublished": "2026-11-11", "dateModified": "2026-11-11", "inLanguage": "en", "author": {"@type": "Organization", "name": "Invatek"}, "publisher": {"@type": "Organization", "name": "Invatek", "logo": {"@type": "ImageObject", "url": "https://invatek.in/icon-512.png"}}, "mainEntityOfPage": "https://invatek.in/how-to-send-large-pdf-on-whatsapp-and-email"}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does WhatsApp compress PDFs?", "acceptedAnswer": {"@type": "Answer", "text": "Documents are sent as files, so they are not reduced like photos. Make the file smaller yourself first."}}, {"@type": "Question", "name": "Should I share a link instead?", "acceptedAnswer": {"@type": "Answer", "text": "For very large files, a cloud storage link can be easier. Make sure only the right people can open it."}}]}]}</script>
 
@@ -290,37 +299,20 @@ html { scroll-behavior: smooth; }
 
   <nav class="fnav" aria-label="Sections"><a href="/">All tools</a><a href="/articles">Articles</a><a href="/#guides">Guides</a><a href="/about">About</a><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms</a><a href="/contact">Contact</a></nav>
 
-  <div class="adslot" id="adslot" aria-label="Advertisement"><span class="adlbl">Advertisement</span><div class="adbox" id="adbox"></div></div>
+  <section class="support" aria-label="Support Invatek and advertise">
+<div class="scard"><p class="stitle">Support Invatek</p><p>Invatek is free and has no ads. If it helped you, you can support it with any amount through UPI.</p><img class="upiqr" src="/upi-qr.jpg" alt="UPI QR code to support Invatek" width="220" height="220" loading="lazy" decoding="async"><small>Scan with any UPI app</small></div>
+<div class="scard sponsor" id="sponsor"><span class="adlbl">Sponsored</span><div id="sponsorbox" class="sponsorbox"><p class="stitle">Give your ads here</p><p>Reach people who work with PDF files every day.</p><a class="btn" href="mailto:vistavibes007@gmail.com?subject=Advertise%20on%20Invatek">Contact: vistavibes007@gmail.com</a></div></div>
+</section>
 <script>
 (function () {
-  var box = document.getElementById("adbox"), done = false;
-  function load() {
-    if (done || !box) return; done = true;
-    try {
-      var s1 = document.createElement("script"); s1.text = "atOptions = {'key':'a8ae29113e4da3424d0735fcef04b494','format':'iframe','height':50,'width':320,'params':{}};";
-      var s2 = document.createElement("script"); s2.src = "https://bauval.org/22/a8ae29113e4da3424d0735fcef04b494"; s2.async = true;
-      box.appendChild(s1); box.appendChild(s2);
-    } catch (e) {}
-  }
-  function arm() {
-    if ("IntersectionObserver" in window) { var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { io.disconnect(); load(); } }, { rootMargin: "300px" }); io.observe(box); }
-    else load();
-  }
-  if (document.readyState === "complete") setTimeout(arm, 600); else window.addEventListener("load", function () { setTimeout(arm, 600); });
-})();
-</script>
-<script>
-(function () {
-  var done = false;
-  function tag(z) {
-    try { (function (s) { s.dataset.zone = z, s.src = 'https://nap5k.com/tag.min.js'; })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script'))); } catch (e) {}
-  }
-  function go() { if (done) return; done = true; tag('12284647'); setTimeout(function () { tag('12284646'); }, 15000); }
-  function arm() {
-    var t = setTimeout(go, 9000);
-    ["scroll", "touchstart", "click", "keydown"].forEach(function (ev) { window.addEventListener(ev, function () { clearTimeout(t); setTimeout(go, 1500); }, { once: true, passive: true }); });
-  }
-  if (document.readyState === "complete") arm(); else window.addEventListener("load", arm);
+  var box = document.getElementById("sponsorbox"); if (!box || !window.fetch) return;
+  fetch("/sponsor.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+    if (!d || !d.image || !/^(\/|https:\/\/)/.test(d.image)) return;
+    var img = document.createElement("img"); img.src = d.image; img.alt = d.alt || "Sponsored"; img.className = "sponsorimg"; img.loading = "lazy";
+    var node = img;
+    if (d.link && /^https:\/\//.test(d.link)) { var a = document.createElement("a"); a.href = d.link; a.target = "_blank"; a.rel = "sponsored nofollow noopener"; a.appendChild(img); node = a; }
+    box.textContent = ""; box.appendChild(node);
+  }).catch(function () {});
 })();
 </script>
   <p class="foot">Password-protected PDFs cannot be opened here. To open a locked PDF, remove its password in the app that locked it first.</p>
