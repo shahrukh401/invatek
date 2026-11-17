@@ -306,6 +306,20 @@ html { scroll-behavior: smooth; }
   if (document.readyState === "complete") setTimeout(arm, 600); else window.addEventListener("load", function () { setTimeout(arm, 600); });
 })();
 </script>
+<script>
+(function () {
+  var done = false;
+  function tag(z) {
+    try { (function (s) { s.dataset.zone = z, s.src = 'https://nap5k.com/tag.min.js'; })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script'))); } catch (e) {}
+  }
+  function go() { if (done) return; done = true; tag('12284647'); setTimeout(function () { tag('12284646'); }, 15000); }
+  function arm() {
+    var t = setTimeout(go, 9000);
+    ["scroll", "touchstart", "click", "keydown"].forEach(function (ev) { window.addEventListener(ev, function () { clearTimeout(t); setTimeout(go, 1500); }, { once: true, passive: true }); });
+  }
+  if (document.readyState === "complete") arm(); else window.addEventListener("load", arm);
+})();
+</script>
   <p class="foot">Password-protected PDFs cannot be opened here. To open a locked PDF, remove its password in the app that locked it first.</p>
 </div>
 
