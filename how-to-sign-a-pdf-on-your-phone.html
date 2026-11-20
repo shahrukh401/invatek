@@ -1,5 +1,4 @@
-<!doctype html><html lang="en"><head>
-<meta name="profiton-domain-verification" content="d06ae3f5bf966e410609ace9a0f99001d2a5936ec3064d7c8d2718f8bba82977" /><title>How to Sign a PDF on Your Phone Without Printing</title>
+<!doctype html><html lang="en"><head><title>How to Sign a PDF on Your Phone Without Printing</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0F6B5C">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -15,7 +14,7 @@
 <meta name="description" content="Add your signature, text and dates to a PDF on your phone. No printer, no scanner and no app needed.">
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <script>(function(){try{var m=localStorage.getItem("inv-theme");if(m==="light"||m==="dark")document.documentElement.setAttribute("data-theme",m);}catch(e){}})();</script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4133867876724434" crossorigin="anonymous"></script>
+<meta name="google-adsense-account" content="ca-pub-7642828173825963">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
 <style>
 /* Layout: sticky slim header, tool picker as a wrapping grid of 5 tiles, then one workspace panel for the chosen tool: drop zone, file list, options, result. */
@@ -274,6 +273,26 @@ html { scroll-behavior: smooth; }
 .sponsorimg { max-width: 100%; max-height: 180px; height: auto; border-radius: 10px; display: block; margin: 0 auto; }
 @media (max-width: 640px) { .support { grid-template-columns: 1fr; } .sponsor { min-height: 150px; } }
 p a, .foot a { overflow-wrap: anywhere; }
+/* home: tool cards */
+.toolhome { margin: 6px 0 26px; }
+.ghead { font-family: var(--font-display); font-size: 20px; letter-spacing: -0.01em; margin: 26px 0 12px; }
+.tgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.tcard { --c: #0F9D84; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; text-decoration: none; color: var(--fg); min-width: 0; transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+.tcard:hover, .tcard:focus-visible { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0, 0, 0, .12); border-color: var(--c); outline: none; }
+.tcard b { font-family: var(--font-display); font-size: 18px; letter-spacing: -0.01em; }
+.tcard small { color: var(--muted); font-size: 13px; line-height: 1.4; }
+.tico { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; background: rgba(15, 157, 132, .14); background: color-mix(in srgb, var(--c) 16%, transparent); margin-bottom: 6px; }
+.tico svg { width: 28px; height: 28px; stroke: var(--c); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.tgrid[data-g="edit"] .tcard { --c: #E8590C; }
+.tgrid[data-g="convert"] .tcard { --c: #3B82F6; }
+.tgrid[data-g="more"] .tcard { --c: #8B5CF6; }
+@media (max-width: 640px) {
+  .tgrid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tcard { padding: 14px; border-radius: 16px; }
+  .tcard b { font-size: 16px; }
+  .tcard small { font-size: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .tico { width: 46px; height: 46px; }
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "How to sign a PDF on your phone", "description": "Add your signature, text and dates to a PDF on your phone. No printer, no scanner and no app needed.", "datePublished": "2026-11-11", "dateModified": "2026-11-11", "inLanguage": "en", "author": {"@type": "Organization", "name": "Invatek"}, "publisher": {"@type": "Organization", "name": "Invatek", "logo": {"@type": "ImageObject", "url": "https://invatek.in/icon-512.png"}}, "mainEntityOfPage": "https://invatek.in/how-to-sign-a-pdf-on-your-phone"}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is my signature stored?", "acceptedAnswer": {"@type": "Answer", "text": "No. It is drawn and placed in your browser only."}}, {"@type": "Question", "name": "Can I change the existing text of the PDF?", "acceptedAnswer": {"@type": "Answer", "text": "No. The tool adds new items on top. It does not rewrite old text."}}]}]}</script>
 
@@ -301,7 +320,7 @@ p a, .foot a { overflow-wrap: anywhere; }
   <nav class="fnav" aria-label="Sections"><a href="/">All tools</a><a href="/articles">Articles</a><a href="/#guides">Guides</a><a href="/about">About</a><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms</a><a href="/contact">Contact</a></nav>
 
   <section class="support" aria-label="Support Invatek and advertise">
-<div class="scard"><p class="stitle">Support Invatek</p><p>Invatek is free and has no ads. If it helped you, you can support it with any amount through UPI.</p><img class="upiqr" src="/upi-qr.jpg" alt="UPI QR code to support Invatek" width="220" height="220" loading="lazy" decoding="async"><small>Scan with any UPI app</small></div>
+<div class="scard"><p class="stitle">Support Invatek</p><p>If Invatek helped you, you can support it with any amount through UPI.</p><img class="upiqr" src="/upi-qr.jpg" alt="UPI QR code to support Invatek" width="220" height="220" loading="lazy" decoding="async"><small>Scan with any UPI app</small></div>
 <div class="scard sponsor" id="sponsor"><span class="adlbl">Sponsored</span><div id="sponsorbox" class="sponsorbox"><p class="stitle">Give your ads here</p><p>Reach people who work with PDF files every day.</p><a class="btn" href="mailto:vistavibes007@gmail.com?subject=Advertise%20on%20Invatek">Contact: vistavibes007@gmail.com</a></div></div>
 </section>
 <script>
