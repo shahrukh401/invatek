@@ -1,0 +1,1373 @@
+<!doctype html><html lang="en"><head><title>Free Payment Receipt Generator Online: Make Receipt PDF | Invatek</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0F6B5C">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="canonical" href="https://invatek.in/payment-receipt-generator">
+<meta property="og:title" content="Free Payment Receipt Generator Online: Make Receipt PDF | Invatek">
+<meta property="og:description" content="Make a payment receipt for cash, UPI, bank transfer or cheque. Shows amount in words. Download as PDF or share on WhatsApp. Free and private.">
+<meta property="og:url" content="https://invatek.in/payment-receipt-generator">
+<meta property="og:type" content="website">
+<meta name="description" content="Make a payment receipt for cash, UPI, bank transfer or cheque. Shows amount in words. Download as PDF or share on WhatsApp. Free and private.">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>(function(){try{var m=localStorage.getItem("inv-theme");if(m==="light"||m==="dark")document.documentElement.setAttribute("data-theme",m);}catch(e){}})();</script>
+<meta name="google-adsense-account" content="ca-pub-7642828173825963">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+/* Layout: sticky slim header, tool picker as a wrapping grid of 5 tiles, then one workspace panel for the chosen tool: drop zone, file list, options, result. */
+:root {
+  --bg: #F1F4F3;
+  --surface: #FFFFFF;
+  --fg: #12201C;
+  --muted: #5A6A65;
+  --line: #D3DCD9;
+  --accent: #0F6B5C;
+  --on-accent: #FFFFFF;
+  --accent-soft: #DCEFEA;
+  --warn: #A63A12;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0C1613; --surface: #142420; --fg: #E6F0ED; --muted: #93A8A2; --line: #26403A;
+    --accent: #5FD0B5; --on-accent: #06211B; --accent-soft: #1A3A33; --warn: #FF9A70; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0C1613; --surface: #142420; --fg: #E6F0ED; --muted: #93A8A2; --line: #26403A;
+  --accent: #5FD0B5; --on-accent: #06211B; --accent-soft: #1A3A33; --warn: #FF9A70; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 16px; line-height: 1.5; margin: 0; padding: 0 0 56px;
+  -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: 26px; padding: 22px max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px)); }
+.wrap > .doc, .wrap > .fnav, .wrap > .foot { max-width: 880px; width: 100%; margin-inline: auto; }
+h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(34px, 8vw, 52px); letter-spacing: -0.035em; line-height: 1.02; margin: 0; text-wrap: balance; }
+h1 span { color: var(--accent); }
+.lead { margin: 10px 0 0; color: var(--muted); max-width: 52ch; }
+.privacy { display: inline-block; margin-top: 12px; font-size: 13px; font-weight: 600; background: var(--accent-soft); color: var(--accent); padding: 5px 12px; border-radius: 99px; }
+
+.tools { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.tool { text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.tool b { font-family: var(--font-display); font-size: 18px; letter-spacing: -0.01em; }
+.tool small { color: var(--muted); font-size: 13px; line-height: 1.35; }
+.tool[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+.tool svg { width: 26px; height: 26px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; margin-bottom: 4px; }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.panel h2 { margin: 0; font-family: var(--font-display); font-size: 24px; letter-spacing: -0.02em; }
+.panel p.sub { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+.drop { border: 2px dashed var(--line); border-radius: 14px; padding: 26px 16px; text-align: center; background: var(--bg); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.drop.over { border-color: var(--accent); background: var(--accent-soft); }
+.drop p { margin: 0; color: var(--muted); font-size: 14px; }
+.btn { background: var(--accent); color: var(--on-accent); border: none; border-radius: 12px; padding: 12px 20px; font-weight: 600; }
+.btn.ghost { background: var(--surface); color: var(--fg); border: 1px solid var(--line); }
+.btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+.files { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.file { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; background: var(--bg); }
+.file .ext { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; background: var(--accent); color: var(--on-accent); border-radius: 6px; padding: 4px 6px; }
+.file .nm { min-width: 0; overflow-wrap: anywhere; font-weight: 500; }
+.file .meta { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+.file .acts { display: flex; gap: 4px; }
+.icon { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); font-size: 16px; line-height: 1; }
+.opts { display: flex; flex-wrap: wrap; gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 5px; flex: 1 1 220px; min-width: 0; }
+.field label, .field .lab { font-size: 13px; font-weight: 600; color: var(--muted); }
+.field input[type="text"], .field input[type="url"], .field input[type="password"], .field select { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; width: 100%; min-width: 0; }
+.field .hint { font-size: 12px; color: var(--muted); }
+.err { color: var(--warn); font-weight: 600; font-size: 14px; margin: 0; }
+.result { border: 1px solid var(--accent); background: var(--accent-soft); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.result b { font-family: var(--font-display); font-size: 18px; }
+.result .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+html { scroll-behavior: smooth; }
+.panel[id], #tools-top { scroll-margin-top: 16px; }
+.doc p, .doc ul, .doc ol { margin: 0; }
+.doc ul, .doc ol { padding-left: 22px; display: flex; flex-direction: column; gap: 6px; }
+.doc h3 { font-family: var(--font-display); font-size: 18px; margin: 10px 0 0; letter-spacing: -0.01em; }
+.doc a { color: var(--accent); }
+.doc .updated { color: var(--muted); font-size: 14px; }
+.doc details { border: 1px solid var(--line); border-radius: 12px; background: var(--bg); }
+.doc summary { cursor: pointer; padding: 12px 14px; font-weight: 600; }
+.doc .gbody { padding: 0 14px 14px; display: flex; flex-direction: column; gap: 10px; }
+.doc .gbody h3:first-child { margin-top: 0; }
+.topnav { margin-top: -8px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+.tgroup { grid-column: 1 / -1; margin: 6px 0 0; font-family: var(--font-body); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+[hidden] { display: none !important; }
+
+.hint { margin: 0; color: var(--muted); font-size: 13px; }
+.btn.sm { padding: 7px 12px; font-size: 14px; border-radius: 10px; }
+.rotwrap, .editor { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.rotbar, .etools, .eopts, .enav { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.thumb { border: 1px solid var(--line); border-radius: 12px; background: var(--bg); padding: 10px; display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 0; }
+.timg { width: 100%; height: 150px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--surface); border-radius: 8px; }
+.timg img { max-width: 140px; max-height: 140px; width: auto; height: auto; box-shadow: 0 1px 4px rgba(0,0,0,0.25); background: #fff; transition: transform 0.2s; }
+.tlab { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; text-align: center; }
+.trow { display: flex; gap: 8px; }
+.trow .icon { width: 44px; height: 38px; font-size: 20px; }
+.etool { border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; background: var(--surface); font-weight: 600; font-size: 14px; }
+.etool[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.swatches { display: flex; gap: 6px; }
+.swatch { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--line); padding: 0; }
+.swatch[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--accent); }
+.eopts select { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px; }
+.sigpad { display: flex; flex-direction: column; gap: 8px; }
+.sigcanvas { width: 100%; max-width: 420px; aspect-ratio: 3 / 1; background: #fff; border: 1px dashed var(--line); border-radius: 10px; touch-action: none; }
+.stagewrap { overflow-x: auto; max-width: 100%; }
+.stage { position: relative; margin: 0 auto; background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,0.3); max-width: 100%; }
+.stage .bg { display: block; }
+.stage .ov { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; }
+.stage .ov[data-tool="move"] { cursor: default; }
+.stage .ov g.ann { pointer-events: none; }
+.stage .ov[data-tool="move"] g.ann { pointer-events: all; cursor: move; touch-action: none; }
+.stage .tin { position: absolute; z-index: 2; font-family: Helvetica, Arial, sans-serif; line-height: 1.2; background: rgba(255,255,255,0.85); border: 1px dashed #1A73E8; outline: none; padding: 0; margin: 0; resize: none; min-width: 120px; overflow: hidden; field-sizing: content; }
+.fnav { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14px; }
+.fnav a { color: var(--accent); font-weight: 600; }
+.foot { color: var(--muted); font-size: 13px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* ---- app bar, theme button, bottom tabs, tablet and desktop layout ---- */
+.appbar { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--surface) 90%, transparent); -webkit-backdrop-filter: saturate(1.4) blur(10px); backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid var(--line); padding: calc(8px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) 8px max(16px, env(safe-area-inset-left, 0px));
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--fg); font-family: var(--font-display); font-weight: 800; font-size: 20px; letter-spacing: -0.02em; }
+.brand img { width: 30px; height: 30px; border-radius: 8px; display: block; }
+.barbtns { display: flex; align-items: center; gap: 8px; }
+.themebtn { display: inline-flex; align-items: center; gap: 6px; height: 38px; min-width: 38px; padding: 0 10px; justify-content: center; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); font-weight: 600; font-size: 14px; }
+.themebtn svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.themebtn .tl { display: none; }
+.tool, .btn, .etool, .icon, .themebtn { transition: transform .12s ease, background-color .15s ease, border-color .15s ease; }
+.tool:active, .btn:active, .etool:active, .icon:active, .themebtn:active { transform: scale(.97); }
+.tool { border-radius: 18px; }
+.tabbar { display: none; }
+.wrap > .fnav.topnav { max-width: none; margin-inline: 0; }
+@media (max-width: 899px) {
+  body { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+  .topnav { display: none; }
+  .tabbar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; background: color-mix(in srgb, var(--surface) 94%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    border-top: 1px solid var(--line); padding: 6px max(8px, env(safe-area-inset-right, 0px)) calc(6px + env(safe-area-inset-bottom, 0px)) max(8px, env(safe-area-inset-left, 0px)); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 4px; border-radius: 14px; text-decoration: none; color: var(--muted); font-size: 12px; font-weight: 600; }
+  .tabbar a svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .tabbar a.on { color: var(--accent); background: var(--accent-soft); }
+  .panel .btn, .drop .btn { min-height: 46px; }
+}
+@media (min-width: 600px) {
+  .themebtn .tl { display: inline; }
+  .tools { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .tool { padding: 18px; }
+  .tool svg { width: 30px; height: 30px; }
+  .panel { padding: 26px; border-radius: 22px; }
+}
+@media (min-width: 900px) {
+  .appgrid { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 22px; align-items: start; }
+  .appgrid .tools { grid-template-columns: 1fr; gap: 8px; position: sticky; top: 76px; max-height: calc(100vh - 92px); overflow-y: auto; padding-right: 2px; }
+  .appgrid .tool { display: grid; grid-template-columns: 34px 1fr; column-gap: 12px; align-items: center; padding: 12px 14px; border-radius: 14px; }
+  .appgrid .tool svg { grid-row: 1 / span 2; margin: 0; width: 28px; height: 28px; }
+  .appgrid .tool small { display: none; }
+  .appgrid .tool b { font-size: 16px; }
+  .appgrid .tool:hover { border-color: var(--accent); }
+  .appgrid .panel { min-height: 420px; }
+}
+
+.file.scanrow { grid-template-columns: auto 1fr; align-items: start; }
+.file.scanrow .sbox { grid-row: 1 / span 2; }
+.file.scanrow .acts { grid-column: 2; flex-wrap: wrap; margin-top: 4px; }
+.sbox { width: 56px; height: 72px; border-radius: 8px; overflow: hidden; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; }
+.sbox img { max-width: 100%; max-height: 100%; display: block; transition: transform .2s; }
+.field textarea { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; width: 100%; min-width: 0; resize: vertical; line-height: 1.5; }
+.modal { position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; padding: 12px; overflow-y: auto; }
+.modal .box { background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 20px; padding: 18px; max-width: 600px; width: 100%; display: flex; flex-direction: column; gap: 12px; max-height: 100%; }
+.modal h2 { margin: 0; font-family: var(--font-display); font-size: 20px; letter-spacing: -0.02em; }
+.cstage { position: relative; margin: 0 auto; overflow: hidden; touch-action: none; background: #222; user-select: none; -webkit-user-select: none; max-width: 100%; }
+.cstage canvas { display: block; }
+.csel { position: absolute; border: 2px solid #fff; box-shadow: 0 0 0 9999px rgba(0,0,0,0.55); touch-action: none; cursor: move; }
+.ch { position: absolute; width: 28px; height: 28px; margin: -14px 0 0 -14px; background: var(--accent); border: 3px solid #fff; border-radius: 50%; touch-action: none; }
+.crow { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.totop { position: fixed; right: 16px; bottom: calc(88px + env(safe-area-inset-bottom, 0px)); z-index: 35; width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--accent); color: var(--on-accent); box-shadow: 0 2px 10px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; padding: 0; }
+.totop svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(96px + env(safe-area-inset-bottom, 0px)); z-index: 120; background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 12px; font-size: 14px; font-weight: 600; max-width: calc(100vw - 32px); box-shadow: 0 2px 12px rgba(0,0,0,0.35); }
+@media (min-width: 900px) { .totop { bottom: 24px; right: 24px; } .toast { bottom: 28px; } }
+.modal.full { padding: 0; align-items: stretch; }
+.vbox { background: var(--bg); width: 100%; height: 100%; display: flex; flex-direction: column; min-height: 0; }
+.vtop { display: flex; align-items: center; gap: 8px; padding: calc(10px + env(safe-area-inset-top, 0px)) 12px 10px; background: var(--surface); border-bottom: 1px solid var(--line); }
+.vtop b { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-display); }
+.vpages2 { flex: 1; min-height: 0; overflow: auto; padding: 12px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; -webkit-overflow-scrolling: touch; }
+.vpage2 { margin: 0 auto; flex: none; background: #fff; color: #667; box-shadow: 0 1px 6px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; font-size: 13px; }
+@media (display-mode: standalone) {
+  body { -webkit-user-select: none; user-select: none; }
+  input, textarea, .doc, .doc * { -webkit-user-select: text; user-select: text; }
+  .privacy { display: none; }
+}
+
+.pg h1 { font-size: clamp(26px, 6vw, 38px); letter-spacing: -0.03em; }
+.pg .lead { max-width: 60ch; }
+.seo h2 { font-size: 22px; }
+.seo .faq p { margin-top: 2px; }
+.toolslist { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; padding: 0 !important; list-style: none; }
+.toolslist a { display: block; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); font-weight: 600; text-decoration: none; }
+.artlist { list-style: none; padding: 0 !important; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; }
+.artlist a { display: block; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); font-weight: 600; text-decoration: none; }
+.cta { display: inline-block; align-self: flex-start; background: var(--accent); color: var(--on-accent) !important; text-decoration: none; font-weight: 700; padding: 12px 18px; border-radius: 12px; }
+.meta { color: var(--muted); font-size: 13px; }
+/* phone and tablet: one row of tool chips so the tool panel is right below */
+@media (max-width: 899px) {
+  .appgrid { display: flex; flex-direction: column; gap: 14px; }
+  .appgrid .tools { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 8px; padding: 2px 2px 8px; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .appgrid .tools::-webkit-scrollbar { display: none; }
+  .appgrid .tgroup { display: none; }
+  .appgrid .tool { flex: 0 0 auto; flex-direction: row; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 999px; scroll-snap-align: start; }
+  .appgrid .tool svg { margin: 0; width: 20px; height: 20px; }
+  .appgrid .tool b { font-size: 14px; white-space: nowrap; }
+  .appgrid .tool small { display: none; }
+}
+/* site search */
+.srch { position: fixed; inset: 0; z-index: 90; background: rgba(0, 0, 0, .45); display: flex; align-items: flex-start; justify-content: center; padding: max(16px, env(safe-area-inset-top, 0px)) 12px 12px; }
+.srchbox { width: min(640px, 100%); max-height: calc(100vh - 32px); display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 18px 50px rgba(0, 0, 0, .35); overflow: hidden; }
+.srchrow { display: flex; gap: 8px; align-items: center; padding: 12px; border-bottom: 1px solid var(--line); }
+.srchrow input { flex: 1; min-width: 0; font: inherit; font-size: 16px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
+.srchlist { list-style: none; margin: 0; padding: 6px; overflow-y: auto; }
+.srchlist a { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 10px; text-decoration: none; color: var(--fg); }
+.srchlist a:hover, .srchlist a:focus { background: var(--accent-soft); outline: none; }
+.srchlist small { color: var(--muted); font-size: 13px; line-height: 1.35; }
+.srchhint { padding: 8px 12px 10px; color: var(--muted); font-size: 13px; }
+.slider { width: 100%; accent-color: var(--accent); margin: 6px 0 0; }
+.sliderlbl { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+/* QR layout, mobile friendly */
+.qrform { flex-direction: column; flex-wrap: nowrap; gap: 14px; }
+.qrform .field { flex: none; width: 100%; }
+.qrform .qrbox { margin: 0 auto; padding: 14px; background: #fff; border: 1px solid var(--line); border-radius: 16px; width: fit-content; max-width: 100%; line-height: 0; }
+.qrform .qrbox[hidden] { display: none; }
+.qrform .qrcanvas { width: 260px; transition: width .08s; max-width: 100%; height: auto; aspect-ratio: 1; display: block; }
+.qrform .qrmsg { text-align: center; margin: -4px 0 0; }
+.qrgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.qrgrid .field { min-width: 0; }
+.qrinfo { font-size: 13px; color: var(--muted); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+.qrinfo summary { cursor: pointer; font-weight: 600; color: var(--fg); }
+.qrinfo p { margin: 8px 0 0; line-height: 1.5; }
+.qrbtns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.qrbtns .btn { width: 100%; justify-content: center; padding-left: 8px; padding-right: 8px; }
+.qrform textarea { font-size: 16px; }
+@media (max-width: 380px) { .qrgrid { grid-template-columns: 1fr; } }
+.qrform .slider { touch-action: pan-y; height: 28px; }
+.qrform .qrbox { min-width: 120px; min-height: 120px; }
+.adlbl { display: block; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+/* support + sponsor boxes */
+.support { max-width: 760px; margin: 26px auto 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.scard { border: 1px solid var(--line); border-radius: 16px; padding: 16px; text-align: center; background: var(--surface); display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 0; }
+.scard p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.scard .stitle { color: var(--fg); font-weight: 700; font-size: 16px; }
+.scard small { color: var(--muted); font-size: 12px; }
+.upiqr { width: 100%; max-width: 200px; height: auto; aspect-ratio: 1; background: #fff; border-radius: 12px; padding: 6px; object-fit: contain; }
+.sponsor { border: 2px dashed var(--accent); justify-content: center; position: relative; min-height: 200px; }
+.sponsor .adlbl { position: absolute; top: 8px; left: 12px; margin: 0; }
+.sponsorbox { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; }
+.sponsorbox .btn { max-width: 100%; white-space: normal; word-break: break-all; text-decoration: none; }
+.sponsorimg { max-width: 100%; max-height: 180px; height: auto; border-radius: 10px; display: block; margin: 0 auto; }
+@media (max-width: 640px) { .support { grid-template-columns: 1fr; } .sponsor { min-height: 150px; } }
+p a, .foot a { overflow-wrap: anywhere; }
+/* home: tool cards */
+.toolhome { margin: 6px 0 26px; }
+.ghead { font-family: var(--font-display); font-size: 20px; letter-spacing: -0.01em; margin: 26px 0 12px; }
+.tgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.tcard { --c: #0F9D84; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; text-decoration: none; color: var(--fg); min-width: 0; transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+.tcard:hover, .tcard:focus-visible { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0, 0, 0, .12); border-color: var(--c); outline: none; }
+.tcard b { font-family: var(--font-display); font-size: 18px; letter-spacing: -0.01em; }
+.tcard small { color: var(--muted); font-size: 13px; line-height: 1.4; }
+.tico { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; background: rgba(15, 157, 132, .14); background: color-mix(in srgb, var(--c) 16%, transparent); margin-bottom: 6px; }
+.tico svg { width: 28px; height: 28px; stroke: var(--c); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.tgrid[data-g="edit"] .tcard { --c: #E8590C; }
+.tgrid[data-g="convert"] .tcard { --c: #3B82F6; }
+.tgrid[data-g="more"] .tcard { --c: #8B5CF6; }
+@media (max-width: 640px) {
+  .tgrid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tcard { padding: 14px; border-radius: 16px; }
+  .tcard b { font-size: 16px; }
+  .tcard small { font-size: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .tico { width: 46px; height: 46px; }
+}
+.tgrid[data-g="image"] .tcard { --c: #D6336C; }
+
+/* two main tabs: PDF tools / Invoice */
+.modetabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; max-width: 460px; width: 100%; margin-inline: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; }
+.modetabs a { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 10px; border-radius: 12px; font-weight: 700; font-size: 15px; text-decoration: none; color: var(--muted); text-align: center; }
+.modetabs a svg { width: 19px; height: 19px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.modetabs a.on { background: var(--accent); color: var(--on-accent); }
+.modetabs a:not(.on):hover { background: var(--accent-soft); color: var(--accent); }
+.tgrid[data-g="biz"] .tcard { --c: #0E9AA7; }
+
+@media (max-width: 899px) { .modetabs { display: none; } }
+</style>
+<style>/* Invatek Business app */
+body.bzpage .wrap { max-width: 1280px; }
+body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot { max-width: 880px; }
+.bz { scroll-margin-top: 66px; display: grid; grid-template-columns: 188px minmax(0, 1fr); gap: 16px; align-items: start; }
+.bz button { font: inherit; }
+.bz-side { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 10px; position: sticky; top: 72px; display: flex; flex-direction: column; gap: 2px; }
+.bz-sh { margin: 10px 8px 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
+.bz-sh:first-child { margin-top: 4px; }
+.bz-st { display: flex; align-items: center; gap: 10px; background: none; border: 0; border-radius: 10px; padding: 9px 10px; text-align: left; font-weight: 600; font-size: 14.5px; color: var(--fg); }
+.bz-st:hover { background: var(--accent-soft); }
+.bz-st svg { width: 20px; height: 20px; flex: none; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.bz-side-note { margin: 10px 8px 4px; font-size: 12px; color: var(--muted); line-height: 1.4; }
+.bz-main { min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+.bz-bar { display: flex; gap: 8px; align-items: center; }
+.bz-tabs { display: flex; gap: 6px; overflow-x: auto; flex: 1; min-width: 0; padding: 3px 2px 6px; scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
+.bz-tab { display: flex; align-items: center; gap: 4px; flex: none; max-width: 230px; padding: 4px 4px 4px 12px; min-height: 40px; border: 1px solid var(--line); background: var(--surface); border-radius: 12px; cursor: grab; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; font-size: 14px; font-weight: 600; }
+.bz-tab.on { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+.bz-tab.drag { position: relative; z-index: 5; cursor: grabbing; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28); }
+.bz-tt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; pointer-events: none; }
+.bz-tc, .bz-x { flex: none; width: 30px; height: 30px; border: 0; border-radius: 8px; background: none; color: var(--muted); font-size: 20px; line-height: 1; }
+.bz-tc:hover, .bz-x:hover { background: var(--line); color: var(--fg); }
+.bz-newwrap { position: relative; flex: none; }
+.bz-newbtn { min-height: 40px; }
+.bz-menu { position: absolute; right: 0; top: calc(100% + 6px); z-index: 40; min-width: 210px; padding: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22); }
+.bz-menu[hidden] { display: none; }
+.bz-menu button { display: block; width: 100%; text-align: left; padding: 11px 12px; border: 0; border-radius: 8px; background: none; font-weight: 600; font-size: 15px; }
+.bz-menu button:hover { background: var(--accent-soft); }
+.bz-switch { display: none; }
+.bz-work { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr); gap: 16px; align-items: start; }
+.bz-edit { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.bz-prev { position: sticky; top: 72px; max-height: calc(100vh - 150px); overflow: auto; background: color-mix(in srgb, var(--line) 55%, var(--bg)); border: 1px solid var(--line); border-radius: 18px; padding: 12px; min-width: 0; }
+.bz-prevhead { display: flex; justify-content: flex-end; margin-bottom: 8px; }
+.bz-saved { font-size: 12px; font-weight: 600; color: var(--accent); }
+.bz-saved.warn { color: var(--warn); }
+.bz-warn { margin: 0 0 8px; padding: 8px 10px; border-radius: 10px; background: var(--accent-soft); color: var(--warn); font-size: 13px; font-weight: 600; }
+.bz-warn[hidden] { display: none; }
+.bz-pages { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.bz-page { display: block; max-width: 100%; height: auto !important; background: #fff; border-radius: 3px; box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18); }
+.bz-wait { color: var(--muted); font-size: 14px; margin: 30px 0; }
+.bz-actions { position: sticky; bottom: 8px; z-index: 20; display: flex; gap: 8px; padding: 8px; background: color-mix(in srgb, var(--surface) 94%, transparent); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 6px 22px rgba(0, 0, 0, 0.14); }
+.bz-actions .btn { flex: 1 1 0; min-height: 46px; padding: 10px 8px; }
+.bz-actions .btn:first-child { flex: 1.5 1 0; }
+.bz-sec { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.bz-sec > summary { list-style: none; cursor: pointer; padding: 14px 16px; font-weight: 700; font-size: 16px; display: flex; justify-content: space-between; align-items: center; min-height: 48px; }
+.bz-sec > summary::-webkit-details-marker { display: none; }
+.bz-sec > summary::after { content: ""; width: 9px; height: 9px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); margin-right: 4px; transition: transform 0.15s; }
+.bz-sec[open] > summary::after { transform: rotate(-135deg); }
+.bz-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; padding: 0 16px 16px; }
+.bz-f { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.bz-f.w2, .bz-full { grid-column: 1 / -1; }
+.bz-f > span, .bz-lab { font-size: 12.5px; font-weight: 600; color: var(--muted); }
+.bz-f input, .bz-f select, .bz-f textarea { width: 100%; min-width: 0; font-size: 16px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 9px 11px; min-height: 42px; }
+.bz-f textarea { resize: vertical; line-height: 1.4; }
+.bz-f input, .bz-f select, .bz-f textarea { font-family: inherit; color: var(--fg); }
+.bz-ym { display: grid; grid-template-columns: 1.4fr 1fr; gap: 6px; }
+.bz-ym select { width: 100%; font-size: 16px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 9px 8px; min-height: 42px; min-width: 0; }
+.bz-chk { display: flex; align-items: center; gap: 10px; grid-column: 1 / -1; font-size: 14.5px; font-weight: 600; min-height: 36px; }
+.bz-chk input { width: 20px; height: 20px; flex: none; accent-color: var(--accent); }
+.bz-hint { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.45; }
+.bz-hint.warn { color: var(--warn); font-weight: 600; }
+.bz-pad { padding: 0 16px 14px; display: flex; flex-direction: column; gap: 8px; }
+.bz-items { display: flex; flex-direction: column; gap: 10px; padding: 0 12px 10px; }
+.bz-item { border: 1px solid var(--line); border-radius: 14px; background: var(--bg); }
+.bz-item .bz-grid { padding: 0 12px 12px; }
+.bz-item .bz-f input, .bz-item .bz-f select, .bz-item .bz-f textarea { background: var(--surface); }
+.bz-itop { display: flex; align-items: center; gap: 8px; padding: 8px 8px 8px 12px; }
+.bz-itop b { flex: 1; font-size: 14px; }
+.bz-amt { font-weight: 700; font-size: 14px; color: var(--accent); }
+.bz-totals { padding: 12px 16px 14px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 4px; font-size: 14.5px; }
+.bz-totals > div { display: flex; justify-content: space-between; gap: 12px; }
+.bz-totals .g { font-weight: 800; font-size: 17px; color: var(--accent); }
+.bz-words { margin: 6px 0 0; font-size: 13px; color: var(--muted); }
+.bz-row2 { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) 30px; gap: 8px; align-items: end; }
+.bz-row2 .bz-x { margin-bottom: 6px; }
+.bz-addrow { align-self: flex-start; }
+.bz-logorow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.bz-logo { max-height: 44px; max-width: 120px; border-radius: 6px; background: #fff; border: 1px solid var(--line); padding: 2px; }
+.bz-tpls { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 6px; }
+.bz-tpl { position: relative; display: flex; flex-direction: column; gap: 4px; padding: 8px 8px 6px; background: #fff; color: #333; border: 1.5px solid var(--line); border-radius: 12px; text-align: center; font-size: 12px; font-weight: 700; min-height: 88px; }
+.bz-tpl.on { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+.bz-tpl i, .bz-tpl em, .bz-tpl b { display: block; border-radius: 2px; }
+.bz-tpl em { height: 3px; width: 70%; background: #ccc; }
+.bz-tpl b { height: 3px; width: 50%; background: #ddd; }
+.bz-tpl span { margin-top: auto; color: var(--fg); }
+.bz-tpl.t-classic i { height: 14px; background: var(--c); }
+.bz-tpl.t-modern i { height: 8px; background: var(--c); width: 60%; }
+.bz-tpl.t-minimal i { height: 2px; background: #111; }
+.bz-tpl.t-bold i { height: 22px; background: var(--c); }
+.bz-cols { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 6px; }
+.bz-col { width: 32px; height: 32px; border-radius: 50%; border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--line); padding: 0; }
+.bz-col.on { box-shadow: 0 0 0 2px var(--fg); }
+.bz-colpick { width: 40px; height: 34px; padding: 0; border: 1px solid var(--line); border-radius: 8px; background: none; }
+.bz-foot { display: flex; flex-wrap: wrap; gap: 8px; padding: 4px 0 8px; }
+.bz-danger { color: var(--warn) !important; }
+@media (max-width: 1100px) { .bz { grid-template-columns: 1fr; } .bz-side { display: none; } }
+@media (max-width: 899px) {
+  .bz-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+  .bz-switch button { border: 0; background: none; border-radius: 10px; min-height: 42px; font-weight: 700; color: var(--muted); }
+  .bz-switch button.on { background: var(--accent); color: var(--on-accent); }
+  .bz-work { display: block; }
+  .bz-work[data-view="edit"] .bz-prev, .bz-work[data-view="prev"] .bz-edit { display: none; }
+  .bz-prev { position: static; max-height: none; overflow: visible; padding: 8px; }
+  .bz-tpls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bz-actions { position: sticky; bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
+}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Invatek Payment Receipt Maker", "url": "https://invatek.in/payment-receipt-generator", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Do I need a revenue stamp?", "acceptedAnswer": {"@type": "Answer", "text": "Rules can differ for cash receipts. Check with your CA or local rules if you are unsure."}}, {"@type": "Question", "name": "Is it free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. No sign up and no limit."}}]}]}</script>
+
+</head><body class="bzpage">
+<div class="appbar">
+  <a class="brand" href="/" aria-label="Invatek home"><img src="icon-192.png" alt="" width="30" height="30"><span>Invatek</span></a>
+  <div class="barbtns">
+    <button type="button" class="btn sm" id="installBtn" hidden>Install app</button>
+    <button type="button" class="themebtn" id="searchBtn" aria-label="Search tools and guides" title="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><span class="tl">Search</span></button>
+    <button type="button" class="themebtn" id="shareBtn" aria-label="Share Invatek" title="Share Invatek"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.4M8.2 13.2l7.6 4.4"/></svg></button>
+    <button type="button" class="themebtn" id="themeBtn" aria-label="Switch theme" title="Switch theme"><span id="themeIcon"></span><span class="tl" id="themeLbl">Light</span></button>
+  </div>
+</div>
+<button type="button" class="totop" id="toTop" aria-label="Back to top" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg></button>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div class="wrap">
+  <nav class="modetabs" aria-label="Main sections"><a href="/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5"/></svg>PDF tools</a><a href="/invoice-generator" class="on" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16l-3-2-2 2-2-2-2 2-2-2-3 2zM8 9h8M8 13h5"/></svg>Invoice</a></nav>
+  <header class="pg"><h1>Make a payment receipt and download it as PDF</h1><p class="lead">Give a clear proof that you received a payment. Enter the amount, mode and purpose and get a neat receipt PDF.</p><span class="privacy">Nothing is uploaded. Your documents stay on this device.</span></header>
+
+  <nav class="fnav topnav" aria-label="Sections"><a href="/">All tools</a><a href="/invoice-generator">Invoice</a><a href="/articles">Articles</a><a href="/#guides">Guides</a><a href="/about">About</a><a href="/privacy-policy">Privacy</a><a href="/contact">Contact</a></nav>
+
+  <div id="tools-top"></div>
+  <div class="bz" id="bizapp"></div>
+
+  
+  <nav class="fnav" aria-label="Sections"><a href="/">All tools</a><a href="/invoice-generator">Invoice</a><a href="/articles">Articles</a><a href="/#guides">Guides</a><a href="/about">About</a><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms</a><a href="/contact">Contact</a></nav>
+
+  <section class="panel doc seo" id="about-tool"><h2>About Payment Receipt Maker</h2><p>A payment receipt is a written proof that money was received. It shows who paid, how much, how it was paid and what it was for. It also writes the amount in words, which makes it harder to change.</p><p>Use it for fees, advance payments, deposits and part payments. You can mention the invoice number the payment is against. This tool helps you format a document. For tax and legal questions, check with your CA or tax adviser.</p><h3>How to use it</h3><ol><li>Open the tool and enter your name and the payer.</li><li>Type the amount, choose the payment mode and add a reference number.</li><li>Write what the payment is for.</li><li>Download the PDF or share it.</li></ol><h3>Tips</h3><ul><li>For UPI or bank transfer, add the reference number so it can be matched with your statement.</li><li>Keep a copy of every receipt you give.</li></ul><h3>Questions</h3><div class="faq"><h3>Do I need a revenue stamp?</h3><p>Rules can differ for cash receipts. Check with your CA or local rules if you are unsure.</p><h3>Is it free?</h3><p>Yes. No sign up and no limit.</p></div><h3>हिंदी में</h3><p lang="hi">पैसे मिलने का साफ सबूत बनाएं। रकम, भुगतान का तरीका और कारण भरें, राशि शब्दों में अपने आप लिख जाती है। रसीद PDF डाउनलोड करें या WhatsApp पर भेजें।</p><p>Your documents are made in your browser and saved only on your device. Read the <a href="/#privacy">Privacy Policy</a>.</p></section>
+
+  <section class="panel doc seo" id="alltools"><h2>More business documents</h2><ul class="toolslist"><li><a href="/invoice-generator">Invoice Generator</a></li><li><a href="/quotation-generator">Quotation Maker</a></li><li><a href="/sales-order-generator">Sales Order Maker</a></li><li><a href="/proforma-invoice-generator">Proforma Invoice Maker</a></li><li><a href="/rent-receipt-generator">Rent Receipt Generator</a></li><li><a href="/salary-slip-generator">Salary Slip Generator</a></li></ul></section>
+
+  <section class="panel doc seo" id="pdftools"><h2>PDF tools</h2><ul class="toolslist"><li><a href="/scan-to-pdf">Scan to PDF</a></li><li><a href="/text-to-pdf">Text to PDF</a></li><li><a href="/merge-pdf">Merge PDF</a></li><li><a href="/split-pdf">Split PDF</a></li><li><a href="/remove-pdf-pages">Remove pages</a></li><li><a href="/rotate-pdf">Rotate PDF</a></li><li><a href="/compress-pdf">Compress PDF</a></li><li><a href="/edit-pdf">Edit PDF</a></li><li><a href="/protect-pdf">Protect PDF</a></li><li><a href="/photos-to-pdf">Photos to PDF</a></li><li><a href="/word-to-pdf">Word to PDF</a></li><li><a href="/excel-to-pdf">Excel to PDF</a></li><li><a href="/pdf-to-excel">PDF to Excel</a></li><li><a href="/pdf-to-word">PDF to Word</a></li><li><a href="/qr-code-generator">QR Code</a></li><li><a href="/pdf-to-jpg">PDF to JPG</a></li><li><a href="/compress-image-to-kb">Compress image</a></li><li><a href="/resize-image">Resize image</a></li><li><a href="/add-page-numbers-to-pdf">Page numbers</a></li><li><a href="/watermark-pdf">Watermark PDF</a></li></ul></section>
+
+  <section class="support" aria-label="Support Invatek and advertise">
+<div class="scard"><p class="stitle">Support Invatek</p><p>If Invatek helped you, you can support it with any amount through UPI.</p><img class="upiqr" src="/upi-qr.jpg" alt="UPI QR code to support Invatek" width="220" height="220" loading="lazy" decoding="async"><small>Scan with any UPI app</small></div>
+<div class="scard sponsor" id="sponsor"><span class="adlbl">Sponsored</span><div id="sponsorbox" class="sponsorbox"><p class="stitle">Give your ads here</p><p>Reach people who work with PDF files every day.</p><a class="btn" href="mailto:vistavibes007@gmail.com?subject=Advertise%20on%20Invatek">Contact: vistavibes007@gmail.com</a></div></div>
+</section>
+<script>
+(function () {
+  var box = document.getElementById("sponsorbox"); if (!box || !window.fetch) return;
+  fetch("/sponsor.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+    if (!d || !d.image || !/^(\/|https:\/\/)/.test(d.image)) return;
+    var img = document.createElement("img"); img.src = d.image; img.alt = d.alt || "Sponsored"; img.className = "sponsorimg"; img.loading = "lazy";
+    var node = img;
+    if (d.link && /^https:\/\//.test(d.link)) { var a = document.createElement("a"); a.href = d.link; a.target = "_blank"; a.rel = "sponsored nofollow noopener"; a.appendChild(img); node = a; }
+    box.textContent = ""; box.appendChild(node);
+  }).catch(function () {});
+})();
+</script>
+  <p class="foot">Password-protected PDFs cannot be opened here. To open a locked PDF, remove its password in the app that locked it first.</p>
+</div>
+
+<nav class="tabbar" id="tabbar2" aria-label="Main"><a href="/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h5"/></svg>PDF tools</a><a href="/invoice-generator" class="on" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16l-3-2-2 2-2-2-2 2-2-2-3 2zM8 9h8M8 13h5"/></svg>Invoice</a></nav>
+<script>window.INV_BIZ="receipt";</script>
+<script>
+/* Invatek Business: invoice, quotation, sales order, proforma, receipt, rent receipt, salary slip. Runs fully in the browser. */
+(function () {
+  "use strict";
+  var root = document.getElementById("bizapp");
+  if (!root) return;
+
+  /* ---------- small helpers ---------- */
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+  function num(v) { var n = parseFloat(String(v == null ? "" : v).replace(/,/g, "")); return isFinite(n) ? n : 0; }
+  function r2(x) { return Math.round((x + (x >= 0 ? 1e-9 : -1e-9)) * 100) / 100; }
+  function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+  function toast(t) { var e = $("toast"); if (!e) return; e.textContent = t; e.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(function () { e.hidden = true; }, 3200); }
+  function fmt(n) {
+    n = r2(n); var neg = n < 0; n = Math.abs(n);
+    var s = n.toFixed(2).split("."), a = s[0], out = a;
+    if (a.length > 3) { var last = a.slice(-3), rest = a.slice(0, -3); out = rest.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + "," + last; }
+    return (neg ? "-" : "") + out + "." + s[1];
+  }
+  var ONES = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+  var TENS = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+  function two(n) { return n < 20 ? ONES[n] : TENS[Math.floor(n / 10)] + (n % 10 ? " " + ONES[n % 10] : ""); }
+  function three(n) { return n > 99 ? ONES[Math.floor(n / 100)] + " Hundred" + (n % 100 ? " " + two(n % 100) : "") : two(n); }
+  function words(n) {
+    if (n === 0) return "Zero";
+    var out = [], cr = Math.floor(n / 1e7), lk = Math.floor(n / 1e5) % 100, th = Math.floor(n / 1e3) % 100, rest = n % 1000;
+    if (cr) out.push(words(cr) + " Crore"); if (lk) out.push(two(lk) + " Lakh"); if (th) out.push(two(th) + " Thousand"); if (rest) out.push(three(rest));
+    return out.join(" ");
+  }
+  function rupees(x) {
+    x = r2(Math.abs(x)); var r = Math.floor(x), p = Math.round((x - r) * 100);
+    return "Rupees " + words(r) + (p ? " and " + words(p) + " Paise" : "") + " Only";
+  }
+  function today() { var d = new Date(); return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
+  function fdate(s) { var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ""); return m ? m[3] + "/" + m[2] + "/" + m[1] : (s || ""); }
+  var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  function ymLabel(ym) { var m = /^(\d{4})-(\d{2})$/.exec(ym || ""); return m ? MONTHS[+m[2] - 1] + " " + m[1] : ""; }
+  var STATES = ["Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Ladakh", "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"];
+  var COLORS = ["#0F6B5C", "#1D4ED8", "#B91C1C", "#7C3AED", "#C2410C", "#0F172A", "#BE185D", "#047857"];
+  var RATES = [0, 0.25, 3, 5, 12, 18, 28, 40];
+
+  /* ---------- document types ---------- */
+  var TYPES = {
+    invoice: { name: "Invoice", head: "INVOICE", prefix: "INV", noL: "Invoice no.", dueL: "Due date", kind: "items", icon: "M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h7", terms: "Please pay by the due date. Thank you for your business." },
+    quotation: { name: "Quotation", head: "QUOTATION", prefix: "QT", noL: "Quotation no.", dueL: "Valid until", kind: "items", icon: "M5 4h14v16H5zM8 9h8M8 13h8M8 17h5", terms: "This quotation is valid until the date shown. Prices may change after that." },
+    salesorder: { name: "Sales order", head: "SALES ORDER", prefix: "SO", noL: "Order no.", dueL: "Delivery date", kind: "items", icon: "M4 7l8-4 8 4v10l-8 4-8-4zM4 7l8 4 8-4M12 11v10", terms: "Goods will be supplied as per this order." },
+    proforma: { name: "Proforma invoice", head: "PROFORMA INVOICE", prefix: "PI", noL: "Proforma no.", dueL: "Valid until", kind: "items", icon: "M6 3h9l4 4v14H6zM14 3v5h5M9 14l2 2 4-4", terms: "This is not a tax invoice. A tax invoice will be issued after payment or delivery." },
+    receipt: { name: "Payment receipt", head: "PAYMENT RECEIPT", prefix: "RC", noL: "Receipt no.", kind: "receipt", icon: "M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6", terms: "" },
+    rent: { name: "Rent receipt", head: "RENT RECEIPT", prefix: "RR", noL: "Receipt no.", kind: "rent", icon: "M3 11l9-7 9 7v9H3zM9 20v-6h6v6", terms: "" },
+    salary: { name: "Salary slip", head: "SALARY SLIP", prefix: "SS", noL: "Slip no.", kind: "salary", icon: "M4 6h16v12H4zM12 9v6M9.5 10.5c0-1 1-1.5 2.5-1.5s2.5.5 2.5 1.5-1 1.3-2.5 1.5-2.5.5-2.5 1.5 1 1.5 2.5 1.5 2.5-.5 2.5-1.5", terms: "" }
+  };
+  var ORDER = ["invoice", "quotation", "salesorder", "proforma", "receipt", "rent", "salary"];
+  var TPLS = [["classic", "Classic"], ["modern", "Modern"], ["minimal", "Minimal"], ["bold", "Bold"]];
+
+  /* ---------- saved state (autosave) ---------- */
+  var KEY = "invatek_biz_v1", S, memOnly = false;
+  function emptyProf() { return { name: "", addr: "", gstin: "", phone: "", email: "", state: "", bank: "", sign: "Authorised signatory", logo: "" }; }
+  function load() {
+    try { var raw = localStorage.getItem(KEY); if (raw) { var o = JSON.parse(raw); if (o && o.docs) return o; } } catch (e) { memOnly = true; }
+    return { v: 1, active: "", docs: [], cnt: {}, prof: emptyProf(), tpl: "classic", color: COLORS[0], credit: true };
+  }
+  var saveT, savedAt = 0;
+  function save() {
+    clearTimeout(saveT);
+    saveT = setTimeout(function () {
+      try { localStorage.setItem(KEY, JSON.stringify(S)); memOnly = false; } catch (e) { memOnly = true; }
+      setSaved();
+    }, 350);
+    setSaved(true);
+  }
+  function setSaved(pending) {
+    var e = $("bzSaved"); if (!e) return;
+    e.textContent = pending ? "Saving..." : memOnly ? "Autosave is blocked in this browser" : "Saved on this device";
+    e.className = "bz-saved" + (memOnly && !pending ? " warn" : "");
+  }
+  S = load();
+  if (!S.cnt) S.cnt = {}; if (!S.prof) S.prof = emptyProf();
+
+  function nextNo(type) {
+    S.cnt[type] = (S.cnt[type] || 0) + 1;
+    return TYPES[type].prefix + "-" + ("000" + S.cnt[type]).slice(-4);
+  }
+  function newDoc(type) {
+    var P = S.prof, T = TYPES[type];
+    var d = { id: uid(), type: type, tpl: S.tpl || "classic", color: S.color || COLORS[0], no: nextNo(type), date: today(), due: "", ref: "",
+      from: { name: P.name, addr: P.addr, gstin: P.gstin, phone: P.phone, email: P.email, state: P.state },
+      to: { name: "", addr: "", gstin: "", phone: "", email: "", state: "" },
+      gst: "none", incl: false, items: [{ n: "", d: "", h: "", q: "1", u: "", r: "", t: "18" }], disc: "", dt: "%", extra: "", extraL: "Other charges", round: false, adv: "",
+      notes: "", terms: T.terms || "", bank: P.bank, sign: P.sign || "Authorised signatory", x: {} };
+    if (type === "receipt") d.x = { amt: "", mode: "Cash", ref: "", towards: "", against: "" };
+    if (type === "rent") {
+      var n = new Date(), y = n.getFullYear(), m = ("0" + (n.getMonth() + 1)).slice(-2);
+      d.x = { tenant: "", landlord: P.name, pan: "", prop: "", rent: "", from: y + "-" + m, to: y + "-" + m, day: "1", stamp: false, start: "1" };
+    }
+    if (type === "salary") {
+      var n2 = new Date();
+      d.x = { month: n2.getFullYear() + "-" + ("0" + (n2.getMonth() + 1)).slice(-2), emp: "", eid: "", desig: "", dept: "", pan: "", acc: "", days: "30", paid: "30",
+        earn: [{ l: "Basic salary", a: "" }, { l: "House rent allowance", a: "" }, { l: "Other allowance", a: "" }], ded: [{ l: "Provident fund", a: "" }, { l: "Professional tax", a: "" }] };
+    }
+    return d;
+  }
+  function cur() { for (var i = 0; i < S.docs.length; i++) if (S.docs[i].id === S.active) return S.docs[i]; return null; }
+  function addDoc(type, quiet) {
+    var d = newDoc(type); S.docs.push(d); S.active = d.id; save(); renderAll(); if (!quiet) scrollTop();
+    return d;
+  }
+  function scrollTop() { try { root.scrollIntoView({ block: "start" }); } catch (e) {} }
+  function docTitle(d) {
+    var T = TYPES[d.type], who = d.type === "salary" ? d.x.emp : d.type === "rent" ? d.x.tenant : d.to.name;
+    return T.name + (d.no ? " " + d.no : "") + (who ? " - " + who : "");
+  }
+
+  /* ---------- calculations ---------- */
+  function calc(d) {
+    var gst = d.gst || "none", rows = [], sub = 0;
+    d.items.forEach(function (it) {
+      var q = num(it.q), r = num(it.r), t = gst === "none" ? 0 : num(it.t), gross = q * r;
+      var tx = (d.incl && gst !== "none") ? gross / (1 + t / 100) : gross;
+      rows.push({ it: it, q: q, r: r, t: t, amt: r2(tx), taxable: tx }); sub += tx;
+    });
+    sub = r2(sub);
+    var disc = d.dt === "%" ? sub * num(d.disc) / 100 : num(d.disc); disc = r2(Math.min(Math.max(disc, 0), sub));
+    var f = sub > 0 ? (sub - disc) / sub : 1, groups = {}, tax = 0, after = 0;
+    rows.forEach(function (rw) {
+      var tx2 = rw.taxable * f, tt = tx2 * rw.t / 100; after += tx2; tax += tt;
+      var g = groups[rw.t] || (groups[rw.t] = { t: rw.t, base: 0, tax: 0 }); g.base += tx2; g.tax += tt;
+    });
+    after = r2(after); tax = r2(tax);
+    var list = Object.keys(groups).map(function (k) { var g = groups[k]; return { t: g.t, base: r2(g.base), tax: r2(g.tax) }; }).sort(function (a, b) { return a.t - b.t; });
+    var extra = r2(num(d.extra)), tot = r2(after + tax + extra), ro = d.round ? r2(Math.round(tot) - tot) : 0, grand = r2(tot + ro), adv = r2(num(d.adv));
+    return { rows: rows, sub: sub, disc: disc, groups: list, tax: tax, extra: extra, ro: ro, grand: grand, adv: adv, bal: r2(grand - adv) };
+  }
+  function heading(d) { return (d.type === "invoice" && d.gst !== "none") ? "TAX INVOICE" : TYPES[d.type].head; }
+
+  /* ---------- libraries (loaded when needed) ---------- */
+  var WORKER_URL = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  var LIBS = {
+    pdflib: { urls: ["https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js", "https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js", "https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"], get: function () { return window.PDFLib; } },
+    pdfjs: { urls: ["https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"], get: function () { return window.pdfjsLib; } }
+  };
+  var libP = {};
+  function loadLib(name) {
+    var L = LIBS[name];
+    if (L.get()) return Promise.resolve(L.get());
+    if (!libP[name]) {
+      libP[name] = (async function () {
+        for (var i = 0; i < L.urls.length; i++) {
+          try {
+            await new Promise(function (res, rej) { var sc = document.createElement("script"); sc.src = L.urls[i]; sc.onload = res; sc.onerror = function () { sc.remove(); rej(new Error("x")); }; document.head.appendChild(sc); });
+            if (L.get()) return L.get();
+          } catch (e) { /* next address */ }
+        }
+        throw new Error("blocked");
+      })().catch(function () { libP[name] = null; throw new Error("Could not load a needed component. Check your internet connection (or turn off your ad blocker for this site) and try again."); });
+    }
+    return libP[name];
+  }
+
+  /* ---------- PDF drawing ---------- */
+  function hex(h) { var m = /^#?([0-9a-f]{6})$/i.exec(h || ""); var v = m ? parseInt(m[1], 16) : 0x0F6B5C; return [(v >> 16 & 255) / 255, (v >> 8 & 255) / 255, (v & 255) / 255]; }
+  async function buildPdf(d) {
+    var P = await loadLib("pdflib"), rgb = P.rgb, pdf = await P.PDFDocument.create();
+    var F = await pdf.embedFont(P.StandardFonts.Helvetica), B = await pdf.embedFont(P.StandardFonts.HelveticaBold);
+    pdf.setTitle(docTitle(d)); pdf.setProducer("Invatek"); pdf.setCreator("Invatek");
+    var set = null; try { set = new Set(F.getCharacterSet()); } catch (e) {}
+    var lost = 0;
+    function safe(s) {
+      s = String(s == null ? "" : s).replace(/₹/g, "Rs. ").replace(/[\r\n\t]+/g, " "); var o = "";
+      for (var i = 0; i < s.length; i++) {
+        var cp = s.charCodeAt(i);
+        if (cp >= 0xD800 && cp <= 0xDBFF && i + 1 < s.length) { i++; o += "?"; lost++; continue; }
+        if (cp < 32) continue;
+        if (set ? set.has(cp) : cp < 256) o += s.charAt(i); else { o += "?"; lost++; }
+      }
+      return o;
+    }
+    var W = 595.28, H = 841.89, M = 36, BOT = 56;
+    var ac = hex(d.color), ACC = rgb(ac[0], ac[1], ac[2]), WHITE = rgb(1, 1, 1), INK = rgb(0.07, 0.09, 0.11), MUT = rgb(0.4, 0.44, 0.47), LINE = rgb(0.85, 0.87, 0.88);
+    var TINT = rgb(ac[0] * 0.12 + 0.88, ac[1] * 0.12 + 0.88, ac[2] * 0.12 + 0.88), SOFT = rgb(0.965, 0.97, 0.975), DARK = rgb(0.09, 0.11, 0.14);
+    var page, pages = [], y;
+    function newPage() { page = pdf.addPage([W, H]); pages.push(page); y = H - M; return page; }
+    function T(s, x, yy, o) {
+      o = o || {}; s = safe(s); var size = o.size || 9, font = o.bold ? B : F, w = font.widthOfTextAtSize(s, size);
+      if (o.fit && w > o.fit) { size = Math.max(6, size * o.fit / w); w = font.widthOfTextAtSize(s, size); }
+      var xx = o.align === "right" ? x - w : o.align === "center" ? x - w / 2 : x;
+      page.drawText(s, { x: xx, y: yy, size: size, font: font, color: o.color || INK }); return w;
+    }
+    function wrap(s, font, size, maxW) {
+      var out = [];
+      String(s == null ? "" : s).split(/\r?\n/).forEach(function (para) {
+        para = safe(para).replace(/\s+/g, " ").trim(); if (!para) { out.push(""); return; }
+        var line = "";
+        para.split(" ").forEach(function (w) {
+          while (font.widthOfTextAtSize(w, size) > maxW) {
+            var k = w.length; while (k > 1 && font.widthOfTextAtSize(w.slice(0, k), size) > maxW) k--;
+            if (line) { out.push(line); line = ""; }
+            out.push(w.slice(0, k)); w = w.slice(k);
+          }
+          var t = line ? line + " " + w : w;
+          if (font.widthOfTextAtSize(t, size) <= maxW) line = t; else { if (line) out.push(line); line = w; }
+        });
+        if (line) out.push(line);
+      });
+      return out;
+    }
+    function lines(arr, x, yy, o) { o = o || {}; var lh = o.lh || (o.size || 9) * 1.35; arr.forEach(function (l) { if (l) T(l, x, yy, o); yy -= lh; }); return yy; }
+    function hline(x1, yy, x2, col, th) { page.drawLine({ start: { x: x1, y: yy }, end: { x: x2, y: yy }, thickness: th || 0.6, color: col || LINE }); }
+    function ensure(h) { if (y - h < BOT) { newPage(); return true; } return false; }
+
+    var logo = null;
+    if (S.prof.logo) { try { var b64 = S.prof.logo.split(",")[1], bin = atob(b64), u = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); logo = /^data:image\/png/.test(S.prof.logo) ? await pdf.embedPng(u) : await pdf.embedJpg(u); } catch (e) { logo = null; } }
+
+    var T0 = TYPES[d.type], title = heading(d), tp = d.tpl;
+    function sellerBlock(x, top, align, col, mcol, maxW, dry) {
+      var f = d.from, yy = top, rt = align === "right";
+      if (logo) {
+        var sc = Math.min(120 / logo.width, 46 / logo.height, 1), lw = logo.width * sc, lh = logo.height * sc;
+        if (!dry) { if (col === WHITE) page.drawRectangle({ x: (rt ? x - lw : x) - 4, y: yy - lh - 4, width: lw + 8, height: lh + 8, color: WHITE, borderRadius: 4 }); page.drawImage(logo, { x: rt ? x - lw : x, y: yy - lh, width: lw, height: lh }); }
+        yy -= lh + 12;
+      }
+      var nm = wrap(f.name || "Your business name", B, 12.5, maxW); yy -= 10;
+      nm.forEach(function (l) { if (!dry) T(l, x, yy, { size: 12.5, bold: 1, color: col, align: align }); yy -= 15; });
+      var det = [];
+      wrap(f.addr, F, 8.5, maxW).forEach(function (l) { det.push(l); });
+      if (f.state) det.push(f.state);
+      if (f.gstin) det.push("GSTIN: " + f.gstin);
+      if (f.phone) det.push("Phone: " + f.phone);
+      if (f.email) det.push("Email: " + f.email);
+      det.forEach(function (l) { if (!dry && l) T(l, x, yy, { size: 8.5, color: mcol, align: align }); yy -= 11.5; });
+      return yy;
+    }
+    function header(titleText, hasSeller) {
+      newPage();
+      var yEnd;
+      if (tp === "classic") {
+        page.drawRectangle({ x: 0, y: H - 70, width: W, height: 70, color: ACC });
+        T(titleText, M, H - 44, { size: 22, bold: 1, color: WHITE });
+        yEnd = hasSeller ? sellerBlock(M, H - 82, "left", INK, MUT, 300) : H - 90;
+      } else if (tp === "bold") {
+        var endB = hasSeller ? sellerBlock(W - M, H - 30, "right", WHITE, rgb(0.93, 0.95, 0.95), 250, true) : H - 100;
+        var bh = Math.max(110, H - endB + 18);
+        page.drawRectangle({ x: 0, y: H - bh, width: W, height: bh, color: ACC });
+        T(titleText, M, H - 60, { size: 26, bold: 1, color: WHITE, fit: 250 });
+        if (hasSeller) sellerBlock(W - M, H - 30, "right", WHITE, rgb(0.93, 0.95, 0.95), 250);
+        yEnd = H - bh - 8;
+      } else {
+        if (tp === "modern") page.drawRectangle({ x: 0, y: H - 8, width: W, height: 8, color: ACC });
+        T(titleText, M, H - 56, { size: 24, bold: 1, color: tp === "modern" ? ACC : INK, fit: 250 });
+        var endS = hasSeller ? sellerBlock(W - M, H - 30, "right", INK, MUT, 250) : H - 60;
+        yEnd = Math.min(endS, H - 74);
+        if (tp === "minimal") { hline(M, yEnd - 2, W - M, INK, 1); yEnd -= 8; }
+      }
+      y = yEnd - 6;
+    }
+    function metaRows(rows, x, top) {
+      var yy = top; rows.forEach(function (r) { if (!r[1]) return; T(r[0], x, yy, { size: 8.5, color: MUT }); T(r[1], W - M, yy, { size: 9, bold: 1, align: "right", fit: 120 }); yy -= 14; }); return yy;
+    }
+    function partyBlock(label, p, x, top, maxW, extra) {
+      var yy = top; T(label, x, yy, { size: 7.5, bold: 1, color: tp === "minimal" ? MUT : ACC }); yy -= 13;
+      wrap(p.name || "-", B, 11, maxW).forEach(function (l) { T(l, x, yy, { size: 11, bold: 1 }); yy -= 14; });
+      var det = wrap(p.addr, F, 8.5, maxW); if (p.state) det.push(p.state); if (p.gstin) det.push("GSTIN: " + p.gstin); if (p.phone) det.push("Phone: " + p.phone); if (p.email) det.push("Email: " + p.email);
+      (extra || []).forEach(function (e) { det.push(e); });
+      det.forEach(function (l) { if (l) T(l, x, yy, { size: 8.5, color: MUT }); yy -= 11.5; });
+      return yy;
+    }
+    function sigBlock() {
+      ensure(70); var x2 = W - M;
+      T("For " + (d.from.name || ""), x2, y - 6, { size: 9, bold: 1, align: "right", fit: 220 });
+      hline(x2 - 160, y - 46, x2, INK, 0.8);
+      T(d.sign || "Authorised signatory", x2, y - 58, { size: 8.5, color: MUT, align: "right", fit: 160 });
+      y -= 66;
+    }
+
+    /* ---- invoice, quotation, sales order, proforma ---- */
+    function drawItems() {
+      var C = calc(d), gst = d.gst !== "none", hasHsn = d.items.some(function (i) { return (i.h || "").trim(); });
+      header(title, true);
+      var meta = [[T0.noL, d.no], ["Date", fdate(d.date)], [T0.dueL, fdate(d.due)], ["PO / reference", d.ref]];
+      var yl = partyBlock(d.type === "salesorder" ? "CUSTOMER" : "BILL TO", d.to, M, y, 290);
+      var yr = metaRows(meta, W - M - 200, y);
+      y = Math.min(yl, yr) - 10;
+      /* table */
+      var cw = { n: 22, h: hasHsn ? 52 : 0, q: 54, r: 62, t: gst ? 38 : 0, a: 76 }, used = cw.n + cw.h + cw.q + cw.r + cw.t + cw.a, nameW = W - 2 * M - used;
+      var xs = {}, x = M; xs.n = x; x += cw.n; xs.i = x; x += nameW; if (cw.h) { xs.h = x; x += cw.h; } xs.q = x; x += cw.q; xs.r = x; x += cw.r; if (cw.t) { xs.t = x; x += cw.t; } xs.a = x;
+      function thead() {
+        var hh = 20, fill = tp === "classic" ? ACC : tp === "bold" ? DARK : tp === "modern" ? TINT : null, tc = (tp === "classic" || tp === "bold") ? WHITE : tp === "modern" ? ACC : INK;
+        if (fill) page.drawRectangle({ x: M, y: y - hh, width: W - 2 * M, height: hh, color: fill });
+        else { hline(M, y, W - M, INK, 0.8); hline(M, y - hh, W - M, INK, 0.8); }
+        var ty = y - 13, o = { size: 8.5, bold: 1, color: tc };
+        T("#", xs.n + 6, ty, o); T("Item", xs.i + 2, ty, o); if (cw.h) T("HSN/SAC", xs.h, ty, o);
+        T("Qty", xs.r - 6, ty, { size: 8.5, bold: 1, color: tc, align: "right" }); T("Rate", xs.t ? xs.t - 6 : xs.a - 6, ty, { size: 8.5, bold: 1, color: tc, align: "right" });
+        if (cw.t) T("GST", xs.a - 6, ty, { size: 8.5, bold: 1, color: tc, align: "right" });
+        T(gst ? "Taxable amt" : "Amount", W - M - 6, ty, { size: 8.5, bold: 1, color: tc, align: "right" });
+        y -= hh;
+      }
+      thead();
+      C.rows.forEach(function (rw, idx) {
+        var it = rw.it, nl = wrap(it.n || "-", B, 9.5, nameW - 8), dl = it.d ? wrap(it.d, F, 8, nameW - 8) : [];
+        var rh = Math.max(24, 8 + nl.length * 12 + dl.length * 10.5);
+        if (y - rh < BOT + 10) { newPage(); thead(); }
+        if ((tp === "modern" || tp === "bold") && idx % 2 === 1) page.drawRectangle({ x: M, y: y - rh, width: W - 2 * M, height: rh, color: SOFT });
+        var ty = y - 15;
+        T(String(idx + 1), xs.n + 6, ty, { size: 9, color: MUT });
+        var yy = ty; nl.forEach(function (l) { T(l, xs.i + 2, yy, { size: 9.5, bold: 1 }); yy -= 12; });
+        dl.forEach(function (l) { T(l, xs.i + 2, yy, { size: 8, color: MUT }); yy -= 10.5; });
+        if (cw.h) T(it.h || "", xs.h, ty, { size: 8.5, fit: cw.h - 4 });
+        T(fmtQ(rw.q) + (it.u ? " " + it.u : ""), xs.r - 6, ty, { size: 9, align: "right", fit: cw.q - 8 });
+        T(fmt(rw.r), xs.t ? xs.t - 6 : xs.a - 6, ty, { size: 9, align: "right", fit: cw.r - 8 });
+        if (cw.t) T(fmtQ(rw.t) + "%", xs.a - 6, ty, { size: 9, align: "right" });
+        T(fmt(rw.amt), W - M - 6, ty, { size: 9, bold: 1, align: "right", fit: cw.a - 8 });
+        y -= rh; hline(M, y, W - M, LINE);
+      });
+      y -= 14;
+      /* notes (left) and totals (right) */
+      var LW = 270, RX = W - M - 215, rows = [];
+      rows.push(["Subtotal", fmt(C.sub)]);
+      if (C.disc) rows.push(["Discount" + (d.dt === "%" ? " (" + fmtQ(num(d.disc)) + "%)" : ""), "-" + fmt(C.disc)]);
+      if (gst) C.groups.forEach(function (g) {
+        if (!g.tax && !g.t) return;
+        if (d.gst === "cgst") { rows.push(["CGST @ " + fmtQ(g.t / 2) + "%", fmt(g.tax / 2)]); rows.push(["SGST @ " + fmtQ(g.t / 2) + "%", fmt(g.tax - r2(g.tax / 2))]); }
+        else rows.push(["IGST @ " + fmtQ(g.t) + "%", fmt(g.tax)]);
+      });
+      if (C.extra) rows.push([d.extraL || "Other charges", fmt(C.extra)]);
+      if (C.ro) rows.push(["Round off", (C.ro > 0 ? "+" : "") + fmt(C.ro)]);
+      var left = [], bn = (d.type === "invoice" || d.type === "proforma" || d.type === "salesorder" || d.type === "quotation");
+      left.push(["Amount in words", [rupees(C.grand)]]);
+      if (d.bank && d.bank.trim() && d.type !== "salesorder") left.push(["Bank / payment details", wrap(d.bank, F, 8.5, LW)]);
+      if (d.notes && d.notes.trim()) left.push(["Notes", wrap(d.notes, F, 8.5, LW)]);
+      if (d.terms && d.terms.trim()) left.push(["Terms and conditions", wrap(d.terms, F, 8.5, LW)]);
+      var lh = 0; left.forEach(function (b) { b[1] = b[0] === "Amount in words" ? wrap(b[1][0], B, 9, LW) : b[1]; lh += 14 + b[1].length * 11.5 + 8; });
+      var rh2 = rows.length * 15 + 34 + (C.adv ? 34 : 0);
+      ensure(Math.max(lh, rh2) + 6);
+      var ly = y, ry = y;
+      left.forEach(function (b) {
+        T(b[0].toUpperCase(), M, ly, { size: 7.5, bold: 1, color: tp === "minimal" ? MUT : ACC }); ly -= 12;
+        b[1].forEach(function (l) { if (l) T(l, M, ly, { size: b[0] === "Amount in words" ? 9 : 8.5, bold: b[0] === "Amount in words", color: b[0] === "Amount in words" ? INK : MUT }); ly -= 11.5; });
+        ly -= 8;
+      });
+      rows.forEach(function (r) { T(r[0], RX, ry, { size: 9, color: MUT }); T(r[1], W - M, ry, { size: 9, align: "right" }); ry -= 15; });
+      ry -= 14; var bh2 = 26;
+      var bfill = tp === "minimal" ? null : tp === "bold" ? DARK : ACC;
+      if (bfill) page.drawRectangle({ x: RX - 8, y: ry - bh2 + 17, width: W - M - RX + 8, height: bh2, color: bfill });
+      else { hline(RX - 8, ry + 17, W - M, INK, 0.8); hline(RX - 8, ry + 17 - bh2, W - M, INK, 0.8); }
+      var gc = bfill ? WHITE : INK;
+      T("Total", RX, ry + 3, { size: 11, bold: 1, color: gc }); T("Rs. " + fmt(C.grand), W - M - 8, ry + 3, { size: 11, bold: 1, color: gc, align: "right", fit: 150 });
+      ry -= bh2 - 4;
+      if (C.adv) {
+        T(d.type === "quotation" || d.type === "proforma" ? "Advance requested" : "Advance received", RX, ry, { size: 9, color: MUT }); T("-" + fmt(C.adv), W - M, ry, { size: 9, align: "right" }); ry -= 17;
+        T("Balance due", RX, ry, { size: 10.5, bold: 1, color: tp === "minimal" ? INK : ACC }); T("Rs. " + fmt(C.bal), W - M, ry, { size: 10.5, bold: 1, align: "right", color: tp === "minimal" ? INK : ACC }); ry -= 16;
+      }
+      y = Math.min(ly, ry) - 8;
+      sigBlock();
+    }
+    function fmtQ(n) { return (Math.round(n * 1000) / 1000).toString(); }
+
+    /* ---- payment receipt ---- */
+    function kv(rows, x0, w) {
+      rows.forEach(function (r) {
+        var vl = wrap(r[1] || "-", r[2] ? B : F, r[2] ? 12 : 9.5, w - 140), h = Math.max(26, 12 + vl.length * (r[2] ? 15 : 12.5));
+        ensure(h);
+        T(r[0], x0 + 8, y - 15, { size: 8.5, color: MUT });
+        var yy = y - 15; vl.forEach(function (l) { T(l, x0 + 140, yy, { size: r[2] ? 12 : 9.5, bold: !!r[2] }); yy -= r[2] ? 15 : 12.5; });
+        y -= h; hline(x0, y, x0 + w, LINE);
+      });
+    }
+    function drawReceipt() {
+      header(title, true);
+      var yl = partyBlock("RECEIVED FROM", d.to, M, y, 290), yr = metaRows([[T0.noL, d.no], ["Date", fdate(d.date)]], W - M - 200, y);
+      y = Math.min(yl, yr) - 14;
+      var a = num(d.x.amt), w = W - 2 * M;
+      if (tp === "minimal") hline(M, y, W - M, INK, 0.8); else hline(M, y, W - M, LINE);
+      kv([["Amount received", "Rs. " + fmt(a), 1], ["Amount in words", rupees(a)], ["Payment mode", d.x.mode], ["Reference / UTR / cheque no.", d.x.ref], ["Towards", d.x.towards], ["Against invoice no.", d.x.against]].filter(function (r) { return r[1]; }), M, w);
+      if (d.notes && d.notes.trim()) { y -= 12; T("NOTES", M, y, { size: 7.5, bold: 1, color: tp === "minimal" ? MUT : ACC }); y -= 12; y = lines(wrap(d.notes, F, 9, w), M, y, { size: 9, color: MUT, lh: 12 }); }
+      y -= 14; T("Received with thanks.", M, y, { size: 9.5, bold: 1 }); y -= 16;
+      sigBlock();
+    }
+
+    /* ---- salary slip ---- */
+    function drawSalary() {
+      header(title, true);
+      var x = d.x, yl = y; T("PAY PERIOD", M, y, { size: 7.5, bold: 1, color: tp === "minimal" ? MUT : ACC }); T(ymLabel(x.month) || "-", M, y - 16, { size: 14, bold: 1 });
+      var yr = metaRows([[T0.noL, d.no], ["Date", fdate(d.date)]], W - M - 200, y);
+      y = Math.min(y - 28, yr) - 10;
+      var half = (W - 2 * M) / 2, left = [["Employee name", x.emp], ["Employee ID", x.eid], ["Designation", x.desig], ["Department", x.dept]], right = [["PAN", x.pan], ["Bank / account no.", x.acc], ["Days in month", x.days], ["Days paid", x.paid]];
+      var top = y; hline(M, top, W - M, LINE);
+      var yy = top - 4;
+      for (var i = 0; i < 4; i++) {
+        var a = left[i], b = right[i]; yy -= 15;
+        T(a[0], M + 4, yy, { size: 8.5, color: MUT }); T(a[1] || "-", M + 100, yy, { size: 9.5, bold: 1, fit: half - 110 });
+        T(b[0], M + half + 4, yy, { size: 8.5, color: MUT }); T(b[1] || "-", M + half + 100, yy, { size: 9.5, bold: 1, fit: half - 110 });
+      }
+      y = yy - 10; hline(M, y, W - M, LINE); y -= 16;
+      var earn = x.earn.filter(function (r) { return r.l || num(r.a); }), ded = x.ded.filter(function (r) { return r.l || num(r.a); });
+      var n = Math.max(earn.length, ded.length, 1), hh = 20, fill = tp === "classic" ? ACC : tp === "bold" ? DARK : tp === "modern" ? TINT : null, tc = (tp === "classic" || tp === "bold") ? WHITE : tp === "modern" ? ACC : INK;
+      ensure(hh + n * 20 + 80);
+      if (fill) page.drawRectangle({ x: M, y: y - hh, width: W - 2 * M, height: hh, color: fill }); else { hline(M, y, W - M, INK, 0.8); hline(M, y - hh, W - M, INK, 0.8); }
+      T("Earnings", M + 6, y - 13, { size: 8.5, bold: 1, color: tc }); T("Amount (Rs.)", M + half - 8, y - 13, { size: 8.5, bold: 1, color: tc, align: "right" });
+      T("Deductions", M + half + 6, y - 13, { size: 8.5, bold: 1, color: tc }); T("Amount (Rs.)", W - M - 6, y - 13, { size: 8.5, bold: 1, color: tc, align: "right" });
+      y -= hh; var te = 0, td = 0;
+      for (var k = 0; k < n; k++) {
+        var e = earn[k], dd = ded[k], ty = y - 15;
+        if (e) { T(e.l, M + 6, ty, { size: 9.5, fit: half - 100 }); T(fmt(num(e.a)), M + half - 8, ty, { size: 9.5, align: "right" }); te += num(e.a); }
+        if (dd) { T(dd.l, M + half + 6, ty, { size: 9.5, fit: half - 100 }); T(fmt(num(dd.a)), W - M - 6, ty, { size: 9.5, align: "right" }); td += num(dd.a); }
+        y -= 20; hline(M, y, W - M, LINE);
+      }
+      page.drawLine({ start: { x: M + half, y: y + n * 20 + 0 }, end: { x: M + half, y: y }, thickness: 0.6, color: LINE });
+      y -= 18; te = r2(te); td = r2(td);
+      T("Total earnings", M + 6, y, { size: 9.5, bold: 1 }); T(fmt(te), M + half - 8, y, { size: 9.5, bold: 1, align: "right" });
+      T("Total deductions", M + half + 6, y, { size: 9.5, bold: 1 }); T(fmt(td), W - M - 6, y, { size: 9.5, bold: 1, align: "right" });
+      y -= 40; var net = r2(te - td);
+      var bfill = tp === "minimal" ? null : tp === "bold" ? DARK : ACC, gc = bfill ? WHITE : INK;
+      if (bfill) page.drawRectangle({ x: M, y: y - 8, width: W - 2 * M, height: 30, color: bfill }); else { hline(M, y + 22, W - M, INK, 0.8); hline(M, y - 8, W - M, INK, 0.8); }
+      T("Net pay", M + 8, y + 3, { size: 12, bold: 1, color: gc }); T("Rs. " + fmt(net), W - M - 8, y + 3, { size: 12, bold: 1, color: gc, align: "right" });
+      y -= 26; T(rupees(net), M, y, { size: 9, bold: 1 }); y -= 22;
+      if (d.notes && d.notes.trim()) { T("NOTES", M, y, { size: 7.5, bold: 1, color: tp === "minimal" ? MUT : ACC }); y -= 12; y = lines(wrap(d.notes, F, 8.5, W - 2 * M), M, y, { size: 8.5, color: MUT, lh: 11.5 }) - 6; }
+      T("This is a computer generated salary slip.", M, y, { size: 8, color: MUT }); y -= 10;
+      sigBlock();
+    }
+
+    /* ---- rent receipts: three per page ---- */
+    function drawRent() {
+      var x = d.x, ms = [], m1 = /^(\d{4})-(\d{2})$/.exec(x.from || ""), m2 = /^(\d{4})-(\d{2})$/.exec(x.to || "");
+      if (m1 && m2) { var a = +m1[1] * 12 + (+m1[2] - 1), b = +m2[1] * 12 + (+m2[2] - 1); for (var k = a; k <= b && ms.length < 36; k++) ms.push(Math.floor(k / 12) + "-" + ("0" + (k % 12 + 1)).slice(-2)); }
+      if (!ms.length) ms.push(x.from || today().slice(0, 7));
+      var rent = num(x.rent), BH = 236, start = Math.max(1, Math.floor(num(x.start)) || 1);
+      ms.forEach(function (ym, i) {
+        if (i % 3 === 0) { newPage(); y = H - M; }
+        var top = y, h = BH - 16, bx = M, bw = W - 2 * M;
+        page.drawRectangle({ x: bx, y: top - h, width: bw, height: h, borderColor: tp === "minimal" ? INK : ACC, borderWidth: tp === "minimal" ? 0.8 : 1.2 });
+        if (tp === "classic" || tp === "bold") { page.drawRectangle({ x: bx, y: top - 28, width: bw, height: 28, color: tp === "bold" ? DARK : ACC }); T("RENT RECEIPT", bx + 12, top - 19, { size: 12.5, bold: 1, color: WHITE }); }
+        else { if (tp === "modern") page.drawRectangle({ x: bx, y: top - 28, width: bw, height: 28, color: TINT }); T("RENT RECEIPT", bx + 12, top - 19, { size: 12.5, bold: 1, color: tp === "modern" ? ACC : INK }); }
+        var dayN = Math.min(28, Math.max(1, Math.floor(num(x.day)) || 1)), dt = ym + "-" + ("0" + dayN).slice(-2);
+        var hc = (tp === "classic" || tp === "bold") ? WHITE : tp === "modern" ? ACC : INK;
+        T("Receipt no. " + (start + i), bx + bw - 12, top - 19, { size: 9, bold: 1, color: hc, align: "right" });
+        var yy = top - 48;
+        T("Date: " + fdate(dt), bx + 12, yy, { size: 9.5, bold: 1 }); yy -= 18;
+        var para = "Received Rs. " + fmt(rent) + " (" + rupees(rent) + ") from " + (x.tenant || "__________") + " as rent for the property at " + (x.prop || "__________") + ", for the month of " + ymLabel(ym) + ".";
+        yy = lines(wrap(para, F, 10, bw - 24), bx + 12, yy, { size: 10, lh: 14.5 }) - 4;
+        T("Landlord: " + (x.landlord || ""), bx + 12, yy, { size: 9.5, bold: 1, fit: bw - 200 }); yy -= 14;
+        if (x.pan) { T("Landlord PAN: " + x.pan, bx + 12, yy, { size: 9, color: MUT }); yy -= 14; }
+        if (d.notes && d.notes.trim()) { yy = lines(wrap(d.notes, F, 8.5, bw - 24).slice(0, 2), bx + 12, yy, { size: 8.5, color: MUT, lh: 11 }); }
+        var by = top - h + 14;
+        if (x.stamp) { page.drawRectangle({ x: bx + 12, y: by + 2, width: 44, height: 44, borderColor: MUT, borderWidth: 0.6, borderDashArray: [2, 2] }); T("Revenue", bx + 34, by + 28, { size: 6.5, color: MUT, align: "center" }); T("stamp", bx + 34, by + 19, { size: 6.5, color: MUT, align: "center" }); }
+        hline(bx + bw - 190, by + 18, bx + bw - 12, INK, 0.8); T("Landlord's signature", bx + bw - 12, by + 6, { size: 8, color: MUT, align: "right" });
+        y = top - BH;
+        if (i % 3 !== 2 && i !== ms.length - 1) page.drawLine({ start: { x: M, y: y + 8 }, end: { x: W - M, y: y + 8 }, thickness: 0.5, color: MUT, dashArray: [4, 3] });
+      });
+    }
+
+    var kind = T0.kind;
+    if (kind === "items") drawItems(); else if (kind === "receipt") drawReceipt(); else if (kind === "salary") drawSalary(); else drawRent();
+
+    pages.forEach(function (pg, i) {
+      page = pg;
+      var fy = 24;
+      if (S.credit !== false) T("Made with Invatek.in", M, fy, { size: 7.5, color: MUT });
+      if (pages.length > 1) T("Page " + (i + 1) + " of " + pages.length, W - M, fy, { size: 7.5, color: MUT, align: "right" });
+    });
+    var bytes = await pdf.save();
+    return { bytes: bytes, lost: lost, name: fileName(d) };
+  }
+  function fileName(d) {
+    var who = d.type === "salary" ? d.x.emp : d.type === "rent" ? "" : d.to.name, base = TYPES[d.type].name + "-" + (d.no || "") + (who ? "-" + who : "");
+    return base.replace(/[^A-Za-z0-9._-]+/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "") + ".pdf";
+  }
+
+  /* ---------- preview (the PDF itself, drawn with pdf.js) ---------- */
+  var prevTok = 0, prevT;
+  function schedulePreview(now) {
+    clearTimeout(prevT);
+    prevT = setTimeout(renderPreview, now ? 10 : 700);
+  }
+  async function renderPreview() {
+    var d = cur(), box = $("bzPages"); if (!d || !box) return;
+    if (!isVisible($("bzPrev"))) return;
+    var tok = ++prevTok;
+    try {
+      var res = await buildPdf(d); if (tok !== prevTok) return;
+      lastPdf = res;
+      var lib = await loadLib("pdfjs"); if (tok !== prevTok) return;
+      try { lib.GlobalWorkerOptions.workerSrc = WORKER_URL; } catch (e) {}
+      var doc = await lib.getDocument({ data: new Uint8Array(res.bytes.slice(0)) }).promise; if (tok !== prevTok) return;
+      var cssW = Math.max(240, Math.min(box.clientWidth || 360, 620)), dpr = Math.min(window.devicePixelRatio || 1, 2), frag = document.createDocumentFragment();
+      for (var i = 1; i <= doc.numPages; i++) {
+        var pg = await doc.getPage(i); if (tok !== prevTok) return;
+        var v1 = pg.getViewport({ scale: 1 }), sc = cssW / v1.width, vp = pg.getViewport({ scale: sc * dpr });
+        var cv = document.createElement("canvas"); cv.width = Math.round(vp.width); cv.height = Math.round(vp.height); cv.style.width = cssW + "px"; cv.style.height = Math.round(vp.height / dpr) + "px"; cv.className = "bz-page";
+        await pg.render({ canvasContext: cv.getContext("2d"), viewport: vp }).promise; if (tok !== prevTok) return;
+        frag.appendChild(cv);
+      }
+      box.textContent = ""; box.appendChild(frag);
+      var w = $("bzWarn"); if (w) { w.hidden = !res.lost; w.textContent = res.lost ? res.lost + " character(s) such as Hindi letters cannot be drawn in this PDF and show as ?. Use English letters for the PDF." : ""; }
+    } catch (e) { if (tok === prevTok) box.textContent = (e && e.message) || "Preview could not be made."; }
+  }
+  function isVisible(e) { return !!(e && e.offsetParent !== null); }
+  var lastPdf = null;
+
+  /* ---------- download and share ---------- */
+  function saveBlob(bytes, name) {
+    var blob = new Blob([bytes], { type: "application/pdf" }), url = URL.createObjectURL(blob), a = document.createElement("a");
+    a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(url); }, 10000);
+  }
+  async function makeNow() {
+    var d = cur(); if (!d) return null;
+    try { return await buildPdf(d); } catch (e) { toast((e && e.message) || "Could not make the PDF."); return null; }
+  }
+  function msgText(d, C) {
+    var T0 = TYPES[d.type], who = d.type === "salary" ? d.x.emp : d.type === "rent" ? d.x.tenant : d.to.name, biz = d.from.name || "";
+    var amt = T0.kind === "items" ? C.grand : T0.kind === "receipt" ? num(d.x.amt) : T0.kind === "rent" ? num(d.x.rent) : 0;
+    var t = "Hello" + (who ? " " + who : "") + ",\n\nPlease find the " + T0.name.toLowerCase() + " " + (d.no || "") + (amt ? " for Rs. " + fmt(amt) : "") + " attached." + "\n\nThank you" + (biz ? ",\n" + biz : ".");
+    return t;
+  }
+  function phoneDigits(p) { var s = String(p || "").replace(/\D+/g, ""); if (s.length === 10) s = "91" + s; return s; }
+  async function actDownload() {
+    var r = await makeNow(); if (!r) return; saveBlob(r.bytes, r.name); toast("PDF saved in your Downloads folder.");
+  }
+  async function actShare(kindOf) {
+    var d = cur(); if (!d) return; var C = d.items ? calc(d) : null, text = msgText(d, C);
+    var to = d.type === "salary" || d.type === "rent" ? "" : d.to;
+    var r = await makeNow(); if (!r) return;
+    var file = null; try { file = new File([r.bytes], r.name, { type: "application/pdf" }); } catch (e) {}
+    if (kindOf === "wa" || kindOf === "mail") {
+      /* phone share sheet can attach the PDF straight to WhatsApp or Gmail */
+      if (file && navigator.canShare && navigator.canShare({ files: [file] }) && /android|iphone|ipad|mobile/i.test(navigator.userAgent)) {
+        try { await navigator.share({ files: [file], title: r.name, text: text }); return; } catch (e) { if (e && e.name === "AbortError") return; }
+      }
+      saveBlob(r.bytes, r.name);
+      if (kindOf === "wa") {
+        var ph = to ? phoneDigits(to.phone) : "";
+        window.open("https://wa.me/" + ph + "?text=" + encodeURIComponent(text), "_blank", "noopener");
+        toast("PDF saved. In WhatsApp, tap the attach button and pick the PDF from Downloads.");
+      } else {
+        var em = to && to.email ? to.email : "";
+        location.href = "mailto:" + encodeURIComponent(em).replace(/%40/g, "@") + "?subject=" + encodeURIComponent(TYPES[d.type].name + " " + (d.no || "") + (d.from.name ? " from " + d.from.name : "")) + "&body=" + encodeURIComponent(text);
+        toast("PDF saved. Attach it from Downloads to the email.");
+      }
+    }
+  }
+
+  /* ---------- editor ---------- */
+  function get(o, p) { var k = p.split("."), v = o; for (var i = 0; i < k.length; i++) { if (v == null) return ""; v = v[k[i]]; } return v == null ? "" : v; }
+  function set(o, p, val) { var k = p.split("."), v = o; for (var i = 0; i < k.length - 1; i++) v = v[k[i]]; v[k[k.length - 1]] = val; }
+  function fld(label, p, o) {
+    o = o || {}; var d = cur(), v = get(d, p), cls = "bz-f" + (o.w ? " w" + o.w : ""), a = ' data-p="' + p + '"' + (o.s ? ' data-s="1"' : "") + (o.num ? ' data-num="1"' : "");
+    var h = '<label class="' + cls + '"><span>' + label + "</span>";
+    if (o.t === "area") h += "<textarea" + a + ' rows="' + (o.r || 2) + '" placeholder="' + esc(o.ph || "") + '">' + esc(v) + "</textarea>";
+    else if (o.t === "sel") h += "<select" + a + ">" + o.o.map(function (x) { var val = Array.isArray(x) ? x[0] : x, lab = Array.isArray(x) ? x[1] : x; return '<option value="' + esc(val) + '"' + (String(val) === String(v) ? " selected" : "") + ">" + esc(lab) + "</option>"; }).join("") + "</select>";
+    else if (o.t === "check") return '<label class="bz-chk"><input type="checkbox"' + a + (v ? " checked" : "") + "><span>" + label + "</span></label>";
+    else if (o.t === "ym") {
+      var m = /^(\d{4})-(\d{2})$/.exec(v || ""), yy = m ? +m[1] : new Date().getFullYear(), mm = m ? +m[2] : 1, ys = "";
+      for (var y = yy - 6; y <= yy + 3; y++) ys += '<option value="' + y + '"' + (y === yy ? " selected" : "") + ">" + y + "</option>";
+      h += '<span class="bz-ym"><select data-ym="' + p + '" data-part="m">' + MONTHS.map(function (n, i) { return '<option value="' + (i + 1) + '"' + (i + 1 === mm ? " selected" : "") + ">" + n + "</option>"; }).join("") + '</select><select data-ym="' + p + '" data-part="y">' + ys + "</select></span>";
+    }
+    else h += "<input" + a + ' type="' + (o.t || "text") + '" value="' + esc(v) + '" placeholder="' + esc(o.ph || "") + '"' + (o.num ? ' inputmode="decimal"' : "") + (o.ac ? ' autocomplete="' + o.ac + '"' : "") + (o.list ? ' list="' + o.list + '"' : "") + ">";
+    return h + "</label>";
+  }
+  function sec(title, body, open, id) { return '<details class="bz-sec"' + (open ? " open" : "") + (id ? ' id="' + id + '"' : "") + "><summary>" + title + '</summary><div class="bz-grid">' + body + "</div></details>"; }
+  function stateSel(label, p) { return fld(label, p, { t: "sel", o: [["", "Select state"]].concat(STATES.map(function (s) { return [s, s]; })), s: 1 }); }
+  function partyFields(pre, who) {
+    return fld(who === "from" ? "Business name" : "Name", pre + ".name", { w: 2, ph: who === "from" ? "Your business name" : "Customer name", ac: "off" }) +
+      fld("Address", pre + ".addr", { t: "area", w: 2, ph: "Street, city, PIN code" }) +
+      fld("GSTIN (optional)", pre + ".gstin", { ph: "22AAAAA0000A1Z5" }) + fld("Phone", pre + ".phone", { t: "tel", ph: "98765 43210" }) +
+      fld("Email", pre + ".email", { t: "email", ph: "name@example.com" }) + stateSel("State", pre + ".state");
+  }
+  function itemRow(it, i, gst) {
+    var C = calc(cur()), rw = C.rows[i], p = "items." + i + ".";
+    return '<div class="bz-item"><div class="bz-itop"><b>Item ' + (i + 1) + '</b><span class="bz-amt">Rs. ' + fmt(rw ? rw.amt : 0) + '</span><button type="button" class="bz-x" data-act="delitem" data-i="' + i + '" aria-label="Remove item ' + (i + 1) + '">&times;</button></div>' +
+      '<div class="bz-grid">' + fld("Item name", p + "n", { w: 2, ph: "e.g. Web design service" }) + fld("Description (optional)", p + "d", { w: 2, ph: "Short details" }) +
+      fld("Qty", p + "q", { num: 1, ph: "1" }) + fld("Unit", p + "u", { ph: "pcs, kg, hrs", list: "bzUnits" }) + fld("Rate (Rs.)", p + "r", { num: 1, ph: "0.00" }) +
+      (gst ? fld("GST %", p + "t", { t: "sel", o: RATES.map(function (r) { return [String(r), r + "%"]; }) }) : "") + fld("HSN / SAC (optional)", p + "h", { ph: "e.g. 9983" }) + "</div></div>";
+  }
+  function rowList(path, rows, labelA, ph) {
+    return rows.map(function (r, i) { return '<div class="bz-row2"><label class="bz-f"><span>' + labelA + '</span><input data-p="' + path + "." + i + '.l" value="' + esc(r.l) + '" placeholder="' + ph + '"></label><label class="bz-f"><span>Amount</span><input data-p="' + path + "." + i + '.a" data-num="1" inputmode="decimal" value="' + esc(r.a) + '" placeholder="0.00"></label><button type="button" class="bz-x" data-act="delrow" data-path="' + path + '" data-i="' + i + '" aria-label="Remove row">&times;</button></div>'; }).join("") + '<button type="button" class="btn ghost sm bz-addrow" data-act="addrow" data-path="' + path + '">+ Add row</button>';
+  }
+  function designSec(d) {
+    return sec("Design and template", '<div class="bz-full"><span class="bz-lab">Template</span><div class="bz-tpls">' + TPLS.map(function (t) {
+      return '<button type="button" class="bz-tpl t-' + t[0] + (d.tpl === t[0] ? " on" : "") + '" data-act="tpl" data-v="' + t[0] + '" style="--c:' + d.color + '" aria-pressed="' + (d.tpl === t[0]) + '"><i></i><em></em><b></b><span>' + t[1] + "</span></button>"; }).join("") + '</div></div><div class="bz-full"><span class="bz-lab">Colour</span><div class="bz-cols">' +
+      COLORS.map(function (c) { return '<button type="button" class="bz-col' + (d.color.toLowerCase() === c.toLowerCase() ? " on" : "") + '" data-act="color" data-v="' + c + '" style="background:' + c + '" aria-label="Colour ' + c + '"></button>'; }).join("") +
+      '<input type="color" class="bz-colpick" data-p="color" data-s="1" value="' + esc(d.color) + '" aria-label="Pick any colour"></div></div>' +
+      '<label class="bz-chk bz-full"><input type="checkbox" data-credit="1"' + (S.credit !== false ? " checked" : "") + '><span>Show small "Made with Invatek.in" at the bottom of the PDF</span></label>', false);
+  }
+  function businessSec(d, id) {
+    var logo = S.prof.logo ? '<img class="bz-logo" src="' + esc(S.prof.logo) + '" alt="Logo">' : "";
+    return sec(d.type === "salary" ? "Company details" : d.type === "rent" ? "Your details" : "Your business", '<div class="bz-full bz-logorow">' + logo + '<button type="button" class="btn ghost sm" data-act="logo">' + (S.prof.logo ? "Change logo" : "Add logo") + "</button>" + (S.prof.logo ? '<button type="button" class="btn ghost sm" data-act="rmlogo">Remove logo</button>' : "") + '<input type="file" id="bzLogoIn" accept="image/*" hidden></div>' + partyFields("from", "from") +
+      '<p class="bz-hint bz-full">These details are remembered on this device and filled in for your next document.</p>', true, id);
+  }
+  function formHtml(d) {
+    var T0 = TYPES[d.type], h = "", k = T0.kind;
+    h += sec("Document", fld(T0.noL, "no", { ac: "off" }) + fld("Date", "date", { t: "date" }) + (k === "items" ? fld(T0.dueL, "due", { t: "date" }) + fld("PO / reference (optional)", "ref") : ""), true);
+    if (k === "items") {
+      h += businessSec(d) + sec("Customer", partyFields("to", "to"), true);
+      var hint = "";
+      if (d.gst !== "none" && d.from.state && d.to.state) {
+        var same = d.from.state === d.to.state;
+        if (same && d.gst === "igst") hint = "Both states are the same. For this, CGST + SGST is normally used.";
+        if (!same && d.gst === "cgst") hint = "The states are different. For this, IGST is normally used.";
+      }
+      h += sec("GST", fld("GST on this document", "gst", { t: "sel", s: 1, w: 2, o: [["none", "No GST (without GST)"], ["cgst", "GST: CGST + SGST (same state)"], ["igst", "GST: IGST (other state)"]] }) +
+        (d.gst !== "none" ? fld("Prices already include GST", "incl", { t: "check", s: 1 }) : "") + (hint ? '<p class="bz-hint warn bz-full">' + hint + "</p>" : "") +
+        '<p class="bz-hint bz-full">Choose a GST % on each item. Tax is added to the total, or taken out of the price if the box above is ticked.</p>', true);
+      h += '<datalist id="bzUnits"><option>pcs</option><option>nos</option><option>kg</option><option>g</option><option>ltr</option><option>box</option><option>hrs</option><option>days</option><option>month</option><option>set</option><option>sq ft</option></datalist>';
+      h += '<details class="bz-sec" open><summary>Items</summary><div class="bz-items">' + d.items.map(function (it, i) { return itemRow(it, i, d.gst !== "none"); }).join("") + '</div><div class="bz-pad"><button type="button" class="btn ghost sm" data-act="additem">+ Add item</button></div><div class="bz-totals" id="bzTot"></div></details>';
+      h += sec("Discount, charges and advance", fld("Discount", "disc", { num: 1, ph: "0" }) + fld("Discount type", "dt", { t: "sel", s: 1, o: [["%", "Percent (%)"], ["Rs", "Amount (Rs.)"]] }) + fld("Other charges name", "extraL", { ph: "Shipping, packing..." }) + fld("Other charges (Rs.)", "extra", { num: 1, ph: "0" }) +
+        fld("Advance paid / requested (Rs.)", "adv", { num: 1, ph: "0" }) + fld("Round off the total to a whole rupee", "round", { t: "check", s: 1 }), false);
+      h += sec("Notes, bank details and signature", fld("Notes (optional)", "notes", { t: "area", w: 2, r: 3, ph: "Thank you for your order." }) + fld("Terms and conditions", "terms", { t: "area", w: 2, r: 3 }) + fld("Bank / UPI details (optional)", "bank", { t: "area", w: 2, r: 3, ph: "Bank name, A/c no., IFSC, UPI ID" }) + fld("Signature name", "sign", { ph: "Authorised signatory" }), false);
+    } else if (k === "receipt") {
+      h += businessSec(d) + sec("Received from", fld("Name", "to.name", { w: 2, ph: "Payer name" }) + fld("Phone", "to.phone", { t: "tel" }) + fld("Email", "to.email", { t: "email" }) + fld("Address", "to.addr", { t: "area", w: 2 }), true);
+      h += sec("Payment", fld("Amount received (Rs.)", "x.amt", { num: 1, ph: "0.00" }) + fld("Payment mode", "x.mode", { t: "sel", o: ["Cash", "UPI", "Bank transfer", "Cheque", "Card", "Other"] }) + fld("Reference / UTR / cheque no.", "x.ref") + fld("Against invoice no. (optional)", "x.against") + fld("Towards", "x.towards", { w: 2, ph: "e.g. Advance for website work" }) + fld("Notes (optional)", "notes", { t: "area", w: 2 }) + fld("Signature name", "sign"), true);
+    } else if (k === "rent") {
+      h += sec("Rent details", fld("Tenant name", "x.tenant", { w: 2 }) + fld("Landlord name", "x.landlord", { w: 2 }) + fld("Landlord PAN (needed if yearly rent is above Rs. 1 lakh)", "x.pan", { w: 2, ph: "ABCDE1234F" }) + fld("Property address", "x.prop", { t: "area", w: 2, ph: "Flat no., building, city" }) + fld("Monthly rent (Rs.)", "x.rent", { num: 1, ph: "0" }) + fld("Paid on day of month", "x.day", { num: 1, ph: "1" }) +
+        fld("From month", "x.from", { t: "ym" }) + fld("To month", "x.to", { t: "ym" }) + fld("First receipt number", "x.start", { num: 1, ph: "1" }) + fld("Add a box for revenue stamp", "x.stamp", { t: "check" }) + fld("Notes (optional)", "notes", { t: "area", w: 2 }), true);
+    } else if (k === "salary") {
+      h += businessSec(d) + sec("Employee", fld("Pay month", "x.month", { t: "ym" }) + fld("Employee name", "x.emp") + fld("Employee ID", "x.eid") + fld("Designation", "x.desig") + fld("Department", "x.dept") + fld("PAN", "x.pan") + fld("Bank / account no.", "x.acc") + fld("Days in month", "x.days", { num: 1 }) + fld("Days paid", "x.paid", { num: 1 }), true);
+      h += '<details class="bz-sec" open><summary>Earnings</summary><div class="bz-pad">' + rowList("x.earn", d.x.earn, "Name", "e.g. Basic salary") + '</div></details><details class="bz-sec" open><summary>Deductions</summary><div class="bz-pad">' + rowList("x.ded", d.x.ded, "Name", "e.g. Provident fund") + '</div></details><div class="bz-totals" id="bzTot"></div>';
+      h += sec("Notes and signature", fld("Notes (optional)", "notes", { t: "area", w: 2 }) + fld("Signature name", "sign"), false);
+    }
+    h += designSec(d);
+    h += '<div class="bz-foot"><button type="button" class="btn ghost sm" data-act="dup">Duplicate this document</button><button type="button" class="btn ghost sm bz-danger" data-act="del">Delete this document</button></div>';
+    return h;
+  }
+  function renderTotals() {
+    var e = $("bzTot"), d = cur(); if (!e || !d) return;
+    if (TYPES[d.type].kind === "items") {
+      var C = calc(d), rows = [["Subtotal", C.sub]]; if (C.disc) rows.push(["Discount", -C.disc]);
+      if (d.gst !== "none") C.groups.forEach(function (g) { if (!g.t) return; if (d.gst === "cgst") { rows.push(["CGST @ " + g.t / 2 + "%", g.tax / 2]); rows.push(["SGST @ " + g.t / 2 + "%", g.tax - r2(g.tax / 2)]); } else rows.push(["IGST @ " + g.t + "%", g.tax]); });
+      if (C.extra) rows.push([d.extraL || "Other charges", C.extra]); if (C.ro) rows.push(["Round off", C.ro]);
+      e.innerHTML = rows.map(function (r) { return "<div><span>" + esc(r[0]) + "</span><span>" + fmt(r[1]) + "</span></div>"; }).join("") + '<div class="g"><span>Total</span><span>Rs. ' + fmt(C.grand) + "</span></div>" + (C.adv ? '<div class="g"><span>Balance due</span><span>Rs. ' + fmt(C.bal) + "</span></div>" : "") + '<p class="bz-words">' + esc(rupees(C.grand)) + "</p>";
+      var ams = root.querySelectorAll(".bz-amt"); C.rows.forEach(function (rw, i) { if (ams[i]) ams[i].textContent = "Rs. " + fmt(rw.amt); });
+    } else {
+      var te = 0, td = 0; d.x.earn.forEach(function (r) { te += num(r.a); }); d.x.ded.forEach(function (r) { td += num(r.a); });
+      e.innerHTML = "<div><span>Total earnings</span><span>" + fmt(te) + "</span></div><div><span>Total deductions</span><span>" + fmt(td) + '</span></div><div class="g"><span>Net pay</span><span>Rs. ' + fmt(te - td) + '</span></div><p class="bz-words">' + esc(rupees(te - td)) + "</p>";
+    }
+  }
+
+  /* ---------- layout ---------- */
+  function shell() {
+    root.innerHTML =
+      '<aside class="bz-side" aria-label="Create a document"><p class="bz-sh">Create new</p>' + ORDER.map(function (t) { return '<button type="button" class="bz-st" data-act="new" data-v="' + t + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + TYPES[t].icon + '"/></svg><span>' + TYPES[t].name + "</span></button>"; }).join("") + '<p class="bz-sh">My details</p><button type="button" class="bz-st" data-act="mine"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V8l8-5 8 5v13M9 21v-6h6v6"/></svg><span>My business</span></button><p class="bz-side-note">Everything saves on this device. Nothing is uploaded.</p></aside>' +
+      '<div class="bz-main"><div class="bz-bar"><div class="bz-tabs" id="bzTabs" role="tablist" aria-label="Open documents"></div><div class="bz-newwrap"><button type="button" class="btn sm bz-newbtn" id="bzNew" aria-haspopup="true" aria-expanded="false">+ New</button><div class="bz-menu" id="bzMenu" hidden>' + ORDER.map(function (t) { return '<button type="button" data-act="new" data-v="' + t + '">' + TYPES[t].name + "</button>"; }).join("") + '</div></div></div>' +
+      '<div class="bz-switch" role="tablist"><button type="button" class="on" data-act="view" data-v="edit" role="tab">Edit</button><button type="button" data-act="view" data-v="prev" role="tab">Preview</button></div>' +
+      '<div class="bz-work" id="bzWork" data-view="edit"><div class="bz-edit" id="bzEdit"></div><div class="bz-prev" id="bzPrev"><div class="bz-prevhead"><span id="bzSaved" class="bz-saved">Saved on this device</span></div><p class="bz-warn" id="bzWarn" hidden></p><div class="bz-pages" id="bzPages"><p class="bz-wait">Preview loads here.</p></div></div></div>' +
+      '<div class="bz-actions"><button type="button" class="btn" data-act="dl">Download PDF</button><button type="button" class="btn ghost" data-act="wa">WhatsApp</button><button type="button" class="btn ghost" data-act="mail">Email</button></div></div>';
+  }
+  function renderTabs() {
+    var h = ""; S.docs.forEach(function (d) { h += '<div class="bz-tab' + (d.id === S.active ? " on" : "") + '" data-id="' + d.id + '" role="tab" tabindex="0" aria-selected="' + (d.id === S.active) + '"><span class="bz-tt">' + esc(docTitle(d)) + '</span><button type="button" class="bz-tc" data-act="close" data-id="' + d.id + '" aria-label="Close tab">&times;</button></div>'; });
+    $("bzTabs").innerHTML = h;
+  }
+  var openMap = {};
+  function renderForm() {
+    var d = cur(), ed = $("bzEdit"), fk = null;
+    ed.querySelectorAll("details").forEach(function (x) { var k = x.querySelector("summary"); if (k) openMap[k.textContent] = x.open; });
+    var ae = document.activeElement; if (ae && ed.contains(ae) && ae.dataset && ae.dataset.p) fk = ae.dataset.p;
+    ed.innerHTML = d ? formHtml(d) : "";
+    ed.querySelectorAll("details").forEach(function (x) { var k = x.querySelector("summary"); if (k && openMap.hasOwnProperty(k.textContent)) x.open = openMap[k.textContent]; });
+    renderTotals();
+  }
+  function renderAll() { renderTabs(); renderForm(); schedulePreview(true); setSaved(); }
+  function touchTitle() { var d = cur(); if (!d) return; var t = document.querySelector('.bz-tab.on .bz-tt'); if (t) t.textContent = docTitle(d); }
+
+  /* ---------- events ---------- */
+  function onField(e) {
+    var t = e.target, d = cur(); if (!d) return;
+    if (t.dataset.credit) { S.credit = t.checked; save(); schedulePreview(); return; }
+    if (t.dataset.ym) {
+      var p = t.dataset.ym, parts = root.querySelectorAll('[data-ym="' + p + '"]'), m = "", y = "";
+      parts.forEach(function (x) { if (x.dataset.part === "m") m = x.value; else y = x.value; });
+      set(d, p, y + "-" + ("0" + m).slice(-2)); changed(false); return;
+    }
+    var p2 = t.dataset.p; if (!p2) return;
+    var v = t.type === "checkbox" ? t.checked : t.value;
+    if (p2 === "from.gstin" || p2 === "to.gstin" || p2 === "x.pan") v = String(v).toUpperCase();
+    set(d, p2, v);
+    if (p2.indexOf("from.") === 0) { S.prof[p2.slice(5)] = v; }
+    if (p2 === "bank") S.prof.bank = v; if (p2 === "sign") S.prof.sign = v;
+    if (p2 === "x.landlord" && !S.prof.name) S.prof.name = v;
+    if (p2 === "tpl") S.tpl = v; if (p2 === "color") { S.color = v; }
+    changed(!!t.dataset.s && e.type === "change");
+  }
+  function changed(struct) {
+    save(); touchTitle();
+    if (struct) { var sc = root.querySelector(".bz-edit"), top = sc ? sc.scrollTop : 0; renderForm(); if (sc) sc.scrollTop = top; } else renderTotals();
+    schedulePreview();
+  }
+  function logoPick(file) {
+    if (!file) return; var rd = new FileReader();
+    rd.onload = function () {
+      var im = new Image(); im.onload = function () {
+        var sc = Math.min(1, 360 / Math.max(im.width, im.height)), c = document.createElement("canvas"); c.width = Math.max(1, Math.round(im.width * sc)); c.height = Math.max(1, Math.round(im.height * sc));
+        c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
+        S.prof.logo = /png|svg|webp|gif/i.test(file.type) ? c.toDataURL("image/png") : c.toDataURL("image/jpeg", 0.88); save(); renderForm(); schedulePreview(true);
+      }; im.onerror = function () { toast("That picture could not be opened."); }; im.src = rd.result;
+    }; rd.readAsDataURL(file);
+  }
+  function closeTab(id) {
+    var i = S.docs.findIndex(function (x) { return x.id === id; }); if (i < 0) return;
+    var d = S.docs[i], filled = (d.to && d.to.name) || (d.items && d.items.some(function (x) { return x.n || num(x.r); })) || (d.x && (d.x.amt || d.x.tenant || d.x.emp));
+    if (filled && !confirm("Close and delete \"" + docTitle(d) + "\"? This cannot be undone.")) return;
+    S.docs.splice(i, 1);
+    if (S.active === id) S.active = S.docs.length ? S.docs[Math.min(i, S.docs.length - 1)].id : "";
+    if (!S.docs.length) { addDoc(window.INV_BIZ || "invoice", true); return; }
+    save(); renderAll();
+  }
+  function onClick(e) {
+    var b = e.target.closest("[data-act]"); if (!b || !root.contains(b)) return;
+    var a = b.dataset.act, d = cur();
+    if (a === "new") { $("bzMenu").hidden = true; $("bzNew").setAttribute("aria-expanded", "false"); addDoc(b.dataset.v); }
+    else if (a === "close") { e.stopPropagation(); closeTab(b.dataset.id); }
+    else if (a === "tpl") { d.tpl = b.dataset.v; S.tpl = d.tpl; save(); renderForm(); schedulePreview(true); }
+    else if (a === "color") { d.color = b.dataset.v; S.color = d.color; save(); renderForm(); schedulePreview(true); }
+    else if (a === "additem") { d.items.push({ n: "", d: "", h: "", q: "1", u: "", r: "", t: d.items.length ? d.items[d.items.length - 1].t : "18" }); save(); renderForm(); var inps = root.querySelectorAll(".bz-item"); if (inps.length) { var fi = inps[inps.length - 1].querySelector("input"); if (fi) fi.focus(); } schedulePreview(); }
+    else if (a === "delitem") { if (d.items.length > 1) d.items.splice(+b.dataset.i, 1); else d.items[0] = { n: "", d: "", h: "", q: "1", u: "", r: "", t: "18" }; save(); renderForm(); schedulePreview(); }
+    else if (a === "addrow") { get(d, b.dataset.path).push({ l: "", a: "" }); save(); renderForm(); }
+    else if (a === "delrow") { get(d, b.dataset.path).splice(+b.dataset.i, 1); save(); renderForm(); schedulePreview(); }
+    else if (a === "logo") $("bzLogoIn").click();
+    else if (a === "rmlogo") { S.prof.logo = ""; save(); renderForm(); schedulePreview(true); }
+    else if (a === "dup") { var c = JSON.parse(JSON.stringify(d)); c.id = uid(); c.no = nextNo(d.type); S.docs.splice(S.docs.indexOf(d) + 1, 0, c); S.active = c.id; save(); renderAll(); toast("Copied. You are now editing the copy."); }
+    else if (a === "del") closeTab(d.id);
+    else if (a === "mine") { var dets = root.querySelectorAll(".bz-sec"); for (var i = 0; i < dets.length; i++) { if (/business|details/i.test(dets[i].querySelector("summary").textContent)) { dets[i].open = true; dets[i].scrollIntoView({ behavior: "smooth", block: "start" }); break; } } }
+    else if (a === "view") { setView(b.dataset.v); }
+    else if (a === "dl") actDownload();
+    else if (a === "wa") actShare("wa");
+    else if (a === "mail") actShare("mail");
+  }
+  function setView(v) {
+    $("bzWork").dataset.view = v;
+    root.querySelectorAll(".bz-switch button").forEach(function (x) { x.classList.toggle("on", x.dataset.v === v); });
+    if (v === "prev") { schedulePreview(true); try { root.scrollIntoView({ block: "start" }); } catch (e) {} }
+  }
+
+  /* drag tabs to reorder (mouse, finger and keyboard) */
+  var drag = null;
+  function tabsEl() { return $("bzTabs"); }
+  function dragStart(e) {
+    var tab = e.target.closest(".bz-tab"); if (!tab || e.target.closest(".bz-tc")) return;
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    drag = { id: tab.dataset.id, el: tab, x0: e.clientX, active: false, pid: e.pointerId, touch: e.pointerType !== "mouse", t: null, moved: false };
+    if (drag.touch) drag.t = setTimeout(function () { if (drag) beginDrag(); }, 280);
+  }
+  function beginDrag() { drag.active = true; drag.el.classList.add("drag"); try { navigator.vibrate && navigator.vibrate(10); } catch (e) {} }
+  function dragMove(e) {
+    if (!drag || e.pointerId !== drag.pid) return;
+    var dx = e.clientX - drag.x0;
+    if (!drag.active) {
+      if (Math.abs(dx) > 8) { if (drag.touch) { clearTimeout(drag.t); drag = null; } else { beginDrag(); try { drag.el.setPointerCapture(e.pointerId); } catch (x) {} } }
+      if (!drag || !drag.active) return;
+    }
+    drag.moved = true; e.preventDefault();
+    drag.el.style.transform = "translateX(" + dx + "px)";
+    var tabs = [].slice.call(tabsEl().querySelectorAll(".bz-tab")), me = drag.el.getBoundingClientRect(), cx = me.left + me.width / 2, idx = tabs.indexOf(drag.el);
+    for (var i = 0; i < tabs.length; i++) {
+      if (tabs[i] === drag.el) continue; var r = tabs[i].getBoundingClientRect(), mid = r.left + r.width / 2;
+      if ((i > idx && cx > mid) || (i < idx && cx < mid)) { var from = S.docs.findIndex(function (x) { return x.id === drag.id; }), to = S.docs.findIndex(function (x) { return x.id === tabs[i].dataset.id; }); var it = S.docs.splice(from, 1)[0]; S.docs.splice(to, 0, it); var oldLeft = me.left; renderTabs(); drag.el = tabsEl().querySelector('[data-id="' + drag.id + '"]'); drag.el.classList.add("drag"); var nl = drag.el.getBoundingClientRect().left, ndx = oldLeft - nl; drag.x0 = e.clientX - ndx; drag.el.style.transform = "translateX(" + ndx + "px)"; try { drag.el.setPointerCapture(e.pointerId); } catch (x) {} save(); break; }
+    }
+  }
+  function dragEnd(e) {
+    if (!drag || (e && e.pointerId !== drag.pid)) return;
+    clearTimeout(drag.t); var was = drag.active, moved = drag.moved, id = drag.id; if (drag.el) { drag.el.classList.remove("drag"); drag.el.style.transform = ""; } drag = null;
+    if (!was && !moved && e && e.type === "pointerup") { if (S.active !== id) { S.active = id; save(); renderAll(); } }
+    else if (was) { save(); renderTabs(); }
+  }
+  function onTabKey(e) {
+    var tab = e.target.closest && e.target.closest(".bz-tab"); if (!tab || e.target.closest(".bz-tc")) return;
+    var i = S.docs.findIndex(function (x) { return x.id === tab.dataset.id; });
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); S.active = tab.dataset.id; save(); renderAll(); }
+    else if (e.altKey && (e.key === "ArrowLeft" || e.key === "ArrowRight")) {
+      var j = i + (e.key === "ArrowLeft" ? -1 : 1); if (j < 0 || j >= S.docs.length) return; e.preventDefault();
+      var it = S.docs.splice(i, 1)[0]; S.docs.splice(j, 0, it); save(); renderTabs(); var n = tabsEl().querySelector('[data-id="' + it.id + '"]'); if (n) n.focus();
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowRight") { var k = i + (e.key === "ArrowLeft" ? -1 : 1); if (k >= 0 && k < S.docs.length) { var nx = tabsEl().querySelector('[data-id="' + S.docs[k].id + '"]'); if (nx) nx.focus(); } }
+  }
+
+  /* ---------- start ---------- */
+  function init() {
+    shell();
+    var want = window.INV_BIZ || "invoice";
+    if (!S.docs.length) { var d0 = newDoc(want); S.docs.push(d0); S.active = d0.id; }
+    else if (!cur()) S.active = S.docs[0].id;
+    else { var cd = cur(); if (cd.type !== want) { for (var i = S.docs.length - 1; i >= 0; i--) if (S.docs[i].type === want) { S.active = S.docs[i].id; break; } if (cur().type !== want) { var d1 = newDoc(want); S.docs.push(d1); S.active = d1.id; } } }
+    save();
+    root.addEventListener("click", onClick);
+    root.addEventListener("input", onField); root.addEventListener("change", onField);
+    root.addEventListener("change", function (e) { if (e.target.id === "bzLogoIn") { logoPick(e.target.files && e.target.files[0]); e.target.value = ""; } });
+    $("bzNew").addEventListener("click", function (e) { e.stopPropagation(); var m = $("bzMenu"); m.hidden = !m.hidden; $("bzNew").setAttribute("aria-expanded", String(!m.hidden)); });
+    document.addEventListener("click", function (e) { var m = $("bzMenu"); if (m && !m.hidden && !e.target.closest(".bz-newwrap")) { m.hidden = true; $("bzNew").setAttribute("aria-expanded", "false"); } });
+    var tb = tabsEl();
+    tb.addEventListener("pointerdown", dragStart); window.addEventListener("pointermove", dragMove, { passive: false }); window.addEventListener("pointerup", dragEnd); window.addEventListener("pointercancel", dragEnd);
+    tb.addEventListener("touchmove", function (e) { if (drag && drag.active) e.preventDefault(); }, { passive: false });
+    tb.addEventListener("keydown", onTabKey);
+    tb.addEventListener("contextmenu", function (e) { if (drag) e.preventDefault(); });
+    window.addEventListener("resize", function () { schedulePreview(); });
+    function flush() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+    window.addEventListener("pagehide", flush); window.addEventListener("beforeunload", flush);
+    document.addEventListener("visibilitychange", function () { if (document.visibilityState === "hidden") flush(); });
+    renderAll();
+    window.INV_BIZ_API = { state: function () { return S; }, build: function () { return buildPdf(cur()); }, calc: function () { return calc(cur()); }, words: rupees };
+  }
+  init();
+})();
+
+</script>
+<script>
+window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "k": "home tools"}, {"t": "Scan to PDF", "u": "/scan-to-pdf", "d": "Scan documents to PDF with your phone camera. Removes shadows, keeps colour, lets you crop each page. Free, no sign up, files never uploaded.", "k": "camera scanner document photo scan tool"}, {"t": "Text to PDF", "u": "/text-to-pdf", "d": "Type or paste text and save it as a PDF. Works with English and Hindi. Free, no sign up, and nothing is uploaded.", "k": "type write note letter hindi tool"}, {"t": "Merge PDF", "u": "/merge-pdf", "d": "Combine several PDF files into one in the order you choose. Free, no sign up, and your files never leave your device.", "k": "combine join pdf files one tool"}, {"t": "Split PDF", "u": "/split-pdf", "d": "Extract chosen pages from a PDF, or save every page as its own file. Free, no sign up, and nothing is uploaded.", "k": "extract pages separate cut tool"}, {"t": "Remove pages", "u": "/remove-pdf-pages", "d": "Delete unwanted pages from a PDF in seconds. Free, no sign up, and your file is never uploaded.", "k": "delete pages blank tool"}, {"t": "Rotate PDF", "u": "/rotate-pdf", "d": "Turn PDF pages left or right with a preview of every page. Free, no sign up, and your file never leaves your device.", "k": "turn sideways upside down tool"}, {"t": "Compress PDF", "u": "/compress-pdf", "d": "Make a PDF smaller for email, WhatsApp or online forms. Three levels, shows the new size, free, no sign up, and your file is never uploaded.", "k": "reduce size smaller shrink kb mb 100kb 200kb 500kb upload form tool"}, {"t": "Edit PDF", "u": "/edit-pdf", "d": "Change text in a PDF, add your signature, write, draw, highlight or cover text. Free, no sign up, and your file stays on your device.", "k": "change text sign signature fill form draw highlight tool"}, {"t": "Protect PDF", "u": "/protect-pdf", "d": "Lock a PDF with a password so only people who know it can open it. Strong AES 256 encryption, free, no sign up, and your file never leaves your device.", "k": "password lock secure encrypt tool"}, {"t": "Photos to PDF", "u": "/photos-to-pdf", "d": "Turn JPG, PNG or WebP photos into one PDF, one photo per page. Free, no sign up, and nothing is uploaded.", "k": "jpg png image picture convert tool"}, {"t": "Word to PDF", "u": "/word-to-pdf", "d": "Convert a Word (.docx) file to PDF in your browser. Free, no sign up, and your document is never uploaded.", "k": "docx doc convert tool"}, {"t": "Excel to PDF", "u": "/excel-to-pdf", "d": "Convert Excel (.xlsx, .xls) or CSV files to PDF, one section per sheet. Free, no sign up, and nothing is uploaded.", "k": "xlsx csv sheet convert tool"}, {"t": "PDF to Excel", "u": "/pdf-to-excel", "d": "Pull tables and text from a PDF or a photo into an Excel file. Reads scanned pages with OCR in English and Hindi. Free and private.", "k": "table ocr convert xlsx tool"}, {"t": "PDF to Word", "u": "/pdf-to-word", "d": "Turn a PDF or a photo into an editable Word file. Reads scans with OCR in English and Hindi. Free, no sign up, and private.", "k": "docx ocr editable convert tool"}, {"t": "QR Code", "u": "/qr-code-generator", "d": "Make a QR code from any link or text and save it as PNG or SVG. Free, no sign up, and everything happens on your device.", "k": "qr barcode link scan generate code tool"}, {"t": "PDF to JPG", "u": "/pdf-to-jpg", "d": "Turn every page of a PDF into a JPG or PNG picture. Free, no sign up, and your file stays on your device.", "k": "pdf to image picture png jpeg photo save pages tool"}, {"t": "Compress image", "u": "/compress-image-to-kb", "d": "Reduce a photo or signature to the exact size in KB that your form asks for. Free, no sign up, nothing is uploaded.", "k": "reduce photo size kb 20kb 50kb 100kb signature form exam upload image compress tool"}, {"t": "Resize image", "u": "/resize-image", "d": "Resize a photo to the width and height you need, or save it as JPG, PNG or WebP. Free and private, it works on your device.", "k": "photo width height pixels passport size change dimension jpg png webp tool"}, {"t": "Page numbers", "u": "/add-page-numbers-to-pdf", "d": "Put page numbers on every page of a PDF. Choose the place and the look. Free, no sign up, and your file stays on your device.", "k": "page number numbering pdf tool"}, {"t": "Watermark PDF", "u": "/watermark-pdf", "d": "Write a word such as CONFIDENTIAL or your name across every page of a PDF. Free, no sign up, and private.", "k": "watermark confidential draft stamp text pdf tool"}, {"t": "Invoice Generator", "u": "/invoice-generator", "d": "Make a GST or normal invoice and download it as a PDF. Add items, CGST, SGST, IGST, discount, notes and logo. Free, no sign up, saved on your device.", "k": "gst bill billing tax invoice cgst sgst igst vyapar invoice business bill"}, {"t": "Quotation Maker", "u": "/quotation-generator", "d": "Make a professional quotation or estimate with items, GST, discount and validity date. Download as PDF or share on WhatsApp. Free and private.", "k": "quote estimate price offer invoice business bill"}, {"t": "Sales Order Maker", "u": "/sales-order-generator", "d": "Make a sales order with items, quantity, GST and delivery date. Download as PDF or share on WhatsApp. Free, no sign up.", "k": "order confirm invoice business bill"}, {"t": "Proforma Invoice Maker", "u": "/proforma-invoice-generator", "d": "Make a proforma invoice with items, GST and advance amount. Download as PDF or share on WhatsApp. Free, private and no sign up.", "k": "advance pro forma invoice business bill"}, {"t": "Payment Receipt Maker", "u": "/payment-receipt-generator", "d": "Make a payment receipt for cash, UPI, bank transfer or cheque. Shows amount in words. Download as PDF or share on WhatsApp. Free and private.", "k": "cash upi receipt payment invoice business bill"}, {"t": "Rent Receipt Generator", "u": "/rent-receipt-generator", "d": "Make rent receipts for HRA claims. Pick the months, rent and landlord PAN and download all receipts in one PDF. Free, no sign up, private.", "k": "hra house rent allowance landlord tenant invoice business bill"}, {"t": "Salary Slip Generator", "u": "/salary-slip-generator", "d": "Make a monthly salary slip with earnings, deductions, net pay and amount in words. Download as PDF. Free, private, no sign up.", "k": "payslip pay slip salary employee invoice business bill"}, {"t": "PDF guides and articles", "u": "/articles", "d": "How to guides for everyday PDF jobs", "k": "articles blog help how to"}, {"t": "How to merge PDF files on your phone", "u": "/how-to-merge-pdf-files-on-phone", "d": "Learn how to combine several PDF files into one on Android or iPhone without installing an app. Step by step, free, and private.", "k": "guide article how to"}, {"t": "How to compress a PDF without losing quality", "u": "/how-to-compress-pdf-without-losing-quality", "d": "Make a PDF smaller for email, WhatsApp or online forms. Learn what changes the size of a PDF and how to compress it free on your phone.", "k": "guide article how to"}, {"t": "Reduce PDF size for online forms and uploads", "u": "/reduce-pdf-size-for-online-forms", "d": "Upload failed because the file is too big? Learn how to bring a PDF under a form's size limit using free tools on your phone.", "k": "guide article how to"}, {"t": "How to convert photos to PDF on your phone", "u": "/convert-photos-to-pdf-on-android", "d": "Turn JPG or PNG photos into one PDF file on your phone. No app needed, free, and your photos stay private.", "k": "guide article how to"}, {"t": "How to scan documents to PDF with your phone", "u": "/scan-documents-to-pdf-with-phone", "d": "Use your phone camera as a scanner. Remove shadows, crop pages and save a clean PDF. Free and private, no app needed.", "k": "guide article how to"}, {"t": "How to password protect a PDF", "u": "/how-to-password-protect-a-pdf", "d": "Lock a PDF with a password before you share it. Learn how password protection works and how to do it free, without uploading your file.", "k": "guide article how to"}, {"t": "How to split a PDF and extract pages", "u": "/how-to-split-pdf-and-extract-pages", "d": "Pull out only the pages you need from a PDF, or save every page as its own file. Free, private and works on your phone.", "k": "guide article how to"}, {"t": "How to rotate PDF pages", "u": "/how-to-rotate-pdf-pages", "d": "Fix sideways or upside down PDF pages and save the corrected file. Free, with a preview of every page.", "k": "guide article how to"}, {"t": "How to convert Word to PDF", "u": "/how-to-convert-word-to-pdf", "d": "Turn a Word (.docx) file into a PDF that looks the same on every device. Free and private, nothing is uploaded.", "k": "guide article how to"}, {"t": "How to convert Excel to PDF", "u": "/how-to-convert-excel-to-pdf", "d": "Turn an Excel or CSV spreadsheet into a PDF anyone can open. Free, private and works on your phone.", "k": "guide article how to"}, {"t": "How to convert PDF to Word", "u": "/how-to-convert-pdf-to-word", "d": "Get the text out of a PDF, even a scan, into a Word file you can edit. Works in English and Hindi, free and private.", "k": "guide article how to"}, {"t": "How to sign a PDF on your phone", "u": "/how-to-sign-a-pdf-on-your-phone", "d": "Add your signature, text and dates to a PDF on your phone. No printer, no scanner and no app needed.", "k": "guide article how to"}, {"t": "How to remove pages from a PDF", "u": "/how-to-remove-pages-from-a-pdf", "d": "Delete blank, duplicate or private pages from a PDF and save a clean copy. Free and nothing is uploaded.", "k": "guide article how to"}, {"t": "Are online PDF tools safe to use?", "u": "/are-online-pdf-tools-safe", "d": "Many PDF websites upload your files to a server. Learn the risks, how to spot safer tools, and what to do with private documents.", "k": "guide article how to"}, {"t": "PDF vs JPG: which one should you use?", "u": "/pdf-vs-jpg-which-format-to-use", "d": "Understand the difference between PDF and JPG, when each is better, and how to convert between them for forms and sharing.", "k": "guide article how to"}, {"t": "How to make a resume PDF that looks professional", "u": "/how-to-make-a-resume-pdf", "d": "Save your resume as a clean PDF that opens the same on every phone and computer. Tips on file name, size and layout.", "k": "guide article how to"}, {"t": "How to send all documents as one PDF", "u": "/send-documents-as-one-pdf-for-job-applications", "d": "Combine resume, certificates and ID proof into a single tidy PDF for job and college applications. Free, on your phone.", "k": "guide article how to"}, {"t": "How to convert a PDF table to Excel", "u": "/how-to-convert-pdf-table-to-excel", "d": "Move a table from a PDF or a photo into Excel so you can sort and calculate. Reads scans with OCR, free and private.", "k": "guide article how to"}, {"t": "How to fill a PDF form on your phone", "u": "/how-to-add-text-to-a-pdf-form", "d": "Type your answers on top of a PDF form, add ticks and a date, and save the filled form. Free, no app needed.", "k": "guide article how to"}, {"t": "How to send a large PDF on WhatsApp and email", "u": "/how-to-send-large-pdf-on-whatsapp-and-email", "d": "PDF too big to send? Learn how to shrink it, split it or share it in parts so it goes through on WhatsApp and email.", "k": "guide article how to"}, {"t": "How to turn text into a PDF", "u": "/text-to-pdf-write-notes-and-letters", "d": "Type or paste text and save it as a neat A4 PDF. Works for English and Hindi. Free and private.", "k": "guide article how to"}, {"t": "How to edit text in a PDF", "u": "/how-to-edit-text-in-a-pdf", "d": "Change a name, date or number in a PDF without special software. Learn how to edit PDF text online for free and what limits to expect.", "k": "guide article how to"}, {"t": "How to make a QR code for a link", "u": "/how-to-make-a-qr-code-for-a-link", "d": "Create a QR code for a website, WhatsApp link or any text, test it, and print or share it. Simple steps and tips for scannable codes.", "k": "guide article how to"}, {"t": "How to convert a PDF to JPG", "u": "/how-to-convert-pdf-to-jpg", "d": "Save PDF pages as JPG or PNG pictures on your phone or computer. Simple steps, tips for good quality and small files.", "k": "guide article how to"}, {"t": "How to reduce image size to 50 KB", "u": "/how-to-reduce-image-size-to-50-kb", "d": "Make a photo or signature small enough for an exam or job form. Type the size in KB and save the smaller picture.", "k": "guide article how to"}, {"t": "How to resize a photo for a form", "u": "/how-to-resize-a-photo-for-a-form", "d": "Change the width and height of a photo for a form, ID or profile. Includes passport photo size and tips to avoid a stretched face.", "k": "guide article how to"}, {"t": "How to add page numbers to a PDF", "u": "/how-to-add-page-numbers-to-a-pdf", "d": "Put page numbers on a PDF report or assignment. Choose the place, the look and the first number.", "k": "guide article how to"}, {"t": "How to add a watermark to a PDF", "u": "/how-to-add-a-watermark-to-a-pdf", "d": "Write a word such as CONFIDENTIAL, DRAFT or your name across every page of a PDF, free and on your own device.", "k": "guide article how to"}, {"t": "How to make a GST invoice", "u": "/how-to-make-a-gst-invoice", "d": "Learn what a GST invoice should show, how CGST, SGST and IGST differ and how to make an invoice PDF free on your phone.", "k": "guide article how to"}, {"t": "How to make a rent receipt for an HRA claim", "u": "/how-to-make-a-rent-receipt-for-hra", "d": "Learn what a rent receipt should show for an HRA claim and make monthly rent receipts in one PDF, free on your phone.", "k": "guide article how to"}, {"t": "Quotation vs proforma invoice vs invoice", "u": "/quotation-vs-proforma-invoice-vs-invoice", "d": "Understand the difference between a quotation, a sales order, a proforma invoice and a tax invoice, and when to use each.", "k": "guide article how to"}, {"t": "About Invatek", "u": "/about", "d": "Invatek is a set of free PDF tools that work in your browser. Learn who we are and how your files stay private.", "k": "legal info"}, {"t": "Privacy Policy", "u": "/privacy-policy", "d": "How Invatek handles your files, cookies and advertising. Your files are processed in your browser and are not uploaded.", "k": "legal info"}, {"t": "Terms of Use", "u": "/terms", "d": "The terms for using Invatek's free PDF tools.", "k": "legal info"}, {"t": "Contact Invatek", "u": "/contact", "d": "How to reach Invatek for help, feedback or tool requests.", "k": "legal info"}];
+
+(function () {
+  var D = window.INV_INDEX || [], btn = document.getElementById("searchBtn"); if (!btn) return;
+  var STOP = { a: 1, an: 1, the: 1, to: 1, of: 1, for: 1, in: 1, on: 1, my: 1, how: 1, do: 1, i: 1, and: 1, is: 1, it: 1, me: 1, with: 1 };
+  var box = null, inp = null, list = null, lastFocus = null;
+  function words(q) { return (q || "").toLowerCase().split(/[^a-z0-9\u0900-\u097f]+/).filter(function (w) { return w && !STOP[w]; }); }
+  function rank(q) {
+    var ws = words(q); if (!ws.length) return [];
+    return D.map(function (e) {
+      var t = e.t.toLowerCase(), h = t + " " + (e.k || "").toLowerCase() + " " + (e.d || "").toLowerCase(), sc = 0;
+      ws.forEach(function (w) { if (t.indexOf(w) >= 0) sc += 3; else if (h.indexOf(w) >= 0) sc += 1; });
+      return { e: e, s: sc };
+    }).filter(function (r) { return r.s > 0; }).sort(function (a, b) { return b.s - a.s; }).slice(0, 8).map(function (r) { return r.e; });
+  }
+  function show(q) {
+    list.innerHTML = "";
+    var items = q.trim() ? rank(q) : D.filter(function (e) { return ["/compress-pdf", "/merge-pdf", "/scan-to-pdf", "/qr-code-generator", "/protect-pdf"].indexOf(e.u) >= 0; });
+    if (!items.length) { var li0 = document.createElement("li"); li0.className = "srchhint"; li0.textContent = "No match. Try a word like compress, merge, scan, password or QR."; list.appendChild(li0); return; }
+    if (!q.trim()) { var h = document.createElement("li"); h.className = "srchhint"; h.textContent = "Popular tools"; list.appendChild(h); }
+    items.forEach(function (e) {
+      var li = document.createElement("li"), a = document.createElement("a"), b = document.createElement("b"), s = document.createElement("small");
+      a.href = e.u; b.textContent = e.t; s.textContent = e.d; a.appendChild(b); a.appendChild(s); li.appendChild(a); list.appendChild(li);
+    });
+  }
+  function close() { if (box) { box.remove(); box = null; document.body.style.overflow = ""; if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch (e) {} } } }
+  function open() {
+    if (box) return; lastFocus = document.activeElement;
+    box = document.createElement("div"); box.className = "srch"; box.setAttribute("role", "dialog"); box.setAttribute("aria-modal", "true"); box.setAttribute("aria-label", "Search");
+    var card = document.createElement("div"); card.className = "srchbox"; var row = document.createElement("div"); row.className = "srchrow";
+    inp = document.createElement("input"); inp.type = "search"; inp.setAttribute("aria-label", "Search tools and guides"); inp.autocomplete = "off"; inp.spellcheck = false; inp.setAttribute("enterkeyhint", "search");
+    inp.placeholder = "Search, e.g. compress pdf to 200 KB";
+    var x = document.createElement("button"); x.type = "button"; x.className = "btn ghost sm"; x.textContent = "Close"; x.addEventListener("click", close);
+    row.appendChild(inp); row.appendChild(x); list = document.createElement("ul"); list.className = "srchlist";
+    card.appendChild(row); card.appendChild(list); box.appendChild(card); document.body.appendChild(box); document.body.style.overflow = "hidden";
+    box.addEventListener("click", function (e) { if (e.target === box) close(); });
+    inp.addEventListener("input", function () { show(inp.value); });
+    inp.addEventListener("keydown", function (e) { if (e.key === "Enter") { var f = list.querySelector("a"); if (f) location.href = f.getAttribute("href"); } });
+    show(""); inp.focus();
+  }
+  btn.addEventListener("click", open);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") close();
+    else if (e.key === "/" && !box && !/^(INPUT|TEXTAREA|SELECT)$/.test((e.target && e.target.tagName) || "")) { e.preventDefault(); open(); }
+  });
+})();
+(function () {
+  function $(id) { return document.getElementById(id); }
+  var toastTimer;
+  function toast(t) { var e = $("toast"); e.textContent = t; e.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(function () { e.hidden = true; }, 2600); }
+/* share the site, back to top */
+  (function () {
+    var URL_SITE = "https://invatek.in/";
+    $("shareBtn").addEventListener("click", async function () {
+      var data = { title: "Invatek: Free PDF tools", text: "Free PDF tools: merge, split, scan, convert and edit PDFs. Your files never leave your phone.", url: URL_SITE };
+      try {
+        if (navigator.share) { await navigator.share(data); return; }
+        if (navigator.clipboard && navigator.clipboard.writeText) { await navigator.clipboard.writeText(URL_SITE); toast("Link copied"); return; }
+        toast(URL_SITE);
+      } catch (e) {
+        if (e && e.name === "AbortError") return;
+        try { await navigator.clipboard.writeText(URL_SITE); toast("Link copied"); } catch (e2) { toast(URL_SITE); }
+      }
+    });
+    var tt = $("toTop"), ticking = false;
+    function check() { ticking = false; tt.hidden = (window.scrollY || document.documentElement.scrollTop) < 500; }
+    window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(check); } }, { passive: true });
+    tt.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
+    check();
+  })();
+
+  /* theme: Light / Dark (first visit follows the phone setting, then remembers the choice) */
+  (function () {
+    var KEY = "inv-theme", names = { light: "Light", dark: "Dark" };
+    var ICONS = {
+      light: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>',
+      dark: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>' };
+    function system() { return window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; }
+    function get() { try { var m = localStorage.getItem(KEY); if (m === "light" || m === "dark") return m; } catch (e) {} return system(); }
+    function apply(m) {
+      document.documentElement.setAttribute("data-theme", m);
+      var t = document.querySelector('meta[name="theme-color"]'); if (t) t.setAttribute("content", m === "dark" ? "#0C1613" : "#0F6B5C");
+      var b = $("themeBtn"); if (!b) return;
+      $("themeIcon").innerHTML = ICONS[m]; $("themeLbl").textContent = names[m];
+      b.setAttribute("aria-label", "Theme: " + names[m] + ". Tap to switch.");
+    }
+    apply(get());
+    $("themeBtn").addEventListener("click", function () {
+      var m = get() === "dark" ? "light" : "dark";
+      try { localStorage.setItem(KEY, m); } catch (e) {}
+      apply(m);
+    });
+  })();
+
+  /* bottom tab highlight */
+  (function () {
+    var links = document.querySelectorAll("#tabbar a"); if (!links.length || !("IntersectionObserver" in window)) return;
+    function mark(id) { for (var i = 0; i < links.length; i++) links[i].classList.toggle("on", links[i].getAttribute("data-sec") === id); }
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) mark(e.target.id === "panel" ? "tools-top" : e.target.id); }); }, { rootMargin: "-40% 0px -50% 0px" });
+    ["panel", "guides", "about", "contact"].forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
+  })();
+})();
+</script>
+</body></html>
