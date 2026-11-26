@@ -482,6 +482,27 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
   .bz-main.fs .bz-prev { top: 8px; max-height: calc(100vh - 150px); }
   .bz-main.fs .bz-pages { display: flex; flex-direction: column; align-items: center; }
 }
+
+/* create sheet (tiles) */
+.bz-menu { position: fixed; inset: 0; z-index: 450; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(10, 20, 18, 0.5); min-width: 0; border: 0; border-radius: 0; box-shadow: none; }
+.bz-menu[hidden] { display: none; }
+.bz-sheet { width: min(520px, 100%); max-height: 92vh; overflow: auto; background: var(--surface); border-radius: 22px; padding: 14px 18px 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35); }
+.bz-sheethead { display: flex; align-items: center; justify-content: space-between; font-size: 18px; }
+.bz-sheet .bz-sh { margin: 14px 2px 8px; }
+.bz-tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.bz-menu .bz-tile { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px 2px; width: auto; text-align: center; border: 0; background: none; border-radius: 12px; font-weight: 600; font-size: 13px; line-height: 1.2; color: var(--fg); }
+.bz-tile:hover { background: var(--accent-soft); }
+.bz-circ { width: 58px; height: 58px; border-radius: 50%; background: var(--accent-soft); display: grid; place-items: center; }
+.bz-circ svg { width: 26px; height: 26px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+@media (max-width: 899px) {
+  .bz-menu { align-items: flex-end; padding: 0; }
+  .bz-sheet { width: 100%; border-radius: 22px 22px 0 0; padding-bottom: calc(22px + env(safe-area-inset-bottom, 0px)); }
+  .bz-newbtn { min-width: 84px; }
+}
+.bz-actions .btn:first-child { flex: 2 1 0; }
+.bz-menu .bz-sheethead { display: flex; }
+.bz-menu .bz-sheethead b { flex: 1; }
+.bz-menu .bz-sheethead .bz-x { display: block; width: 36px; height: 36px; flex: none; padding: 0; text-align: center; }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Invatek Rent Receipt Generator", "url": "https://invatek.in/rent-receipt-generator", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many months can I make at once?", "acceptedAnswer": {"@type": "Answer", "text": "Up to 36 months in one PDF."}}, {"@type": "Question", "name": "Is it valid for HRA?", "acceptedAnswer": {"@type": "Answer", "text": "The receipts show the details employers usually ask for. Your employer decides what proof it accepts, so check with them."}}, {"@type": "Question", "name": "Is my data uploaded?", "acceptedAnswer": {"@type": "Answer", "text": "No. Everything stays in your browser."}}]}]}</script>
 
@@ -1061,27 +1082,15 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
   async function actDownload() {
     var r = await makeNow(); if (!r) return; saveBlob(r.bytes, r.name); toast("PDF saved in your Downloads folder.");
   }
-  async function actShare(kindOf) {
+  async function actShare() {
     var d = cur(); if (!d) return; var C = d.items ? calc(d) : null, text = msgText(d, C);
-    var to = d.type === "salary" || d.type === "rent" ? "" : d.to;
     var r = await makeNow(); if (!r) return;
     var file = null; try { file = new File([r.bytes], r.name, { type: "application/pdf" }); } catch (e) {}
-    if (kindOf === "wa" || kindOf === "mail") {
-      /* phone share sheet can attach the PDF straight to WhatsApp or Gmail */
-      if (file && navigator.canShare && navigator.canShare({ files: [file] }) && /android|iphone|ipad|mobile/i.test(navigator.userAgent)) {
-        try { await navigator.share({ files: [file], title: r.name, text: text }); return; } catch (e) { if (e && e.name === "AbortError") return; }
-      }
-      saveBlob(r.bytes, r.name);
-      if (kindOf === "wa") {
-        var ph = to ? phoneDigits(to.phone) : "";
-        window.open("https://wa.me/" + ph + "?text=" + encodeURIComponent(text), "_blank", "noopener");
-        toast("PDF saved. In WhatsApp, tap the attach button and pick the PDF from Downloads.");
-      } else {
-        var em = to && to.email ? to.email : "";
-        location.href = "mailto:" + encodeURIComponent(em).replace(/%40/g, "@") + "?subject=" + encodeURIComponent(TYPES[d.type].name + " " + (d.no || "") + (d.from.name ? " from " + d.from.name : "")) + "&body=" + encodeURIComponent(text);
-        toast("PDF saved. Attach it from Downloads to the email.");
-      }
+    if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+      try { await navigator.share({ files: [file], title: r.name, text: text }); return; } catch (e) { if (e && e.name === "AbortError") return; }
     }
+    saveBlob(r.bytes, r.name);
+    toast("This device cannot open a share menu, so the PDF was saved. Attach it in WhatsApp or Email from your files.");
   }
 
   /* ---------- editor ---------- */
@@ -1183,10 +1192,10 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
   function shell() {
     root.innerHTML =
       '<aside class="bz-side" aria-label="Create a document"><p class="bz-sh">Create new</p>' + ORDER.map(function (t) { return '<button type="button" class="bz-st" data-act="new" data-v="' + t + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + TYPES[t].icon + '"/></svg><span>' + TYPES[t].name + "</span></button>"; }).join("") + '<p class="bz-sh">My details</p><button type="button" class="bz-st" data-act="mine"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V8l8-5 8 5v13M9 21v-6h6v6"/></svg><span>My business</span></button><p class="bz-side-note">Everything saves on this device. Nothing is uploaded.</p></aside>' +
-      '<div class="bz-main"><div class="bz-bar"><div class="bz-tabs" id="bzTabs" role="tablist" aria-label="Open documents"></div><div class="bz-newwrap"><button type="button" class="btn sm bz-newbtn" id="bzNew" aria-haspopup="true" aria-expanded="false">+ New</button><div class="bz-menu" id="bzMenu" hidden>' + ORDER.map(function (t) { return '<button type="button" data-act="new" data-v="' + t + '">' + TYPES[t].name + "</button>"; }).join("") + '</div></div></div>' +
+      '<div class="bz-main"><div class="bz-bar"><div class="bz-tabs" id="bzTabs" role="tablist" aria-label="Open documents"></div><div class="bz-newwrap"><button type="button" class="btn sm bz-newbtn" id="bzNew" aria-haspopup="true" aria-expanded="false">+ New</button><div class="bz-menu" id="bzMenu" hidden><div class="bz-sheet" role="dialog" aria-label="Create a document"><div class="bz-sheethead"><b>Create new</b><button type="button" class="bz-x" data-act="closemenu" aria-label="Close">&times;</button></div>' + [["Sales documents", ["invoice", "quotation", "salesorder", "proforma"]], ["Receipts and slips", ["receipt", "rent", "salary"]]].map(function (g) { return '<p class="bz-sh">' + g[0] + '</p><div class="bz-tiles">' + g[1].map(function (t) { return '<button type="button" class="bz-tile" data-act="new" data-v="' + t + '"><span class="bz-circ"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + TYPES[t].icon + '"/></svg></span><span>' + TYPES[t].name + "</span></button>"; }).join("") + "</div>"; }).join("") + '</div></div></div></div>' +
       '<div class="bz-switch" role="tablist"><button type="button" class="on" data-act="view" data-v="edit" role="tab">Edit</button><button type="button" data-act="view" data-v="prev" role="tab">Preview</button></div>' +
       '<div class="bz-work" id="bzWork" data-view="edit"><div class="bz-edit" id="bzEdit"></div><div class="bz-prev" id="bzPrev"><div class="bz-prevhead"><button type="button" class="btn ghost sm bz-fsbtn" id="bzFs" data-act="fs">Full screen</button><span id="bzSaved" class="bz-saved">Saved on this device</span></div><p class="bz-warn" id="bzWarn" hidden></p><div class="bz-pages" id="bzPages"><p class="bz-wait">Preview loads here.</p></div></div></div>' +
-      '<div class="bz-actions"><button type="button" class="btn" data-act="dl">Download PDF</button><button type="button" class="btn ghost" data-act="wa">WhatsApp</button><button type="button" class="btn ghost" data-act="mail">Email</button></div></div>';
+      '<div class="bz-actions"><button type="button" class="btn" data-act="dl">Download PDF</button><button type="button" class="btn ghost" data-act="share">Share</button></div></div>';
   }
   function renderTabs() {
     var h = ""; S.docs.forEach(function (d) { h += '<div class="bz-tab' + (d.id === S.active ? " on" : "") + '" data-id="' + d.id + '" role="tab" tabindex="0" aria-selected="' + (d.id === S.active) + '"><span class="bz-tt">' + esc(docTitle(d)) + '</span><button type="button" class="bz-tc" data-act="close" data-id="' + d.id + '" aria-label="Close tab">&times;</button></div>'; });
@@ -1266,8 +1275,8 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
     else if (a === "fs") setFs(!isFs());
     else if (a === "view") { setView(b.dataset.v); }
     else if (a === "dl") actDownload();
-    else if (a === "wa") actShare("wa");
-    else if (a === "mail") actShare("mail");
+    else if (a === "share") actShare();
+    else if (a === "closemenu") { $("bzMenu").hidden = true; $("bzNew").setAttribute("aria-expanded", "false"); }
   }
   function setView(v) {
     $("bzWork").dataset.view = v;
@@ -1328,7 +1337,7 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
     root.addEventListener("input", onField); root.addEventListener("change", onField);
     root.addEventListener("change", function (e) { if (e.target.id === "bzLogoIn") { logoPick(e.target.files && e.target.files[0]); e.target.value = ""; } });
     $("bzNew").addEventListener("click", function (e) { e.stopPropagation(); var m = $("bzMenu"); m.hidden = !m.hidden; $("bzNew").setAttribute("aria-expanded", String(!m.hidden)); });
-    document.addEventListener("click", function (e) { var m = $("bzMenu"); if (m && !m.hidden && !e.target.closest(".bz-newwrap")) { m.hidden = true; $("bzNew").setAttribute("aria-expanded", "false"); } });
+    document.addEventListener("click", function (e) { var m = $("bzMenu"); if (m && !m.hidden && (!e.target.closest(".bz-newwrap") || e.target === m)) { m.hidden = true; $("bzNew").setAttribute("aria-expanded", "false"); } });
     var tb = tabsEl();
     tb.addEventListener("pointerdown", dragStart); window.addEventListener("pointermove", dragMove, { passive: false }); window.addEventListener("pointerup", dragEnd); window.addEventListener("pointercancel", dragEnd);
     tb.addEventListener("touchmove", function (e) { if (drag && drag.active) e.preventDefault(); }, { passive: false });
