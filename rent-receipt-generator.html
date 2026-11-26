@@ -503,6 +503,110 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
 .bz-menu .bz-sheethead { display: flex; }
 .bz-menu .bz-sheethead b { flex: 1; }
 .bz-menu .bz-sheethead .bz-x { display: block; width: 36px; height: 36px; flex: none; padding: 0; text-align: center; }
+
+/* ---- dashboard home ---- */
+.bz[data-screen="home"] .bz-main { display: none; }
+.bz[data-screen="edit"] .bz-home { display: none; }
+.bz-home { min-width: 0; max-width: 760px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; padding-bottom: 8px; }
+.bz-hd { display: flex; align-items: center; gap: 12px; }
+.bz-av { width: 48px; height: 48px; border-radius: 50%; background: var(--accent); color: var(--on-accent); display: grid; place-items: center; font-weight: 800; font-size: 20px; flex: none; }
+.bz-hn { display: flex; flex-direction: column; min-width: 0; }
+.bz-hn b { font-size: 20px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bz-link { align-self: flex-start; background: none; border: 0; padding: 2px 0; color: var(--accent); font-weight: 600; font-size: 14px; text-decoration: underline; }
+.bz-sum { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.bz-c { border-radius: 14px; padding: 14px; border: 1px solid; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.bz-c b { font-size: 24px; line-height: 1.1; overflow: hidden; text-overflow: ellipsis; }
+.bz-c span { font-weight: 700; font-size: 14px; }
+.bz-c.g { background: #eaf6ea; border-color: #bfe0bf; color: #1b6b2a; }
+.bz-c.b { background: #e8effc; border-color: #bccdf0; color: #1d4ed8; }
+:root[data-theme="dark"] .bz-c.g { background: #12301a; border-color: #285c33; color: #7bd88f; }
+:root[data-theme="dark"] .bz-c.b { background: #10223f; border-color: #28467d; color: #8fb3ff; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .bz-c.g { background: #12301a; border-color: #285c33; color: #7bd88f; } :root:not([data-theme="light"]) .bz-c.b { background: #10223f; border-color: #28467d; color: #8fb3ff; } }
+.bz-fl { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; }
+.bz-fl button { flex: none; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 7px 14px; font-weight: 600; font-size: 14px; color: var(--fg); min-height: 38px; }
+.bz-fl button.on { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.bz-ls { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.bz-row { display: flex; align-items: center; gap: 12px; padding: 10px 6px 10px 12px; border: 1px solid var(--line); background: var(--surface); border-radius: 14px; cursor: pointer; min-height: 64px; }
+.bz-row:hover, .bz-row:focus-visible { border-color: var(--accent); }
+.bz-circ.sm { width: 42px; height: 42px; flex: none; }
+.bz-circ.sm svg { width: 20px; height: 20px; }
+.bz-rt { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.bz-rt b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bz-rt small { color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bz-ra { font-weight: 800; flex: none; }
+.bz-empty { text-align: center; padding: 40px 12px 90px; color: var(--muted); }
+.bz-empty svg { width: 72px; height: 72px; stroke: var(--line); fill: none; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.bz-empty p { margin: 6px 0; }
+.bz-empty b { color: var(--fg); font-size: 18px; }
+.bz-fabs { position: sticky; bottom: 10px; z-index: 20; display: flex; gap: 10px; align-items: center; margin-top: 6px; }
+.bz-fabs .btn { flex: 1 1 0; min-height: 52px; border-radius: 999px; font-weight: 700; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22); }
+.bz-fabs .btn.dark { background: #2b2b44; color: #fff; border-color: #2b2b44; }
+.bz-plus { flex: none; width: 56px; height: 56px; border-radius: 50%; border: 0; background: #5fb87a; color: #fff; font-size: 32px; line-height: 1; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22); }
+.bz-back { flex: none; min-height: 40px; }
+@media (max-width: 899px) { .bz-fabs { bottom: calc(78px + env(safe-area-inset-bottom, 0px)); } .bz-fabs .btn { padding: 10px 8px; font-size: 14.5px; } }
+.bz .bz-plus { font-size: 34px; line-height: 1; padding: 0 0 4px; }
+.bz[data-screen="home"] { grid-template-columns: minmax(0, 1fr); }
+.bz[data-screen="home"] .bz-side { display: none; }
+
+/* ---- Vyapar style editor ---- */
+.bz-bar { display: none; }
+.bz-appbar { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
+.bz-appbar b { font-size: 20px; flex: 1; }
+.bz-iconbtn { width: 44px; height: 44px; flex: none; border: 0; background: none; border-radius: 50%; display: grid; place-items: center; color: var(--accent); }
+.bz-iconbtn:hover { background: var(--accent-soft); }
+.bz-iconbtn svg { width: 26px; height: 26px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.bz-dochead { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; }
+.bz-dn { margin: 0; color: var(--accent); font-weight: 700; font-size: 17px; }
+.bz-dd { margin: 2px 0 0; color: var(--muted); }
+.bz-pill { border: 1.5px solid var(--accent); background: none; color: var(--accent); font-weight: 800; letter-spacing: 0.04em; border-radius: 999px; padding: 8px 18px; min-height: 40px; }
+.bz-docedit { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px; }
+.bz-docedit[hidden] { display: none; }
+.bz-block { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.bz-bl { margin: 0; font-weight: 800; letter-spacing: 0.03em; font-size: 14px; }
+.bz-bl i { color: #d93025; font-style: normal; }
+.bz-party { position: relative; display: flex; align-items: center; gap: 8px; border: 1.5px solid var(--line); border-radius: 12px; padding: 0 6px 0 12px; background: var(--bg); min-height: 54px; }
+.bz-party:focus-within { border-color: var(--accent); }
+.bz-party > svg { width: 24px; height: 24px; flex: none; stroke: var(--muted); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.bz-party input { flex: 1; min-width: 0; border: 0; background: none; outline: none; font: inherit; font-size: 17px; color: var(--fg); padding: 12px 0; }
+.bz-chev { width: 40px; height: 40px; border: 0; background: none; display: grid; place-items: center; }
+.bz-chev svg { width: 22px; height: 22px; stroke: var(--muted); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.bz-plist { position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 30; max-height: 260px; overflow: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2); padding: 4px; }
+.bz-plist[hidden] { display: none; }
+.bz-plist button { display: flex; flex-direction: column; align-items: flex-start; width: 100%; border: 0; background: none; padding: 10px 12px; border-radius: 8px; text-align: left; color: var(--fg); }
+.bz-plist button:hover { background: var(--accent-soft); }
+.bz-plist small { color: var(--muted); }
+.bz-slim { border: 0; background: none; }
+.bz-additems { width: 100%; min-height: 54px; border: 0; border-radius: 6px; background: var(--accent-soft); color: var(--accent); font-weight: 800; font-size: 18px; }
+.bz-manual { align-self: center; }
+.bz-block .bz-items { display: flex; flex-direction: column; gap: 10px; }
+/* picker */
+.bz-pick { position: fixed; inset: 0; z-index: 460; background: var(--bg); display: flex; flex-direction: column; }
+.bz-pick[hidden] { display: none; }
+html.bz-pick-on, html.bz-pick-on body { overflow: hidden; }
+.bz-pickbar { display: flex; align-items: center; gap: 8px; padding: 10px 12px; max-width: 760px; width: 100%; margin: 0 auto; }
+.bz-search { flex: 1; display: flex; align-items: center; gap: 8px; background: var(--accent-soft); border-radius: 12px; padding: 0 12px; min-height: 48px; }
+.bz-search svg { width: 22px; height: 22px; stroke: var(--fg); fill: none; stroke-width: 2; stroke-linecap: round; }
+.bz-search input { flex: 1; min-width: 0; border: 0; background: none; outline: none; font: inherit; font-size: 16px; color: var(--fg); }
+.bz-pickhead { display: flex; justify-content: flex-end; padding: 0 12px 10px; max-width: 760px; width: 100%; margin: 0 auto; border-bottom: 1px solid var(--line); }
+.bz-newbtn2 { border: 0; background: var(--line); color: var(--fg); border-radius: 999px; padding: 12px 20px; font-weight: 700; min-height: 46px; }
+.bz-picklist { flex: 1; overflow: auto; width: 100%; max-width: 760px; margin: 0 auto; padding: 8px 12px; }
+.bz-pl { list-style: none; margin: 0; padding: 0; }
+.bz-pi { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.bz-pav { width: 48px; height: 48px; flex: none; border-radius: 10px; background: #d9eed9; color: #4b6b4b; display: grid; place-items: center; font-weight: 700; font-size: 20px; }
+.bz-pt { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.bz-pt b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bz-pt small { color: var(--muted); }
+.bz-addbtn { flex: none; border: 1.5px solid var(--accent); color: var(--accent); background: none; border-radius: 10px; padding: 10px 16px; font-weight: 800; min-height: 44px; }
+.bz-addbtn.on { background: var(--accent); color: var(--on-accent); }
+.bz-pempty { color: var(--muted); text-align: center; padding: 40px 12px; }
+.bz-newitem { padding: 8px 0; display: flex; flex-direction: column; gap: 12px; }
+.bz-pickbtns { display: flex; gap: 10px; } .bz-pickbtns .btn { flex: 1; min-height: 48px; }
+.bz-pickfoot { padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)); max-width: 760px; width: 100%; margin: 0 auto; }
+.bz-pickfoot .btn { width: 100%; min-height: 52px; font-weight: 700; }
+/* app opens at the very top */
+body.bzpage .wrap { display: flex; flex-direction: column; }
+body.bzpage .wrap > .bz { order: -1; width: 100%; }
+body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot { width: 100%; margin-left: auto; margin-right: auto; }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Invatek Rent Receipt Generator", "url": "https://invatek.in/rent-receipt-generator", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many months can I make at once?", "acceptedAnswer": {"@type": "Answer", "text": "Up to 36 months in one PDF."}}, {"@type": "Question", "name": "Is it valid for HRA?", "acceptedAnswer": {"@type": "Answer", "text": "The receipts show the details employers usually ask for. Your employer decides what proof it accepts, so check with them."}}, {"@type": "Question", "name": "Is my data uploaded?", "acceptedAnswer": {"@type": "Answer", "text": "No. Everything stays in your browser."}}]}]}</script>
 
@@ -634,7 +738,7 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
     e.className = "bz-saved" + (memOnly && !pending ? " warn" : "");
   }
   S = load();
-  if (!S.cnt) S.cnt = {}; if (!S.prof) S.prof = emptyProf();
+  if (!S.cnt) S.cnt = {}; if (!S.prof) S.prof = emptyProf(); if (!S.parties) S.parties = []; if (!S.lib) S.lib = [];
 
   function nextNo(type) {
     S.cnt[type] = (S.cnt[type] || 0) + 1;
@@ -661,7 +765,7 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
   }
   function cur() { for (var i = 0; i < S.docs.length; i++) if (S.docs[i].id === S.active) return S.docs[i]; return null; }
   function addDoc(type, quiet) {
-    var d = newDoc(type); S.docs.push(d); S.active = d.id; save(); renderAll(); if (!quiet) scrollTop();
+    var d = newDoc(type); S.docs.push(d); S.active = d.id; save(); setScreen("edit"); renderAll(); if (!quiet) scrollTop();
     return d;
   }
   function scrollTop() { try { root.scrollIntoView({ block: "start" }); } catch (e) {} }
@@ -1120,7 +1224,7 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
   }
   function itemRow(it, i, gst) {
     var C = calc(cur()), rw = C.rows[i], p = "items." + i + ".";
-    return '<div class="bz-item"><div class="bz-itop"><b>Item ' + (i + 1) + '</b><span class="bz-amt">Rs. ' + fmt(rw ? rw.amt : 0) + '</span><button type="button" class="bz-x" data-act="delitem" data-i="' + i + '" aria-label="Remove item ' + (i + 1) + '">&times;</button></div>' +
+    return '<div class="bz-item"><div class="bz-itop"><b>Item ' + (i + 1) + '</b><span class="bz-amt" data-i="' + i + '">Rs. ' + fmt(rw ? rw.amt : 0) + '</span><button type="button" class="bz-x" data-act="delitem" data-i="' + i + '" aria-label="Remove item ' + (i + 1) + '">&times;</button></div>' +
       '<div class="bz-grid">' + fld("Item name", p + "n", { w: 2, ph: "e.g. Web design service" }) + fld("Description (optional)", p + "d", { w: 2, ph: "Short details" }) +
       fld("Qty", p + "q", { num: 1, ph: "1" }) + fld("Unit", p + "u", { ph: "pcs, kg, hrs", list: "bzUnits" }) + fld("Rate (Rs.)", p + "r", { num: 1, ph: "0.00" }) +
       (gst ? fld("GST %", p + "t", { t: "sel", o: RATES.map(function (r) { return [String(r), r + "%"]; }) }) : "") + fld("HSN / SAC (optional)", p + "h", { ph: "e.g. 9983" }) + "</div></div>";
@@ -1135,30 +1239,30 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
       '<input type="color" class="bz-colpick" data-p="color" data-s="1" value="' + esc(d.color) + '" aria-label="Pick any colour"></div></div>' +
       '<label class="bz-chk bz-full"><input type="checkbox" data-credit="1"' + (S.credit !== false ? " checked" : "") + '><span>Show small "Made with Invatek.in" at the bottom of the PDF</span></label>', false);
   }
-  function businessSec(d, id) {
+  function businessSec(d, id, open) {
     var logo = S.prof.logo ? '<img class="bz-logo" src="' + esc(S.prof.logo) + '" alt="Logo">' : "";
     return sec(d.type === "salary" ? "Company details" : d.type === "rent" ? "Your details" : "Your business", '<div class="bz-full bz-logorow">' + logo + '<button type="button" class="btn ghost sm" data-act="logo">' + (S.prof.logo ? "Change logo" : "Add logo") + "</button>" + (S.prof.logo ? '<button type="button" class="btn ghost sm" data-act="rmlogo">Remove logo</button>' : "") + '<input type="file" id="bzLogoIn" accept="image/*" hidden></div>' + partyFields("from", "from") +
-      '<p class="bz-hint bz-full">These details are remembered on this device and filled in for your next document.</p>', true, id);
+      '<p class="bz-hint bz-full">These details are remembered on this device and filled in for your next document.</p>', open === undefined ? true : open, id);
   }
   function formHtml(d) {
     var T0 = TYPES[d.type], h = "", k = T0.kind;
-    h += sec("Document", fld(T0.noL, "no", { ac: "off" }) + fld("Date", "date", { t: "date" }) + (k === "items" ? fld(T0.dueL, "due", { t: "date" }) + fld("PO / reference (optional)", "ref") : ""), true);
+    if (k !== "items") h += sec("Document", fld(T0.noL, "no", { ac: "off" }) + fld("Date", "date", { t: "date" }), true);
     if (k === "items") {
-      h += businessSec(d) + sec("Customer", partyFields("to", "to"), true);
       var hint = "";
       if (d.gst !== "none" && d.from.state && d.to.state) {
         var same = d.from.state === d.to.state;
         if (same && d.gst === "igst") hint = "Both states are the same. For this, CGST + SGST is normally used.";
         if (!same && d.gst === "cgst") hint = "The states are different. For this, IGST is normally used.";
       }
+      h = docHead(d) + partyBlock(d) + itemsBlock(d);
       h += sec("GST", fld("GST on this document", "gst", { t: "sel", s: 1, w: 2, o: [["none", "No GST (without GST)"], ["cgst", "GST: CGST + SGST (same state)"], ["igst", "GST: IGST (other state)"]] }) +
         (d.gst !== "none" ? fld("Prices already include GST", "incl", { t: "check", s: 1 }) : "") + (hint ? '<p class="bz-hint warn bz-full">' + hint + "</p>" : "") +
         '<p class="bz-hint bz-full">Choose a GST % on each item. Tax is added to the total, or taken out of the price if the box above is ticked.</p>', true);
       h += '<datalist id="bzUnits"><option>pcs</option><option>nos</option><option>kg</option><option>g</option><option>ltr</option><option>box</option><option>hrs</option><option>days</option><option>month</option><option>set</option><option>sq ft</option></datalist>';
-      h += '<details class="bz-sec" open><summary>Items</summary><div class="bz-items">' + d.items.map(function (it, i) { return itemRow(it, i, d.gst !== "none"); }).join("") + '</div><div class="bz-pad"><button type="button" class="btn ghost sm" data-act="additem">+ Add item</button></div><div class="bz-totals" id="bzTot"></div></details>';
       h += sec("Discount, charges and advance", fld("Discount", "disc", { num: 1, ph: "0" }) + fld("Discount type", "dt", { t: "sel", s: 1, o: [["%", "Percent (%)"], ["Rs", "Amount (Rs.)"]] }) + fld("Other charges name", "extraL", { ph: "Shipping, packing..." }) + fld("Other charges (Rs.)", "extra", { num: 1, ph: "0" }) +
         fld("Advance paid / requested (Rs.)", "adv", { num: 1, ph: "0" }) + fld("Round off the total to a whole rupee", "round", { t: "check", s: 1 }), false);
       h += sec("Notes, bank details and signature", fld("Notes (optional)", "notes", { t: "area", w: 2, r: 3, ph: "Thank you for your order." }) + fld("Terms and conditions", "terms", { t: "area", w: 2, r: 3 }) + fld("Bank / UPI details (optional)", "bank", { t: "area", w: 2, r: 3, ph: "Bank name, A/c no., IFSC, UPI ID" }) + fld("Signature name", "sign", { ph: "Authorised signatory" }), false);
+      h += businessSec(d, null, !S.prof.name);
     } else if (k === "receipt") {
       h += businessSec(d) + sec("Received from", fld("Name", "to.name", { w: 2, ph: "Payer name" }) + fld("Phone", "to.phone", { t: "tel" }) + fld("Email", "to.email", { t: "email" }) + fld("Address", "to.addr", { t: "area", w: 2 }), true);
       h += sec("Payment", fld("Amount received (Rs.)", "x.amt", { num: 1, ph: "0.00" }) + fld("Payment mode", "x.mode", { t: "sel", o: ["Cash", "UPI", "Bank transfer", "Cheque", "Card", "Other"] }) + fld("Reference / UTR / cheque no.", "x.ref") + fld("Against invoice no. (optional)", "x.against") + fld("Towards", "x.towards", { w: 2, ph: "e.g. Advance for website work" }) + fld("Notes (optional)", "notes", { t: "area", w: 2 }) + fld("Signature name", "sign"), true);
@@ -1181,18 +1285,145 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
       if (d.gst !== "none") C.groups.forEach(function (g) { if (!g.t) return; if (d.gst === "cgst") { rows.push(["CGST @ " + g.t / 2 + "%", g.tax / 2]); rows.push(["SGST @ " + g.t / 2 + "%", g.tax - r2(g.tax / 2)]); } else rows.push(["IGST @ " + g.t + "%", g.tax]); });
       if (C.extra) rows.push([d.extraL || "Other charges", C.extra]); if (C.ro) rows.push(["Round off", C.ro]);
       e.innerHTML = rows.map(function (r) { return "<div><span>" + esc(r[0]) + "</span><span>" + fmt(r[1]) + "</span></div>"; }).join("") + '<div class="g"><span>Total</span><span>Rs. ' + fmt(C.grand) + "</span></div>" + (C.adv ? '<div class="g"><span>Balance due</span><span>Rs. ' + fmt(C.bal) + "</span></div>" : "") + '<p class="bz-words">' + esc(rupees(C.grand)) + "</p>";
-      var ams = root.querySelectorAll(".bz-amt"); C.rows.forEach(function (rw, i) { if (ams[i]) ams[i].textContent = "Rs. " + fmt(rw.amt); });
+      C.rows.forEach(function (rw, i) { var am = root.querySelector('.bz-amt[data-i="' + i + '"]'); if (am) am.textContent = "Rs. " + fmt(rw.amt); });
     } else {
       var te = 0, td = 0; d.x.earn.forEach(function (r) { te += num(r.a); }); d.x.ded.forEach(function (r) { td += num(r.a); });
       e.innerHTML = "<div><span>Total earnings</span><span>" + fmt(te) + "</span></div><div><span>Total deductions</span><span>" + fmt(td) + '</span></div><div class="g"><span>Net pay</span><span>Rs. ' + fmt(te - td) + '</span></div><p class="bz-words">' + esc(rupees(te - td)) + "</p>";
     }
   }
 
+
+
+  /* ---------- Vyapar style blocks ---------- */
+  var SHEETN = { invoice: "Bill / Invoice", quotation: "Quotation / Estimate", salesorder: "Sales Order", proforma: "Proforma Invoice", receipt: "Payment Receipt", rent: "Rent Receipt", salary: "Salary Slip" };
+  var docEditOpen = false;
+  function blankItem(it) { return !(it.n || num(it.r)); }
+  function dueText(d) {
+    if (!d.due) return ""; var a = new Date(d.due + "T00:00:00"), b = new Date(today() + "T00:00:00"), n = Math.round((a - b) / 86400000);
+    if (isNaN(n)) return ""; return n >= 0 ? " - " + n + " day(s) to due" : " - " + (-n) + " day(s) overdue";
+  }
+  function docHead(d) {
+    var T = TYPES[d.type];
+    return '<div class="bz-dochead"><div><p class="bz-dn">' + esc(T.name) + " #" + esc(d.no || "") + '</p><p class="bz-dd">' + esc(docDate(d)) + esc(dueText(d)) + '</p></div><button type="button" class="bz-pill" data-act="docedit">' + (docEditOpen ? "DONE" : "EDIT") + "</button></div>" +
+      '<div class="bz-docedit" id="bzDocEdit"' + (docEditOpen ? "" : " hidden") + '><div class="bz-grid">' + fld(T.noL, "no", { ac: "off" }) + fld("Date", "date", { t: "date" }) + fld(T.dueL, "due", { t: "date" }) + fld("PO / reference (optional)", "ref") + "</div></div>";
+  }
+  function partyBlock(d) {
+    var pd = fld("Address", "to.addr", { t: "area", w: 2, ph: "Street, city, PIN code" }) + fld("GSTIN (optional)", "to.gstin", { ph: "22AAAAA0000A1Z5" }) + fld("Phone", "to.phone", { t: "tel", ph: "98765 43210" }) + fld("Email", "to.email", { t: "email", ph: "name@example.com" }) + stateSel("State", "to.state");
+    return '<section class="bz-block"><p class="bz-bl">PARTY NAME <i>*</i></p><div class="bz-party"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7z"/></svg><input id="bzParty" data-p="to.name" type="text" autocomplete="off" placeholder="Search/Create Party" value="' + esc(d.to.name) + '"><button type="button" class="bz-chev" data-act="plist" aria-label="Saved parties"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="bz-plist" id="bzPList" hidden></div></div>' +
+      '<details class="bz-sec bz-slim"><summary>Party details (address, GSTIN, phone)</summary><div class="bz-grid">' + pd + "</div></details></section>";
+  }
+  function itemsBlock(d) {
+    var rows = ""; d.items.forEach(function (it, i) { if (!blankItem(it) || it._m) rows += itemRow(it, i, d.gst !== "none"); });
+    return '<section class="bz-block"><p class="bz-bl">ITEMS</p><div class="bz-items">' + rows + '</div><button type="button" class="bz-additems" data-act="pickitems">Add Items</button><button type="button" class="bz-link bz-manual" data-act="manualitem">or type an item by hand</button><div class="bz-totals" id="bzTot"></div></section>';
+  }
+  function renderPList(q) {
+    var box = $("bzPList"); if (!box) return; q = (q || "").trim().toLowerCase();
+    var list = S.parties.filter(function (p) { return !q || p.name.toLowerCase().indexOf(q) >= 0; }).slice(0, 30);
+    if (!list.length) { box.hidden = true; return; }
+    box.innerHTML = list.map(function (p) { return '<button type="button" data-act="pickparty" data-n="' + esc(p.name) + '"><b>' + esc(p.name) + "</b><small>" + esc([p.phone, p.state].filter(Boolean).join(" · ")) + "</small></button>"; }).join("");
+    box.hidden = false;
+  }
+  function upsertParty(d) {
+    if (!d || !d.to || !d.to.name || !d.to.name.trim() || TYPES[d.type].kind === "salary" || TYPES[d.type].kind === "rent") return;
+    var n = d.to.name.trim(), i = S.parties.findIndex(function (p) { return p.name.toLowerCase() === n.toLowerCase(); }), rec = JSON.parse(JSON.stringify(d.to)); rec.name = n;
+    if (i >= 0) S.parties[i] = rec; else S.parties.unshift(rec);
+    if (S.parties.length > 300) S.parties.length = 300;
+  }
+  function upsertLib(it) {
+    if (!it || !it.n || !it.n.trim()) return; var n = it.n.trim(), i = S.lib.findIndex(function (x) { return x.n.toLowerCase() === n.toLowerCase(); });
+    var rec = { n: n, d: it.d || "", h: it.h || "", u: it.u || "", r: it.r || "", t: it.t || "18" };
+    if (i >= 0) S.lib[i] = rec; else S.lib.unshift(rec);
+    if (S.lib.length > 500) S.lib.length = 500;
+  }
+  /* item picker screen */
+  var pickMode = "list";
+  function pickQty(name) { var d = cur(); if (!d) return 0; var t = 0; d.items.forEach(function (it) { if ((it.n || "").trim().toLowerCase() === name.toLowerCase()) t += num(it.q) || 0; }); return t; }
+  function renderPick() {
+    var el = $("bzPick"); if (!el) return; var d = cur(); if (!d) return;
+    var q = ((el.querySelector("#bzPq") || {}).value || "").trim().toLowerCase();
+    var n = 0; d.items.forEach(function (it) { if (!blankItem(it)) n++; });
+    var body;
+    if (pickMode === "new") {
+      body = '<div class="bz-newitem"><p class="bz-bl">NEW ITEM</p><div class="bz-grid">' +
+        '<label class="bz-f w2"><span>Item name</span><input id="niN" type="text" placeholder="e.g. Web design service"></label>' +
+        '<label class="bz-f"><span>Rate (Rs.)</span><input id="niR" type="text" inputmode="decimal" placeholder="0.00"></label>' +
+        '<label class="bz-f"><span>Unit</span><input id="niU" type="text" list="bzUnits" placeholder="pcs, kg, hrs"></label>' +
+        '<label class="bz-f"><span>GST %</span><select id="niT">' + RATES.map(function (r) { return '<option value="' + r + '"' + (r === 18 ? " selected" : "") + ">" + r + "%</option>"; }).join("") + "</select></label>" +
+        '<label class="bz-f"><span>HSN / SAC (optional)</span><input id="niH" type="text" placeholder="e.g. 9983"></label></div>' +
+        '<div class="bz-pickbtns"><button type="button" class="btn ghost" data-act="picklist">Cancel</button><button type="button" class="btn" data-act="saveitem">Save and add</button></div></div>';
+    } else {
+      var L = S.lib.map(function (x, i) { return [x, i]; }).filter(function (a) { return !q || a[0].n.toLowerCase().indexOf(q) >= 0; });
+      body = L.length ? '<ul class="bz-pl">' + L.map(function (a) {
+        var x = a[0], i = a[1], c = pickQty(x.n);
+        return '<li class="bz-pi"><span class="bz-pav">' + esc((x.n[0] || "?").toUpperCase()) + '</span><span class="bz-pt"><b>' + esc(x.n) + "</b><small>" + (x.r ? "₹" + esc(x.r) + (x.u ? "/" + esc(x.u) : "") : "No rate") + (x.h ? " · HSN " + esc(x.h) : "") + '</small></span><button type="button" class="bz-addbtn' + (c ? " on" : "") + '" data-act="addlib" data-i="' + i + '">' + (c ? "Added " + c + " +" : "ADD +") + "</button></li>";
+      }).join("") + "</ul>" : '<p class="bz-pempty">' + (S.lib.length ? "No item matches your search." : "No saved items yet. Tap Create New Item. Items you type in a bill are saved here too.") + "</p>";
+    }
+    el.innerHTML = '<div class="bz-pickbar"><button type="button" class="bz-iconbtn" data-act="closepick" aria-label="Back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><div class="bz-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4-4"/></svg><input id="bzPq" type="search" placeholder="Search items" value="' + esc(q) + '" autocomplete="off"></div></div>' +
+      '<div class="bz-pickhead"><button type="button" class="bz-newbtn2" data-act="newitem">+ Create New Item</button></div><div class="bz-picklist">' + body + '</div>' +
+      '<div class="bz-pickfoot"><button type="button" class="btn" data-act="closepick">Done' + (n ? " (" + n + " item" + (n === 1 ? "" : "s") + ")" : "") + "</button></div>";
+    var inp = el.querySelector("#bzPq"); if (inp && pickMode === "list") { inp.addEventListener("input", function () { var pos = inp.selectionStart; renderPick(); var i2 = $("bzPq"); if (i2) { i2.focus(); try { i2.setSelectionRange(pos, pos); } catch (e) {} } }); }
+  }
+  function openPick() { pickMode = "list"; var el = $("bzPick"); el.hidden = false; document.documentElement.classList.add("bz-pick-on"); renderPick(); var i = $("bzPq"); if (i && window.innerWidth > 899) i.focus(); }
+  function closePick() { var el = $("bzPick"); if (el) el.hidden = true; document.documentElement.classList.remove("bz-pick-on"); renderForm(); schedulePreview(true); }
+  function pushItem(x) {
+    var d = cur(); if (!d) return;
+    var key = (x.n || "").trim().toLowerCase(), ex = null;
+    d.items.forEach(function (it) { if (!ex && (it.n || "").trim().toLowerCase() === key && key) ex = it; });
+    if (ex) { ex.q = String((num(ex.q) || 0) + 1); }
+    else {
+      var it2 = { n: x.n, d: x.d || "", h: x.h || "", q: "1", u: x.u || "", r: x.r || "", t: x.t || "18" };
+      if (d.items.every(blankItem)) d.items = [it2]; else d.items.push(it2);
+    }
+    save();
+  }
+
+  /* ---------- home (dashboard) ---------- */
+  var homeF = "all";
+  function scr() { return root.dataset.screen || "home"; }
+  function setScreen(v) {
+    root.dataset.screen = v; if (v === "home") { setFs(false); renderHome(); try { root.scrollIntoView({ block: "start" }); } catch (e) {} } else { setFs(false); }
+  }
+  function docAmount(d) {
+    try {
+      if (TYPES[d.type].kind === "items") return calc(d).grand;
+      if (d.type === "salary") { var te = 0, td = 0; d.x.earn.forEach(function (r) { te += num(r.a); }); d.x.ded.forEach(function (r) { td += num(r.a); }); return te - td; }
+      if (d.type === "rent") { var f = String(d.x.from || "").split("-"), t = String(d.x.to || "").split("-"), mo = (+t[0] - +f[0]) * 12 + (+t[1] - +f[1]) + 1; return num(d.x.rent) * Math.max(1, mo || 1); }
+      return num(d.x.amt);
+    } catch (e) { return 0; }
+  }
+  function rupeeFmt(n) { return "₹" + fmt(n); }
+  function docParty(d) { return d.type === "salary" ? d.x.emp : d.type === "rent" ? d.x.tenant : d.to && d.to.name; }
+  function docDate(d) {
+    var v = d.date || (d.x && d.x.month) || ""; if (!v) return "";
+    var m = /^(\d{4})-(\d{2})(?:-(\d{2}))?$/.exec(v); if (!m) return v;
+    return (m[3] ? +m[3] + " " : "") + MONTHS[+m[2] - 1].slice(0, 3) + " " + m[1];
+  }
+  function isBlank(d) { return !((d.to && d.to.name) || (d.items && d.items.some(function (x) { return x.n || num(x.r); })) || (d.x && (d.x.amt || d.x.tenant || d.x.emp || d.x.rent))); }
+  function renderHome() {
+    var h = $("bzHome"); if (!h) return;
+    var want = window.INV_BIZ || "invoice", wn = SHEETN[want] || TYPES[want].name, alt = want === "quotation" ? "invoice" : "quotation", altn = SHEETN[alt];
+    var coll = 0, sales = 0, cnt = 0;
+    S.docs.forEach(function (d) { if (d.type === "invoice") { var C = calc(d); sales += C.grand; coll += C.bal; cnt++; } });
+    var name = S.prof.name || "Business name", ini = (name.trim()[0] || "B").toUpperCase();
+    var types = []; S.docs.forEach(function (d) { if (types.indexOf(d.type) < 0) types.push(d.type); });
+    if (homeF !== "all" && types.indexOf(homeF) < 0) homeF = "all";
+    var list = S.docs.slice().reverse().filter(function (d) { return !isBlank(d) && (homeF === "all" || d.type === homeF); });
+    h.innerHTML =
+      '<div class="bz-hd"><span class="bz-av">' + esc(ini) + '</span><div class="bz-hn"><b>' + esc(name) + '</b><button type="button" class="bz-link" data-act="setup">' + (S.prof.name ? "Edit business details" : "Add your business details") + "</button></div></div>" +
+      '<div class="bz-sum"><div class="bz-c g"><b>' + rupeeFmt(coll) + "</b><span>To collect ↓</span></div><div class=\"bz-c b\"><b>" + rupeeFmt(sales) + "</b><span>Total sales (" + cnt + " invoice" + (cnt === 1 ? "" : "s") + ")</span></div></div>" +
+      (types.length > 1 ? '<div class="bz-fl" role="tablist"><button type="button" class="' + (homeF === "all" ? "on" : "") + '" data-act="filter" data-v="all">All</button>' + types.map(function (t) { return '<button type="button" class="' + (homeF === t ? "on" : "") + '" data-act="filter" data-v="' + t + '">' + TYPES[t].name + "</button>"; }).join("") + "</div>" : "") +
+      (list.length ? '<ul class="bz-ls">' + list.map(function (d) {
+        var who = docParty(d), T = TYPES[d.type];
+        return '<li class="bz-row" data-act="open" data-id="' + d.id + '" tabindex="0" role="button"><span class="bz-circ sm"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + T.icon + '"/></svg></span><span class="bz-rt"><b>' + esc(who || "No name yet") + "</b><small>" + esc(T.name + " " + (d.no || "") + (docDate(d) ? " · " + docDate(d) : "")) + '</small></span><span class="bz-ra">' + rupeeFmt(docAmount(d)) + '</span><button type="button" class="bz-x" data-act="deldoc" data-id="' + d.id + '" aria-label="Delete">&times;</button></li>';
+      }).join("") + "</ul>" : '<div class="bz-empty"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h7"/></svg><p><b>No documents yet</b></p><p>Tap "+ ' + esc(wn) + '" to make your first one. It saves on this device.</p></div>') +
+      '<div class="bz-fabs"><button type="button" class="btn dark" data-act="new" data-v="' + alt + '">' + esc(altn) + '</button><button type="button" class="bz-plus" data-act="menu" aria-label="More documents">+</button><button type="button" class="btn" data-act="new" data-v="' + want + '">+ ' + esc(wn) + "</button></div>";
+  }
+
   /* ---------- layout ---------- */
   function shell() {
     root.innerHTML =
       '<aside class="bz-side" aria-label="Create a document"><p class="bz-sh">Create new</p>' + ORDER.map(function (t) { return '<button type="button" class="bz-st" data-act="new" data-v="' + t + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + TYPES[t].icon + '"/></svg><span>' + TYPES[t].name + "</span></button>"; }).join("") + '<p class="bz-sh">My details</p><button type="button" class="bz-st" data-act="mine"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V8l8-5 8 5v13M9 21v-6h6v6"/></svg><span>My business</span></button><p class="bz-side-note">Everything saves on this device. Nothing is uploaded.</p></aside>' +
-      '<div class="bz-main"><div class="bz-bar"><div class="bz-tabs" id="bzTabs" role="tablist" aria-label="Open documents"></div><div class="bz-newwrap"><button type="button" class="btn sm bz-newbtn" id="bzNew" aria-haspopup="true" aria-expanded="false">+ New</button><div class="bz-menu" id="bzMenu" hidden><div class="bz-sheet" role="dialog" aria-label="Create a document"><div class="bz-sheethead"><b>Create new</b><button type="button" class="bz-x" data-act="closemenu" aria-label="Close">&times;</button></div>' + [["Sales documents", ["invoice", "quotation", "salesorder", "proforma"]], ["Receipts and slips", ["receipt", "rent", "salary"]]].map(function (g) { return '<p class="bz-sh">' + g[0] + '</p><div class="bz-tiles">' + g[1].map(function (t) { return '<button type="button" class="bz-tile" data-act="new" data-v="' + t + '"><span class="bz-circ"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + TYPES[t].icon + '"/></svg></span><span>' + TYPES[t].name + "</span></button>"; }).join("") + "</div>"; }).join("") + '</div></div></div></div>' +
+      '<div class="bz-home" id="bzHome"></div>' + '<div class="bz-menu" id="bzMenu" hidden><div class="bz-sheet" role="dialog" aria-label="Create a document"><div class="bz-sheethead"><b>Create new</b><button type="button" class="bz-x" data-act="closemenu" aria-label="Close">&times;</button></div>' + [["Sales Transactions", ["invoice", "quotation", "salesorder", "proforma"]], ["Receipts and slips", ["receipt", "rent", "salary"]]].map(function (g) { return '<p class="bz-sh">' + g[0] + '</p><div class="bz-tiles">' + g[1].map(function (t) { return '<button type="button" class="bz-tile" data-act="new" data-v="' + t + '"><span class="bz-circ"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + TYPES[t].icon + '"/></svg></span><span>' + SHEETN[t] + "</span></button>"; }).join("") + "</div>"; }).join("") + '</div></div>' + '<div class="bz-pick" id="bzPick" hidden></div><div class="bz-main"><div class="bz-appbar"><button type="button" class="bz-iconbtn" data-act="home" aria-label="Back to all documents"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><b id="bzTitle">Create Bill / Invoice</b></div><div class="bz-bar"><div class="bz-tabs" id="bzTabs" role="tablist" aria-label="Open documents"></div><div class="bz-newwrap"><button type="button" class="btn sm bz-newbtn" id="bzNew" aria-haspopup="true" aria-expanded="false">+ New</button></div></div>' +
       '<div class="bz-switch" role="tablist"><button type="button" class="on" data-act="view" data-v="edit" role="tab">Edit</button><button type="button" data-act="view" data-v="prev" role="tab">Preview</button></div>' +
       '<div class="bz-work" id="bzWork" data-view="edit"><div class="bz-edit" id="bzEdit"></div><div class="bz-prev" id="bzPrev"><div class="bz-prevhead"><button type="button" class="btn ghost sm bz-fsbtn" id="bzFs" data-act="fs">Full screen</button><span id="bzSaved" class="bz-saved">Saved on this device</span></div><p class="bz-warn" id="bzWarn" hidden></p><div class="bz-pages" id="bzPages"><p class="bz-wait">Preview loads here.</p></div></div></div>' +
       '<div class="bz-actions"><button type="button" class="btn" data-act="dl">Download PDF</button><button type="button" class="btn ghost" data-act="share">Share</button></div></div>';
@@ -1210,7 +1441,7 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
     ed.querySelectorAll("details").forEach(function (x) { var k = x.querySelector("summary"); if (k && openMap.hasOwnProperty(k.textContent)) x.open = openMap[k.textContent]; });
     renderTotals();
   }
-  function renderAll() { renderTabs(); renderForm(); schedulePreview(true); setSaved(); }
+  function renderAll() { renderTabs(); renderForm(); schedulePreview(true); setSaved(); var d = cur(), tt = $("bzTitle"); if (tt && d) tt.textContent = "Create " + SHEETN[d.type]; }
   function touchTitle() { var d = cur(); if (!d) return; var t = document.querySelector('.bz-tab.on .bz-tt'); if (t) t.textContent = docTitle(d); }
 
   /* ---------- events ---------- */
@@ -1230,6 +1461,8 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
     if (p2 === "bank") S.prof.bank = v; if (p2 === "sign") S.prof.sign = v;
     if (p2 === "x.landlord" && !S.prof.name) S.prof.name = v;
     if (p2 === "tpl") S.tpl = v; if (p2 === "color") { S.color = v; }
+    if (e.type === "change") { if (p2.indexOf("to.") === 0) upsertParty(d); if (/^items\.\d+\.(n|r)$/.test(p2)) upsertLib(d.items[+p2.split(".")[1]]); }
+    if (p2 === "to.name" && e.type === "input") renderPList(v);
     changed(!!t.dataset.s && e.type === "change");
   }
   function changed(struct) {
@@ -1253,14 +1486,30 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
     if (filled && !confirm("Close and delete \"" + docTitle(d) + "\"? This cannot be undone.")) return;
     S.docs.splice(i, 1);
     if (S.active === id) S.active = S.docs.length ? S.docs[Math.min(i, S.docs.length - 1)].id : "";
-    if (!S.docs.length) { addDoc(window.INV_BIZ || "invoice", true); return; }
-    save(); renderAll();
+    if (!S.docs.length) { S.active = ""; save(); setScreen("home"); return; }
+    save(); if (scr() === "home") renderHome(); else renderAll();
   }
   function onClick(e) {
     var b = e.target.closest("[data-act]"); if (!b || !root.contains(b)) return;
     var a = b.dataset.act, d = cur();
     if (a === "new") { $("bzMenu").hidden = true; $("bzNew").setAttribute("aria-expanded", "false"); addDoc(b.dataset.v); }
     else if (a === "close") { e.stopPropagation(); closeTab(b.dataset.id); }
+    else if (a === "home") { upsertParty(d); save(); setScreen("home"); }
+    else if (a === "docedit") { docEditOpen = !docEditOpen; var de = $("bzDocEdit"); if (de) de.hidden = !docEditOpen; b.textContent = docEditOpen ? "DONE" : "EDIT"; }
+    else if (a === "plist") { e.stopPropagation(); var pl = $("bzPList"); if (pl.hidden) renderPList(""); else pl.hidden = true; }
+    else if (a === "pickparty") { var pp = S.parties.find(function (x) { return x.name === b.dataset.n; }); if (pp) { d.to = JSON.parse(JSON.stringify(pp)); save(); renderForm(); schedulePreview(true); } }
+    else if (a === "pickitems") openPick();
+    else if (a === "closepick") closePick();
+    else if (a === "newitem") { pickMode = "new"; renderPick(); var ni = $("niN"); if (ni) ni.focus(); }
+    else if (a === "picklist") { pickMode = "list"; renderPick(); }
+    else if (a === "saveitem") { var nm = ($("niN").value || "").trim(); if (!nm) { toast("Type the item name first."); return; } var rec = { n: nm, r: ($("niR").value || "").trim(), u: ($("niU").value || "").trim(), t: $("niT").value, h: ($("niH").value || "").trim(), d: "" }; upsertLib(rec); pushItem(rec); pickMode = "list"; renderPick(); }
+    else if (a === "addlib") { var x = S.lib[+b.dataset.i]; if (x) { pushItem(x); renderPick(); } }
+    else if (a === "manualitem") { d.items.push({ n: "", d: "", h: "", q: "1", u: "", r: "", t: d.items.length ? d.items[d.items.length - 1].t : "18", _m: true }); save(); renderForm(); var mi = root.querySelectorAll(".bz-item"); if (mi.length) { var f2 = mi[mi.length - 1].querySelector("input"); if (f2) f2.focus(); } }
+    else if (a === "menu") { e.stopPropagation(); $("bzMenu").hidden = false; }
+    else if (a === "filter") { homeF = b.dataset.v; renderHome(); }
+    else if (a === "open") { if (e.target.closest(".bz-x")) return; S.active = b.dataset.id; save(); setScreen("edit"); renderAll(); scrollTop(); }
+    else if (a === "deldoc") { e.stopPropagation(); closeTab(b.dataset.id); }
+    else if (a === "setup") { var sd = addDoc(window.INV_BIZ || "invoice"); setTimeout(function () { var ds = root.querySelectorAll(".bz-sec"); for (var q = 0; q < ds.length; q++) { if (/business|details/i.test(ds[q].querySelector("summary").textContent)) { ds[q].open = true; ds[q].scrollIntoView({ block: "start" }); break; } } }, 60); }
     else if (a === "tpl") { d.tpl = b.dataset.v; S.tpl = d.tpl; save(); renderForm(); schedulePreview(true); }
     else if (a === "color") { d.color = b.dataset.v; S.color = d.color; save(); renderForm(); schedulePreview(true); }
     else if (a === "additem") { d.items.push({ n: "", d: "", h: "", q: "1", u: "", r: "", t: d.items.length ? d.items[d.items.length - 1].t : "18" }); save(); renderForm(); var inps = root.querySelectorAll(".bz-item"); if (inps.length) { var fi = inps[inps.length - 1].querySelector("input"); if (fi) fi.focus(); } schedulePreview(); }
@@ -1329,15 +1578,16 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
   function init() {
     shell();
     var want = window.INV_BIZ || "invoice";
-    if (!S.docs.length) { var d0 = newDoc(want); S.docs.push(d0); S.active = d0.id; }
-    else if (!cur()) S.active = S.docs[0].id;
-    else { var cd = cur(); if (cd.type !== want) { for (var i = S.docs.length - 1; i >= 0; i--) if (S.docs[i].type === want) { S.active = S.docs[i].id; break; } if (cur().type !== want) { var d1 = newDoc(want); S.docs.push(d1); S.active = d1.id; } } }
+    S.docs = S.docs.filter(function (d) { return !isBlank(d); });
+    if (!cur()) S.active = S.docs.length ? S.docs[0].id : "";
     save();
     root.addEventListener("click", onClick);
+    root.addEventListener("focusin", function (e) { if (e.target.id === "bzParty") renderPList(e.target.value); });
+    document.addEventListener("click", function (e) { var pl = $("bzPList"); if (pl && !pl.hidden && !e.target.closest(".bz-party")) pl.hidden = true; });
     root.addEventListener("input", onField); root.addEventListener("change", onField);
     root.addEventListener("change", function (e) { if (e.target.id === "bzLogoIn") { logoPick(e.target.files && e.target.files[0]); e.target.value = ""; } });
     $("bzNew").addEventListener("click", function (e) { e.stopPropagation(); var m = $("bzMenu"); m.hidden = !m.hidden; $("bzNew").setAttribute("aria-expanded", String(!m.hidden)); });
-    document.addEventListener("click", function (e) { var m = $("bzMenu"); if (m && !m.hidden && (!e.target.closest(".bz-newwrap") || e.target === m)) { m.hidden = true; $("bzNew").setAttribute("aria-expanded", "false"); } });
+    document.addEventListener("click", function (e) { var m = $("bzMenu"); if (m && !m.hidden && (e.target === m || !e.target.closest(".bz-newwrap, .bz-sheet"))) { m.hidden = true; $("bzNew").setAttribute("aria-expanded", "false"); } });
     var tb = tabsEl();
     tb.addEventListener("pointerdown", dragStart); window.addEventListener("pointermove", dragMove, { passive: false }); window.addEventListener("pointerup", dragEnd); window.addEventListener("pointercancel", dragEnd);
     tb.addEventListener("touchmove", function (e) { if (drag && drag.active) e.preventDefault(); }, { passive: false });
@@ -1347,7 +1597,8 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
     function flush() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
     window.addEventListener("pagehide", flush); window.addEventListener("beforeunload", flush);
     document.addEventListener("visibilitychange", function () { if (document.visibilityState === "hidden") flush(); });
-    renderAll();
+    root.dataset.screen = "home"; renderAll(); renderHome();
+    root.addEventListener("keydown", function (e) { if ((e.key === "Enter" || e.key === " ") && e.target.classList && e.target.classList.contains("bz-row")) { e.preventDefault(); e.target.click(); } });
     window.INV_BIZ_API = { state: function () { return S; }, build: function () { return buildPdf(cur()); }, calc: function () { return calc(cur()); }, words: rupees };
   }
   init();
