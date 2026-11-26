@@ -503,6 +503,50 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
 .bz-menu .bz-sheethead { display: flex; }
 .bz-menu .bz-sheethead b { flex: 1; }
 .bz-menu .bz-sheethead .bz-x { display: block; width: 36px; height: 36px; flex: none; padding: 0; text-align: center; }
+
+/* ---- dashboard home ---- */
+.bz[data-screen="home"] .bz-main { display: none; }
+.bz[data-screen="edit"] .bz-home { display: none; }
+.bz-home { min-width: 0; max-width: 760px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; padding-bottom: 8px; }
+.bz-hd { display: flex; align-items: center; gap: 12px; }
+.bz-av { width: 48px; height: 48px; border-radius: 50%; background: var(--accent); color: var(--on-accent); display: grid; place-items: center; font-weight: 800; font-size: 20px; flex: none; }
+.bz-hn { display: flex; flex-direction: column; min-width: 0; }
+.bz-hn b { font-size: 20px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bz-link { align-self: flex-start; background: none; border: 0; padding: 2px 0; color: var(--accent); font-weight: 600; font-size: 14px; text-decoration: underline; }
+.bz-sum { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.bz-c { border-radius: 14px; padding: 14px; border: 1px solid; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.bz-c b { font-size: 24px; line-height: 1.1; overflow: hidden; text-overflow: ellipsis; }
+.bz-c span { font-weight: 700; font-size: 14px; }
+.bz-c.g { background: #eaf6ea; border-color: #bfe0bf; color: #1b6b2a; }
+.bz-c.b { background: #e8effc; border-color: #bccdf0; color: #1d4ed8; }
+:root[data-theme="dark"] .bz-c.g { background: #12301a; border-color: #285c33; color: #7bd88f; }
+:root[data-theme="dark"] .bz-c.b { background: #10223f; border-color: #28467d; color: #8fb3ff; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .bz-c.g { background: #12301a; border-color: #285c33; color: #7bd88f; } :root:not([data-theme="light"]) .bz-c.b { background: #10223f; border-color: #28467d; color: #8fb3ff; } }
+.bz-fl { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; }
+.bz-fl button { flex: none; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 7px 14px; font-weight: 600; font-size: 14px; color: var(--fg); min-height: 38px; }
+.bz-fl button.on { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.bz-ls { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.bz-row { display: flex; align-items: center; gap: 12px; padding: 10px 6px 10px 12px; border: 1px solid var(--line); background: var(--surface); border-radius: 14px; cursor: pointer; min-height: 64px; }
+.bz-row:hover, .bz-row:focus-visible { border-color: var(--accent); }
+.bz-circ.sm { width: 42px; height: 42px; flex: none; }
+.bz-circ.sm svg { width: 20px; height: 20px; }
+.bz-rt { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.bz-rt b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bz-rt small { color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bz-ra { font-weight: 800; flex: none; }
+.bz-empty { text-align: center; padding: 40px 12px 90px; color: var(--muted); }
+.bz-empty svg { width: 72px; height: 72px; stroke: var(--line); fill: none; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.bz-empty p { margin: 6px 0; }
+.bz-empty b { color: var(--fg); font-size: 18px; }
+.bz-fabs { position: sticky; bottom: 10px; z-index: 20; display: flex; gap: 10px; align-items: center; margin-top: 6px; }
+.bz-fabs .btn { flex: 1 1 0; min-height: 52px; border-radius: 999px; font-weight: 700; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22); }
+.bz-fabs .btn.dark { background: #2b2b44; color: #fff; border-color: #2b2b44; }
+.bz-plus { flex: none; width: 56px; height: 56px; border-radius: 50%; border: 0; background: #5fb87a; color: #fff; font-size: 32px; line-height: 1; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22); }
+.bz-back { flex: none; min-height: 40px; }
+@media (max-width: 899px) { .bz-fabs { bottom: calc(78px + env(safe-area-inset-bottom, 0px)); } .bz-fabs .btn { padding: 10px 8px; font-size: 14.5px; } }
+.bz .bz-plus { font-size: 34px; line-height: 1; padding: 0 0 4px; }
+.bz[data-screen="home"] { grid-template-columns: minmax(0, 1fr); }
+.bz[data-screen="home"] .bz-side { display: none; }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Invatek Invoice Generator", "url": "https://invatek.in/invoice-generator", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is the invoice generator free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. There is no sign up, no limit and no watermark. A small Made with Invatek line at the bottom can be switched off."}}, {"@type": "Question", "name": "Is my data uploaded anywhere?", "acceptedAnswer": {"@type": "Answer", "text": "No. Everything is made in your browser and saved only on your device. If you clear your browser data, saved documents are removed, so download the PDFs you need."}}, {"@type": "Question", "name": "Can I make a bill without GST?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Choose No GST and the tax columns disappear."}}, {"@type": "Question", "name": "Why does the PDF show Rs. and not the rupee sign?", "acceptedAnswer": {"@type": "Answer", "text": "PDF standard fonts do not include the rupee sign, so the amounts are written as Rs. to stay readable everywhere."}}]}]}</script>
 
@@ -661,7 +705,7 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
   }
   function cur() { for (var i = 0; i < S.docs.length; i++) if (S.docs[i].id === S.active) return S.docs[i]; return null; }
   function addDoc(type, quiet) {
-    var d = newDoc(type); S.docs.push(d); S.active = d.id; save(); renderAll(); if (!quiet) scrollTop();
+    var d = newDoc(type); S.docs.push(d); S.active = d.id; save(); setScreen("edit"); renderAll(); if (!quiet) scrollTop();
     return d;
   }
   function scrollTop() { try { root.scrollIntoView({ block: "start" }); } catch (e) {} }
@@ -1188,11 +1232,54 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
     }
   }
 
+
+  /* ---------- home (dashboard) ---------- */
+  var homeF = "all";
+  function scr() { return root.dataset.screen || "home"; }
+  function setScreen(v) {
+    root.dataset.screen = v; if (v === "home") { setFs(false); renderHome(); try { root.scrollIntoView({ block: "start" }); } catch (e) {} } else { setFs(false); }
+  }
+  function docAmount(d) {
+    try {
+      if (TYPES[d.type].kind === "items") return calc(d).grand;
+      if (d.type === "salary") { var te = 0, td = 0; d.x.earn.forEach(function (r) { te += num(r.a); }); d.x.ded.forEach(function (r) { td += num(r.a); }); return te - td; }
+      if (d.type === "rent") { var f = String(d.x.from || "").split("-"), t = String(d.x.to || "").split("-"), mo = (+t[0] - +f[0]) * 12 + (+t[1] - +f[1]) + 1; return num(d.x.rent) * Math.max(1, mo || 1); }
+      return num(d.x.amt);
+    } catch (e) { return 0; }
+  }
+  function rupeeFmt(n) { return "₹" + fmt(n); }
+  function docParty(d) { return d.type === "salary" ? d.x.emp : d.type === "rent" ? d.x.tenant : d.to && d.to.name; }
+  function docDate(d) {
+    var v = d.date || (d.x && d.x.month) || ""; if (!v) return "";
+    var m = /^(\d{4})-(\d{2})(?:-(\d{2}))?$/.exec(v); if (!m) return v;
+    return (m[3] ? +m[3] + " " : "") + MONTHS[+m[2] - 1].slice(0, 3) + " " + m[1];
+  }
+  function isBlank(d) { return !((d.to && d.to.name) || (d.items && d.items.some(function (x) { return x.n || num(x.r); })) || (d.x && (d.x.amt || d.x.tenant || d.x.emp || d.x.rent))); }
+  function renderHome() {
+    var h = $("bzHome"); if (!h) return;
+    var want = window.INV_BIZ || "invoice", wn = want === "invoice" ? "Bill / Invoice" : TYPES[want].name;
+    var coll = 0, sales = 0, cnt = 0;
+    S.docs.forEach(function (d) { if (d.type === "invoice") { var C = calc(d); sales += C.grand; coll += C.bal; cnt++; } });
+    var name = S.prof.name || "Business name", ini = (name.trim()[0] || "B").toUpperCase();
+    var types = []; S.docs.forEach(function (d) { if (types.indexOf(d.type) < 0) types.push(d.type); });
+    if (homeF !== "all" && types.indexOf(homeF) < 0) homeF = "all";
+    var list = S.docs.slice().reverse().filter(function (d) { return !isBlank(d) && (homeF === "all" || d.type === homeF); });
+    h.innerHTML =
+      '<div class="bz-hd"><span class="bz-av">' + esc(ini) + '</span><div class="bz-hn"><b>' + esc(name) + '</b><button type="button" class="bz-link" data-act="setup">' + (S.prof.name ? "Edit business details" : "Add your business details") + "</button></div></div>" +
+      '<div class="bz-sum"><div class="bz-c g"><b>' + rupeeFmt(coll) + "</b><span>To collect ↓</span></div><div class=\"bz-c b\"><b>" + rupeeFmt(sales) + "</b><span>Total sales (" + cnt + " invoice" + (cnt === 1 ? "" : "s") + ")</span></div></div>" +
+      (types.length > 1 ? '<div class="bz-fl" role="tablist"><button type="button" class="' + (homeF === "all" ? "on" : "") + '" data-act="filter" data-v="all">All</button>' + types.map(function (t) { return '<button type="button" class="' + (homeF === t ? "on" : "") + '" data-act="filter" data-v="' + t + '">' + TYPES[t].name + "</button>"; }).join("") + "</div>" : "") +
+      (list.length ? '<ul class="bz-ls">' + list.map(function (d) {
+        var who = docParty(d), T = TYPES[d.type];
+        return '<li class="bz-row" data-act="open" data-id="' + d.id + '" tabindex="0" role="button"><span class="bz-circ sm"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + T.icon + '"/></svg></span><span class="bz-rt"><b>' + esc(who || "No name yet") + "</b><small>" + esc(T.name + " " + (d.no || "") + (docDate(d) ? " · " + docDate(d) : "")) + '</small></span><span class="bz-ra">' + rupeeFmt(docAmount(d)) + '</span><button type="button" class="bz-x" data-act="deldoc" data-id="' + d.id + '" aria-label="Delete">&times;</button></li>';
+      }).join("") + "</ul>" : '<div class="bz-empty"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h7"/></svg><p><b>No documents yet</b></p><p>Tap "+ ' + esc(wn) + '" to make your first one. It saves on this device.</p></div>') +
+      '<div class="bz-fabs"><button type="button" class="btn dark" data-act="new" data-v="receipt">Received Payment</button><button type="button" class="bz-plus" data-act="menu" aria-label="More documents">+</button><button type="button" class="btn" data-act="new" data-v="' + want + '">+ ' + esc(wn) + "</button></div>";
+  }
+
   /* ---------- layout ---------- */
   function shell() {
     root.innerHTML =
       '<aside class="bz-side" aria-label="Create a document"><p class="bz-sh">Create new</p>' + ORDER.map(function (t) { return '<button type="button" class="bz-st" data-act="new" data-v="' + t + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + TYPES[t].icon + '"/></svg><span>' + TYPES[t].name + "</span></button>"; }).join("") + '<p class="bz-sh">My details</p><button type="button" class="bz-st" data-act="mine"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V8l8-5 8 5v13M9 21v-6h6v6"/></svg><span>My business</span></button><p class="bz-side-note">Everything saves on this device. Nothing is uploaded.</p></aside>' +
-      '<div class="bz-main"><div class="bz-bar"><div class="bz-tabs" id="bzTabs" role="tablist" aria-label="Open documents"></div><div class="bz-newwrap"><button type="button" class="btn sm bz-newbtn" id="bzNew" aria-haspopup="true" aria-expanded="false">+ New</button><div class="bz-menu" id="bzMenu" hidden><div class="bz-sheet" role="dialog" aria-label="Create a document"><div class="bz-sheethead"><b>Create new</b><button type="button" class="bz-x" data-act="closemenu" aria-label="Close">&times;</button></div>' + [["Sales documents", ["invoice", "quotation", "salesorder", "proforma"]], ["Receipts and slips", ["receipt", "rent", "salary"]]].map(function (g) { return '<p class="bz-sh">' + g[0] + '</p><div class="bz-tiles">' + g[1].map(function (t) { return '<button type="button" class="bz-tile" data-act="new" data-v="' + t + '"><span class="bz-circ"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + TYPES[t].icon + '"/></svg></span><span>' + TYPES[t].name + "</span></button>"; }).join("") + "</div>"; }).join("") + '</div></div></div></div>' +
+      '<div class="bz-home" id="bzHome"></div>' + '<div class="bz-menu" id="bzMenu" hidden><div class="bz-sheet" role="dialog" aria-label="Create a document"><div class="bz-sheethead"><b>Create new</b><button type="button" class="bz-x" data-act="closemenu" aria-label="Close">&times;</button></div>' + [["Sales documents", ["invoice", "quotation", "salesorder", "proforma"]], ["Receipts and slips", ["receipt", "rent", "salary"]]].map(function (g) { return '<p class="bz-sh">' + g[0] + '</p><div class="bz-tiles">' + g[1].map(function (t) { return '<button type="button" class="bz-tile" data-act="new" data-v="' + t + '"><span class="bz-circ"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + TYPES[t].icon + '"/></svg></span><span>' + TYPES[t].name + "</span></button>"; }).join("") + "</div>"; }).join("") + '</div></div>' + '<div class="bz-main"><div class="bz-bar"><button type="button" class="btn ghost sm bz-back" data-act="home" aria-label="All documents">&lsaquo; All</button><div class="bz-tabs" id="bzTabs" role="tablist" aria-label="Open documents"></div><div class="bz-newwrap"><button type="button" class="btn sm bz-newbtn" id="bzNew" aria-haspopup="true" aria-expanded="false">+ New</button></div></div>' +
       '<div class="bz-switch" role="tablist"><button type="button" class="on" data-act="view" data-v="edit" role="tab">Edit</button><button type="button" data-act="view" data-v="prev" role="tab">Preview</button></div>' +
       '<div class="bz-work" id="bzWork" data-view="edit"><div class="bz-edit" id="bzEdit"></div><div class="bz-prev" id="bzPrev"><div class="bz-prevhead"><button type="button" class="btn ghost sm bz-fsbtn" id="bzFs" data-act="fs">Full screen</button><span id="bzSaved" class="bz-saved">Saved on this device</span></div><p class="bz-warn" id="bzWarn" hidden></p><div class="bz-pages" id="bzPages"><p class="bz-wait">Preview loads here.</p></div></div></div>' +
       '<div class="bz-actions"><button type="button" class="btn" data-act="dl">Download PDF</button><button type="button" class="btn ghost" data-act="share">Share</button></div></div>';
@@ -1253,14 +1340,20 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
     if (filled && !confirm("Close and delete \"" + docTitle(d) + "\"? This cannot be undone.")) return;
     S.docs.splice(i, 1);
     if (S.active === id) S.active = S.docs.length ? S.docs[Math.min(i, S.docs.length - 1)].id : "";
-    if (!S.docs.length) { addDoc(window.INV_BIZ || "invoice", true); return; }
-    save(); renderAll();
+    if (!S.docs.length) { S.active = ""; save(); setScreen("home"); return; }
+    save(); if (scr() === "home") renderHome(); else renderAll();
   }
   function onClick(e) {
     var b = e.target.closest("[data-act]"); if (!b || !root.contains(b)) return;
     var a = b.dataset.act, d = cur();
     if (a === "new") { $("bzMenu").hidden = true; $("bzNew").setAttribute("aria-expanded", "false"); addDoc(b.dataset.v); }
     else if (a === "close") { e.stopPropagation(); closeTab(b.dataset.id); }
+    else if (a === "home") { setScreen("home"); }
+    else if (a === "menu") { e.stopPropagation(); $("bzMenu").hidden = false; }
+    else if (a === "filter") { homeF = b.dataset.v; renderHome(); }
+    else if (a === "open") { if (e.target.closest(".bz-x")) return; S.active = b.dataset.id; save(); setScreen("edit"); renderAll(); scrollTop(); }
+    else if (a === "deldoc") { e.stopPropagation(); closeTab(b.dataset.id); }
+    else if (a === "setup") { var sd = addDoc(window.INV_BIZ || "invoice"); setTimeout(function () { var ds = root.querySelectorAll(".bz-sec"); for (var q = 0; q < ds.length; q++) { if (/business|details/i.test(ds[q].querySelector("summary").textContent)) { ds[q].open = true; ds[q].scrollIntoView({ block: "start" }); break; } } }, 60); }
     else if (a === "tpl") { d.tpl = b.dataset.v; S.tpl = d.tpl; save(); renderForm(); schedulePreview(true); }
     else if (a === "color") { d.color = b.dataset.v; S.color = d.color; save(); renderForm(); schedulePreview(true); }
     else if (a === "additem") { d.items.push({ n: "", d: "", h: "", q: "1", u: "", r: "", t: d.items.length ? d.items[d.items.length - 1].t : "18" }); save(); renderForm(); var inps = root.querySelectorAll(".bz-item"); if (inps.length) { var fi = inps[inps.length - 1].querySelector("input"); if (fi) fi.focus(); } schedulePreview(); }
@@ -1329,15 +1422,14 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
   function init() {
     shell();
     var want = window.INV_BIZ || "invoice";
-    if (!S.docs.length) { var d0 = newDoc(want); S.docs.push(d0); S.active = d0.id; }
-    else if (!cur()) S.active = S.docs[0].id;
-    else { var cd = cur(); if (cd.type !== want) { for (var i = S.docs.length - 1; i >= 0; i--) if (S.docs[i].type === want) { S.active = S.docs[i].id; break; } if (cur().type !== want) { var d1 = newDoc(want); S.docs.push(d1); S.active = d1.id; } } }
+    S.docs = S.docs.filter(function (d) { return !isBlank(d); });
+    if (!cur()) S.active = S.docs.length ? S.docs[0].id : "";
     save();
     root.addEventListener("click", onClick);
     root.addEventListener("input", onField); root.addEventListener("change", onField);
     root.addEventListener("change", function (e) { if (e.target.id === "bzLogoIn") { logoPick(e.target.files && e.target.files[0]); e.target.value = ""; } });
     $("bzNew").addEventListener("click", function (e) { e.stopPropagation(); var m = $("bzMenu"); m.hidden = !m.hidden; $("bzNew").setAttribute("aria-expanded", String(!m.hidden)); });
-    document.addEventListener("click", function (e) { var m = $("bzMenu"); if (m && !m.hidden && (!e.target.closest(".bz-newwrap") || e.target === m)) { m.hidden = true; $("bzNew").setAttribute("aria-expanded", "false"); } });
+    document.addEventListener("click", function (e) { var m = $("bzMenu"); if (m && !m.hidden && (e.target === m || !e.target.closest(".bz-newwrap, .bz-sheet"))) { m.hidden = true; $("bzNew").setAttribute("aria-expanded", "false"); } });
     var tb = tabsEl();
     tb.addEventListener("pointerdown", dragStart); window.addEventListener("pointermove", dragMove, { passive: false }); window.addEventListener("pointerup", dragEnd); window.addEventListener("pointercancel", dragEnd);
     tb.addEventListener("touchmove", function (e) { if (drag && drag.active) e.preventDefault(); }, { passive: false });
@@ -1347,7 +1439,8 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
     function flush() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
     window.addEventListener("pagehide", flush); window.addEventListener("beforeunload", flush);
     document.addEventListener("visibilitychange", function () { if (document.visibilityState === "hidden") flush(); });
-    renderAll();
+    root.dataset.screen = "home"; renderAll(); renderHome();
+    root.addEventListener("keydown", function (e) { if ((e.key === "Enter" || e.key === " ") && e.target.classList && e.target.classList.contains("bz-row")) { e.preventDefault(); e.target.click(); } });
     window.INV_BIZ_API = { state: function () { return S; }, build: function () { return buildPdf(cur()); }, calc: function () { return calc(cur()); }, words: rupees };
   }
   init();
