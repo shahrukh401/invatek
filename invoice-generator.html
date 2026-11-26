@@ -607,6 +607,63 @@ html.bz-pick-on, html.bz-pick-on body { overflow: hidden; }
 body.bzpage .wrap { display: flex; flex-direction: column; }
 body.bzpage .wrap > .bz { order: -1; width: 100%; }
 body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot { width: 100%; margin-left: auto; margin-right: auto; }
+
+/* ---- v3: smaller type, item rows, business screen ---- */
+.bz { font-size: 14px; }
+.bz-appbar b, .bz-ptitle { font-size: 17px; }
+.bz-ptitle { flex: 1; font-weight: 700; }
+.bz-dn { font-size: 15px; } .bz-dd { font-size: 13px; }
+.bz-pill { font-size: 13px; padding: 6px 16px; min-height: 36px; }
+.bz-bl { font-size: 12.5px; }
+.bz-party input { font-size: 15px; padding: 10px 0; } .bz-party { min-height: 48px; }
+.bz-plist button { font-size: 14px; }
+.bz-additems { font-size: 15px; min-height: 48px; }
+.bz-hn b { font-size: 17px; } .bz-av { width: 42px; height: 42px; font-size: 18px; }
+.bz-c b { font-size: 20px; } .bz-c span { font-size: 12.5px; }
+.bz-fl button { font-size: 13px; min-height: 34px; padding: 5px 13px; }
+.bz-row { min-height: 58px; } .bz-rt b { font-size: 14.5px; } .bz-rt small { font-size: 12.5px; } .bz-ra { font-size: 14.5px; }
+.bz-fabs .btn { min-height: 46px; font-size: 14px; } .bz-plus { width: 48px; height: 48px; }
+.bz .bz-plus { font-size: 30px; }
+.bz-tile { font-size: 12.5px; } .bz-circ { width: 52px; height: 52px; } .bz-circ svg { width: 24px; height: 24px; }
+.bz-sheethead { font-size: 16px; }
+.bz-actions .btn { min-height: 42px; font-size: 14px; }
+.bz-bizrow { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; color: var(--fg); }
+.bz-bizrow .bz-bt { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.bz-bizrow b { font-size: 14.5px; } .bz-bizrow small { color: var(--muted); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bz-bizrow svg { width: 20px; height: 20px; flex: none; stroke: var(--muted); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+/* item rows */
+.bz-irow { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.bz-irow:last-child { border-bottom: 0; }
+.bz-pav.sm { width: 38px; height: 38px; font-size: 16px; border-radius: 9px; }
+.bz-pt b { font-size: 14.5px; } .bz-pt small { font-size: 12.5px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bz-pt small.bz-pr { color: var(--fg); font-weight: 600; font-size: 13.5px; margin-top: 2px; }
+.bz-ira { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex: none; }
+.bz-ira > b { font-size: 14px; }
+.bz-ibtn { display: flex; align-items: center; gap: 2px; }
+.bz-ibtn .bz-x { width: 28px; height: 28px; font-size: 18px; }
+.bz-edbtn { border: 1px solid var(--line); background: var(--surface); color: var(--accent); font-weight: 800; font-size: 12.5px; letter-spacing: 0.03em; border-radius: 10px; padding: 7px 14px; min-height: 34px; }
+.bz-pctl { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex: none; }
+.bz-pi { align-items: flex-start; }
+.bz-step { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.bz-step button { width: 38px; height: 36px; border: 0; background: none; color: var(--accent); font-size: 20px; font-weight: 700; }
+.bz-step b { min-width: 38px; text-align: center; font-size: 15px; border-left: 1px solid var(--line); border-right: 1px solid var(--line); line-height: 36px; }
+.bz-addbtn { font-size: 13px; padding: 7px 16px; min-height: 36px; }
+.bz-picksum { display: flex; justify-content: space-between; align-items: center; background: var(--line); padding: 12px 16px; font-size: 15px; }
+.bz-picksum b { font-size: 15px; }
+.bz-pickfoot { display: flex; align-items: center; gap: 12px; max-width: none; padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)); background: var(--bg); }
+.bz-pickfoot .btn { width: auto; flex: 0 0 auto; padding: 0 22px; min-height: 48px; font-size: 15px; }
+.bz-pickfoot:has(> .btn:only-child) .btn { width: 100%; }
+.bz-more { flex: 1; min-width: 0; border: 0; background: none; text-align: left; color: var(--accent); padding: 0; display: flex; flex-direction: column; }
+.bz-more b { font-size: 15px; } .bz-more small { color: var(--muted); font-size: 12px; }
+.bz-newbtn2 { font-size: 13.5px; min-height: 40px; padding: 8px 16px; }
+.bz-search { min-height: 44px; } .bz-search input { font-size: 15px; }
+.bz-pempty { font-size: 14px; }
+.bz-imgrow { display: flex; flex-direction: column; gap: 6px; }
+.bz-imgbox { height: 84px; border: 1.5px dashed var(--line); border-radius: 12px; display: grid; place-items: center; background: repeating-conic-gradient(#0000000a 0 25%, transparent 0 50%) 0 0 / 14px 14px; }
+.bz-imgbox img { max-width: 100%; max-height: 76px; object-fit: contain; }
+.bz-imgbox em { color: var(--muted); font-size: 13px; font-style: normal; }
+.bz-imgbtns { display: flex; gap: 8px; }
+.bz-pick .bz-grid { padding: 4px 0; }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Invatek Invoice Generator", "url": "https://invatek.in/invoice-generator", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is the invoice generator free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. There is no sign up, no limit and no watermark. A small Made with Invatek line at the bottom can be switched off."}}, {"@type": "Question", "name": "Is my data uploaded anywhere?", "acceptedAnswer": {"@type": "Answer", "text": "No. Everything is made in your browser and saved only on your device. If you clear your browser data, saved documents are removed, so download the PDFs you need."}}, {"@type": "Question", "name": "Can I make a bill without GST?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Choose No GST and the tax columns disappear."}}, {"@type": "Question", "name": "Why does the PDF show Rs. and not the rupee sign?", "acceptedAnswer": {"@type": "Answer", "text": "PDF standard fonts do not include the rupee sign, so the amounts are written as Rs. to stay readable everywhere."}}]}]}</script>
 
@@ -718,7 +775,7 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
 
   /* ---------- saved state (autosave) ---------- */
   var KEY = "invatek_biz_v1", S, memOnly = false;
-  function emptyProf() { return { name: "", addr: "", gstin: "", phone: "", email: "", state: "", bank: "", sign: "Authorised signatory", logo: "" }; }
+  function emptyProf() { return { name: "", addr: "", gstin: "", phone: "", email: "", state: "", bank: "", sign: "Authorised signatory", logo: "", signImg: "", stampImg: "" }; }
   function load() {
     try { var raw = localStorage.getItem(KEY); if (raw) { var o = JSON.parse(raw); if (o && o.docs) return o; } } catch (e) { memOnly = true; }
     return { v: 1, active: "", docs: [], cnt: {}, prof: emptyProf(), tpl: "classic", color: COLORS[0], credit: true };
@@ -874,6 +931,8 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
     var logo = null;
     if (S.prof.logo) { try { var b64 = S.prof.logo.split(",")[1], bin = atob(b64), u = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); logo = /^data:image\/png/.test(S.prof.logo) ? await pdf.embedPng(u) : await pdf.embedJpg(u); } catch (e) { logo = null; } }
 
+    async function embImg(src) { if (!src) return null; try { var bb = atob(src.split(",")[1]), uu = new Uint8Array(bb.length); for (var q = 0; q < bb.length; q++) uu[q] = bb.charCodeAt(q); return /^data:image\/png/.test(src) ? await pdf.embedPng(uu) : await pdf.embedJpg(uu); } catch (e) { return null; } }
+    var sigImg = await embImg(S.prof.signImg), stampImg = await embImg(S.prof.stampImg);
     var T0 = TYPES[d.type], title = heading(d), tp = d.tpl;
     function sellerBlock(x, top, align, col, mcol, maxW, dry) {
       var f = d.from, yy = top, rt = align === "right";
@@ -928,8 +987,10 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
       return yy;
     }
     function sigBlock() {
-      ensure(70); var x2 = W - M;
+      ensure(sigImg || stampImg ? 96 : 70); var x2 = W - M;
       T("For " + (d.from.name || ""), x2, y - 6, { size: 9, bold: 1, align: "right", fit: 220 });
+      if (sigImg) { var ss = Math.min(150 / sigImg.width, 36 / sigImg.height, 1), sw = sigImg.width * ss, sh = sigImg.height * ss; page.drawImage(sigImg, { x: x2 - 80 - sw / 2, y: y - 44 + 2, width: sw, height: sh }); }
+      if (stampImg) { var ts = Math.min(66 / stampImg.width, 66 / stampImg.height, 1), tw = stampImg.width * ts, th = stampImg.height * ts; page.drawImage(stampImg, { x: x2 - 175 - tw, y: y - 62, width: tw, height: th }); }
       hline(x2 - 160, y - 46, x2, INK, 0.8);
       T(d.sign || "Authorised signatory", x2, y - 58, { size: 8.5, color: MUT, align: "right", fit: 160 });
       y -= 66;
@@ -1105,6 +1166,7 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
         if (d.notes && d.notes.trim()) { yy = lines(wrap(d.notes, F, 8.5, bw - 24).slice(0, 2), bx + 12, yy, { size: 8.5, color: MUT, lh: 11 }); }
         var by = top - h + 14;
         if (x.stamp) { page.drawRectangle({ x: bx + 12, y: by + 2, width: 44, height: 44, borderColor: MUT, borderWidth: 0.6, borderDashArray: [2, 2] }); T("Revenue", bx + 34, by + 28, { size: 6.5, color: MUT, align: "center" }); T("stamp", bx + 34, by + 19, { size: 6.5, color: MUT, align: "center" }); }
+        if (sigImg) { var rs = Math.min(140 / sigImg.width, 30 / sigImg.height, 1); page.drawImage(sigImg, { x: bx + bw - 101 - sigImg.width * rs / 2, y: by + 20, width: sigImg.width * rs, height: sigImg.height * rs }); }
         hline(bx + bw - 190, by + 18, bx + bw - 12, INK, 0.8); T("Landlord's signature", bx + bw - 12, by + 6, { size: 8, color: MUT, align: "right" });
         y = top - BH;
         if (i % 3 !== 2 && i !== ms.length - 1) page.drawLine({ start: { x: M, y: y + 8 }, end: { x: W - M, y: y + 8 }, thickness: 0.5, color: MUT, dashArray: [4, 3] });
@@ -1239,10 +1301,9 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
       '<input type="color" class="bz-colpick" data-p="color" data-s="1" value="' + esc(d.color) + '" aria-label="Pick any colour"></div></div>' +
       '<label class="bz-chk bz-full"><input type="checkbox" data-credit="1"' + (S.credit !== false ? " checked" : "") + '><span>Show small "Made with Invatek.in" at the bottom of the PDF</span></label>', false);
   }
-  function businessSec(d, id, open) {
-    var logo = S.prof.logo ? '<img class="bz-logo" src="' + esc(S.prof.logo) + '" alt="Logo">' : "";
-    return sec(d.type === "salary" ? "Company details" : d.type === "rent" ? "Your details" : "Your business", '<div class="bz-full bz-logorow">' + logo + '<button type="button" class="btn ghost sm" data-act="logo">' + (S.prof.logo ? "Change logo" : "Add logo") + "</button>" + (S.prof.logo ? '<button type="button" class="btn ghost sm" data-act="rmlogo">Remove logo</button>' : "") + '<input type="file" id="bzLogoIn" accept="image/*" hidden></div>' + partyFields("from", "from") +
-      '<p class="bz-hint bz-full">These details are remembered on this device and filled in for your next document.</p>', open === undefined ? true : open, id);
+  function businessSec() {
+    var P = S.prof, sub = [P.name, P.gstin].filter(Boolean).join(" \u00B7 ") || "Name, address, GSTIN, logo, signature and stamp";
+    return '<button type="button" class="bz-bizrow bz-full" data-act="bizopen"><span class="bz-bt"><b>Business details</b><small>' + esc(sub) + '</small></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>';
   }
   function formHtml(d) {
     var T0 = TYPES[d.type], h = "", k = T0.kind;
@@ -1262,7 +1323,7 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
       h += sec("Discount, charges and advance", fld("Discount", "disc", { num: 1, ph: "0" }) + fld("Discount type", "dt", { t: "sel", s: 1, o: [["%", "Percent (%)"], ["Rs", "Amount (Rs.)"]] }) + fld("Other charges name", "extraL", { ph: "Shipping, packing..." }) + fld("Other charges (Rs.)", "extra", { num: 1, ph: "0" }) +
         fld("Advance paid / requested (Rs.)", "adv", { num: 1, ph: "0" }) + fld("Round off the total to a whole rupee", "round", { t: "check", s: 1 }), false);
       h += sec("Notes, bank details and signature", fld("Notes (optional)", "notes", { t: "area", w: 2, r: 3, ph: "Thank you for your order." }) + fld("Terms and conditions", "terms", { t: "area", w: 2, r: 3 }) + fld("Bank / UPI details (optional)", "bank", { t: "area", w: 2, r: 3, ph: "Bank name, A/c no., IFSC, UPI ID" }) + fld("Signature name", "sign", { ph: "Authorised signatory" }), false);
-      h += businessSec(d, null, !S.prof.name);
+      h += businessSec();
     } else if (k === "receipt") {
       h += businessSec(d) + sec("Received from", fld("Name", "to.name", { w: 2, ph: "Payer name" }) + fld("Phone", "to.phone", { t: "tel" }) + fld("Email", "to.email", { t: "email" }) + fld("Address", "to.addr", { t: "area", w: 2 }), true);
       h += sec("Payment", fld("Amount received (Rs.)", "x.amt", { num: 1, ph: "0.00" }) + fld("Payment mode", "x.mode", { t: "sel", o: ["Cash", "UPI", "Bank transfer", "Cheque", "Card", "Other"] }) + fld("Reference / UTR / cheque no.", "x.ref") + fld("Against invoice no. (optional)", "x.against") + fld("Towards", "x.towards", { w: 2, ph: "e.g. Advance for website work" }) + fld("Notes (optional)", "notes", { t: "area", w: 2 }) + fld("Signature name", "sign"), true);
@@ -1313,8 +1374,12 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
       '<details class="bz-sec bz-slim"><summary>Party details (address, GSTIN, phone)</summary><div class="bz-grid">' + pd + "</div></details></section>";
   }
   function itemsBlock(d) {
-    var rows = ""; d.items.forEach(function (it, i) { if (!blankItem(it) || it._m) rows += itemRow(it, i, d.gst !== "none"); });
-    return '<section class="bz-block"><p class="bz-bl">ITEMS</p><div class="bz-items">' + rows + '</div><button type="button" class="bz-additems" data-act="pickitems">Add Items</button><button type="button" class="bz-link bz-manual" data-act="manualitem">or type an item by hand</button><div class="bz-totals" id="bzTot"></div></section>';
+    var C = calc(d), rows = "";
+    d.items.forEach(function (it, i) {
+      if (blankItem(it)) return; var rw = C.rows[i];
+      rows += '<div class="bz-irow"><span class="bz-pav sm">' + esc((it.n[0] || "?").toUpperCase()) + '</span><span class="bz-pt"><b>' + esc(it.n || "Item") + "</b><small>" + esc((it.q || "1") + (it.u ? " " + it.u : "") + " \u00D7 \u20B9" + (it.r || "0") + (d.gst !== "none" ? " \u00B7 GST " + (it.t || 0) + "%" : "")) + '</small></span><span class="bz-ira"><b class="bz-amt" data-i="' + i + '">Rs. ' + fmt(rw ? rw.amt : 0) + '</b><span class="bz-ibtn"><button type="button" class="bz-edbtn" data-act="edititem" data-i="' + i + '">EDIT</button><button type="button" class="bz-x" data-act="delitem" data-i="' + i + '" aria-label="Remove item">&times;</button></span></span></div>';
+    });
+    return '<section class="bz-block"><p class="bz-bl">ITEMS</p><div class="bz-items">' + rows + '</div><button type="button" class="bz-additems" data-act="pickitems">' + (rows ? "Add more items" : "Add Items") + '</button><div class="bz-totals" id="bzTot"></div></section>';
   }
   function renderPList(q) {
     var box = $("bzPList"); if (!box) return; q = (q || "").trim().toLowerCase();
@@ -1336,35 +1401,58 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
     if (S.lib.length > 500) S.lib.length = 500;
   }
   /* item picker screen */
-  var pickMode = "list";
+  var pickMode = "list", editRef = null;
   function pickQty(name) { var d = cur(); if (!d) return 0; var t = 0; d.items.forEach(function (it) { if ((it.n || "").trim().toLowerCase() === name.toLowerCase()) t += num(it.q) || 0; }); return t; }
+  function fq(n) { return String(Math.round(n * 1000) / 1000); }
+  function itemFormHtml(v, withQty, canDel) {
+    return '<div class="bz-newitem"><p class="bz-bl">' + (editRef ? "EDIT ITEM" : "NEW ITEM") + '</p><div class="bz-grid">' +
+      '<label class="bz-f w2"><span>Item name</span><input id="niN" type="text" value="' + esc(v.n || "") + '" placeholder="e.g. Web design service"></label>' +
+      '<label class="bz-f w2"><span>Description (optional)</span><input id="niD" type="text" value="' + esc(v.d || "") + '" placeholder="Short details"></label>' +
+      (withQty ? '<label class="bz-f"><span>Quantity</span><input id="niQ" type="text" inputmode="decimal" value="' + esc(v.q || "1") + '"></label>' : "") +
+      '<label class="bz-f"><span>Rate (Rs.)</span><input id="niR" type="text" inputmode="decimal" value="' + esc(v.r || "") + '" placeholder="0.00"></label>' +
+      '<label class="bz-f"><span>Unit</span><input id="niU" type="text" list="bzUnits" value="' + esc(v.u || "") + '" placeholder="pcs, kg, hrs"></label>' +
+      '<label class="bz-f"><span>GST %</span><select id="niT">' + RATES.map(function (r) { return '<option value="' + r + '"' + (String(r) === String(v.t || "18") ? " selected" : "") + ">" + r + "%</option>"; }).join("") + "</select></label>" +
+      '<label class="bz-f"><span>HSN / SAC (optional)</span><input id="niH" type="text" value="' + esc(v.h || "") + '" placeholder="e.g. 9983"></label></div>' +
+      '<div class="bz-pickbtns">' + (canDel ? '<button type="button" class="btn ghost bz-danger" data-act="delpicked">Delete</button>' : "") + '<button type="button" class="btn ghost" data-act="cancelitem">Cancel</button><button type="button" class="btn" data-act="saveitem">Save</button></div></div>';
+  }
   function renderPick() {
     var el = $("bzPick"); if (!el) return; var d = cur(); if (!d) return;
-    var q = ((el.querySelector("#bzPq") || {}).value || "").trim().toLowerCase();
+    var q = ((el.querySelector("#bzPq") || {}).value || "").trim().toLowerCase(), C = calc(d);
     var n = 0; d.items.forEach(function (it) { if (!blankItem(it)) n++; });
-    var body;
-    if (pickMode === "new") {
-      body = '<div class="bz-newitem"><p class="bz-bl">NEW ITEM</p><div class="bz-grid">' +
-        '<label class="bz-f w2"><span>Item name</span><input id="niN" type="text" placeholder="e.g. Web design service"></label>' +
-        '<label class="bz-f"><span>Rate (Rs.)</span><input id="niR" type="text" inputmode="decimal" placeholder="0.00"></label>' +
-        '<label class="bz-f"><span>Unit</span><input id="niU" type="text" list="bzUnits" placeholder="pcs, kg, hrs"></label>' +
-        '<label class="bz-f"><span>GST %</span><select id="niT">' + RATES.map(function (r) { return '<option value="' + r + '"' + (r === 18 ? " selected" : "") + ">" + r + "%</option>"; }).join("") + "</select></label>" +
-        '<label class="bz-f"><span>HSN / SAC (optional)</span><input id="niH" type="text" placeholder="e.g. 9983"></label></div>' +
-        '<div class="bz-pickbtns"><button type="button" class="btn ghost" data-act="picklist">Cancel</button><button type="button" class="btn" data-act="saveitem">Save and add</button></div></div>';
+    var body, formMode = pickMode === "new" || pickMode === "edit";
+    if (pickMode === "new") body = itemFormHtml({ t: "18" }, false, false);
+    else if (pickMode === "edit") {
+      var src = editRef.src === "doc" ? d.items[editRef.i] : S.lib[editRef.i]; if (!src) { pickMode = "list"; editRef = null; return renderPick(); }
+      body = itemFormHtml(src, editRef.src === "doc", true);
     } else {
       var L = S.lib.map(function (x, i) { return [x, i]; }).filter(function (a) { return !q || a[0].n.toLowerCase().indexOf(q) >= 0; });
       body = L.length ? '<ul class="bz-pl">' + L.map(function (a) {
         var x = a[0], i = a[1], c = pickQty(x.n);
-        return '<li class="bz-pi"><span class="bz-pav">' + esc((x.n[0] || "?").toUpperCase()) + '</span><span class="bz-pt"><b>' + esc(x.n) + "</b><small>" + (x.r ? "₹" + esc(x.r) + (x.u ? "/" + esc(x.u) : "") : "No rate") + (x.h ? " · HSN " + esc(x.h) : "") + '</small></span><button type="button" class="bz-addbtn' + (c ? " on" : "") + '" data-act="addlib" data-i="' + i + '">' + (c ? "Added " + c + " +" : "ADD +") + "</button></li>";
-      }).join("") + "</ul>" : '<p class="bz-pempty">' + (S.lib.length ? "No item matches your search." : "No saved items yet. Tap Create New Item. Items you type in a bill are saved here too.") + "</p>";
+        return '<li class="bz-pi"><span class="bz-pav">' + esc((x.n[0] || "?").toUpperCase()) + '</span><span class="bz-pt"><b>' + esc(x.n) + "</b>" + (x.d ? "<small>" + esc(x.d) + "</small>" : "") + '<small class="bz-pr">' + (x.r ? "\u20B9" + esc(x.r) + (x.u ? "/" + esc(x.u) : "") : "No rate") + (x.h ? " \u00B7 HSN " + esc(x.h) : "") + '</small></span><span class="bz-pctl"><button type="button" class="bz-edbtn" data-act="editlib" data-i="' + i + '">EDIT</button>' +
+          (c ? '<span class="bz-step"><button type="button" data-act="qtyminus" data-i="' + i + '" aria-label="Less">\u2212</button><b>' + fq(c) + '</b><button type="button" data-act="addlib" data-i="' + i + '" aria-label="More">+</button></span>' : '<button type="button" class="bz-addbtn" data-act="addlib" data-i="' + i + '">ADD +</button>') + "</span></li>";
+      }).join("") + "</ul>" : '<p class="bz-pempty">' + (S.lib.length ? "No item matches your search." : "No saved items yet. Tap Create New Item.") + "</p>";
     }
-    el.innerHTML = '<div class="bz-pickbar"><button type="button" class="bz-iconbtn" data-act="closepick" aria-label="Back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><div class="bz-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4-4"/></svg><input id="bzPq" type="search" placeholder="Search items" value="' + esc(q) + '" autocomplete="off"></div></div>' +
-      '<div class="bz-pickhead"><button type="button" class="bz-newbtn2" data-act="newitem">+ Create New Item</button></div><div class="bz-picklist">' + body + '</div>' +
-      '<div class="bz-pickfoot"><button type="button" class="btn" data-act="closepick">Done' + (n ? " (" + n + " item" + (n === 1 ? "" : "s") + ")" : "") + "</button></div>";
+    var head = formMode ? '<div class="bz-pickbar"><button type="button" class="bz-iconbtn" data-act="cancelitem" aria-label="Back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><b class="bz-ptitle">' + (pickMode === "new" ? "Create New Item" : "Edit Item") + "</b></div>"
+      : '<div class="bz-pickbar"><button type="button" class="bz-iconbtn" data-act="closepick" aria-label="Back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><div class="bz-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4-4"/></svg><input id="bzPq" type="search" placeholder="Search by Item Name" value="' + esc(q) + '" autocomplete="off"></div></div><div class="bz-pickhead"><button type="button" class="bz-newbtn2" data-act="newitem">+ Create New Item</button></div>';
+    var foot = formMode ? "" : '<div class="bz-picksum"><span>' + n + " item" + (n === 1 ? "" : "s") + "</span><b>\u20B9" + fmt(C.sub) + '</b></div><div class="bz-pickfoot"><button type="button" class="bz-more" data-act="moredetails"><b>Add more details</b><small>Additional charges, Round off...</small></button><button type="button" class="btn" data-act="genbill">Generate ' + (d.type === "invoice" ? "Bill" : esc(TYPES[d.type].name)) + "</button></div>";
+    el.innerHTML = head + '<div class="bz-picklist">' + body + "</div>" + foot;
     var inp = el.querySelector("#bzPq"); if (inp && pickMode === "list") { inp.addEventListener("input", function () { var pos = inp.selectionStart; renderPick(); var i2 = $("bzPq"); if (i2) { i2.focus(); try { i2.setSelectionRange(pos, pos); } catch (e) {} } }); }
   }
-  function openPick() { pickMode = "list"; var el = $("bzPick"); el.hidden = false; document.documentElement.classList.add("bz-pick-on"); renderPick(); var i = $("bzPq"); if (i && window.innerWidth > 899) i.focus(); }
-  function closePick() { var el = $("bzPick"); if (el) el.hidden = true; document.documentElement.classList.remove("bz-pick-on"); renderForm(); schedulePreview(true); }
+  function openPick(mode, ref) { pickMode = mode || "list"; editRef = ref || null; var el = $("bzPick"); el.hidden = false; document.documentElement.classList.add("bz-pick-on"); renderPick(); var i = $("bzPq"); if (i && window.innerWidth > 899) i.focus(); }
+  function closePick(more) {
+    var el = $("bzPick"); if (el) el.hidden = true; document.documentElement.classList.remove("bz-pick-on"); pickMode = "list"; editRef = null;
+    if (more) openMap["Discount, charges and advance"] = true;
+    renderForm(); schedulePreview(true);
+    if (more) { var ds = root.querySelectorAll(".bz-sec"); for (var q = 0; q < ds.length; q++) { var sm = ds[q].querySelector("summary"); if (sm && /Discount/.test(sm.textContent)) { ds[q].open = true; ds[q].scrollIntoView({ block: "center" }); break; } } }
+  }
+  function saveItemForm() {
+    var d = cur(), nm = ($("niN").value || "").trim(); if (!nm) { toast("Type the item name first."); return false; }
+    var rec = { n: nm, d: ($("niD").value || "").trim(), r: ($("niR").value || "").trim(), u: ($("niU").value || "").trim(), t: $("niT").value, h: ($("niH").value || "").trim() };
+    if (pickMode === "edit" && editRef.src === "doc") { var it = d.items[editRef.i]; it.n = rec.n; it.d = rec.d; it.r = rec.r; it.u = rec.u; it.t = rec.t; it.h = rec.h; it.q = ($("niQ").value || "1").trim() || "1"; upsertLib(rec); }
+    else if (pickMode === "edit") { var old = S.lib[editRef.i], ok = old.n.toLowerCase(); S.lib[editRef.i] = rec; d.items.forEach(function (it) { if ((it.n || "").trim().toLowerCase() === ok) { it.n = rec.n; it.d = rec.d; it.r = rec.r; it.u = rec.u; it.t = rec.t; it.h = rec.h; } }); }
+    else { upsertLib(rec); pushItem(rec); }
+    save(); return true;
+  }
   function pushItem(x) {
     var d = cur(); if (!d) return;
     var key = (x.n || "").trim().toLowerCase(), ex = null;
@@ -1375,6 +1463,47 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
       if (d.items.every(blankItem)) d.items = [it2]; else d.items.push(it2);
     }
     save();
+  }
+
+
+  /* ---------- business details screen ---------- */
+  function pf(label, key, o) {
+    o = o || {}; var v = S.prof[key] || "", a = ' data-prof="' + key + '"', cls = "bz-f" + (o.w ? " w" + o.w : "");
+    if (o.t === "area") return '<label class="' + cls + '"><span>' + label + "</span><textarea" + a + ' rows="' + (o.r || 2) + '" placeholder="' + esc(o.ph || "") + '">' + esc(v) + "</textarea></label>";
+    if (o.t === "sel") return '<label class="' + cls + '"><span>' + label + "</span><select" + a + '><option value="">Select state</option>' + STATES.map(function (x) { return '<option value="' + esc(x) + '"' + (x === v ? " selected" : "") + ">" + esc(x) + "</option>"; }).join("") + "</select></label>";
+    return '<label class="' + cls + '"><span>' + label + "</span><input" + a + ' type="' + (o.t || "text") + '" value="' + esc(v) + '" placeholder="' + esc(o.ph || "") + '" autocomplete="off"></label>';
+  }
+  function imgRow(label, key, hint, id) {
+    var v = S.prof[key];
+    return '<div class="bz-full bz-imgrow"><span class="bz-lab">' + label + '</span><div class="bz-imgbox">' + (v ? '<img src="' + esc(v) + '" alt="' + label + '">' : '<em>' + hint + "</em>") + '</div><div class="bz-imgbtns"><button type="button" class="btn ghost sm" data-act="bizimg" data-k="' + key + '">' + (v ? "Change" : "Add") + "</button>" + (v ? '<button type="button" class="btn ghost sm" data-act="bizrm" data-k="' + key + '">Remove</button>' : "") + '<input type="file" id="' + id + '" accept="image/*" hidden></div></div>';
+  }
+  function renderBiz() {
+    var el = $("bzBiz"); if (!el || el.hidden) return;
+    var sc = el.querySelector(".bz-picklist"), top = sc ? sc.scrollTop : 0;
+    el.innerHTML = '<div class="bz-pickbar"><button type="button" class="bz-iconbtn" data-act="bizsave" aria-label="Back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><b class="bz-ptitle">Business details</b></div>' +
+      '<div class="bz-picklist"><div class="bz-grid">' + imgRow("Logo", "logo", "No logo", "bzLogoIn") + pf("Business name", "name", { w: 2, ph: "Your business name" }) + pf("Address", "addr", { t: "area", w: 2, ph: "Street, city, PIN code" }) + pf("GSTIN (optional)", "gstin", { ph: "22AAAAA0000A1Z5" }) + pf("Phone", "phone", { t: "tel", ph: "98765 43210" }) + pf("Email", "email", { t: "email", ph: "name@example.com" }) + pf("State", "state", { t: "sel" }) +
+      pf("Bank / UPI details (optional)", "bank", { t: "area", w: 2, r: 3, ph: "Bank name, A/c no., IFSC, UPI ID" }) + pf("Signature name", "sign", { w: 2, ph: "Authorised signatory" }) +
+      imgRow("Signature", "signImg", "No signature", "bzSigIn") + imgRow("Stamp", "stampImg", "No stamp", "bzStampIn") +
+      '<p class="bz-hint bz-full">Sign on white paper and take a clear photo. The white background is removed for you. Everything is saved on this device only.</p></div></div>' +
+      '<div class="bz-pickfoot"><button type="button" class="btn" data-act="bizsave">Save</button></div>';
+    var sc2 = el.querySelector(".bz-picklist"); if (sc2) sc2.scrollTop = top;
+  }
+  function openBiz() { var el = $("bzBiz"); el.hidden = false; document.documentElement.classList.add("bz-pick-on"); renderBiz(); }
+  function closeBiz() {
+    var el = $("bzBiz"); if (el) el.hidden = true; document.documentElement.classList.remove("bz-pick-on"); var P = S.prof, d = cur();
+    if (d && scr() === "edit") { d.from = { name: P.name, addr: P.addr, gstin: P.gstin, phone: P.phone, email: P.email, state: P.state }; d.bank = P.bank; d.sign = P.sign || "Authorised signatory"; renderForm(); schedulePreview(true); }
+    save(); if (scr() === "home") renderHome();
+  }
+  function imgPick(file, key, clear) {
+    if (!file) return; var rd = new FileReader();
+    rd.onload = function () {
+      var im = new Image(); im.onload = function () {
+        var sc = Math.min(1, (key === "logo" ? 360 : 420) / Math.max(im.width, im.height)), c = document.createElement("canvas"); c.width = Math.max(1, Math.round(im.width * sc)); c.height = Math.max(1, Math.round(im.height * sc));
+        var cx = c.getContext("2d"); cx.drawImage(im, 0, 0, c.width, c.height);
+        if (clear) { try { var id = cx.getImageData(0, 0, c.width, c.height), px = id.data; for (var i = 0; i < px.length; i += 4) { var lum = 0.299 * px[i] + 0.587 * px[i + 1] + 0.114 * px[i + 2]; if (lum > 225) px[i + 3] = 0; else if (lum > 170) px[i + 3] = Math.round(255 * (225 - lum) / 55); } cx.putImageData(id, 0, 0); } catch (e) {} }
+        S.prof[key] = (clear || /png|svg|webp|gif/i.test(file.type)) ? c.toDataURL("image/png") : c.toDataURL("image/jpeg", 0.88); save(); renderBiz(); renderForm(); schedulePreview(true);
+      }; im.onerror = function () { toast("That picture could not be opened."); }; im.src = rd.result;
+    }; rd.readAsDataURL(file);
   }
 
   /* ---------- home (dashboard) ---------- */
@@ -1423,7 +1552,7 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
   function shell() {
     root.innerHTML =
       '<aside class="bz-side" aria-label="Create a document"><p class="bz-sh">Create new</p>' + ORDER.map(function (t) { return '<button type="button" class="bz-st" data-act="new" data-v="' + t + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + TYPES[t].icon + '"/></svg><span>' + TYPES[t].name + "</span></button>"; }).join("") + '<p class="bz-sh">My details</p><button type="button" class="bz-st" data-act="mine"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V8l8-5 8 5v13M9 21v-6h6v6"/></svg><span>My business</span></button><p class="bz-side-note">Everything saves on this device. Nothing is uploaded.</p></aside>' +
-      '<div class="bz-home" id="bzHome"></div>' + '<div class="bz-menu" id="bzMenu" hidden><div class="bz-sheet" role="dialog" aria-label="Create a document"><div class="bz-sheethead"><b>Create new</b><button type="button" class="bz-x" data-act="closemenu" aria-label="Close">&times;</button></div>' + [["Sales Transactions", ["invoice", "quotation", "salesorder", "proforma"]], ["Receipts and slips", ["receipt", "rent", "salary"]]].map(function (g) { return '<p class="bz-sh">' + g[0] + '</p><div class="bz-tiles">' + g[1].map(function (t) { return '<button type="button" class="bz-tile" data-act="new" data-v="' + t + '"><span class="bz-circ"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + TYPES[t].icon + '"/></svg></span><span>' + SHEETN[t] + "</span></button>"; }).join("") + "</div>"; }).join("") + '</div></div>' + '<div class="bz-pick" id="bzPick" hidden></div><div class="bz-main"><div class="bz-appbar"><button type="button" class="bz-iconbtn" data-act="home" aria-label="Back to all documents"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><b id="bzTitle">Create Bill / Invoice</b></div><div class="bz-bar"><div class="bz-tabs" id="bzTabs" role="tablist" aria-label="Open documents"></div><div class="bz-newwrap"><button type="button" class="btn sm bz-newbtn" id="bzNew" aria-haspopup="true" aria-expanded="false">+ New</button></div></div>' +
+      '<div class="bz-home" id="bzHome"></div>' + '<div class="bz-menu" id="bzMenu" hidden><div class="bz-sheet" role="dialog" aria-label="Create a document"><div class="bz-sheethead"><b>Create new</b><button type="button" class="bz-x" data-act="closemenu" aria-label="Close">&times;</button></div>' + [["Sales Transactions", ["invoice", "quotation", "salesorder", "proforma"]], ["Receipts and slips", ["receipt", "rent", "salary"]]].map(function (g) { return '<p class="bz-sh">' + g[0] + '</p><div class="bz-tiles">' + g[1].map(function (t) { return '<button type="button" class="bz-tile" data-act="new" data-v="' + t + '"><span class="bz-circ"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + TYPES[t].icon + '"/></svg></span><span>' + SHEETN[t] + "</span></button>"; }).join("") + "</div>"; }).join("") + '</div></div>' + '<div class="bz-pick" id="bzPick" hidden></div><div class="bz-pick" id="bzBiz" hidden></div><div class="bz-main"><div class="bz-appbar"><button type="button" class="bz-iconbtn" data-act="home" aria-label="Back to all documents"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><b id="bzTitle">Create Bill / Invoice</b></div><div class="bz-bar"><div class="bz-tabs" id="bzTabs" role="tablist" aria-label="Open documents"></div><div class="bz-newwrap"><button type="button" class="btn sm bz-newbtn" id="bzNew" aria-haspopup="true" aria-expanded="false">+ New</button></div></div>' +
       '<div class="bz-switch" role="tablist"><button type="button" class="on" data-act="view" data-v="edit" role="tab">Edit</button><button type="button" data-act="view" data-v="prev" role="tab">Preview</button></div>' +
       '<div class="bz-work" id="bzWork" data-view="edit"><div class="bz-edit" id="bzEdit"></div><div class="bz-prev" id="bzPrev"><div class="bz-prevhead"><button type="button" class="btn ghost sm bz-fsbtn" id="bzFs" data-act="fs">Full screen</button><span id="bzSaved" class="bz-saved">Saved on this device</span></div><p class="bz-warn" id="bzWarn" hidden></p><div class="bz-pages" id="bzPages"><p class="bz-wait">Preview loads here.</p></div></div></div>' +
       '<div class="bz-actions"><button type="button" class="btn" data-act="dl">Download PDF</button><button type="button" class="btn ghost" data-act="share">Share</button></div></div>';
@@ -1446,7 +1575,9 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
 
   /* ---------- events ---------- */
   function onField(e) {
-    var t = e.target, d = cur(); if (!d) return;
+    var t = e.target, d = cur();
+    if (t.dataset && t.dataset.prof) { S.prof[t.dataset.prof] = t.value; save(); return; }
+    if (!d) return;
     if (t.dataset.credit) { S.credit = t.checked; save(); schedulePreview(); return; }
     if (t.dataset.ym) {
       var p = t.dataset.ym, parts = root.querySelectorAll('[data-ym="' + p + '"]'), m = "", y = "";
@@ -1500,16 +1631,21 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
     else if (a === "pickparty") { var pp = S.parties.find(function (x) { return x.name === b.dataset.n; }); if (pp) { d.to = JSON.parse(JSON.stringify(pp)); save(); renderForm(); schedulePreview(true); } }
     else if (a === "pickitems") openPick();
     else if (a === "closepick") closePick();
-    else if (a === "newitem") { pickMode = "new"; renderPick(); var ni = $("niN"); if (ni) ni.focus(); }
-    else if (a === "picklist") { pickMode = "list"; renderPick(); }
-    else if (a === "saveitem") { var nm = ($("niN").value || "").trim(); if (!nm) { toast("Type the item name first."); return; } var rec = { n: nm, r: ($("niR").value || "").trim(), u: ($("niU").value || "").trim(), t: $("niT").value, h: ($("niH").value || "").trim(), d: "" }; upsertLib(rec); pushItem(rec); pickMode = "list"; renderPick(); }
+    else if (a === "moredetails") closePick(true);
+    else if (a === "genbill") { closePick(); if (window.innerWidth < 900) setView("prev"); }
+    else if (a === "newitem") { pickMode = "new"; editRef = null; renderPick(); var ni = $("niN"); if (ni) ni.focus(); }
+    else if (a === "edititem") openPick("edit", { src: "doc", i: +b.dataset.i, from: "doc" });
+    else if (a === "editlib") { pickMode = "edit"; editRef = { src: "lib", i: +b.dataset.i, from: "list" }; renderPick(); }
+    else if (a === "cancelitem") { if (editRef && editRef.from === "doc") closePick(); else { pickMode = "list"; editRef = null; renderPick(); } }
+    else if (a === "saveitem") { if (saveItemForm()) { if (editRef && editRef.from === "doc") closePick(); else { pickMode = "list"; editRef = null; renderPick(); } } }
+    else if (a === "delpicked") { if (editRef.src === "doc") { d.items.splice(editRef.i, 1); if (!d.items.length) d.items = [{ n: "", d: "", h: "", q: "1", u: "", r: "", t: "18" }]; save(); closePick(); } else { S.lib.splice(editRef.i, 1); save(); pickMode = "list"; editRef = null; renderPick(); } }
     else if (a === "addlib") { var x = S.lib[+b.dataset.i]; if (x) { pushItem(x); renderPick(); } }
-    else if (a === "manualitem") { d.items.push({ n: "", d: "", h: "", q: "1", u: "", r: "", t: d.items.length ? d.items[d.items.length - 1].t : "18", _m: true }); save(); renderForm(); var mi = root.querySelectorAll(".bz-item"); if (mi.length) { var f2 = mi[mi.length - 1].querySelector("input"); if (f2) f2.focus(); } }
+    else if (a === "qtyminus") { var x2 = S.lib[+b.dataset.i]; if (x2) { var kk = x2.n.trim().toLowerCase(), ix = d.items.findIndex(function (it) { return (it.n || "").trim().toLowerCase() === kk; }); if (ix >= 0) { var nq = (num(d.items[ix].q) || 1) - 1; if (nq <= 0) { d.items.splice(ix, 1); if (!d.items.length) d.items = [{ n: "", d: "", h: "", q: "1", u: "", r: "", t: "18" }]; } else d.items[ix].q = fq(nq); save(); renderPick(); } } }
     else if (a === "menu") { e.stopPropagation(); $("bzMenu").hidden = false; }
     else if (a === "filter") { homeF = b.dataset.v; renderHome(); }
     else if (a === "open") { if (e.target.closest(".bz-x")) return; S.active = b.dataset.id; save(); setScreen("edit"); renderAll(); scrollTop(); }
     else if (a === "deldoc") { e.stopPropagation(); closeTab(b.dataset.id); }
-    else if (a === "setup") { var sd = addDoc(window.INV_BIZ || "invoice"); setTimeout(function () { var ds = root.querySelectorAll(".bz-sec"); for (var q = 0; q < ds.length; q++) { if (/business|details/i.test(ds[q].querySelector("summary").textContent)) { ds[q].open = true; ds[q].scrollIntoView({ block: "start" }); break; } } }, 60); }
+    else if (a === "setup") openBiz();
     else if (a === "tpl") { d.tpl = b.dataset.v; S.tpl = d.tpl; save(); renderForm(); schedulePreview(true); }
     else if (a === "color") { d.color = b.dataset.v; S.color = d.color; save(); renderForm(); schedulePreview(true); }
     else if (a === "additem") { d.items.push({ n: "", d: "", h: "", q: "1", u: "", r: "", t: d.items.length ? d.items[d.items.length - 1].t : "18" }); save(); renderForm(); var inps = root.querySelectorAll(".bz-item"); if (inps.length) { var fi = inps[inps.length - 1].querySelector("input"); if (fi) fi.focus(); } schedulePreview(); }
@@ -1520,7 +1656,11 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
     else if (a === "rmlogo") { S.prof.logo = ""; save(); renderForm(); schedulePreview(true); }
     else if (a === "dup") { var c = JSON.parse(JSON.stringify(d)); c.id = uid(); c.no = nextNo(d.type); S.docs.splice(S.docs.indexOf(d) + 1, 0, c); S.active = c.id; save(); renderAll(); toast("Copied. You are now editing the copy."); }
     else if (a === "del") closeTab(d.id);
-    else if (a === "mine") { var dets = root.querySelectorAll(".bz-sec"); for (var i = 0; i < dets.length; i++) { if (/business|details/i.test(dets[i].querySelector("summary").textContent)) { dets[i].open = true; dets[i].scrollIntoView({ behavior: "smooth", block: "start" }); break; } } }
+    else if (a === "bizopen" || a === "mine") openBiz();
+    else if (a === "bizsave") closeBiz();
+    else if (a === "bizimg") { var fi0 = $(b.dataset.k === "logo" ? "bzLogoIn" : b.dataset.k === "signImg" ? "bzSigIn" : "bzStampIn"); if (fi0) fi0.click(); }
+    else if (a === "bizrm") { S.prof[b.dataset.k] = ""; save(); renderBiz(); renderForm(); schedulePreview(true); }
+    else if (a === "mine_old") { var dets = root.querySelectorAll(".bz-sec"); for (var i = 0; i < dets.length; i++) { if (/business|details/i.test(dets[i].querySelector("summary").textContent)) { dets[i].open = true; dets[i].scrollIntoView({ behavior: "smooth", block: "start" }); break; } } }
     else if (a === "fs") setFs(!isFs());
     else if (a === "view") { setView(b.dataset.v); }
     else if (a === "dl") actDownload();
@@ -1585,7 +1725,7 @@ body.bzpage .wrap > .doc, body.bzpage .wrap > .fnav, body.bzpage .wrap > .foot {
     root.addEventListener("focusin", function (e) { if (e.target.id === "bzParty") renderPList(e.target.value); });
     document.addEventListener("click", function (e) { var pl = $("bzPList"); if (pl && !pl.hidden && !e.target.closest(".bz-party")) pl.hidden = true; });
     root.addEventListener("input", onField); root.addEventListener("change", onField);
-    root.addEventListener("change", function (e) { if (e.target.id === "bzLogoIn") { logoPick(e.target.files && e.target.files[0]); e.target.value = ""; } });
+    root.addEventListener("change", function (e) { var id = e.target.id; if (id === "bzLogoIn") imgPick(e.target.files && e.target.files[0], "logo", false); else if (id === "bzSigIn") imgPick(e.target.files && e.target.files[0], "signImg", true); else if (id === "bzStampIn") imgPick(e.target.files && e.target.files[0], "stampImg", true); if (/^bz(Logo|Sig|Stamp)In$/.test(id)) e.target.value = ""; });
     $("bzNew").addEventListener("click", function (e) { e.stopPropagation(); var m = $("bzMenu"); m.hidden = !m.hidden; $("bzNew").setAttribute("aria-expanded", String(!m.hidden)); });
     document.addEventListener("click", function (e) { var m = $("bzMenu"); if (m && !m.hidden && (e.target === m || !e.target.closest(".bz-newwrap, .bz-sheet"))) { m.hidden = true; $("bzNew").setAttribute("aria-expanded", "false"); } });
     var tb = tabsEl();
