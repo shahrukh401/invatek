@@ -366,6 +366,60 @@ textarea.codein { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, mo
   .tabbar { display: none; }
 }
 @media (max-width: 899px) { .modetabs { display: none; } }
+
+/* ---- v4: full screen page tools, page cross marks, add pages ---- */
+.fswrap { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.fsbtn { align-self: flex-end; }
+.edfs.fsgen .fsbody { flex: 1; min-height: 0; overflow: auto; padding: 12px 14px 40px; display: flex; flex-direction: column; gap: 12px; }
+.edfs.fsgen .fsbody > * { width: 100%; max-width: 1200px; margin: 0 auto; }
+.thumbs.big { grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 16px; }
+.thumbs.big .timg { height: auto; min-height: 220px; padding: 6px; }
+.thumbs.big .timg img { max-width: 100%; max-height: 560px; width: 100%; height: auto; object-fit: contain; }
+.thumbs.big .thumb { padding: 12px; }
+.pgcell { position: relative; }
+.pgcell .timg { position: relative; }
+.pgx { position: absolute; top: 6px; right: 6px; z-index: 3; width: 38px; height: 38px; border-radius: 50%; border: 2px solid #fff; background: #d93025; color: #fff; font-size: 18px; font-weight: 800; line-height: 1; display: grid; place-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.35); }
+.pgcell.mk-rm .pgx { background: #555; }
+.pgcell.mk-ex .pgx { background: #555; }
+.pgbig { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; font-size: 84px; font-weight: 800; color: #d93025; pointer-events: none; text-shadow: 0 0 6px #fff; }
+.pgcell.mk-rm .pgbig { display: flex; }
+.pgcell.mk-rm .timg img { opacity: 0.3; }
+.pgcell.mk-rm { border-color: #d93025; box-shadow: 0 0 0 2px #d93025; }
+.pgcell.mk-ex { border-color: #1b8a3a; box-shadow: 0 0 0 3px #1b8a3a; background: color-mix(in srgb, #1b8a3a 10%, var(--bg)); }
+.pgcell.mk-ex .tlab { color: #1b8a3a; font-weight: 700; }
+.pgrid .timg img { cursor: pointer; }
+.cropstage.big { width: min(100%, 1000px); }
+.addlab { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; }
+.posin { width: 64px; min-height: 40px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--fg); font: inherit; text-align: center; }
+.blankpg { background: #fff; width: 100px; height: 140px; border: 1px dashed #bbb; }
+.thumbs.big .blankpg { width: 100%; height: 420px; }
+.edfs .enav { flex-wrap: wrap; }
+.thumbs.big .blankpg { height: auto; aspect-ratio: 210 / 297; }
+
+/* ---- v4: scan slider and looks ---- */
+.scanstudio { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.ssbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.sscount { flex: 1; text-align: center; min-width: 90px; }
+.sstools { display: flex; gap: 6px; margin-left: auto; }
+.slides { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; gap: 0; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); scrollbar-width: thin; }
+.slide { flex: 0 0 100%; scroll-snap-align: center; display: flex; align-items: center; justify-content: center; padding: 10px; min-height: 260px; position: relative; box-sizing: border-box; }
+.slide img { display: none; max-width: 100%; max-height: 70vh; width: auto; height: auto; box-shadow: 0 1px 8px rgba(0,0,0,0.3); background: #fff; }
+.slide.ready img { display: block; }
+.slide.ready .sswait { display: none; }
+.sswait { color: var(--muted); }
+.scanstudio.full .slide img { max-height: calc(100vh - 340px); }
+.ssdots { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+.ssdot { width: 10px; height: 10px; border-radius: 50%; border: 0; padding: 0; background: var(--line); }
+.ssdot.on { background: var(--accent); transform: scale(1.3); }
+.sslab { margin: 4px 0 0; font-weight: 700; }
+.sslooks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.look { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px; border: 2px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--fg); min-width: 0; }
+.look img { width: 100%; height: 92px; object-fit: contain; background: #fff; border-radius: 6px; }
+.look .lname { font-weight: 700; font-size: 13px; text-align: center; }
+.look .lsub { font-size: 11px; color: var(--muted); text-align: center; }
+.look.on { border-color: var(--accent); background: var(--accent-soft); box-shadow: 0 0 0 2px var(--accent); }
+.look.on .lname::before { content: "\2713 "; color: var(--accent); }
+@media (max-width: 520px) { .sslooks { grid-template-columns: repeat(2, minmax(0, 1fr)); } .look img { height: 110px; } }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Invatek Text to PDF", "url": "https://invatek.in/text-to-pdf", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can I write in Hindi?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Hindi shows correctly, but the pages are saved as pictures, so you cannot select the text inside the PDF."}}, {"@type": "Question", "name": "Is there a limit on length?", "acceptedAnswer": {"@type": "Answer", "text": "There is no fixed limit. Very long text simply makes more pages."}}, {"@type": "Question", "name": "Is my text stored?", "acceptedAnswer": {"@type": "Answer", "text": "No. The PDF is made in your browser and your text is not sent anywhere."}}]}]}</script>
 
@@ -399,7 +453,9 @@ textarea.codein { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, mo
 
   <section class="panel doc seo" id="about-tool"><h2>About Text to PDF</h2><p>Text to PDF is the quickest way to turn plain writing into a file you can share. Type directly into the box or paste text from another app, add an optional title, and the tool lays it out on A4 pages with sensible margins.</p><p>Long text flows onto as many pages as it needs. English text stays selectable in the PDF. Hindi and other scripts are drawn as page pictures so they show correctly on every phone.</p><h3>How to use it</h3><ol><li>Open the tool and type or paste your text in the box.</li><li>Add a title if you want one at the top of the first page.</li><li>Pick a text size: Small, Normal, Large or Extra large.</li><li>Tap Create PDF, then Save file or Share.</li></ol><h3>Tips</h3><ul><li>Press Enter twice to leave a blank line between paragraphs.</li><li>Use Large text if the PDF will be read on a phone.</li><li>For text you need to copy later, keep it in English. Hindi pages become pictures.</li><li>The file name is taken from your title.</li></ul><h3>Questions</h3><div class="faq"><h3>Can I write in Hindi?</h3><p>Yes. Hindi shows correctly, but the pages are saved as pictures, so you cannot select the text inside the PDF.</p><h3>Is there a limit on length?</h3><p>There is no fixed limit. Very long text simply makes more pages.</p><h3>Is my text stored?</h3><p>No. The PDF is made in your browser and your text is not sent anywhere.</p></div><h3>हिंदी में</h3><p lang="hi">यहाँ अपना टेक्स्ट लिखें या पेस्ट करें और उसे तुरंत PDF में बदलें। हिंदी और अंग्रेज़ी दोनों चलती हैं। आपका टेक्स्ट कहीं भेजा नहीं जाता।</p><h3>Related guides</h3><ul><li><a href="/text-to-pdf-write-notes-and-letters">How to turn text into a PDF</a></li></ul><p>Your files are processed in your browser and are not uploaded. Read the <a href="/#privacy">Privacy Policy</a>.</p></section>
 
-  <section class="panel doc seo" id="alltools"><h2>More PDF tools</h2><ul class="toolslist"><li><a href="/scan-to-pdf">Scan to PDF</a></li><li><a href="/merge-pdf">Merge PDF</a></li><li><a href="/split-pdf">Split PDF</a></li><li><a href="/remove-pdf-pages">Remove pages</a></li><li><a href="/rotate-pdf">Rotate PDF</a></li><li><a href="/compress-pdf">Compress PDF</a></li><li><a href="/edit-pdf">Edit PDF</a></li><li><a href="/protect-pdf">Protect PDF</a></li><li><a href="/photos-to-pdf">Photos to PDF</a></li><li><a href="/word-to-pdf">Word to PDF</a></li><li><a href="/excel-to-pdf">Excel to PDF</a></li><li><a href="/pdf-to-excel">PDF to Excel</a></li><li><a href="/pdf-to-word">PDF to Word</a></li><li><a href="/qr-code-generator">QR Code</a></li><li><a href="/pdf-to-jpg">PDF to JPG</a></li><li><a href="/compress-image-to-kb">Compress image</a></li><li><a href="/resize-image">Resize image</a></li><li><a href="/add-page-numbers-to-pdf">Page numbers</a></li><li><a href="/watermark-pdf">Watermark PDF</a></li><li><a href="/organize-pdf">Organize PDF</a></li><li><a href="/crop-pdf">Crop PDF</a></li><li><a href="/unlock-pdf">Unlock PDF</a></li><li><a href="/ocr-pdf">OCR PDF</a></li><li><a href="/html-to-pdf">HTML to PDF</a></li><li><a href="/html-code-viewer">HTML Code Viewer</a></li></ul></section>
+  <section class="panel doc seo" id="alltools"><h2>More PDF tools</h2><ul class="toolslist"><li><a href="/scan-to-pdf">Scan to PDF</a></li><li><a href="/merge-pdf">Merge PDF</a></li><li><a href="/split-pdf">Split PDF</a></li><li><a href="/remove-pdf-pages">Remove pages</a></li><li><a href="/rotate-pdf">Rotate PDF</a></li><li><a href="/compress-pdf">Compress PDF</a></li><li><a href="/edit-pdf">Edit PDF</a></li><li><a href="/protect-pdf">Protect PDF</a></li><li><a href="/photos-to-pdf">Photos to PDF</a></li><li><a href="/word-to-pdf">Word to PDF</a></li><li><a href="/excel-to-pdf">Excel to PDF</a></li><li><a href="/pdf-to-excel">PDF to Excel</a></li><li><a href="/pdf-to-word">PDF to Word</a></li><li><a href="/qr-code-generator">QR Code</a></li><li><a href="/pdf-to-jpg">PDF to JPG</a></li><li><a href="/compress-image-to-kb">Compress image</a></li><li><a href="/resize-image">Resize image</a></li><li><a href="/add-page-numbers-to-pdf">Page numbers</a></li><li><a href="/watermark-pdf">Watermark PDF</a></li><li><a href="/organize-pdf">Organize PDF</a></li><li><a href="/crop-pdf">Crop PDF</a></li><li><a href="/unlock-pdf">Unlock PDF</a></li><li><a href="/ocr-pdf">OCR PDF</a></li><li><a href="/html-to-pdf">HTML to PDF</a></li><li><a href="/barcode-generator">Barcode Generator</a></li><li><a href="/html-code-viewer">HTML Code Viewer</a></li></ul></section>
+
+  <section class="panel doc seo" id="calcs"><h2>Calculators</h2><ul class="toolslist"><li><a href="/calculator">Calculator</a></li><li><a href="/age-calculator">Age Calculator</a></li><li><a href="/percentage-calculator">Percentage Calculator</a></li><li><a href="/gst-calculator">GST Calculator</a></li><li><a href="/emi-calculator">EMI Calculator</a></li><li><a href="/stock-average-calculator">Stock Average Calculator</a></li><li><a href="/love-calculator">Love Calculator</a></li></ul></section>
 
   <section class="support" aria-label="Support Invatek and advertise">
 <div class="scard"><p class="stitle">Support Invatek</p><p>If Invatek helped you, you can support it with any amount through UPI.</p><img class="upiqr" src="/upi-qr.jpg" alt="UPI QR code to support Invatek" width="220" height="220" loading="lazy" decoding="async"><small>Scan with any UPI app</small></div>
@@ -421,9 +477,9 @@ textarea.codein { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, mo
 </div>
 
 <nav class="tabbar" id="tabbar2" aria-label="Main"><a href="/" class="on" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h5"/></svg>PDF tools</a><a href="/invoice-generator"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16l-3-2-2 2-2-2-2 2-2-2-3 2zM8 9h8M8 13h5"/></svg>Invoice</a></nav>
-<script>window.INV_TOOL="text2pdf";window.INV_SLUGS={"scan": "scan-to-pdf", "text2pdf": "text-to-pdf", "merge": "merge-pdf", "split": "split-pdf", "remove": "remove-pdf-pages", "rotate": "rotate-pdf", "compress": "compress-pdf", "edit": "edit-pdf", "protect": "protect-pdf", "images": "photos-to-pdf", "word2pdf": "word-to-pdf", "excel2pdf": "excel-to-pdf", "pdf2excel": "pdf-to-excel", "pdf2word": "pdf-to-word", "qr": "qr-code-generator", "pdf2jpg": "pdf-to-jpg", "imgcompress": "compress-image-to-kb", "imgresize": "resize-image", "pagenum": "add-page-numbers-to-pdf", "watermark": "watermark-pdf", "organize": "organize-pdf", "crop": "crop-pdf", "unlock": "unlock-pdf", "ocrpdf": "ocr-pdf", "html2pdf": "html-to-pdf"};</script>
+<script>window.INV_TOOL="text2pdf";window.INV_SLUGS={"scan": "scan-to-pdf", "text2pdf": "text-to-pdf", "merge": "merge-pdf", "split": "split-pdf", "remove": "remove-pdf-pages", "rotate": "rotate-pdf", "compress": "compress-pdf", "edit": "edit-pdf", "protect": "protect-pdf", "images": "photos-to-pdf", "word2pdf": "word-to-pdf", "excel2pdf": "excel-to-pdf", "pdf2excel": "pdf-to-excel", "pdf2word": "pdf-to-word", "qr": "qr-code-generator", "pdf2jpg": "pdf-to-jpg", "imgcompress": "compress-image-to-kb", "imgresize": "resize-image", "pagenum": "add-page-numbers-to-pdf", "watermark": "watermark-pdf", "organize": "organize-pdf", "crop": "crop-pdf", "unlock": "unlock-pdf", "ocrpdf": "ocr-pdf", "html2pdf": "html-to-pdf", "barcode": "barcode-generator"};</script>
 <script>
-window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "k": "home tools"}, {"t": "Scan to PDF", "u": "/scan-to-pdf", "d": "Scan documents to PDF with your phone camera. Removes shadows, keeps colour, lets you crop each page. Free, no sign up, files never uploaded.", "k": "camera scanner document photo scan tool"}, {"t": "Text to PDF", "u": "/text-to-pdf", "d": "Type or paste text and save it as a PDF. Works with English and Hindi. Free, no sign up, and nothing is uploaded.", "k": "type write note letter hindi tool"}, {"t": "Merge PDF", "u": "/merge-pdf", "d": "Combine several PDF files into one in the order you choose. Free, no sign up, and your files never leave your device.", "k": "combine join pdf files one tool"}, {"t": "Split PDF", "u": "/split-pdf", "d": "Extract chosen pages from a PDF, or save every page as its own file. Free, no sign up, and nothing is uploaded.", "k": "extract pages separate cut tool"}, {"t": "Remove pages", "u": "/remove-pdf-pages", "d": "Delete unwanted pages from a PDF in seconds. Free, no sign up, and your file is never uploaded.", "k": "delete pages blank tool"}, {"t": "Rotate PDF", "u": "/rotate-pdf", "d": "Turn PDF pages left or right with a preview of every page. Free, no sign up, and your file never leaves your device.", "k": "turn sideways upside down tool"}, {"t": "Compress PDF", "u": "/compress-pdf", "d": "Make a PDF smaller for email, WhatsApp or online forms. Three levels, shows the new size, free, no sign up, and your file is never uploaded.", "k": "reduce size smaller shrink kb mb 100kb 200kb 500kb upload form tool"}, {"t": "Edit PDF", "u": "/edit-pdf", "d": "Change text in a PDF, add your signature, write, draw, highlight or cover text. Free, no sign up, and your file stays on your device.", "k": "change text sign signature fill form draw highlight tool"}, {"t": "Protect PDF", "u": "/protect-pdf", "d": "Lock a PDF with a password so only people who know it can open it. Strong AES 256 encryption, free, no sign up, and your file never leaves your device.", "k": "password lock secure encrypt tool"}, {"t": "Photos to PDF", "u": "/photos-to-pdf", "d": "Turn JPG, PNG or WebP photos into one PDF, one photo per page. Free, no sign up, and nothing is uploaded.", "k": "jpg png image picture convert tool"}, {"t": "Word to PDF", "u": "/word-to-pdf", "d": "Convert a Word (.docx) file to PDF in your browser. Free, no sign up, and your document is never uploaded.", "k": "docx doc convert tool"}, {"t": "Excel to PDF", "u": "/excel-to-pdf", "d": "Convert Excel (.xlsx, .xls) or CSV files to PDF, one section per sheet. Free, no sign up, and nothing is uploaded.", "k": "xlsx csv sheet convert tool"}, {"t": "PDF to Excel", "u": "/pdf-to-excel", "d": "Pull tables and text from a PDF or a photo into an Excel file. Reads scanned pages with OCR in English and Hindi. Free and private.", "k": "table ocr convert xlsx tool"}, {"t": "PDF to Word", "u": "/pdf-to-word", "d": "Turn a PDF or a photo into an editable Word file. Reads scans with OCR in English and Hindi. Free, no sign up, and private.", "k": "docx ocr editable convert tool"}, {"t": "QR Code", "u": "/qr-code-generator", "d": "Make a QR code from any link or text and save it as PNG or SVG. Free, no sign up, and everything happens on your device.", "k": "qr barcode link scan generate code tool"}, {"t": "PDF to JPG", "u": "/pdf-to-jpg", "d": "Turn every page of a PDF into a JPG or PNG picture. Free, no sign up, and your file stays on your device.", "k": "pdf to image picture png jpeg photo save pages tool"}, {"t": "Compress image", "u": "/compress-image-to-kb", "d": "Reduce a photo or signature to the exact size in KB that your form asks for. Free, no sign up, nothing is uploaded.", "k": "reduce photo size kb 20kb 50kb 100kb signature form exam upload image compress tool"}, {"t": "Resize image", "u": "/resize-image", "d": "Resize a photo to the width and height you need, or save it as JPG, PNG or WebP. Free and private, it works on your device.", "k": "photo width height pixels passport size change dimension jpg png webp tool"}, {"t": "Page numbers", "u": "/add-page-numbers-to-pdf", "d": "Put page numbers on every page of a PDF. Choose the place and the look. Free, no sign up, and your file stays on your device.", "k": "page number numbering pdf tool"}, {"t": "Watermark PDF", "u": "/watermark-pdf", "d": "Write a word such as CONFIDENTIAL or your name across every page of a PDF. Free, no sign up, and private.", "k": "watermark confidential draft stamp text pdf tool"}, {"t": "Organize PDF", "u": "/organize-pdf", "d": "Rearrange PDF pages by dragging them. Turn, copy or delete pages and save a new PDF. Free, no sign up, files never uploaded.", "k": "rearrange reorder pages arrange drag delete rotate copy sort tool"}, {"t": "Crop PDF", "u": "/crop-pdf", "d": "Crop PDF pages by dragging a box or typing the margins. Remove white borders from scans. Free, no sign up, private.", "k": "trim margin cut edges white border tool"}, {"t": "Unlock PDF", "u": "/unlock-pdf", "d": "Remove the password from a PDF you own. Type the password once and save a copy that opens without it. Free and private.", "k": "remove password decrypt open locked tool"}, {"t": "OCR PDF", "u": "/ocr-pdf", "d": "Turn a scanned PDF or photo into a searchable PDF with OCR. Find and copy text. English and Hindi. Free, private, no sign up.", "k": "searchable scanned text recognition find copy image to text tool"}, {"t": "HTML to PDF", "u": "/html-to-pdf", "d": "Convert HTML code or an .html file to PDF. Choose page size and margins, preview the page and save. Free and private.", "k": "web page code convert print webpage tool"}, {"t": "Invoice Generator", "u": "/invoice-generator", "d": "Make a GST or normal invoice and download it as a PDF. Add items, CGST, SGST, IGST, discount, notes and logo. Free, no sign up, saved on your device.", "k": "gst bill billing tax invoice cgst sgst igst vyapar invoice business bill"}, {"t": "Quotation Maker", "u": "/quotation-generator", "d": "Make a professional quotation or estimate with items, GST, discount and validity date. Download as PDF or share on WhatsApp. Free and private.", "k": "quote estimate price offer invoice business bill"}, {"t": "Sales Order Maker", "u": "/sales-order-generator", "d": "Make a sales order with items, quantity, GST and delivery date. Download as PDF or share on WhatsApp. Free, no sign up.", "k": "order confirm invoice business bill"}, {"t": "Proforma Invoice Maker", "u": "/proforma-invoice-generator", "d": "Make a proforma invoice with items, GST and advance amount. Download as PDF or share on WhatsApp. Free, private and no sign up.", "k": "advance pro forma invoice business bill"}, {"t": "Payment Receipt Maker", "u": "/payment-receipt-generator", "d": "Make a payment receipt for cash, UPI, bank transfer or cheque. Shows amount in words. Download as PDF or share on WhatsApp. Free and private.", "k": "cash upi receipt payment invoice business bill"}, {"t": "Rent Receipt Generator", "u": "/rent-receipt-generator", "d": "Make rent receipts for HRA claims. Pick the months, rent and landlord PAN and download all receipts in one PDF. Free, no sign up, private.", "k": "hra house rent allowance landlord tenant invoice business bill"}, {"t": "Salary Slip Generator", "u": "/salary-slip-generator", "d": "Make a monthly salary slip with earnings, deductions, net pay and amount in words. Download as PDF. Free, private, no sign up.", "k": "payslip pay slip salary employee invoice business bill"}, {"t": "HTML Code Viewer", "u": "/html-code-viewer", "d": "Write HTML, CSS and JavaScript and see the result live with a console. Also view code in Python, Java, C, SQL and more with colours. Free and private.", "k": "code editor javascript css run playground python java syntax highlight viewer console"}, {"t": "PDF guides and articles", "u": "/articles", "d": "How to guides for everyday PDF jobs", "k": "articles blog help how to"}, {"t": "How to merge PDF files on your phone", "u": "/how-to-merge-pdf-files-on-phone", "d": "Learn how to combine several PDF files into one on Android or iPhone without installing an app. Step by step, free, and private.", "k": "guide article how to"}, {"t": "How to compress a PDF without losing quality", "u": "/how-to-compress-pdf-without-losing-quality", "d": "Make a PDF smaller for email, WhatsApp or online forms. Learn what changes the size of a PDF and how to compress it free on your phone.", "k": "guide article how to"}, {"t": "Reduce PDF size for online forms and uploads", "u": "/reduce-pdf-size-for-online-forms", "d": "Upload failed because the file is too big? Learn how to bring a PDF under a form's size limit using free tools on your phone.", "k": "guide article how to"}, {"t": "How to convert photos to PDF on your phone", "u": "/convert-photos-to-pdf-on-android", "d": "Turn JPG or PNG photos into one PDF file on your phone. No app needed, free, and your photos stay private.", "k": "guide article how to"}, {"t": "How to scan documents to PDF with your phone", "u": "/scan-documents-to-pdf-with-phone", "d": "Use your phone camera as a scanner. Remove shadows, crop pages and save a clean PDF. Free and private, no app needed.", "k": "guide article how to"}, {"t": "How to password protect a PDF", "u": "/how-to-password-protect-a-pdf", "d": "Lock a PDF with a password before you share it. Learn how password protection works and how to do it free, without uploading your file.", "k": "guide article how to"}, {"t": "How to split a PDF and extract pages", "u": "/how-to-split-pdf-and-extract-pages", "d": "Pull out only the pages you need from a PDF, or save every page as its own file. Free, private and works on your phone.", "k": "guide article how to"}, {"t": "How to rotate PDF pages", "u": "/how-to-rotate-pdf-pages", "d": "Fix sideways or upside down PDF pages and save the corrected file. Free, with a preview of every page.", "k": "guide article how to"}, {"t": "How to convert Word to PDF", "u": "/how-to-convert-word-to-pdf", "d": "Turn a Word (.docx) file into a PDF that looks the same on every device. Free and private, nothing is uploaded.", "k": "guide article how to"}, {"t": "How to convert Excel to PDF", "u": "/how-to-convert-excel-to-pdf", "d": "Turn an Excel or CSV spreadsheet into a PDF anyone can open. Free, private and works on your phone.", "k": "guide article how to"}, {"t": "How to convert PDF to Word", "u": "/how-to-convert-pdf-to-word", "d": "Get the text out of a PDF, even a scan, into a Word file you can edit. Works in English and Hindi, free and private.", "k": "guide article how to"}, {"t": "How to sign a PDF on your phone", "u": "/how-to-sign-a-pdf-on-your-phone", "d": "Add your signature, text and dates to a PDF on your phone. No printer, no scanner and no app needed.", "k": "guide article how to"}, {"t": "How to remove pages from a PDF", "u": "/how-to-remove-pages-from-a-pdf", "d": "Delete blank, duplicate or private pages from a PDF and save a clean copy. Free and nothing is uploaded.", "k": "guide article how to"}, {"t": "Are online PDF tools safe to use?", "u": "/are-online-pdf-tools-safe", "d": "Many PDF websites upload your files to a server. Learn the risks, how to spot safer tools, and what to do with private documents.", "k": "guide article how to"}, {"t": "PDF vs JPG: which one should you use?", "u": "/pdf-vs-jpg-which-format-to-use", "d": "Understand the difference between PDF and JPG, when each is better, and how to convert between them for forms and sharing.", "k": "guide article how to"}, {"t": "How to make a resume PDF that looks professional", "u": "/how-to-make-a-resume-pdf", "d": "Save your resume as a clean PDF that opens the same on every phone and computer. Tips on file name, size and layout.", "k": "guide article how to"}, {"t": "How to send all documents as one PDF", "u": "/send-documents-as-one-pdf-for-job-applications", "d": "Combine resume, certificates and ID proof into a single tidy PDF for job and college applications. Free, on your phone.", "k": "guide article how to"}, {"t": "How to convert a PDF table to Excel", "u": "/how-to-convert-pdf-table-to-excel", "d": "Move a table from a PDF or a photo into Excel so you can sort and calculate. Reads scans with OCR, free and private.", "k": "guide article how to"}, {"t": "How to fill a PDF form on your phone", "u": "/how-to-add-text-to-a-pdf-form", "d": "Type your answers on top of a PDF form, add ticks and a date, and save the filled form. Free, no app needed.", "k": "guide article how to"}, {"t": "How to send a large PDF on WhatsApp and email", "u": "/how-to-send-large-pdf-on-whatsapp-and-email", "d": "PDF too big to send? Learn how to shrink it, split it or share it in parts so it goes through on WhatsApp and email.", "k": "guide article how to"}, {"t": "How to turn text into a PDF", "u": "/text-to-pdf-write-notes-and-letters", "d": "Type or paste text and save it as a neat A4 PDF. Works for English and Hindi. Free and private.", "k": "guide article how to"}, {"t": "How to edit text in a PDF", "u": "/how-to-edit-text-in-a-pdf", "d": "Change a name, date or number in a PDF without special software. Learn how to edit PDF text online for free and what limits to expect.", "k": "guide article how to"}, {"t": "How to make a QR code for a link", "u": "/how-to-make-a-qr-code-for-a-link", "d": "Create a QR code for a website, WhatsApp link or any text, test it, and print or share it. Simple steps and tips for scannable codes.", "k": "guide article how to"}, {"t": "How to convert a PDF to JPG", "u": "/how-to-convert-pdf-to-jpg", "d": "Save PDF pages as JPG or PNG pictures on your phone or computer. Simple steps, tips for good quality and small files.", "k": "guide article how to"}, {"t": "How to reduce image size to 50 KB", "u": "/how-to-reduce-image-size-to-50-kb", "d": "Make a photo or signature small enough for an exam or job form. Type the size in KB and save the smaller picture.", "k": "guide article how to"}, {"t": "How to resize a photo for a form", "u": "/how-to-resize-a-photo-for-a-form", "d": "Change the width and height of a photo for a form, ID or profile. Includes passport photo size and tips to avoid a stretched face.", "k": "guide article how to"}, {"t": "How to add page numbers to a PDF", "u": "/how-to-add-page-numbers-to-a-pdf", "d": "Put page numbers on a PDF report or assignment. Choose the place, the look and the first number.", "k": "guide article how to"}, {"t": "How to add a watermark to a PDF", "u": "/how-to-add-a-watermark-to-a-pdf", "d": "Write a word such as CONFIDENTIAL, DRAFT or your name across every page of a PDF, free and on your own device.", "k": "guide article how to"}, {"t": "How to make a GST invoice", "u": "/how-to-make-a-gst-invoice", "d": "Learn what a GST invoice should show, how CGST, SGST and IGST differ and how to make an invoice PDF free on your phone.", "k": "guide article how to"}, {"t": "How to make a rent receipt for an HRA claim", "u": "/how-to-make-a-rent-receipt-for-hra", "d": "Learn what a rent receipt should show for an HRA claim and make monthly rent receipts in one PDF, free on your phone.", "k": "guide article how to"}, {"t": "Quotation vs proforma invoice vs invoice", "u": "/quotation-vs-proforma-invoice-vs-invoice", "d": "Understand the difference between a quotation, a sales order, a proforma invoice and a tax invoice, and when to use each.", "k": "guide article how to"}, {"t": "How to unlock a PDF and remove its password", "u": "/how-to-unlock-a-pdf-with-password", "d": "Remove the password from a PDF you own so it opens without asking. Step by step, free, and your file stays on your device.", "k": "guide article how to"}, {"t": "How to make a scanned PDF searchable", "u": "/how-to-make-a-scanned-pdf-searchable", "d": "Turn a scanned PDF or photo into a PDF where you can search and copy text. Free OCR in your browser, English and Hindi.", "k": "guide article how to"}, {"t": "How to rearrange pages in a PDF", "u": "/how-to-rearrange-pdf-pages", "d": "Change the order of PDF pages, turn sideways pages and remove pages you do not need, all in one place. Free and private.", "k": "guide article how to"}, {"t": "How to convert HTML to PDF", "u": "/how-to-convert-html-to-pdf", "d": "Turn HTML code or an .html file into a PDF. Two ways: a picture PDF for any browser and a print method that keeps text selectable.", "k": "guide article how to"}, {"t": "About Invatek", "u": "/about", "d": "Invatek is a set of free PDF tools that work in your browser. Learn who we are and how your files stay private.", "k": "legal info"}, {"t": "Privacy Policy", "u": "/privacy-policy", "d": "How Invatek handles your files, cookies and advertising. Your files are processed in your browser and are not uploaded.", "k": "legal info"}, {"t": "Terms of Use", "u": "/terms", "d": "The terms for using Invatek's free PDF tools.", "k": "legal info"}, {"t": "Contact Invatek", "u": "/contact", "d": "How to reach Invatek for help, feedback or tool requests.", "k": "legal info"}];
+window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "k": "home tools"}, {"t": "Scan to PDF", "u": "/scan-to-pdf", "d": "Scan documents to PDF with your phone camera. Removes shadows, keeps colour, lets you crop each page. Free, no sign up, files never uploaded.", "k": "camera scanner document photo scan tool"}, {"t": "Text to PDF", "u": "/text-to-pdf", "d": "Type or paste text and save it as a PDF. Works with English and Hindi. Free, no sign up, and nothing is uploaded.", "k": "type write note letter hindi tool"}, {"t": "Merge PDF", "u": "/merge-pdf", "d": "Combine several PDF files into one in the order you choose. Free, no sign up, and your files never leave your device.", "k": "combine join pdf files one tool"}, {"t": "Split PDF", "u": "/split-pdf", "d": "Extract chosen pages from a PDF, or save every page as its own file. Free, no sign up, and nothing is uploaded.", "k": "extract pages separate cut tool"}, {"t": "Remove pages", "u": "/remove-pdf-pages", "d": "Delete unwanted pages from a PDF in seconds. Free, no sign up, and your file is never uploaded.", "k": "delete pages blank tool"}, {"t": "Rotate PDF", "u": "/rotate-pdf", "d": "Turn PDF pages left or right with a preview of every page. Free, no sign up, and your file never leaves your device.", "k": "turn sideways upside down tool"}, {"t": "Compress PDF", "u": "/compress-pdf", "d": "Make a PDF smaller for email, WhatsApp or online forms. Three levels, shows the new size, free, no sign up, and your file is never uploaded.", "k": "reduce size smaller shrink kb mb 100kb 200kb 500kb upload form tool"}, {"t": "Edit PDF", "u": "/edit-pdf", "d": "Change text in a PDF, add your signature, write, draw, highlight or cover text. Free, no sign up, and your file stays on your device.", "k": "change text sign signature fill form draw highlight tool"}, {"t": "Protect PDF", "u": "/protect-pdf", "d": "Lock a PDF with a password so only people who know it can open it. Strong AES 256 encryption, free, no sign up, and your file never leaves your device.", "k": "password lock secure encrypt tool"}, {"t": "Photos to PDF", "u": "/photos-to-pdf", "d": "Turn JPG, PNG or WebP photos into one PDF, one photo per page. Free, no sign up, and nothing is uploaded.", "k": "jpg png image picture convert tool"}, {"t": "Word to PDF", "u": "/word-to-pdf", "d": "Convert a Word (.docx) file to PDF in your browser. Free, no sign up, and your document is never uploaded.", "k": "docx doc convert tool"}, {"t": "Excel to PDF", "u": "/excel-to-pdf", "d": "Convert Excel (.xlsx, .xls) or CSV files to PDF, one section per sheet. Free, no sign up, and nothing is uploaded.", "k": "xlsx csv sheet convert tool"}, {"t": "PDF to Excel", "u": "/pdf-to-excel", "d": "Pull tables and text from a PDF or a photo into an Excel file. Reads scanned pages with OCR in English and Hindi. Free and private.", "k": "table ocr convert xlsx tool"}, {"t": "PDF to Word", "u": "/pdf-to-word", "d": "Turn a PDF or a photo into an editable Word file. Reads scans with OCR in English and Hindi. Free, no sign up, and private.", "k": "docx ocr editable convert tool"}, {"t": "QR Code", "u": "/qr-code-generator", "d": "Make a QR code from any link or text and save it as PNG or SVG. Free, no sign up, and everything happens on your device.", "k": "qr link scan generate code tool"}, {"t": "PDF to JPG", "u": "/pdf-to-jpg", "d": "Turn every page of a PDF into a JPG or PNG picture. Free, no sign up, and your file stays on your device.", "k": "pdf to image picture png jpeg photo save pages tool"}, {"t": "Compress image", "u": "/compress-image-to-kb", "d": "Reduce a photo or signature to the exact size in KB that your form asks for. Free, no sign up, nothing is uploaded.", "k": "reduce photo size kb 20kb 50kb 100kb signature form exam upload image compress tool"}, {"t": "Resize image", "u": "/resize-image", "d": "Resize a photo to the width and height you need, or save it as JPG, PNG or WebP. Free and private, it works on your device.", "k": "photo width height pixels passport size change dimension jpg png webp tool"}, {"t": "Page numbers", "u": "/add-page-numbers-to-pdf", "d": "Put page numbers on every page of a PDF. Choose the place and the look. Free, no sign up, and your file stays on your device.", "k": "page number numbering pdf tool"}, {"t": "Watermark PDF", "u": "/watermark-pdf", "d": "Write a word such as CONFIDENTIAL or your name across every page of a PDF. Free, no sign up, and private.", "k": "watermark confidential draft stamp text pdf tool"}, {"t": "Organize PDF", "u": "/organize-pdf", "d": "Rearrange PDF pages by dragging them. Turn, copy or delete pages and save a new PDF. Free, no sign up, files never uploaded.", "k": "rearrange reorder pages arrange drag delete rotate copy sort tool"}, {"t": "Crop PDF", "u": "/crop-pdf", "d": "Crop PDF pages by dragging a box or typing the margins. Remove white borders from scans. Free, no sign up, private.", "k": "trim margin cut edges white border tool"}, {"t": "Unlock PDF", "u": "/unlock-pdf", "d": "Remove the password from a PDF you own. Type the password once and save a copy that opens without it. Free and private.", "k": "remove password decrypt open locked tool"}, {"t": "OCR PDF", "u": "/ocr-pdf", "d": "Turn a scanned PDF or photo into a searchable PDF with OCR. Find and copy text. English and Hindi. Free, private, no sign up.", "k": "searchable scanned text recognition find copy image to text tool"}, {"t": "HTML to PDF", "u": "/html-to-pdf", "d": "Convert HTML code or an .html file to PDF. Choose page size and margins, preview the page and save. Free and private.", "k": "web page code convert print webpage tool"}, {"t": "Barcode Generator", "u": "/barcode-generator", "d": "Make a barcode online and save it as PNG, SVG or PDF. Supports Code 128, EAN-13 and UPC-A. Free, no sign up, made on your device.", "k": "barcode ean upc code128 generate label product stock tool"}, {"t": "Invoice Generator", "u": "/invoice-generator", "d": "Make a GST or normal invoice and download it as a PDF. Add items, CGST, SGST, IGST, discount, notes and logo. Free, no sign up, saved on your device.", "k": "gst bill billing tax invoice cgst sgst igst vyapar invoice business bill"}, {"t": "Quotation Maker", "u": "/quotation-generator", "d": "Make a professional quotation or estimate with items, GST, discount and validity date. Download as PDF or share on WhatsApp. Free and private.", "k": "quote estimate price offer invoice business bill"}, {"t": "Sales Order Maker", "u": "/sales-order-generator", "d": "Make a sales order with items, quantity, GST and delivery date. Download as PDF or share on WhatsApp. Free, no sign up.", "k": "order confirm invoice business bill"}, {"t": "Proforma Invoice Maker", "u": "/proforma-invoice-generator", "d": "Make a proforma invoice with items, GST and advance amount. Download as PDF or share on WhatsApp. Free, private and no sign up.", "k": "advance pro forma invoice business bill"}, {"t": "Payment Receipt Maker", "u": "/payment-receipt-generator", "d": "Make a payment receipt for cash, UPI, bank transfer or cheque. Shows amount in words. Download as PDF or share on WhatsApp. Free and private.", "k": "cash upi receipt payment invoice business bill"}, {"t": "Rent Receipt Generator", "u": "/rent-receipt-generator", "d": "Make rent receipts for HRA claims. Pick the months, rent and landlord PAN and download all receipts in one PDF. Free, no sign up, private.", "k": "hra house rent allowance landlord tenant invoice business bill"}, {"t": "Salary Slip Generator", "u": "/salary-slip-generator", "d": "Make a monthly salary slip with earnings, deductions, net pay and amount in words. Download as PDF. Free, private, no sign up.", "k": "payslip pay slip salary employee invoice business bill"}, {"t": "HTML Code Viewer", "u": "/html-code-viewer", "d": "Write HTML, CSS and JavaScript and see the result live with a console. Also view code in Python, Java, C, SQL and more with colours. Free and private.", "k": "code editor javascript css run playground python java syntax highlight viewer console"}, {"t": "PDF guides and articles", "u": "/articles", "d": "How to guides for everyday PDF jobs", "k": "articles blog help how to"}, {"t": "How to merge PDF files on your phone", "u": "/how-to-merge-pdf-files-on-phone", "d": "Learn how to combine several PDF files into one on Android or iPhone without installing an app. Step by step, free, and private.", "k": "guide article how to"}, {"t": "How to compress a PDF without losing quality", "u": "/how-to-compress-pdf-without-losing-quality", "d": "Make a PDF smaller for email, WhatsApp or online forms. Learn what changes the size of a PDF and how to compress it free on your phone.", "k": "guide article how to"}, {"t": "Reduce PDF size for online forms and uploads", "u": "/reduce-pdf-size-for-online-forms", "d": "Upload failed because the file is too big? Learn how to bring a PDF under a form's size limit using free tools on your phone.", "k": "guide article how to"}, {"t": "How to convert photos to PDF on your phone", "u": "/convert-photos-to-pdf-on-android", "d": "Turn JPG or PNG photos into one PDF file on your phone. No app needed, free, and your photos stay private.", "k": "guide article how to"}, {"t": "How to scan documents to PDF with your phone", "u": "/scan-documents-to-pdf-with-phone", "d": "Use your phone camera as a scanner. Remove shadows, crop pages and save a clean PDF. Free and private, no app needed.", "k": "guide article how to"}, {"t": "How to password protect a PDF", "u": "/how-to-password-protect-a-pdf", "d": "Lock a PDF with a password before you share it. Learn how password protection works and how to do it free, without uploading your file.", "k": "guide article how to"}, {"t": "How to split a PDF and extract pages", "u": "/how-to-split-pdf-and-extract-pages", "d": "Pull out only the pages you need from a PDF, or save every page as its own file. Free, private and works on your phone.", "k": "guide article how to"}, {"t": "How to rotate PDF pages", "u": "/how-to-rotate-pdf-pages", "d": "Fix sideways or upside down PDF pages and save the corrected file. Free, with a preview of every page.", "k": "guide article how to"}, {"t": "How to convert Word to PDF", "u": "/how-to-convert-word-to-pdf", "d": "Turn a Word (.docx) file into a PDF that looks the same on every device. Free and private, nothing is uploaded.", "k": "guide article how to"}, {"t": "How to convert Excel to PDF", "u": "/how-to-convert-excel-to-pdf", "d": "Turn an Excel or CSV spreadsheet into a PDF anyone can open. Free, private and works on your phone.", "k": "guide article how to"}, {"t": "How to convert PDF to Word", "u": "/how-to-convert-pdf-to-word", "d": "Get the text out of a PDF, even a scan, into a Word file you can edit. Works in English and Hindi, free and private.", "k": "guide article how to"}, {"t": "How to sign a PDF on your phone", "u": "/how-to-sign-a-pdf-on-your-phone", "d": "Add your signature, text and dates to a PDF on your phone. No printer, no scanner and no app needed.", "k": "guide article how to"}, {"t": "How to remove pages from a PDF", "u": "/how-to-remove-pages-from-a-pdf", "d": "Delete blank, duplicate or private pages from a PDF and save a clean copy. Free and nothing is uploaded.", "k": "guide article how to"}, {"t": "Are online PDF tools safe to use?", "u": "/are-online-pdf-tools-safe", "d": "Many PDF websites upload your files to a server. Learn the risks, how to spot safer tools, and what to do with private documents.", "k": "guide article how to"}, {"t": "PDF vs JPG: which one should you use?", "u": "/pdf-vs-jpg-which-format-to-use", "d": "Understand the difference between PDF and JPG, when each is better, and how to convert between them for forms and sharing.", "k": "guide article how to"}, {"t": "How to make a resume PDF that looks professional", "u": "/how-to-make-a-resume-pdf", "d": "Save your resume as a clean PDF that opens the same on every phone and computer. Tips on file name, size and layout.", "k": "guide article how to"}, {"t": "How to send all documents as one PDF", "u": "/send-documents-as-one-pdf-for-job-applications", "d": "Combine resume, certificates and ID proof into a single tidy PDF for job and college applications. Free, on your phone.", "k": "guide article how to"}, {"t": "How to convert a PDF table to Excel", "u": "/how-to-convert-pdf-table-to-excel", "d": "Move a table from a PDF or a photo into Excel so you can sort and calculate. Reads scans with OCR, free and private.", "k": "guide article how to"}, {"t": "How to fill a PDF form on your phone", "u": "/how-to-add-text-to-a-pdf-form", "d": "Type your answers on top of a PDF form, add ticks and a date, and save the filled form. Free, no app needed.", "k": "guide article how to"}, {"t": "How to send a large PDF on WhatsApp and email", "u": "/how-to-send-large-pdf-on-whatsapp-and-email", "d": "PDF too big to send? Learn how to shrink it, split it or share it in parts so it goes through on WhatsApp and email.", "k": "guide article how to"}, {"t": "How to turn text into a PDF", "u": "/text-to-pdf-write-notes-and-letters", "d": "Type or paste text and save it as a neat A4 PDF. Works for English and Hindi. Free and private.", "k": "guide article how to"}, {"t": "How to edit text in a PDF", "u": "/how-to-edit-text-in-a-pdf", "d": "Change a name, date or number in a PDF without special software. Learn how to edit PDF text online for free and what limits to expect.", "k": "guide article how to"}, {"t": "How to make a QR code for a link", "u": "/how-to-make-a-qr-code-for-a-link", "d": "Create a QR code for a website, WhatsApp link or any text, test it, and print or share it. Simple steps and tips for scannable codes.", "k": "guide article how to"}, {"t": "How to convert a PDF to JPG", "u": "/how-to-convert-pdf-to-jpg", "d": "Save PDF pages as JPG or PNG pictures on your phone or computer. Simple steps, tips for good quality and small files.", "k": "guide article how to"}, {"t": "How to reduce image size to 50 KB", "u": "/how-to-reduce-image-size-to-50-kb", "d": "Make a photo or signature small enough for an exam or job form. Type the size in KB and save the smaller picture.", "k": "guide article how to"}, {"t": "How to resize a photo for a form", "u": "/how-to-resize-a-photo-for-a-form", "d": "Change the width and height of a photo for a form, ID or profile. Includes passport photo size and tips to avoid a stretched face.", "k": "guide article how to"}, {"t": "How to add page numbers to a PDF", "u": "/how-to-add-page-numbers-to-a-pdf", "d": "Put page numbers on a PDF report or assignment. Choose the place, the look and the first number.", "k": "guide article how to"}, {"t": "How to add a watermark to a PDF", "u": "/how-to-add-a-watermark-to-a-pdf", "d": "Write a word such as CONFIDENTIAL, DRAFT or your name across every page of a PDF, free and on your own device.", "k": "guide article how to"}, {"t": "How to make a GST invoice", "u": "/how-to-make-a-gst-invoice", "d": "Learn what a GST invoice should show, how CGST, SGST and IGST differ and how to make an invoice PDF free on your phone.", "k": "guide article how to"}, {"t": "How to make a rent receipt for an HRA claim", "u": "/how-to-make-a-rent-receipt-for-hra", "d": "Learn what a rent receipt should show for an HRA claim and make monthly rent receipts in one PDF, free on your phone.", "k": "guide article how to"}, {"t": "Quotation vs proforma invoice vs invoice", "u": "/quotation-vs-proforma-invoice-vs-invoice", "d": "Understand the difference between a quotation, a sales order, a proforma invoice and a tax invoice, and when to use each.", "k": "guide article how to"}, {"t": "How to unlock a PDF and remove its password", "u": "/how-to-unlock-a-pdf-with-password", "d": "Remove the password from a PDF you own so it opens without asking. Step by step, free, and your file stays on your device.", "k": "guide article how to"}, {"t": "How to make a scanned PDF searchable", "u": "/how-to-make-a-scanned-pdf-searchable", "d": "Turn a scanned PDF or photo into a PDF where you can search and copy text. Free OCR in your browser, English and Hindi.", "k": "guide article how to"}, {"t": "How to rearrange pages in a PDF", "u": "/how-to-rearrange-pdf-pages", "d": "Change the order of PDF pages, turn sideways pages and remove pages you do not need, all in one place. Free and private.", "k": "guide article how to"}, {"t": "How to convert HTML to PDF", "u": "/how-to-convert-html-to-pdf", "d": "Turn HTML code or an .html file into a PDF. Two ways: a picture PDF for any browser and a print method that keeps text selectable.", "k": "guide article how to"}, {"t": "About Invatek", "u": "/about", "d": "Invatek is a set of free PDF tools that work in your browser. Learn who we are and how your files stay private.", "k": "legal info"}, {"t": "Privacy Policy", "u": "/privacy-policy", "d": "How Invatek handles your files, cookies and advertising. Your files are processed in your browser and are not uploaded.", "k": "legal info"}, {"t": "Terms of Use", "u": "/terms", "d": "The terms for using Invatek's free PDF tools.", "k": "legal info"}, {"t": "Contact Invatek", "u": "/contact", "d": "How to reach Invatek for help, feedback or tool requests.", "k": "legal info"}, {"t": "Calculator", "u": "/calculator", "d": "Everyday sums with brackets, percent and history. Free, no sign up, worked out on your device.", "k": "calculator simple sum add subtract multiply divide percent brackets tool"}, {"t": "Age Calculator", "u": "/age-calculator", "d": "Exact age in years, months and days, next birthday. Free, no sign up, worked out on your device.", "k": "age calculator date of birth dob birthday years months days tool"}, {"t": "Percentage Calculator", "u": "/percentage-calculator", "d": "Percent of, percent change, marks and discounts. Free, no sign up, worked out on your device.", "k": "percentage percent calculator discount marks increase decrease profit tool"}, {"t": "GST Calculator", "u": "/gst-calculator", "d": "Add or remove GST, with CGST, SGST and IGST. Free, no sign up, worked out on your device.", "k": "gst calculator india cgst sgst igst inclusive exclusive tax invoice tool"}, {"t": "EMI Calculator", "u": "/emi-calculator", "d": "Monthly EMI, total interest and yearly schedule. Free, no sign up, worked out on your device.", "k": "emi calculator loan home car personal interest tenure monthly installment tool"}, {"t": "Stock Average Calculator", "u": "/stock-average-calculator", "d": "Average buy price of shares, plan buying more. Free, no sign up, worked out on your device.", "k": "stock average calculator share average price averaging down buy more profit loss tool"}, {"t": "Love Calculator", "u": "/love-calculator", "d": "Love percent and FLAMES game for two names (for fun). Free, no sign up, worked out on your device.", "k": "love calculator flames game names compatibility fun tool"}, {"t": "How to Use the Percent Key and Brackets on a Calculator", "u": "/how-to-use-the-percent-key-and-brackets-on-a-calculator", "d": "Learn how the percent key and brackets work on a calculator, with simple examples for discounts, margins and bills.", "k": "guide how to calculator"}, {"t": "How to Calculate Your Exact Age in Years, Months and Days", "u": "/how-to-calculate-your-exact-age", "d": "How to work out exact age from a date of birth, by hand or with a tool. Includes the borrowing method, age limits on forms and leap year birthdays.", "k": "guide how to age calculator"}, {"t": "How to Calculate Percentage Increase, Discount and Marks", "u": "/how-to-calculate-percentage-increase-discount-and-marks", "d": "Simple ways to calculate percent of a number, marks percentage, percentage increase or decrease, discounts and original price.", "k": "guide how to percentage calculator"}, {"t": "How to Calculate GST on a Bill: Adding It and Taking It Out", "u": "/how-to-calculate-gst-on-a-bill", "d": "How to add GST to a price and how to remove GST from a GST-inclusive total, with CGST, SGST and IGST explained for small business bills.", "k": "guide how to gst calculator"}, {"t": "How to Calculate EMI on a Loan and What It Means for Total Interest", "u": "/how-to-calculate-emi-on-a-loan", "d": "How EMI is calculated for home, car and personal loans, with a worked example and tips to reduce total interest.", "k": "guide how to emi calculator"}, {"t": "How to Average Down a Stock and Find Your Average Buy Price", "u": "/how-to-average-down-a-stock", "d": "How to calculate average buy price of shares, how averaging down changes it, and what to think about before buying more.", "k": "guide how to stock average calculator"}, {"t": "How the Love Calculator and the FLAMES Game Work", "u": "/how-the-love-calculator-and-flames-game-work", "d": "How the FLAMES game works step by step, what the letters mean, and how an online love calculator makes its percentage. Just for fun.", "k": "guide how to love calculator"}];
 
 (function () {
   var D = window.INV_INDEX || [], btn = document.getElementById("searchBtn"); if (!btn) return;
@@ -497,6 +553,7 @@ window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "
     { id: "unlock", group: "edit", badge: "PDF", name: "Unlock PDF", desc: "Remove the password from a PDF you own.", note: "Type the password, and you get a copy that opens without one. Use it only on files you are allowed to open.", accept: ".pdf,application/pdf", ext: /\.pdf$/i, icon: '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 7.5-2"/>' },
     { id: "ocrpdf", group: "convert", badge: "PDF", name: "OCR PDF", desc: "Make a scanned PDF searchable so you can find and copy text.", note: "Reads the text in scans and photos and hides it behind the page picture. Choose the language below.", accept: ".pdf,application/pdf,image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp", ext: /\.(pdf|jpe?g|png|webp)$/i, kind: "PDF or photo (JPG, PNG, WebP)", ocr: true, pdf: true, multi: false, icon: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><circle cx="11" cy="14" r="3"/><path d="M13.2 16.2L16 19"/>' },
     { id: "html2pdf", group: "convert", badge: "HTM", custom: true, name: "HTML to PDF", desc: "Turn HTML code or a web page file into a PDF.", note: "Paste HTML or open an .html file, check the preview and save a PDF.", icon: '<path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/>' },
+    { id: "barcode", group: "more", badge: "BAR", custom: true, name: "Barcode Generator", desc: "Make a barcode (Code 128, EAN-13 or UPC-A) and save it as PNG, SVG or PDF.", note: "Works fully on your device. Nothing is sent anywhere.", icon: '<path d="M4 5v14M7 5v14M10 5v14M14 5v14M17 5v14M20 5v14"/>' },
     { id: "qr", group: "more", badge: "QR", custom: true, name: "QR Code", desc: "Make a QR code from any link or text, and save it as PNG or SVG.", note: "Works fully on your device. Nothing is sent anywhere.", icon: '<path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 14h2v2h-2zM14 18h2v2h-2zM18 18h2v2h-2z"/>' },
   ];
   var GROUPS = { make: "Scan and create", edit: "Edit PDF", convert: "Convert", image: "Image tools", more: "More tools" };
@@ -626,6 +683,65 @@ window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "
   function clearResult() { var r = document.querySelector("#panel .result"); if (r) r.remove(); result = null; }
 
   /* ---------- Scan to PDF ---------- */
+
+  /* ---------- Scan: slide through pages, pick a look with live previews ---------- */
+  var scanCur = 0;
+  var SCAN_LOOKS = [["colour", "Colour", "Clean and bright"], ["clean", "Grey", "Soft grey"], ["bw", "Black & white", "Sharp text"], ["orig", "Original", "No change"]];
+  function scanKey(f, filter, dim) { return f.id + "|" + filter + "|" + (f.rot || 0) + "|" + (f.crop ? [f.crop.x, f.crop.y, f.crop.w, f.crop.h].join(",") : "-") + "|" + dim; }
+  var scanPvCache = {};
+  function scanPreview(f, filter, dim) {
+    var k = scanKey(f, filter, dim); if (scanPvCache[k]) return Promise.resolve(scanPvCache[k]);
+    return new Promise(function (res) {
+      var i = new Image(); i.onload = function () {
+        try { var c = rotatedCanvas(i, f.rot || 0, dim); if (f.crop) c = cropCanvas(c, f.crop); if (filter !== "orig") enhanceScan(c, filter); scanPvCache[k] = c.toDataURL("image/jpeg", 0.85); res(scanPvCache[k]); } catch (e) { res(null); }
+      }; i.onerror = function () { res(null); }; i.src = f.url;
+    });
+  }
+  function scanStudio(full) {
+    var wrap = el("div", "scanstudio" + (full ? " full" : "")), n = files.length;
+    if (scanCur >= n) scanCur = n - 1; if (scanCur < 0) scanCur = 0;
+    var dim = full ? 1400 : 900, head = el("div", "ssbar"), cnt = el("b", "sscount"), prev = el("button", "btn ghost sm", "◀"), next = el("button", "btn ghost sm", "▶");
+    prev.type = next.type = "button"; prev.setAttribute("aria-label", "Previous page"); next.setAttribute("aria-label", "Next page");
+    var tools = el("span", "sstools");
+    var rot = el("button", "btn ghost sm", "↻ Turn"), crp = el("button", "btn ghost sm", "✂ Crop"); rot.type = crp.type = "button";
+    rot.addEventListener("click", function () { var f = files[scanCur]; f.rot = ((f.rot || 0) + 90) % 360; f.crop = null; f.thumbUrl = null; result = null; if (full) { var o = document.querySelector(".edfs.fsgen .fsbody"); if (o) { o.innerHTML = ""; o.appendChild(scanStudio(true)); } } else renderPanel(); });
+    crp.addEventListener("click", function () { openCrop(files[scanCur]); });
+    tools.appendChild(crp); tools.appendChild(rot);
+    head.appendChild(prev); head.appendChild(cnt); head.appendChild(next); head.appendChild(tools);
+    var slides = el("div", "slides"); slides.setAttribute("aria-label", "Scanned pages. Swipe sideways to see the next page.");
+    var imgs = [];
+    files.forEach(function (f, i) { var sl = el("div", "slide"), im = document.createElement("img"); im.alt = "Page " + (i + 1); sl.appendChild(el("span", "sswait", "Loading page " + (i + 1) + "...")); sl.appendChild(im); slides.appendChild(sl); imgs.push({ sl: sl, im: im }); });
+    var dots = el("div", "ssdots"); files.forEach(function (f, i) { var d = el("button", "ssdot"); d.type = "button"; d.setAttribute("aria-label", "Go to page " + (i + 1)); d.addEventListener("click", function () { goTo(i); }); dots.appendChild(d); });
+    var looks = el("div", "sslooks"), lookBtns = [];
+    SCAN_LOOKS.forEach(function (L) {
+      var b = el("button", "look"), th = document.createElement("img"), nm = el("span", "lname", L[1]), sb = el("span", "lsub", L[2]); b.type = "button"; th.alt = "";
+      b.appendChild(th); b.appendChild(nm); b.appendChild(sb);
+      b.addEventListener("click", function () { opts.scanFilter = L[0]; result = null; paintLooks(); renderSlides(); });
+      looks.appendChild(b); lookBtns.push({ b: b, th: th, k: L[0] });
+    });
+    function paintLooks() { lookBtns.forEach(function (x) { var on = opts.scanFilter === x.k; x.b.className = "look" + (on ? " on" : ""); x.b.setAttribute("aria-pressed", on ? "true" : "false"); }); }
+    function lookThumbs() { var f = files[scanCur]; lookBtns.forEach(function (x) { scanPreview(f, x.k, 220).then(function (u) { if (u && x.th.isConnected) x.th.src = u; }); }); }
+    var token = 0;
+    function renderSlides() {
+      var t = ++token;
+      (async function () {
+        var order = []; for (var i = 0; i < n; i++) order.push(i); order.sort(function (a, b) { return Math.abs(a - scanCur) - Math.abs(b - scanCur); });
+        for (var k = 0; k < order.length; k++) { if (t !== token || !wrap.isConnected) return; var idx = order[k], u = await scanPreview(files[idx], opts.scanFilter, dim); if (t !== token) return; if (u) { imgs[idx].im.src = u; imgs[idx].sl.classList.add("ready"); } await new Promise(function (r) { setTimeout(r, 0); }); }
+      })();
+    }
+    function paintHead() { cnt.textContent = "Page " + (scanCur + 1) + " of " + n; prev.disabled = scanCur <= 0; next.disabled = scanCur >= n - 1; Array.prototype.forEach.call(dots.children, function (d, i) { d.className = "ssdot" + (i === scanCur ? " on" : ""); }); }
+    function goTo(i) { i = Math.max(0, Math.min(n - 1, i)); scanCur = i; slides.scrollTo({ left: slides.clientWidth * i, behavior: "smooth" }); paintHead(); lookThumbs(); }
+    prev.addEventListener("click", function () { goTo(scanCur - 1); }); next.addEventListener("click", function () { goTo(scanCur + 1); });
+    var st = null;
+    slides.addEventListener("scroll", function () { clearTimeout(st); st = setTimeout(function () { var i = Math.round(slides.scrollLeft / Math.max(1, slides.clientWidth)); if (i !== scanCur && i >= 0 && i < n) { scanCur = i; paintHead(); lookThumbs(); } }, 90); });
+    var hint = el("p", "hint", "Swipe sideways to look at each page. Pick a look below, it is used for every page.");
+    wrap.appendChild(head); wrap.appendChild(slides); if (n > 1) wrap.appendChild(dots); wrap.appendChild(el("p", "sslab", "Look of the pages")); wrap.appendChild(looks); wrap.appendChild(hint);
+    if (!full) { var fb = el("button", "btn ghost sm fsbtn", "⛶ Full screen view"); fb.type = "button"; fb.addEventListener("click", function () { openFull("Scan preview", scanStudio); }); wrap.insertBefore(fb, head); }
+    paintHead(); paintLooks(); renderSlides(); lookThumbs();
+    setTimeout(function () { if (scanCur > 0) slides.scrollTo({ left: slides.clientWidth * scanCur }); }, 30);
+    return wrap;
+  }
+
   function scanOptions() {
     var o = el("div", "opts");
     function sel(id, label, key, list) {
@@ -635,7 +751,6 @@ window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "
       s.addEventListener("change", function () { opts[key] = s.value; result = null; });
       f.appendChild(l); f.appendChild(s); return f;
     }
-    o.appendChild(sel("scanFilter", "Look of the pages", "scanFilter", [["colour", "Clean colour (recommended)"], ["clean", "Clean grey"], ["bw", "Black and white"], ["orig", "Original photo"]]));
     o.appendChild(sel("scanSize", "Page size", "scanSize", [["a4", "A4 page"], ["fit", "Same shape as the photo"]]));
     return o;
   }
@@ -883,12 +998,105 @@ window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "
     setResult(await doc.save(), (title ? title.replace(/[^\w\- ]+/g, "").trim().slice(0, 40) || "document" : "document") + ".pdf", pageCount + (pageCount === 1 ? " page" : " pages") + (plain ? "" : ". Pages are pictures, so the text cannot be selected"));
   }
 
+
+  /* ---------- full screen helper and page picking ---------- */
+  function openFull(title, build) {
+    var ov = el("div", "edfs fsgen"), bar = el("div", "edfsbar"), ttl = el("b", null, title), done = el("button", "btn sm", "Done"); done.type = "button";
+    bar.appendChild(ttl); bar.appendChild(done);
+    ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true"); ov.setAttribute("aria-label", title);
+    var body = el("div", "fsbody"); body.appendChild(build(true)); ov.appendChild(bar); ov.appendChild(body); document.body.appendChild(ov); document.body.style.overflow = "hidden";
+    function close() { ov.remove(); document.body.style.overflow = ""; document.removeEventListener("keydown", esc); renderPanel(); }
+    function esc(e) { if (e.key === "Escape" && !(e.target && /^(TEXTAREA|INPUT|SELECT)$/.test(e.target.tagName))) close(); }
+    document.addEventListener("keydown", esc); done.addEventListener("click", close);
+    return ov;
+  }
+  function withFull(title, build) {
+    var w = el("div", "fswrap"), b = el("button", "btn ghost sm fsbtn", "⛶ Full screen view"); b.type = "button";
+    b.addEventListener("click", function () { openFull(title, build); });
+    w.appendChild(b); w.appendChild(build(false)); return w;
+  }
+  async function imageToPdfBuf(file) {
+    await ensurePdf();
+    var url = URL.createObjectURL(file);
+    try {
+      var img = await new Promise(function (res, rej) { var i = new Image(); i.onload = function () { res(i); }; i.onerror = function () { rej(new Error("Could not read " + file.name)); }; i.src = url; });
+      var c = document.createElement("canvas"); c.width = img.naturalWidth; c.height = img.naturalHeight; var cx = c.getContext("2d"); cx.fillStyle = "#fff"; cx.fillRect(0, 0, c.width, c.height); cx.drawImage(img, 0, 0);
+      var jb = await new Promise(function (r) { c.toBlob(r, "image/jpeg", 0.9); }), d = await PDF.PDFDocument.create(), im = await d.embedJpg(new Uint8Array(await jb.arrayBuffer()));
+      var land = c.width > c.height, W = land ? 841.89 : 595.28, H = land ? 595.28 : 841.89, k = Math.min(W / c.width, H / c.height), w = c.width * k, h = c.height * k, pg = d.addPage([W, H]);
+      pg.drawImage(im, { x: (W - w) / 2, y: (H - h) / 2, width: w, height: h });
+      var out = await d.save(); return out.buffer.slice(out.byteOffset, out.byteOffset + out.byteLength);
+    } finally { URL.revokeObjectURL(url); }
+  }
+  async function fileToPdfBuf(file) {
+    if (/\.pdf$/i.test(file.name) || file.type === "application/pdf") return await readBuf(file);
+    return await imageToPdfBuf(file);
+  }
+  function rangeFromSet(set, total) {
+    var out = [], i = 0; while (i < total) { if (set[i]) { var j = i; while (j + 1 < total && set[j + 1]) j++; out.push(j > i ? (i + 1) + "-" + (j + 1) : String(i + 1)); i = j + 1; } else i++; }
+    return out.join(", ");
+  }
+  /* page grid with a cross on every page (Remove pages, Split PDF) */
+  function pageGrid(f, kind, full) {
+    var wrap = el("div", "rotwrap"), bar = el("div", "rotbar"), grid = el("div", "thumbs pgrid" + (full ? " big" : "")), count = el("span", "plabel"), cells = [];
+    var rm = kind === "remove";
+    function marked() { var set = {}; parseRange(opts.range, f.pages).forEach(function (n) { set[n] = 1; }); return set; }
+    function setMarked(set) { opts.range = rangeFromSet(set, f.pages); var ri = $("rangeIn"); if (ri) ri.value = opts.range; clearResult(); paint(); }
+    function paint() {
+      var set = marked(), n = 0; for (var k in set) n++;
+      cells.forEach(function (c, i) {
+        var on = !!set[i]; c.cell.className = "thumb pgcell" + (on ? (rm ? " mk-rm" : " mk-ex") : ""); c.x.setAttribute("aria-pressed", on ? "true" : "false");
+        c.x.textContent = on ? "↩" : "✕"; c.x.setAttribute("aria-label", (on ? "Undo for page " : (rm ? "Remove page " : "Take out page ")) + (i + 1));
+        c.lab.textContent = "Page " + (i + 1) + (on ? (rm ? " · will be removed" : " · taken out") : "");
+      });
+      count.textContent = rm ? (n ? n + " of " + f.pages + " pages will be removed" : "Tap ✕ on a page to remove it") : (n ? n + " of " + f.pages + " pages taken out" : "Tap ✕ on a page to take it out");
+    }
+    function mkb(label, fn) { var b = el("button", "btn ghost", label); b.type = "button"; b.addEventListener("click", fn); return b; }
+    bar.appendChild(mkb("Select all", function () { var set = {}; for (var i = 0; i < f.pages; i++) set[i] = 1; setMarked(set); }));
+    bar.appendChild(mkb("Clear", function () { setMarked({}); }));
+    bar.appendChild(count);
+    var TH = full ? (f.thumbsB = f.thumbsB || []) : (f.thumbs = f.thumbs || []);
+    for (var i = 0; i < f.pages; i++) {
+      (function (i) {
+        var cell = el("div", "thumb pgcell"), box = el("div", "timg"), img = document.createElement("img"), big = el("span", "pgbig", "✕");
+        img.alt = "Page " + (i + 1) + " preview"; if (TH[i]) img.src = TH[i]; box.appendChild(img); box.appendChild(big);
+        var x = el("button", "pgx", "✕"); x.type = "button"; function flip() { var set = marked(); if (set[i]) delete set[i]; else set[i] = 1; setMarked(set); } x.addEventListener("click", flip); img.addEventListener("click", flip);
+        var lab = el("div", "tlab"); cell.appendChild(x); cell.appendChild(box); cell.appendChild(lab); grid.appendChild(cell); cells.push({ cell: cell, x: x, lab: lab, img: img });
+      })(i);
+    }
+    wrap.appendChild(bar); wrap.appendChild(grid); paint();
+    ensureThumbs(f, function (i) { if (!grid.isConnected) return false; if (cells[i]) cells[i].img.src = TH[i]; return true; }, full);
+    return wrap;
+  }
+
+
+  /* big previews of the files in Merge PDF and Photos to PDF */
+  function filesBoard(full) {
+    var wrap = el("div", "rotwrap"), grid = el("div", "thumbs filesboard" + (full ? " big" : ""));
+    function draw() {
+      grid.innerHTML = "";
+      files.forEach(function (f, i) {
+        var cell = el("div", "thumb"), box = el("div", "timg"), img = document.createElement("img"); img.alt = "Preview of " + f.name; box.appendChild(img);
+        if (f.url) img.src = f.url;
+        else if (f.cover) img.src = f.cover;
+        else { (async function () { try { var rr = await renderPageCanvas(f, 1, 420); f.cover = rr.canvas.toDataURL("image/jpeg", 0.82); if (img.isConnected) img.src = f.cover; } catch (e) {} })(); }
+        var lab = el("div", "tlab", (i + 1) + ". " + f.name + (f.pages ? " · " + f.pages + (f.pages === 1 ? " page" : " pages") : "")), row = el("div", "trow");
+        function mkb(t, fn, d, aria) { var b = el("button", "icon", t); b.type = "button"; b.disabled = !!d; b.setAttribute("aria-label", aria); b.addEventListener("click", fn); return b; }
+        row.appendChild(mkb("◀", function () { var t = files[i - 1]; files[i - 1] = files[i]; files[i] = t; result = null; draw(); }, i === 0, "Move earlier"));
+        row.appendChild(mkb("▶", function () { var t = files[i + 1]; files[i + 1] = files[i]; files[i] = t; result = null; draw(); }, i === files.length - 1, "Move later"));
+        row.appendChild(mkb("×", function () { files.splice(i, 1); result = null; draw(); }, false, "Remove " + f.name));
+        cell.appendChild(box); cell.appendChild(lab); cell.appendChild(row); grid.appendChild(cell);
+      });
+      if (!files.length) grid.appendChild(el("p", "hint", "No files left. Press Done and add files."));
+    }
+    draw(); wrap.appendChild(grid); return wrap;
+  }
+
   /* ---------- Rotate: page previews with turn buttons ---------- */
-  function rotateView(f) {
+  function rotateView(f, full) {
     f.rot = f.rot || [];
     var wrap = el("div", "rotwrap");
     var bar = el("div", "rotbar");
-    var grid = el("div", "thumbs");
+    var grid = el("div", "thumbs" + (full ? " big" : "")), TH = full ? (f.thumbsB = f.thumbsB || []) : (f.thumbs = f.thumbs || []);
     var cells = [];
     function norm(v) { return ((v % 360) + 360) % 360; }
     function paint(i) {
@@ -912,60 +1120,54 @@ window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "
         row.appendChild(l); row.appendChild(r);
         cell.appendChild(box); cell.appendChild(lab); cell.appendChild(row); grid.appendChild(cell);
         cells.push({ img: img, lab: lab });
-        if (f.thumbs && f.thumbs[i]) img.src = f.thumbs[i];
+        if (TH[i]) img.src = TH[i];
         paint(i);
       })(i);
     }
     wrap.appendChild(bar); wrap.appendChild(grid);
     wrap.appendChild(el("p", "hint", "Use the arrows under each page, or turn all pages together. Then press Save rotated PDF."));
-    (async function () {
-      await new Promise(function (r) { setTimeout(r, 0); });
-      f.thumbs = f.thumbs || [];
-      for (var i = 0; i < Math.min(f.pages, 150); i++) {
-        if (!grid.isConnected) return;
-        if (!f.thumbs[i]) {
-          try { var rr = await renderPageCanvas(f, i + 1, 150); f.thumbs[i] = rr.canvas.toDataURL("image/jpeg", 0.7); }
-          catch (e) { if (i === 0) wrap.appendChild(el("p", "hint", "Previews are not available, but the turn buttons still work.")); return; }
-        }
-        cells[i].img.src = f.thumbs[i];
-      }
-    })();
+    ensureThumbs(f, function (i) { if (!grid.isConnected) return false; if (cells[i]) cells[i].img.src = TH[i]; return true; }, full);
     return wrap;
   }
   /* ---------- organize pages ---------- */
-  function ensureThumbs(f, onThumb) {
-    f.thumbs = f.thumbs || [];
+  function ensureThumbs(f, onThumb, big) {
+    var TH = big ? (f.thumbsB = f.thumbsB || []) : (f.thumbs = f.thumbs || []);
     return (async function () {
       await new Promise(function (r) { setTimeout(r, 0); });
       for (var i = 0; i < Math.min(f.pages, 200); i++) {
-        if (!f.thumbs[i]) {
-          try { var rr = await renderPageCanvas(f, i + 1, 150); f.thumbs[i] = rr.canvas.toDataURL("image/jpeg", 0.7); }
+        if (!TH[i]) {
+          try { var rr = await renderPageCanvas(f, i + 1, big ? 420 : 150); TH[i] = rr.canvas.toDataURL("image/jpeg", big ? 0.82 : 0.7); }
           catch (e) { return; }
         }
         if (onThumb && !onThumb(i)) return;
       }
     })();
   }
-  function organizeView(f) {
+  function organizeView(f, full) {
     if (!f.org) { f.org = []; for (var i = 0; i < f.pages; i++) f.org.push({ s: i, r: 0 }); }
-    var wrap = el("div", "rotwrap"), bar = el("div", "rotbar"), grid = el("div", "thumbs orggrid"), count = el("span", "plabel");
+    f.extras = f.extras || [];
+    var wrap = el("div", "rotwrap"), bar = el("div", "rotbar"), bar2 = el("div", "rotbar"), grid = el("div", "thumbs orggrid" + (full ? " big" : "")), count = el("span", "plabel");
+    var TH = full ? (f.thumbsB = f.thumbsB || []) : (f.thumbs = f.thumbs || []), thW = full ? 420 : 150;
     function norm(v) { return ((v % 360) + 360) % 360; }
     function mk(label, fn, cls, aria) { var b = el("button", cls || "btn ghost", label); b.type = "button"; if (aria) b.setAttribute("aria-label", aria); b.addEventListener("click", fn); return b; }
     function changed() { clearResult(); draw(); }
     function move(i, to) { if (to < 0 || to >= f.org.length) return; var it = f.org.splice(i, 1)[0]; f.org.splice(to, 0, it); changed(); }
+    function srcThumb(p) { if (p.b) return null; if (p.x) { var ex = f.extras[p.x - 1], T = ex && (full ? ex.thumbsB : ex.thumbs); return T && T[p.s]; } return TH[p.s]; }
     var dragFrom = -1;
     function draw() {
       grid.innerHTML = ""; count.textContent = f.org.length + (f.org.length === 1 ? " page" : " pages");
       f.org.forEach(function (p, i) {
         var cell = el("div", "thumb"), box = el("div", "timg"), img = document.createElement("img");
-        img.alt = "Page " + (p.s + 1) + " preview"; img.setAttribute("data-s", p.s); img.draggable = false; if (f.thumbs && f.thumbs[p.s]) img.src = f.thumbs[p.s];
+        img.alt = "Page " + (i + 1) + " preview"; img.draggable = false; img.setAttribute("data-s", p.b ? -1 : p.s); img.setAttribute("data-x", p.x || 0);
+        if (p.b) { img.className = "blankpg"; img.src = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="; } else { var st = srcThumb(p); if (st) img.src = st; }
         img.style.transform = "rotate(" + norm(p.r) + "deg)"; box.appendChild(img);
-        var lab = el("div", "tlab", (i + 1) + (p.s !== i ? " (was " + (p.s + 1) + ")" : "")), row = el("div", "trow");
+        var lab = el("div", "tlab", (i + 1) + (p.b ? " (blank page)" : p.x ? " (added)" : p.s !== i ? " (was " + (p.s + 1) + ")" : "")), row = el("div", "trow");
         row.appendChild(mk("◀", function () { move(i, i - 1); }, "icon", "Move page " + (i + 1) + " earlier"));
         row.appendChild(mk("▶", function () { move(i, i + 1); }, "icon", "Move page " + (i + 1) + " later"));
         row.appendChild(mk("↺", function () { p.r = norm(p.r - 90); changed(); }, "icon", "Turn page " + (i + 1) + " left"));
         row.appendChild(mk("↻", function () { p.r = norm(p.r + 90); changed(); }, "icon", "Turn page " + (i + 1) + " right"));
-        row.appendChild(mk("⧉", function () { f.org.splice(i + 1, 0, { s: p.s, r: p.r }); changed(); }, "icon", "Copy page " + (i + 1)));
+        row.appendChild(mk("⧉", function () { var c2 = {}; for (var k in p) c2[k] = p[k]; f.org.splice(i + 1, 0, c2); changed(); }, "icon", "Copy page " + (i + 1)));
+        row.appendChild(mk("＋", function () { f.org.splice(i + 1, 0, { b: 1, s: 0, r: 0 }); changed(); }, "icon", "Add a blank page after page " + (i + 1)));
         row.appendChild(mk("×", function () { if (f.org.length > 1) { f.org.splice(i, 1); changed(); } else toast("Keep at least one page."); }, "icon", "Delete page " + (i + 1)));
         cell.appendChild(box); cell.appendChild(lab); cell.appendChild(row);
         cell.draggable = true;
@@ -977,24 +1179,52 @@ window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "
         grid.appendChild(cell);
       });
     }
-    bar.appendChild(mk("Reverse order", function () { f.org.reverse(); changed(); }));
-    bar.appendChild(mk("Reset", function () { f.org = []; for (var i = 0; i < f.pages; i++) f.org.push({ s: i, r: 0 }); changed(); }));
-    bar.appendChild(count);
-    wrap.appendChild(bar); wrap.appendChild(grid);
-    wrap.appendChild(el("p", "hint", "Drag a page, or use the arrows under it, to change the order. Turn, copy or delete pages. Then press Save organized PDF."));
-    draw();
-    ensureThumbs(f, function (i) {
-      if (!grid.isConnected) return false;
-      var src = f.thumbs[i]; grid.querySelectorAll('img[data-s="' + i + '"]').forEach(function (im) { im.src = src; }); return true;
+    function loadThumbs() {
+      ensureThumbs(f, function (i) { if (!grid.isConnected) return false; grid.querySelectorAll('img[data-s="' + i + '"][data-x="0"]').forEach(function (im) { im.src = TH[i]; }); return true; }, full);
+      f.extras.forEach(function (ex, k) {
+        (async function () {
+          await new Promise(function (r) { setTimeout(r, 0); });
+          var T = full ? (ex.thumbsB = ex.thumbsB || []) : (ex.thumbs = ex.thumbs || []);
+          for (var i = 0; i < Math.min(ex.pages, 100); i++) {
+            if (!grid.isConnected) return;
+            if (!T[i]) { try { var rr = await renderPageCanvas(ex, i + 1, thW); T[i] = rr.canvas.toDataURL("image/jpeg", 0.75); } catch (e) { return; } }
+            grid.querySelectorAll('img[data-s="' + i + '"][data-x="' + (k + 1) + '"]').forEach(function (im) { im.src = T[i]; });
+          }
+        })();
+      });
+    }
+    /* adding pages */
+    var posIn = document.createElement("input"); posIn.type = "text"; posIn.setAttribute("inputmode", "numeric"); posIn.placeholder = "end"; posIn.className = "posin"; posIn.setAttribute("aria-label", "Add after page number"); posIn.autocomplete = "off";
+    function insertAt() { var v = parseInt(posIn.value, 10); return isFinite(v) ? Math.max(0, Math.min(f.org.length, v)) : f.org.length; }
+    var fileIn = document.createElement("input"); fileIn.type = "file"; fileIn.accept = ".pdf,application/pdf,image/*"; fileIn.multiple = true; fileIn.hidden = true;
+    fileIn.addEventListener("change", async function () {
+      var list = Array.prototype.slice.call(fileIn.files); fileIn.value = ""; if (!list.length) return;
+      try {
+        await ensurePdf(); var at = insertAt(), added = 0;
+        for (var q = 0; q < list.length; q++) {
+          var buf = await fileToPdfBuf(list[q]), probe = await PDF.PDFDocument.load(buf), ex = { id: "ex" + (++seq), buf: buf, pages: probe.getPageCount(), name: list[q].name };
+          f.extras.push(ex); var xi = f.extras.length;
+          for (var pgi = 0; pgi < ex.pages; pgi++) { f.org.splice(at + added, 0, { x: xi, s: pgi, r: 0 }); added++; }
+        }
+        toast(added + (added === 1 ? " page added" : " pages added") + (posIn.value ? " after page " + at : " at the end") + "."); changed(); loadThumbs();
+      } catch (e) { toast(e && e.message ? e.message : "Could not add that file. Choose a PDF or a photo."); }
     });
+    bar.appendChild(mk("Reverse order", function () { f.org.reverse(); changed(); }));
+    bar.appendChild(mk("Reset", function () { f.org = []; f.extras = []; for (var i = 0; i < f.pages; i++) f.org.push({ s: i, r: 0 }); changed(); }));
+    bar.appendChild(count);
+    var lb = el("label", "addlab", "Add after page "); lb.appendChild(posIn);
+    bar2.appendChild(lb);
+    bar2.appendChild(mk("＋ Blank page", function () { f.org.splice(insertAt(), 0, { b: 1, s: 0, r: 0 }); changed(); }));
+    bar2.appendChild(mk("＋ Pages from PDF or photo", function () { fileIn.click(); })); bar2.appendChild(fileIn);
+    wrap.appendChild(bar); wrap.appendChild(bar2); wrap.appendChild(grid);
+    wrap.appendChild(el("p", "hint", "Drag a page, or use the arrows under it, to change the order. Turn, copy or delete pages. To add pages, type the page number to add after (leave empty for the end) and tap a button, or tap ＋ under a page for a blank page after it. Then press Save organized PDF."));
+    draw(); loadThumbs();
     return wrap;
   }
-
-  /* ---------- crop pages ---------- */
-  function cropView(f) {
+  function cropView(f, full) {
     var c = f.crop2 = f.crop2 || { t: 0, b: 0, l: 0, r: 0 };
     var wrap = el("div", "cropwrap"), fields = el("div", "cropfields");
-    var stage = el("div", "cropstage"), cv = document.createElement("canvas"), box = el("div", "cropbox"), previewN = 1;
+    var stage = el("div", "cropstage" + (full ? " big" : "")), cv = document.createElement("canvas"), box = el("div", "cropbox"), previewN = 1;
     stage.appendChild(cv); ["t", "b", "l", "r"].forEach(function (k) { var s = el("div", "shade s" + k); stage.appendChild(s); }); stage.appendChild(box);
     var inputs = {};
     function clamp(k, v) {
@@ -1025,7 +1255,7 @@ window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "
     pv.type = nx.type = "button";
     function show() {
       pl.textContent = "Preview: page " + previewN + " of " + f.pages; pv.disabled = previewN <= 1; nx.disabled = previewN >= f.pages;
-      renderPageCanvas(f, previewN, 300).then(function (r) { if (!stage.isConnected) return; cv.width = r.canvas.width; cv.height = r.canvas.height; cv.getContext("2d").drawImage(r.canvas, 0, 0); stage.style.aspectRatio = r.canvas.width + " / " + r.canvas.height; }).catch(function () {});
+      renderPageCanvas(f, previewN, full ? Math.min(1100, Math.max(300, window.innerWidth - 40)) : 300).then(function (r) { if (!stage.isConnected) return; cv.width = r.canvas.width; cv.height = r.canvas.height; cv.getContext("2d").drawImage(r.canvas, 0, 0); stage.style.aspectRatio = r.canvas.width + " / " + r.canvas.height; }).catch(function () {});
     }
     pv.addEventListener("click", function () { previewN--; show(); }); nx.addEventListener("click", function () { previewN++; show(); });
     nav.appendChild(pv); nav.appendChild(pl); nav.appendChild(nx);
@@ -1186,6 +1416,10 @@ window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "
     var plabel = el("span", "plabel");
     nav.appendChild(prev); nav.appendChild(plabel); nav.appendChild(next);
     if (!full) nav.appendChild(sbtn("Full screen editor", function () { openEditorFull(f); }));
+    var addRow = el("div", "enav"), addIn = document.createElement("input"); addIn.type = "file"; addIn.accept = ".pdf,application/pdf,image/*"; addIn.hidden = true;
+    addRow.appendChild(sbtn("\uFF0B Blank page after this", function () { edInsert(f, null); }));
+    addRow.appendChild(sbtn("\uFF0B Pages from PDF or photo", function () { addIn.click(); })); addRow.appendChild(addIn);
+    addIn.addEventListener("change", function () { var fl = addIn.files[0]; addIn.value = ""; if (fl) edInsert(f, fl); });
 
     /* stage */
     var stage = el("div", "stage"); stage.style.width = W + "px"; stage.style.minHeight = "200px";
@@ -1196,9 +1430,9 @@ window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "
     var scroller = el("div", "stagewrap"); scroller.appendChild(stage);
 
     if (full) {
-      var side = el("div", "edside"); [tools, opts2, pad, nav, hint].forEach(function (x) { side.appendChild(x); });
+      var side = el("div", "edside"); [tools, opts2, pad, nav, addRow, hint].forEach(function (x) { side.appendChild(x); });
       wrap.appendChild(side); wrap.appendChild(scroller);
-    } else [tools, opts2, pad, nav, scroller, hint].forEach(function (x) { wrap.appendChild(x); });
+    } else [tools, opts2, pad, nav, addRow, scroller, hint].forEach(function (x) { wrap.appendChild(x); });
 
     function list() { return ed.anns[ed.page] || (ed.anns[ed.page] = []); }
     function selected() { var l = list(); for (var i = 0; i < l.length; i++) if (l[i].id === ed.sel) return l[i]; return null; }
@@ -1437,13 +1671,26 @@ window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "
   }
 
   function readableText(s, charset) { for (var i = 0; i < s.length; i++) { var c = s.charCodeAt(i); if (c >= 32 && !(charset ? charset.has(c) : c < 256)) return false; } return true; }
+  async function edInsert(f, file) {
+    try {
+      await ensurePdf(); var ed = f.ed, at = ed.page, doc = await PDF.PDFDocument.load(f.buf), n = 0;
+      if (!file) { var sz = doc.getPage(at).getSize(); doc.insertPage(at + 1, [sz.width, sz.height]); n = 1; }
+      else { var src = await PDF.PDFDocument.load(await fileToPdfBuf(file)), pgs = await doc.copyPages(src, src.getPageIndices()); pgs.forEach(function (pg, i) { doc.insertPage(at + 1 + i, pg); }); n = pgs.length; }
+      var out = await doc.save(); f.buf = out.buffer.slice(out.byteOffset, out.byteOffset + out.byteLength); f.pages = doc.getPageCount(); delete pdfDocs[f.id];
+      f.thumbs = null; f.thumbsB = null; f.org = null; f.rot = []; f.crop2 = null;
+      var na = {}; Object.keys(ed.anns).forEach(function (k) { var ki = parseInt(k, 10); na[ki > at ? ki + n : ki] = ed.anns[k]; }); ed.anns = na; ed.undo = []; ed.sel = null; ed.page = at + 1; ed.pagesAdded = true;
+      clearResult(); toast(n + (n === 1 ? " page" : " pages") + " added after page " + (at + 1) + ".");
+      if (f._fsRebuild) f._fsRebuild(); else renderPanel();
+    } catch (e) { toast(e && e.message ? e.message : "Could not add the page."); }
+  }
   function openEditorFull(f) {
     var ov = el("div", "edfs"), bar = el("div", "edfsbar"), ttl = el("b", null, "Edit PDF: " + f.name);
     var back = el("button", "btn ghost sm", "Back to page"), save = el("button", "btn sm", "Finish and save"); back.type = save.type = "button";
     bar.appendChild(ttl); bar.appendChild(back); bar.appendChild(save);
     ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true"); ov.setAttribute("aria-label", "Full screen PDF editor");
     var body = editorView(f, true); ov.appendChild(bar); ov.appendChild(body); document.body.appendChild(ov); document.body.style.overflow = "hidden";
-    function close(doSave) { ov.remove(); document.body.style.overflow = ""; document.removeEventListener("keydown", esc); renderPanel(); if (doSave) run(); }
+    f._fsRebuild = function () { body.remove(); body = editorView(f, true); ov.appendChild(body); };
+    function close(doSave) { f._fsRebuild = null; ov.remove(); document.body.style.overflow = ""; document.removeEventListener("keydown", esc); renderPanel(); if (doSave) run(); }
     function esc(e) { if (e.key === "Escape" && !(e.target && /^(TEXTAREA|INPUT|SELECT)$/.test(e.target.tagName))) close(false); }
     document.addEventListener("keydown", esc);
     back.addEventListener("click", function () { close(false); }); save.addEventListener("click", function () { close(true); });
@@ -1501,7 +1748,7 @@ window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "
         count++;
       }
     }
-    if (!count) throw new Error("Add some text, a signature or a shape first, then press Save edited PDF.");
+    if (!count && !ed.pagesAdded) throw new Error("Add some text, a signature, a shape or a page first, then press Save edited PDF.");
     setResult(await doc.save(), baseName(f.name) + "-edited.pdf", count + (count === 1 ? " item" : " items") + " added");
   }
   /* EDIT END */
@@ -1798,6 +2045,98 @@ window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "
     for (var y = 0; y < res.size; y++) { var x = 0; while (x < res.size) { if (res.modules[y][x]) { var s0 = x; while (x < res.size && res.modules[y][x]) x++; d += "M" + (s0 + q) + " " + (y + q) + "h" + (x - s0) + "v1h-" + (x - s0) + "z"; } else x++; } }
     return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + n + " " + n + '" shape-rendering="crispEdges"><rect width="' + n + '" height="' + n + '" fill="#FFFFFF"/><path d="' + d + '" fill="' + color + '"/></svg>';
   }
+
+  /* ---------- Barcode generator ---------- */
+  var BC = (function () {
+    var C128 = "212222,222122,222221,121223,121322,131222,122213,122312,132212,221213,221312,231212,112232,122132,122231,113222,123122,123221,223211,221132,221231,213212,223112,312131,311222,321122,321221,312212,322112,322211,212123,212321,232121,111323,131123,131321,112313,132113,132311,211313,231113,231311,112133,112331,132131,113123,113321,133121,313121,211331,231131,213113,213311,213131,311123,311321,331121,312113,312311,332111,314111,221411,431111,111224,111422,121124,121421,141122,141221,112214,112412,122114,122411,142112,142211,241211,221114,413111,241112,134111,111242,121142,121241,114212,124112,124211,411212,421112,421211,212141,214121,412121,111143,111341,131141,114113,114311,411113,411311,113141,114131,311141,411131,211412,211214,211232,2331112".split(",");
+    var L = "0001101,0011001,0010011,0111101,0100011,0110001,0101111,0111011,0110111,0001011".split(","), G = "0100111,0110011,0011011,0100001,0011101,0111001,0000101,0010001,0001001,0010111".split(","), R = "1110010,1100110,1101100,1000010,1011100,1001110,1010000,1000100,1001000,1110100".split(","), PAR = "LLLLLL,LLGLGG,LLGGLG,LLGGGL,LGLLGG,LGGLLG,LGGGLL,LGLGLG,LGLGGL,LGGLGL".split(",");
+    function runs(str) { var out = [], on = true; for (var i = 0; i < str.length; i++) { var n = +str[i]; out.push([on, n]); on = !on; } return out; }
+    function code128(text) {
+      if (!text) throw new Error("Type the text for the barcode.");
+      var codes = [], useC = /^\d{4,}$/.test(text) && text.length % 2 === 0, i, sum;
+      for (i = 0; i < text.length; i++) { var cc = text.charCodeAt(i); if (cc < 32 || cc > 126) throw new Error("Code 128 takes English letters, numbers and common symbols only."); }
+      if (useC) { codes.push(105); for (i = 0; i < text.length; i += 2) codes.push(+text.substr(i, 2)); }
+      else { codes.push(104); for (i = 0; i < text.length; i++) codes.push(text.charCodeAt(i) - 32); }
+      sum = codes[0]; for (i = 1; i < codes.length; i++) sum += codes[i] * i; codes.push(sum % 103); codes.push(106);
+      var mods = []; codes.forEach(function (c) { runs(C128[c]).forEach(function (r) { for (var k = 0; k < r[1]; k++) mods.push(r[0] ? 1 : 0); }); });
+      return { mods: mods, label: text };
+    }
+    function ean(digits, upc) {
+      var d = String(digits).replace(/\s/g, ""); if (!/^\d+$/.test(d)) throw new Error("Use digits only for this barcode type.");
+      var want = upc ? 12 : 13; if (d.length !== want - 1 && d.length !== want) throw new Error((upc ? "UPC-A needs 11 or 12 digits." : "EAN-13 needs 12 or 13 digits."));
+      var full = upc ? "0" + d : d, body = full.slice(0, 12), sum = 0, i;
+      for (i = 0; i < 12; i++) sum += (+body[i]) * (i % 2 ? 3 : 1); var chk = (10 - sum % 10) % 10;
+      if (full.length === 13 && +full[12] !== chk) throw new Error("The last digit should be " + chk + " for this number. Remove the last digit and we add it for you.");
+      full = body + chk; var par = PAR[+full[0]], bits = "101";
+      for (i = 1; i <= 6; i++) bits += (par[i - 1] === "L" ? L : G)[+full[i]]; bits += "01010";
+      for (i = 7; i <= 12; i++) bits += R[+full[i]]; bits += "101";
+      return { mods: bits.split("").map(Number), label: upc ? full.slice(1) : full, ean: true, first: full[0] };
+    }
+    return { encode: function (type, text) { return type === "ean13" ? ean(text, false) : type === "upca" ? ean(text, true) : code128(text); } };
+  })();
+  var bcState = { type: "code128", text: "", mod: "3", h: "120", color: "#111111", label: true };
+  function bcLayout(res, o) {
+    var m = parseInt(o.mod, 10), q = 10, H = parseInt(o.h, 10), pad = 12, fs = Math.round(m * 7 + 6), th = o.label ? fs + 10 : 0;
+    var W = (res.mods.length + q * 2) * m; return { m: m, q: q, H: H, fs: fs, th: th, W: W, T: H + th + pad * 2, pad: pad };
+  }
+  function bcDraw(canvas, res, o, scale) {
+    var Ly = bcLayout(res, o), k = scale || 1; canvas.width = Ly.W * k; canvas.height = Ly.T * k;
+    var c = canvas.getContext("2d"); c.fillStyle = "#fff"; c.fillRect(0, 0, canvas.width, canvas.height); c.fillStyle = o.color;
+    var x = 0; while (x < res.mods.length) { if (res.mods[x]) { var s0 = x; while (x < res.mods.length && res.mods[x]) x++; c.fillRect((Ly.q + s0) * Ly.m * k, Ly.pad * k, (x - s0) * Ly.m * k, Ly.H * k); } else x++; }
+    if (o.label) { c.font = (Ly.fs * k) + "px monospace"; c.textAlign = "center"; c.textBaseline = "top"; c.fillText(res.ean ? res.label.replace(/^(\d)(\d{6})(\d{6})$/, "$1  $2  $3") : res.label, canvas.width / 2, (Ly.pad + Ly.H + 6) * k); }
+  }
+  function bcSvg(res, o) {
+    var Ly = bcLayout(res, o), d = "", x = 0;
+    while (x < res.mods.length) { if (res.mods[x]) { var s0 = x; while (x < res.mods.length && res.mods[x]) x++; d += "M" + ((Ly.q + s0) * Ly.m) + " " + Ly.pad + "h" + ((x - s0) * Ly.m) + "v" + Ly.H + "h-" + ((x - s0) * Ly.m) + "z"; } else x++; }
+    var t = o.label ? '<text x="' + Ly.W / 2 + '" y="' + (Ly.pad + Ly.H + 6 + Ly.fs) + '" font-family="monospace" font-size="' + Ly.fs + '" text-anchor="middle" fill="' + o.color + '">' + String(res.label).replace(/&/g, "&amp;").replace(/</g, "&lt;") + "</text>" : "";
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + Ly.W + " " + Ly.T + '" width="' + Ly.W + '" height="' + Ly.T + '" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#fff"/><path d="' + d + '" fill="' + o.color + '"/>' + t + "</svg>";
+  }
+  function barcodeView() {
+    var w = el("div", "opts qrform");
+    function sel(id, label, key, list, after) {
+      var f = el("div", "field"), l = el("label", null, label); l.htmlFor = id; var s2 = document.createElement("select"); s2.id = id;
+      list.forEach(function (v) { var o = el("option", null, v[1]); o.value = v[0]; if (bcState[key] === v[0]) o.selected = true; s2.appendChild(o); });
+      s2.addEventListener("change", function () { bcState[key] = s2.value; if (after) after(); draw(); }); f.appendChild(l); f.appendChild(s2); return f;
+    }
+    var grid0 = el("div", "qrgrid"); var hint = el("span", "hint");
+    var typeF = sel("bcType", "Barcode type", "type", [["code128", "Code 128 (letters and numbers)"], ["ean13", "EAN-13 (shop products)"], ["upca", "UPC-A (US products)"]], function () { setHint(); });
+    function setHint() { hint.textContent = bcState.type === "code128" ? "Any English letters, numbers and symbols. Good for stock, shelves and tracking numbers." : bcState.type === "ean13" ? "Type 12 digits. The 13th check digit is added for you." : "Type 11 digits. The 12th check digit is added for you."; var t = $("bcText"); if (t) t.placeholder = bcState.type === "code128" ? "Example: INV-2026-0042" : bcState.type === "ean13" ? "Example: 590123412345" : "Example: 03600029145"; }
+    var f1 = el("div", "field"), l1 = el("label", null, "Text or number"); l1.htmlFor = "bcText";
+    var ta = document.createElement("input"); ta.type = "text"; ta.id = "bcText"; ta.value = bcState.text; ta.autocomplete = "off"; ta.spellcheck = false;
+    f1.appendChild(l1); f1.appendChild(ta); f1.appendChild(hint);
+    w.appendChild(typeF); w.appendChild(f1);
+    var box = el("div", "qrbox"), cv = document.createElement("canvas"); cv.className = "qrcanvas"; cv.setAttribute("aria-label", "Your barcode"); cv.style.maxWidth = "100%";
+    var msg = el("p", "hint qrmsg"); box.appendChild(cv); w.appendChild(box); w.appendChild(msg);
+    var grid = el("div", "qrgrid");
+    grid.appendChild(sel("bcMod", "Bar width", "mod", [["2", "Thin"], ["3", "Normal"], ["4", "Wide"], ["5", "Extra wide"]]));
+    grid.appendChild(sel("bcH", "Height", "h", [["80", "Short"], ["120", "Normal"], ["170", "Tall"]]));
+    grid.appendChild(sel("bcCol", "Colour", "color", [["#111111", "Black"], ["#0F6B5C", "Green"], ["#1565C0", "Blue"], ["#B3261E", "Red"]]));
+    var cf = el("label", "check"), cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = bcState.label; cb.addEventListener("change", function () { bcState.label = cb.checked; draw(); }); cf.appendChild(cb); cf.appendChild(document.createTextNode(" Show the number under the bars"));
+    w.appendChild(grid); w.appendChild(cf);
+    var row = el("div", "row qrbtns"), res = null;
+    function btn(t, cls, fn) { var b = el("button", "btn" + (cls ? " " + cls : ""), t); b.type = "button"; b.addEventListener("click", fn); row.appendChild(b); return b; }
+    var bPng = btn("Save PNG", "", function () { var c2 = document.createElement("canvas"); bcDraw(c2, res, bcState, 2); c2.toBlob(function (b) { saveBlob(b, "invatek-barcode.png"); }, "image/png"); });
+    var bSvg = btn("Save SVG", "ghost", function () { saveBlob(new Blob([bcSvg(res, bcState)], { type: "image/svg+xml" }), "invatek-barcode.svg"); });
+    var bPdf = btn("Save PDF", "ghost", async function () {
+      await ensurePdf();
+      var D = await PDF.PDFDocument.create(), c3 = document.createElement("canvas"); bcDraw(c3, res, bcState, 3);
+      var b = await new Promise(function (r) { c3.toBlob(r, "image/png"); }), im = await D.embedPng(new Uint8Array(await b.arrayBuffer())), pw = Math.max(200, Math.min(500, c3.width / 3)), ph = pw * c3.height / c3.width;
+      var pg = D.addPage([595.28, 841.89]); pg.drawImage(im, { x: (595.28 - pw) / 2, y: 841.89 - 80 - ph, width: pw, height: ph });
+      saveBlob(new Blob([await D.save()], { type: "application/pdf" }), "invatek-barcode.pdf");
+    });
+    w.appendChild(row);
+    function draw() {
+      var t = bcState.text.trim(); res = null; msg.className = "hint";
+      if (!t) { box.hidden = true; msg.textContent = "Your barcode will appear here. Type a number or text above."; }
+      else { try { res = BC.encode(bcState.type, t); bcDraw(cv, res, bcState, 1); box.hidden = false; msg.textContent = "Test it with a barcode scanner app before you print it."; } catch (e) { box.hidden = true; msg.className = "err"; msg.textContent = e.message || "Could not make a barcode."; } }
+      [bPng, bSvg, bPdf].forEach(function (b) { b.disabled = !res; });
+    }
+    ta.addEventListener("input", function () { bcState.text = ta.value; draw(); });
+    setHint(); draw();
+    window.INV_BC_API = { encode: BC.encode, draw: function (t, o) { var c = document.createElement("canvas"); bcDraw(c, BC.encode(t, o.text), o, 2); return c.toDataURL("image/png"); } };
+    return w;
+  }
+
   function qrView() {
     try { var pre = sessionStorage.getItem("inv-qr-text"); if (pre) { qrState.text = pre; sessionStorage.removeItem("inv-qr-text"); } } catch (e) {}
     var w = el("div", "opts qrform");
@@ -2639,9 +2978,17 @@ window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "
       } else if (tool.id === "organize") {
         var fo = files[0]; if (!fo) throw new Error("Add a PDF first.");
         if (!fo.org || !fo.org.length) throw new Error("Keep at least one page.");
-        var srcO = await PDF.PDFDocument.load(fo.buf), outO = await PDF.PDFDocument.create();
-        var cpO = await outO.copyPages(srcO, fo.org.map(function (p) { return p.s; }));
-        cpO.forEach(function (pg, i) { var add = fo.org[i].r || 0; if (add) pg.setRotation(PDF.degrees((pg.getRotation().angle + add) % 360)); outO.addPage(pg); });
+        var srcO = await PDF.PDFDocument.load(fo.buf), outO = await PDF.PDFDocument.create(), exDocs = {}, sz0 = srcO.getPage(0).getSize();
+        for (var oi = 0; oi < fo.org.length; oi++) {
+          var it = fo.org[oi], pg;
+          if (it.b) { pg = outO.addPage([sz0.width, sz0.height]); }
+          else {
+            var from = srcO;
+            if (it.x) { if (!exDocs[it.x]) exDocs[it.x] = await PDF.PDFDocument.load(fo.extras[it.x - 1].buf); from = exDocs[it.x]; }
+            var cp1 = await outO.copyPages(from, [it.s]); pg = cp1[0]; outO.addPage(pg);
+          }
+          var add = it.r || 0; if (add) pg.setRotation(PDF.degrees((pg.getRotation().angle + add) % 360));
+        }
         setResult(await outO.save(), baseName(fo.name) + "-organized.pdf", outO.getPageCount() + (outO.getPageCount() === 1 ? " page" : " pages") + " in the new order");
       } else if (tool.id === "crop") {
         var fc = files[0]; if (!fc) throw new Error("Add a PDF first.");
@@ -2741,6 +3088,7 @@ window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "
     var head = el("div"); head.appendChild(el("h2", null, tool.name)); head.appendChild(el("p", "sub", tool.desc)); if (tool.note) head.appendChild(el("p", "sub", tool.note)); p.appendChild(head);
     if (tool.custom) {
       if (tool.id === "html2pdf") { p.appendChild(htmlPdfView()); if (error) p.appendChild(el("p", "err", error)); if (result) p.appendChild(resultView()); return; }
+      if (tool.id === "barcode") { p.appendChild(barcodeView()); return; }
       p.appendChild(qrView()); return;
     }
 
@@ -2797,8 +3145,10 @@ window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "
         acts.appendChild(x); li.appendChild(acts); ul.appendChild(li);
       });
       p.appendChild(ul);
+      if (!tool.scan && (tool.id === "merge" || tool.id === "images")) { var fb = el("button", "btn ghost sm fsbtn", "\u26F6 Full screen view"); fb.type = "button"; fb.addEventListener("click", function () { openFull(tool.name + ": order of files", filesBoard); }); p.appendChild(fb); }
     }
 
+    if (tool.scan && files.length) p.appendChild(scanStudio(false));
     if (files.length) p.appendChild(optionsView());
 
     if (error) p.appendChild(el("p", "err", error));
@@ -2833,10 +3183,10 @@ window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "
 
   function optionsView() {
     if (tool.scan) return scanOptions();
-    if (tool.id === "rotate") return rotateView(files[0]);
+    if (tool.id === "rotate") return withFull("Rotate PDF", function (full) { return rotateView(files[0], full); });
     if (tool.id === "edit") return editorView(files[0]);
-    if (tool.id === "organize") return organizeView(files[0]);
-    if (tool.id === "crop") return cropView(files[0]);
+    if (tool.id === "organize") return withFull("Organize PDF", function (full) { return organizeView(files[0], full); });
+    if (tool.id === "crop") return withFull("Crop PDF", function (full) { return cropView(files[0], full); });
     var o = el("div", "opts");
     function textField(id, label, key, hint, ph) {
       var f = el("div", "field"); var l = el("label", null, label); l.htmlFor = id;
@@ -2940,9 +3290,9 @@ window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "
       [["pages", "Extract chosen pages into one PDF"], ["each", "Save every page as a separate PDF (ZIP)"]].forEach(function (v) { var op = el("option", null, v[1]); op.value = v[0]; if (opts.mode === v[0]) op.selected = true; s.appendChild(op); });
       s.addEventListener("change", function () { opts.mode = s.value; result = null; renderPanel(); });
       f1.appendChild(l1); f1.appendChild(s); o.appendChild(f1);
-      if (opts.mode === "pages") o.appendChild(textField("rangeIn", "Pages to extract (this file has " + total + ")", "range", "Example: 1-3, 5, 8-", "1-3, 5"));
+      if (opts.mode === "pages") { o.appendChild(withFull("Split PDF: choose pages", function (full) { return pageGrid(files[0], "split", full); })); o.appendChild(textField("rangeIn", "Pages to extract (this file has " + total + ")", "range", "Example: 1-3, 5, 8-  — or tap ✕ on the pages above.", "1-3, 5")); }
     } else if (tool.id === "remove") {
-      o.appendChild(textField("rangeIn", "Pages to remove (this file has " + total + ")", "range", "Example: 2, 4-6", "2, 4-6"));
+      o.appendChild(withFull("Remove pages", function (full) { return pageGrid(files[0], "remove", full); })); o.appendChild(textField("rangeIn", "Pages to remove (this file has " + total + ")", "range", "Example: 2, 4-6  — or tap ✕ on the pages above.", "2, 4-6"));
     } else if (tool.id === "rotate") {
       var f2 = el("div", "field"); var l2 = el("label", null, "Turn clockwise by"); l2.htmlFor = "angSel";
       var s2 = document.createElement("select"); s2.id = "angSel";
@@ -2962,14 +3312,7 @@ window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "
     if (t) { if (tool.id === t.id) { files = []; result = null; error = ""; renderPanel(); } selectTool(t); }
   });
 
-  /* app install and offline support */
-  var installEvt = null;
-  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); installEvt = e; $("installBtn").hidden = false; });
-  $("installBtn").addEventListener("click", function () {
-    if (!installEvt) return;
-    installEvt.prompt(); installEvt.userChoice.then(function () { installEvt = null; $("installBtn").hidden = true; }).catch(function () {});
-  });
-  window.addEventListener("appinstalled", function () { $("installBtn").hidden = true; });
+  /* app install is handled by the shared script */
   if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
     window.addEventListener("load", function () { try { navigator.serviceWorker.register("sw.js"); } catch (e) {} });
   }
@@ -3032,6 +3375,205 @@ window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "
     var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) mark(e.target.id === "panel" ? "tools-top" : e.target.id); }); }, { rootMargin: "-40% 0px -50% 0px" });
     ["panel", "guides", "about", "contact"].forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
   })();
+})();
+
+</script>
+<script data-v="11">
+/* Invatek shared script: install button on every page, and drag-to-reorder for tabs. */
+(function () {
+  "use strict";
+  var D = document, W = window;
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function lsDel(k) { try { localStorage.removeItem(k); } catch (e) {} }
+
+  var css = D.createElement("style");
+  css.textContent =
+    ".ivm{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.5);display:flex;align-items:flex-end;justify-content:center;padding:0}" +
+    "@media(min-width:600px){.ivm{align-items:center;padding:20px}}" +
+    ".ivc{background:var(--surface);color:var(--fg);width:100%;max-width:460px;border-radius:20px 20px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:12px;max-height:88vh;overflow:auto;box-shadow:0 -8px 40px rgba(0,0,0,.25)}" +
+    "@media(min-width:600px){.ivc{border-radius:20px}}" +
+    ".ivc h2{margin:0;font-family:var(--font-display);font-size:22px;letter-spacing:-.02em}" +
+    ".ivc ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px}" +
+    ".ivc p{margin:0;color:var(--muted);font-size:14px}" +
+    ".ivc .row{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}" +
+    ".dragtip{margin:-6px 0 0;font-size:13px;color:var(--muted)}" +
+    ".dragtip button{background:none;border:none;padding:0 2px;color:var(--accent);font-weight:700;text-decoration:underline;font-size:13px}" +
+    ".sortable>*{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}" +
+    ".sortable .ph{opacity:.35;outline:2px dashed var(--accent);outline-offset:-2px}" +
+    ".dragghost{position:fixed;z-index:400;pointer-events:none;margin:0!important;opacity:.96;transform:scale(1.06);box-shadow:0 10px 28px rgba(0,0,0,.28);border-radius:14px}" +
+    "#installBtn{white-space:nowrap}@media(max-width:480px){#installBtn{padding:7px 10px;font-size:13px}}";
+  D.head.appendChild(css);
+
+  /* ---------- install the app ---------- */
+  var btn = D.getElementById("installBtn"), evt = null;
+  function installed() {
+    return (W.matchMedia && matchMedia("(display-mode: standalone)").matches) || W.navigator.standalone === true;
+  }
+  function closeModal() { var m = D.getElementById("ivm"); if (m) { m.remove(); D.body.style.overflow = ""; } }
+  function help() {
+    var ua = navigator.userAgent || "", steps, note = "";
+    var ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+    var inApp = /FBAN|FBAV|Instagram|Line\/|Snapchat|Twitter|; wv\)/.test(ua);
+    if (ios) {
+      if (/CriOS|FxiOS|EdgiOS/.test(ua)) steps = ["Open invatek.in in <b>Safari</b>.", "Tap the <b>Share</b> button (a square with an arrow).", "Scroll down and tap <b>Add to Home Screen</b>, then <b>Add</b>."];
+      else steps = ["Tap the <b>Share</b> button at the bottom (a square with an arrow).", "Scroll down and tap <b>Add to Home Screen</b>.", "Tap <b>Add</b>. Invatek now opens like an app."];
+    } else if (inApp) {
+      steps = ["This page is open inside another app, which cannot install websites.", "Tap the menu (three dots) and choose <b>Open in Chrome</b> or <b>Open in browser</b>.", "In Chrome, tap this Install button again."];
+    } else if (/Android/.test(ua)) {
+      steps = ["Tap the menu (<b>three dots</b>) at the top right of Chrome.", "Tap <b>Install app</b> or <b>Add to Home screen</b>.", "Tap <b>Install</b>. The icon appears with your other apps."];
+      note = "If you do not see the option, close this tab, open invatek.in again and use the site for a few seconds first.";
+    } else if (/Edg\//.test(ua)) {
+      steps = ["Click the <b>three dots</b> menu at the top right of Edge.", "Choose <b>Apps</b>, then <b>Install this site as an app</b>.", "Click <b>Install</b>."];
+    } else if (/Chrome\//.test(ua)) {
+      steps = ["Look at the right end of the address bar for the <b>install icon</b> (a small screen with a down arrow). Click it.", "Or open the <b>three dots</b> menu and choose <b>Install Invatek</b> (under Cast, save and share).", "Click <b>Install</b>."];
+    } else {
+      steps = ["This browser cannot install web apps.", "Open invatek.in in <b>Chrome</b> or <b>Edge</b>, then use this button again."];
+    }
+    closeModal();
+    var m = D.createElement("div"); m.className = "ivm"; m.id = "ivm"; m.setAttribute("role", "dialog"); m.setAttribute("aria-modal", "true"); m.setAttribute("aria-label", "Install Invatek");
+    m.innerHTML = '<div class="ivc"><h2>Install Invatek</h2><ol>' + steps.map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ol>" +
+      "<p>" + (note ? note + " " : "") + "Already installed? Open Invatek from your home screen or app list.</p>" +
+      '<div class="row"><button type="button" class="btn" id="ivmClose">Got it</button></div></div>';
+    D.body.appendChild(m); D.body.style.overflow = "hidden";
+    m.addEventListener("click", function (e) { if (e.target === m) closeModal(); });
+    D.getElementById("ivmClose").addEventListener("click", closeModal);
+  }
+  if (btn && !installed()) {
+    W.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); evt = e; btn.hidden = false; });
+    W.addEventListener("appinstalled", function () { evt = null; btn.hidden = true; });
+    btn.hidden = false;
+    if (W.innerWidth <= 400) btn.textContent = "Install";
+    btn.addEventListener("click", function () {
+      if (!evt) { help(); return; }
+      var e = evt; evt = null;
+      try {
+        e.prompt();
+        e.userChoice.then(function (c) { if (c && c.outcome === "accepted") btn.hidden = true; }).catch(function () {});
+      } catch (x) { help(); }
+    });
+  }
+  D.addEventListener("keydown", function (e) { if (e.key === "Escape") closeModal(); });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+    W.addEventListener("load", function () { try { navigator.serviceWorker.register("/sw.js"); } catch (e) {} });
+  }
+
+  /* ---------- drag to reorder ---------- */
+  var state = null, suppress = false, guardOn = false;
+  function nodes(cont, sel) { return [].slice.call(cont.children).filter(function (n) { return n.matches(sel); }); }
+  function applyOrder(cfg, ids) {
+    var all = nodes(cfg.cont, cfg.sel), fixed = all.filter(function (n) { return n.matches(cfg.fixed || "x-none"); });
+    var mv = all.filter(function (n) { return fixed.indexOf(n) < 0; });
+    var pos = {}; ids.forEach(function (id, i) { pos[id] = i; });
+    mv = mv.map(function (n, i) { return { n: n, k: pos.hasOwnProperty(cfg.id(n)) ? pos[cfg.id(n)] : 1000 + i }; }).sort(function (a, b) { return a.k - b.k; });
+    fixed.forEach(function (n) { cfg.cont.appendChild(n); });
+    mv.forEach(function (o) { cfg.cont.appendChild(o.n); });
+  }
+  function ids(cfg) { return nodes(cfg.cont, cfg.sel).filter(function (n) { return !n.matches(cfg.fixed || "x-none"); }).map(cfg.id); }
+  function save(cfg) { lsSet(cfg.key, JSON.stringify(ids(cfg))); if (cfg.after) cfg.after(); }
+
+  function sortable(cfg) {
+    var cont = cfg.cont; if (!cont || cont.__sort) return; cont.__sort = cfg;
+    cont.classList.add("sortable");
+    cfg.original = ids(cfg);
+    try { var s = JSON.parse(lsGet(cfg.key) || "null"); if (s && s.length) applyOrder(cfg, s); } catch (e) {}
+    nodes(cont, cfg.sel).forEach(function (n) { n.setAttribute("draggable", "false"); });
+    cont.addEventListener("dragstart", function (e) { e.preventDefault(); });
+    cont.addEventListener("contextmenu", function (e) { if (state && state.on) e.preventDefault(); });
+    cont.addEventListener("pointerdown", function (e) {
+      if (e.button > 0 || state) return;
+      var it = e.target.closest(cfg.sel); if (!it || it.parentNode !== cont || it.matches(cfg.fixed || "x-none")) return;
+      state = { cfg: cfg, it: it, id: e.pointerId, x: e.clientX, y: e.clientY, on: false, touch: e.pointerType !== "mouse", t: null, ghost: null, ox: 0, oy: 0 };
+      if (state.touch) { var st = state; st.t = setTimeout(function () { if (state === st) begin(); }, 330); }
+    });
+    cont.addEventListener("click", function (e) { if (suppress) { e.preventDefault(); e.stopPropagation(); suppress = false; } }, true);
+    cont.addEventListener("keydown", function (e) {
+      if (!e.altKey || (e.key !== "ArrowLeft" && e.key !== "ArrowRight")) return;
+      var it = e.target.closest(cfg.sel); if (!it || it.matches(cfg.fixed || "x-none")) return;
+      var list = nodes(cont, cfg.sel).filter(function (n) { return !n.matches(cfg.fixed || "x-none"); }), i = list.indexOf(it);
+      var j = e.key === "ArrowLeft" ? i - 1 : i + 1; if (j < 0 || j >= list.length) return;
+      e.preventDefault();
+      if (j < i) cont.insertBefore(it, list[j]); else cont.insertBefore(it, list[j].nextSibling);
+      save(cfg); it.focus();
+    });
+  }
+  function begin() {
+    var s = state; if (!s || s.on) return; s.on = true;
+    if (s.t) { clearTimeout(s.t); s.t = null; }
+    var r = s.it.getBoundingClientRect();
+    s.ox = s.x - r.left; s.oy = s.y - r.top;
+    var g = s.it.cloneNode(true); g.removeAttribute("id"); g.className = (s.it.className || "") + " dragghost"; g.style.width = r.width + "px"; g.style.height = r.height + "px";
+    g.style.left = r.left + "px"; g.style.top = r.top + "px"; g.setAttribute("aria-hidden", "true"); g.removeAttribute("href");
+    D.body.appendChild(g); s.ghost = g; s.it.classList.add("ph");
+    if (navigator.vibrate) { try { navigator.vibrate(12); } catch (e) {} }
+  }
+  function cancelPending() { if (state && state.t) clearTimeout(state.t); if (state && !state.on) state = null; }
+  function move(e) {
+    var s = state, cfg = s.cfg, cont = cfg.cont;
+    s.ghost.style.left = (e.clientX - s.ox) + "px"; s.ghost.style.top = (e.clientY - s.oy) + "px";
+    s.ghost.style.display = "none";
+    var el = D.elementFromPoint(e.clientX, e.clientY); s.ghost.style.display = "";
+    var over = el && el.closest ? el.closest(cfg.sel) : null;
+    if (!over || over === s.it || over.parentNode !== cont || over.matches(cfg.fixed || "x-none")) return;
+    var r = over.getBoundingClientRect(), after = !!(s.it.compareDocumentPosition(over) & 4);
+    var sr = s.it.getBoundingClientRect(), sameRow = Math.abs((sr.top + sr.height / 2) - (r.top + r.height / 2)) < r.height / 2;
+    var past = sameRow ? (after ? e.clientX > r.left + r.width / 2 : e.clientX < r.left + r.width / 2)
+                       : true;
+    if (!past) return;
+    if (after) cont.insertBefore(s.it, over.nextSibling); else cont.insertBefore(s.it, over);
+  }
+  function finish(ok) {
+    var s = state; if (!s) return; state = null;
+    if (s.t) clearTimeout(s.t);
+    if (s.ghost) s.ghost.remove();
+    s.it.classList.remove("ph");
+    if (s.on) {
+      suppress = true; setTimeout(function () { suppress = false; }, 400);
+      if (ok) save(s.cfg);
+    }
+  }
+  function guard() {
+    if (guardOn) return; guardOn = true;
+    D.addEventListener("pointermove", function (e) {
+      var s = state; if (!s || e.pointerId !== s.id) return;
+      var d = Math.abs(e.clientX - s.x) + Math.abs(e.clientY - s.y);
+      if (!s.on) {
+        if (s.touch) { if (d > 10) cancelPending(); return; }
+        if (d > 6) begin(); else return;
+      }
+      e.preventDefault(); move(e);
+    }, { passive: false });
+    D.addEventListener("pointerup", function (e) { if (state && e.pointerId === state.id) finish(true); });
+    D.addEventListener("pointercancel", function (e) { if (state && e.pointerId === state.id) finish(state.on); });
+    D.addEventListener("touchmove", function (e) { if (state && state.on && e.cancelable) e.preventDefault(); }, { passive: false });
+  }
+  function pathId(n) { var h = n.getAttribute("href") || ""; return h.replace(/[?#].*$/, "") || "/"; }
+
+  function init() {
+    guard();
+    try { var vs = D.createElement("p"); vs.style.cssText = "text-align:center;font-size:11px;color:var(--muted);margin:8px 0 70px"; vs.textContent = "Site version 11"; (D.querySelector(".wrap") || D.body).appendChild(vs); } catch (e) {}
+    var main = [D.querySelector(".modetabs"), D.getElementById("tabbar2")].filter(Boolean);
+    var cfgs = main.map(function (c) { return { cont: c, sel: "a", key: "inv-order-main", id: pathId }; });
+    cfgs.forEach(function (cfg) {
+      cfg.after = function () { cfgs.forEach(function (o) { if (o !== cfg) applyOrder(o, ids(cfg)); }); };
+      sortable(cfg);
+    });
+    if (cfgs.length > 1 && lsGet("inv-order-main")) { try { applyOrder(cfgs[1], JSON.parse(lsGet("inv-order-main"))); } catch (e) {} }
+    var cats = D.querySelector(".cats");
+    if (cats) {
+      var cc = { cont: cats, sel: ".chip", fixed: '[data-cat="all"]', key: "inv-order-cats", id: function (n) { return n.getAttribute("data-cat"); } };
+      sortable(cc);
+      var tip = D.createElement("p"); tip.className = "dragtip";
+      tip.innerHTML = 'Tip: press and hold a category (or the PDF tools / Invoice tab), then drag it where you like. <button type="button">Reset order</button>';
+      cats.parentNode.insertBefore(tip, cats.nextSibling);
+      tip.querySelector("button").addEventListener("click", function () {
+        lsDel("inv-order-cats"); lsDel("inv-order-main");
+        applyOrder(cc, cc.original);
+        cfgs.forEach(function (c) { applyOrder(c, c.original); });
+      });
+    }
+  }
+  if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", init); else init();
 })();
 
 </script>
