@@ -1,0 +1,699 @@
+<!doctype html><html lang="en"><head><title>Love Calculator and FLAMES Game: Just for Fun</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0F6B5C">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="canonical" href="https://invatek.in/love-calculator">
+<meta property="og:title" content="Love Calculator and FLAMES Game: Just for Fun">
+<meta property="og:description" content="Free love calculator and FLAMES game. Enter two names to get a love percentage and a FLAMES result. Made for fun only, nothing is saved.">
+<meta property="og:url" content="https://invatek.in/love-calculator">
+<meta property="og:type" content="website">
+<meta name="description" content="Free love calculator and FLAMES game. Enter two names to get a love percentage and a FLAMES result. Made for fun only, nothing is saved.">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>(function(){try{var m=localStorage.getItem("inv-theme");if(m==="light"||m==="dark")document.documentElement.setAttribute("data-theme",m);}catch(e){}})();</script>
+<meta name="google-adsense-account" content="ca-pub-7642828173825963">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: sticky slim header, tool picker as a wrapping grid of 5 tiles, then one workspace panel for the chosen tool: drop zone, file list, options, result. */
+:root {
+  --bg: #F1F4F3;
+  --surface: #FFFFFF;
+  --fg: #12201C;
+  --muted: #5A6A65;
+  --line: #D3DCD9;
+  --accent: #0F6B5C;
+  --on-accent: #FFFFFF;
+  --accent-soft: #DCEFEA;
+  --warn: #A63A12;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0C1613; --surface: #142420; --fg: #E6F0ED; --muted: #93A8A2; --line: #26403A;
+    --accent: #5FD0B5; --on-accent: #06211B; --accent-soft: #1A3A33; --warn: #FF9A70; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0C1613; --surface: #142420; --fg: #E6F0ED; --muted: #93A8A2; --line: #26403A;
+  --accent: #5FD0B5; --on-accent: #06211B; --accent-soft: #1A3A33; --warn: #FF9A70; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 16px; line-height: 1.5; margin: 0; padding: 0 0 56px;
+  -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: 26px; padding: 22px max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px)); }
+.wrap > .doc, .wrap > .fnav, .wrap > .foot { max-width: 880px; width: 100%; margin-inline: auto; }
+h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(34px, 8vw, 52px); letter-spacing: -0.035em; line-height: 1.02; margin: 0; text-wrap: balance; }
+h1 span { color: var(--accent); }
+.lead { margin: 10px 0 0; color: var(--muted); max-width: 52ch; }
+.privacy { display: inline-block; margin-top: 12px; font-size: 13px; font-weight: 600; background: var(--accent-soft); color: var(--accent); padding: 5px 12px; border-radius: 99px; }
+
+.tools { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.tool { text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.tool b { font-family: var(--font-display); font-size: 18px; letter-spacing: -0.01em; }
+.tool small { color: var(--muted); font-size: 13px; line-height: 1.35; }
+.tool[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+.tool svg { width: 26px; height: 26px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; margin-bottom: 4px; }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.panel h2 { margin: 0; font-family: var(--font-display); font-size: 24px; letter-spacing: -0.02em; }
+.panel p.sub { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+.drop { border: 2px dashed var(--line); border-radius: 14px; padding: 26px 16px; text-align: center; background: var(--bg); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.drop.over { border-color: var(--accent); background: var(--accent-soft); }
+.drop p { margin: 0; color: var(--muted); font-size: 14px; }
+.btn { background: var(--accent); color: var(--on-accent); border: none; border-radius: 12px; padding: 12px 20px; font-weight: 600; }
+.btn.ghost { background: var(--surface); color: var(--fg); border: 1px solid var(--line); }
+.btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+.files { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.file { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; background: var(--bg); }
+.file .ext { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; background: var(--accent); color: var(--on-accent); border-radius: 6px; padding: 4px 6px; }
+.file .nm { min-width: 0; overflow-wrap: anywhere; font-weight: 500; }
+.file .meta { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+.file .acts { display: flex; gap: 4px; }
+.icon { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); font-size: 16px; line-height: 1; }
+.opts { display: flex; flex-wrap: wrap; gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 5px; flex: 1 1 220px; min-width: 0; }
+.field label, .field .lab { font-size: 13px; font-weight: 600; color: var(--muted); }
+.field input[type="text"], .field input[type="url"], .field input[type="password"], .field select { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; width: 100%; min-width: 0; }
+.field .hint { font-size: 12px; color: var(--muted); }
+.err { color: var(--warn); font-weight: 600; font-size: 14px; margin: 0; }
+.result { border: 1px solid var(--accent); background: var(--accent-soft); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.result b { font-family: var(--font-display); font-size: 18px; }
+.result .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+html { scroll-behavior: smooth; }
+.panel[id], #tools-top { scroll-margin-top: 16px; }
+.doc p, .doc ul, .doc ol { margin: 0; }
+.doc ul, .doc ol { padding-left: 22px; display: flex; flex-direction: column; gap: 6px; }
+.doc h3 { font-family: var(--font-display); font-size: 18px; margin: 10px 0 0; letter-spacing: -0.01em; }
+.doc a { color: var(--accent); }
+.doc .updated { color: var(--muted); font-size: 14px; }
+.doc details { border: 1px solid var(--line); border-radius: 12px; background: var(--bg); }
+.doc summary { cursor: pointer; padding: 12px 14px; font-weight: 600; }
+.doc .gbody { padding: 0 14px 14px; display: flex; flex-direction: column; gap: 10px; }
+.doc .gbody h3:first-child { margin-top: 0; }
+.topnav { margin-top: -8px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+.tgroup { grid-column: 1 / -1; margin: 6px 0 0; font-family: var(--font-body); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+[hidden] { display: none !important; }
+
+.hint { margin: 0; color: var(--muted); font-size: 13px; }
+.btn.sm { padding: 7px 12px; font-size: 14px; border-radius: 10px; }
+.rotwrap, .editor { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.rotbar, .etools, .eopts, .enav { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.thumb { border: 1px solid var(--line); border-radius: 12px; background: var(--bg); padding: 10px; display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 0; }
+.timg { width: 100%; height: 150px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--surface); border-radius: 8px; }
+.timg img { max-width: 140px; max-height: 140px; width: auto; height: auto; box-shadow: 0 1px 4px rgba(0,0,0,0.25); background: #fff; transition: transform 0.2s; }
+.tlab { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; text-align: center; }
+.trow { display: flex; gap: 8px; }
+.trow .icon { width: 44px; height: 38px; font-size: 20px; }
+.etool { border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; background: var(--surface); font-weight: 600; font-size: 14px; }
+.etool[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.swatches { display: flex; gap: 6px; }
+.swatch { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--line); padding: 0; }
+.swatch[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--accent); }
+.eopts select { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px; }
+.sigpad { display: flex; flex-direction: column; gap: 8px; }
+.sigcanvas { width: 100%; max-width: 420px; aspect-ratio: 3 / 1; background: #fff; border: 1px dashed var(--line); border-radius: 10px; touch-action: none; }
+.stagewrap { overflow-x: auto; max-width: 100%; }
+.stage { position: relative; margin: 0 auto; background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,0.3); max-width: 100%; }
+.stage .bg { display: block; }
+.stage .ov { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; }
+.stage .ov[data-tool="move"] { cursor: default; }
+.stage .ov g.ann { pointer-events: none; }
+.stage .ov[data-tool="move"] g.ann { pointer-events: all; cursor: move; touch-action: none; }
+.stage .tin { position: absolute; z-index: 2; font-family: Helvetica, Arial, sans-serif; line-height: 1.2; background: rgba(255,255,255,0.85); border: 1px dashed #1A73E8; outline: none; padding: 0; margin: 0; resize: none; min-width: 120px; overflow: hidden; field-sizing: content; }
+.fnav { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14px; }
+.fnav a { color: var(--accent); font-weight: 600; }
+.foot { color: var(--muted); font-size: 13px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* ---- app bar, theme button, bottom tabs, tablet and desktop layout ---- */
+.appbar { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--surface) 90%, transparent); -webkit-backdrop-filter: saturate(1.4) blur(10px); backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid var(--line); padding: calc(8px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) 8px max(16px, env(safe-area-inset-left, 0px));
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--fg); font-family: var(--font-display); font-weight: 800; font-size: 20px; letter-spacing: -0.02em; }
+.brand img { width: 30px; height: 30px; border-radius: 8px; display: block; }
+.barbtns { display: flex; align-items: center; gap: 8px; }
+.themebtn { display: inline-flex; align-items: center; gap: 6px; height: 38px; min-width: 38px; padding: 0 10px; justify-content: center; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); font-weight: 600; font-size: 14px; }
+.themebtn svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.themebtn .tl { display: none; }
+.tool, .btn, .etool, .icon, .themebtn { transition: transform .12s ease, background-color .15s ease, border-color .15s ease; }
+.tool:active, .btn:active, .etool:active, .icon:active, .themebtn:active { transform: scale(.97); }
+.tool { border-radius: 18px; }
+.tabbar { display: none; }
+.wrap > .fnav.topnav { max-width: none; margin-inline: 0; }
+@media (max-width: 899px) {
+  body { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+  .topnav { display: none; }
+  .tabbar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; background: color-mix(in srgb, var(--surface) 94%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    border-top: 1px solid var(--line); padding: 6px max(8px, env(safe-area-inset-right, 0px)) calc(6px + env(safe-area-inset-bottom, 0px)) max(8px, env(safe-area-inset-left, 0px)); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 4px; border-radius: 14px; text-decoration: none; color: var(--muted); font-size: 12px; font-weight: 600; }
+  .tabbar a svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .tabbar a.on { color: var(--accent); background: var(--accent-soft); }
+  .panel .btn, .drop .btn { min-height: 46px; }
+}
+@media (min-width: 600px) {
+  .themebtn .tl { display: inline; }
+  .tools { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .tool { padding: 18px; }
+  .tool svg { width: 30px; height: 30px; }
+  .panel { padding: 26px; border-radius: 22px; }
+}
+@media (min-width: 900px) {
+  .appgrid { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 22px; align-items: start; }
+  .appgrid .tools { grid-template-columns: 1fr; gap: 8px; position: sticky; top: 76px; max-height: calc(100vh - 92px); overflow-y: auto; padding-right: 2px; }
+  .appgrid .tool { display: grid; grid-template-columns: 34px 1fr; column-gap: 12px; align-items: center; padding: 12px 14px; border-radius: 14px; }
+  .appgrid .tool svg { grid-row: 1 / span 2; margin: 0; width: 28px; height: 28px; }
+  .appgrid .tool small { display: none; }
+  .appgrid .tool b { font-size: 16px; }
+  .appgrid .tool:hover { border-color: var(--accent); }
+  .appgrid .panel { min-height: 420px; }
+}
+
+.file.scanrow { grid-template-columns: auto 1fr; align-items: start; }
+.file.scanrow .sbox { grid-row: 1 / span 2; }
+.file.scanrow .acts { grid-column: 2; flex-wrap: wrap; margin-top: 4px; }
+.sbox { width: 56px; height: 72px; border-radius: 8px; overflow: hidden; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; }
+.sbox img { max-width: 100%; max-height: 100%; display: block; transition: transform .2s; }
+.field textarea { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; width: 100%; min-width: 0; resize: vertical; line-height: 1.5; }
+.modal { position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; padding: 12px; overflow-y: auto; }
+.modal .box { background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 20px; padding: 18px; max-width: 600px; width: 100%; display: flex; flex-direction: column; gap: 12px; max-height: 100%; }
+.modal h2 { margin: 0; font-family: var(--font-display); font-size: 20px; letter-spacing: -0.02em; }
+.cstage { position: relative; margin: 0 auto; overflow: hidden; touch-action: none; background: #222; user-select: none; -webkit-user-select: none; max-width: 100%; }
+.cstage canvas { display: block; }
+.csel { position: absolute; border: 2px solid #fff; box-shadow: 0 0 0 9999px rgba(0,0,0,0.55); touch-action: none; cursor: move; }
+.ch { position: absolute; width: 28px; height: 28px; margin: -14px 0 0 -14px; background: var(--accent); border: 3px solid #fff; border-radius: 50%; touch-action: none; }
+.crow { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.totop { position: fixed; right: 16px; bottom: calc(88px + env(safe-area-inset-bottom, 0px)); z-index: 35; width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--accent); color: var(--on-accent); box-shadow: 0 2px 10px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; padding: 0; }
+.totop svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(96px + env(safe-area-inset-bottom, 0px)); z-index: 120; background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 12px; font-size: 14px; font-weight: 600; max-width: calc(100vw - 32px); box-shadow: 0 2px 12px rgba(0,0,0,0.35); }
+@media (min-width: 900px) { .totop { bottom: 24px; right: 24px; } .toast { bottom: 28px; } }
+.modal.full { padding: 0; align-items: stretch; }
+.vbox { background: var(--bg); width: 100%; height: 100%; display: flex; flex-direction: column; min-height: 0; }
+.vtop { display: flex; align-items: center; gap: 8px; padding: calc(10px + env(safe-area-inset-top, 0px)) 12px 10px; background: var(--surface); border-bottom: 1px solid var(--line); }
+.vtop b { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-display); }
+.vpages2 { flex: 1; min-height: 0; overflow: auto; padding: 12px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; -webkit-overflow-scrolling: touch; }
+.vpage2 { margin: 0 auto; flex: none; background: #fff; color: #667; box-shadow: 0 1px 6px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; font-size: 13px; }
+@media (display-mode: standalone) {
+  body { -webkit-user-select: none; user-select: none; }
+  input, textarea, .doc, .doc * { -webkit-user-select: text; user-select: text; }
+  .privacy { display: none; }
+}
+
+.pg h1 { font-size: clamp(26px, 6vw, 38px); letter-spacing: -0.03em; }
+.pg .lead { max-width: 60ch; }
+.seo h2 { font-size: 22px; }
+.seo .faq p { margin-top: 2px; }
+.toolslist { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; padding: 0 !important; list-style: none; }
+.toolslist a { display: block; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); font-weight: 600; text-decoration: none; }
+.artlist { list-style: none; padding: 0 !important; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; }
+.artlist a { display: block; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); font-weight: 600; text-decoration: none; }
+.cta { display: inline-block; align-self: flex-start; background: var(--accent); color: var(--on-accent) !important; text-decoration: none; font-weight: 700; padding: 12px 18px; border-radius: 12px; }
+.meta { color: var(--muted); font-size: 13px; }
+/* phone and tablet: one row of tool chips so the tool panel is right below */
+@media (max-width: 899px) {
+  .appgrid { display: flex; flex-direction: column; gap: 14px; }
+  .appgrid .tools { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 8px; padding: 2px 2px 8px; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .appgrid .tools::-webkit-scrollbar { display: none; }
+  .appgrid .tgroup { display: none; }
+  .appgrid .tool { flex: 0 0 auto; flex-direction: row; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 999px; scroll-snap-align: start; }
+  .appgrid .tool svg { margin: 0; width: 20px; height: 20px; }
+  .appgrid .tool b { font-size: 14px; white-space: nowrap; }
+  .appgrid .tool small { display: none; }
+}
+/* site search */
+.srch { position: fixed; inset: 0; z-index: 90; background: rgba(0, 0, 0, .45); display: flex; align-items: flex-start; justify-content: center; padding: max(16px, env(safe-area-inset-top, 0px)) 12px 12px; }
+.srchbox { width: min(640px, 100%); max-height: calc(100vh - 32px); display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 18px 50px rgba(0, 0, 0, .35); overflow: hidden; }
+.srchrow { display: flex; gap: 8px; align-items: center; padding: 12px; border-bottom: 1px solid var(--line); }
+.srchrow input { flex: 1; min-width: 0; font: inherit; font-size: 16px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
+.srchlist { list-style: none; margin: 0; padding: 6px; overflow-y: auto; }
+.srchlist a { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 10px; text-decoration: none; color: var(--fg); }
+.srchlist a:hover, .srchlist a:focus { background: var(--accent-soft); outline: none; }
+.srchlist small { color: var(--muted); font-size: 13px; line-height: 1.35; }
+.srchhint { padding: 8px 12px 10px; color: var(--muted); font-size: 13px; }
+.slider { width: 100%; accent-color: var(--accent); margin: 6px 0 0; }
+.sliderlbl { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+/* QR layout, mobile friendly */
+.qrform { flex-direction: column; flex-wrap: nowrap; gap: 14px; }
+.qrform .field { flex: none; width: 100%; }
+.qrform .qrbox { margin: 0 auto; padding: 14px; background: #fff; border: 1px solid var(--line); border-radius: 16px; width: fit-content; max-width: 100%; line-height: 0; }
+.qrform .qrbox[hidden] { display: none; }
+.qrform .qrcanvas { width: 260px; transition: width .08s; max-width: 100%; height: auto; aspect-ratio: 1; display: block; }
+.qrform .qrmsg { text-align: center; margin: -4px 0 0; }
+.qrgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.qrgrid .field { min-width: 0; }
+.qrinfo { font-size: 13px; color: var(--muted); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+.qrinfo summary { cursor: pointer; font-weight: 600; color: var(--fg); }
+.qrinfo p { margin: 8px 0 0; line-height: 1.5; }
+.qrbtns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.qrbtns .btn { width: 100%; justify-content: center; padding-left: 8px; padding-right: 8px; }
+.qrform textarea { font-size: 16px; }
+@media (max-width: 380px) { .qrgrid { grid-template-columns: 1fr; } }
+.qrform .slider { touch-action: pan-y; height: 28px; }
+.qrform .qrbox { min-width: 120px; min-height: 120px; }
+.adlbl { display: block; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+/* support + sponsor boxes */
+.support { max-width: 760px; margin: 26px auto 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.scard { border: 1px solid var(--line); border-radius: 16px; padding: 16px; text-align: center; background: var(--surface); display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 0; }
+.scard p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.scard .stitle { color: var(--fg); font-weight: 700; font-size: 16px; }
+.scard small { color: var(--muted); font-size: 12px; }
+.upiqr { width: 100%; max-width: 200px; height: auto; aspect-ratio: 1; background: #fff; border-radius: 12px; padding: 6px; object-fit: contain; }
+.sponsor { border: 2px dashed var(--accent); justify-content: center; position: relative; min-height: 200px; }
+.sponsor .adlbl { position: absolute; top: 8px; left: 12px; margin: 0; }
+.sponsorbox { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; }
+.sponsorbox .btn { max-width: 100%; white-space: normal; word-break: break-all; text-decoration: none; }
+.sponsorimg { max-width: 100%; max-height: 180px; height: auto; border-radius: 10px; display: block; margin: 0 auto; }
+@media (max-width: 640px) { .support { grid-template-columns: 1fr; } .sponsor { min-height: 150px; } }
+p a, .foot a { overflow-wrap: anywhere; }
+/* home: tool cards */
+.toolhome { margin: 6px 0 26px; }
+.ghead { font-family: var(--font-display); font-size: 20px; letter-spacing: -0.01em; margin: 26px 0 12px; }
+.tgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.tcard { --c: #0F9D84; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; text-decoration: none; color: var(--fg); min-width: 0; transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+.tcard:hover, .tcard:focus-visible { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0, 0, 0, .12); border-color: var(--c); outline: none; }
+.tcard b { font-family: var(--font-display); font-size: 18px; letter-spacing: -0.01em; }
+.tcard small { color: var(--muted); font-size: 13px; line-height: 1.4; }
+.tico { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; background: rgba(15, 157, 132, .14); background: color-mix(in srgb, var(--c) 16%, transparent); margin-bottom: 6px; }
+.tico svg { width: 28px; height: 28px; stroke: var(--c); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.tgrid[data-g="edit"] .tcard { --c: #E8590C; }
+.tgrid[data-g="convert"] .tcard { --c: #3B82F6; }
+.tgrid[data-g="more"] .tcard { --c: #8B5CF6; }
+@media (max-width: 640px) {
+  .tgrid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tcard { padding: 14px; border-radius: 16px; }
+  .tcard b { font-size: 16px; }
+  .tcard small { font-size: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .tico { width: 46px; height: 46px; }
+}
+.tgrid[data-g="image"] .tcard { --c: #D6336C; }
+
+/* two main tabs: PDF tools / Invoice */
+.modetabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; max-width: 460px; width: 100%; margin-inline: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; }
+.modetabs a { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 10px; border-radius: 12px; font-weight: 700; font-size: 15px; text-decoration: none; color: var(--muted); text-align: center; }
+.modetabs a svg { width: 19px; height: 19px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.modetabs a.on { background: var(--accent); color: var(--on-accent); }
+.modetabs a:not(.on):hover { background: var(--accent-soft); color: var(--accent); }
+.tgrid[data-g="biz"] .tcard { --c: #0E9AA7; }
+
+@media (max-width: 899px) { .modetabs { display: none; } }
+
+/* organize, crop, html to pdf, full screen editor */
+.orggrid .thumb { cursor: grab; }
+.orggrid .thumb.dragging { opacity: 0.4; }
+.orggrid .thumb.dropat { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 12px; }
+.orggrid .trow { flex-wrap: wrap; gap: 4px; justify-content: center; }
+.cropwrap, .htmlwrap { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.cropfields { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+.cropstage { position: relative; width: min(100%, 360px); margin: 0 auto; background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,0.3); touch-action: none; cursor: crosshair; --t: 0%; --b: 0%; --l: 0%; --r: 0%; aspect-ratio: 3 / 4; }
+.cropstage canvas { display: block; width: 100%; height: 100%; pointer-events: none; }
+.cropstage .shade { position: absolute; background: rgba(0,0,0,0.5); pointer-events: none; }
+.cropstage .st { left: 0; right: 0; top: 0; height: var(--t); }
+.cropstage .sb { left: 0; right: 0; bottom: 0; height: var(--b); }
+.cropstage .sl { left: 0; top: var(--t); bottom: var(--b); width: var(--l); }
+.cropstage .sr { right: 0; top: var(--t); bottom: var(--b); width: var(--r); }
+.cropstage .cropbox { position: absolute; left: var(--l); right: var(--r); top: var(--t); bottom: var(--b); border: 2px dashed #1A73E8; pointer-events: none; box-shadow: 0 0 0 1px #fff; }
+textarea.codein { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 14px; line-height: 1.45; tab-size: 2; min-height: 180px; white-space: pre; overflow: auto; }
+.htmlprev { background: color-mix(in srgb, var(--line) 55%, var(--bg)); border: 1px solid var(--line); border-radius: 12px; padding: 8px; overflow: hidden; }
+.htmlprevin { margin: 0 auto; overflow: hidden; background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,0.25); }
+.htmlprevin iframe { border: 0; background: #fff; display: block; }
+.edfs { position: fixed; inset: 0; z-index: 160; background: var(--bg); display: flex; flex-direction: column; }
+.edfsbar { display: flex; gap: 10px; align-items: center; padding: 10px 14px; background: var(--surface); border-bottom: 1px solid var(--line); }
+.edfsbar b { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-display); }
+.edfs .editor { flex: 1; min-height: 0; padding: 12px 14px; }
+.edfull { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 16px; align-items: stretch; overflow: hidden; }
+.edfull .edside { display: flex; flex-direction: column; gap: 12px; overflow: auto; padding-right: 4px; min-height: 0; }
+.edfull .etools { flex-direction: row; }
+.edfull .etool { flex: 1 1 120px; text-align: left; }
+.edfull .stagewrap { overflow: auto; height: 100%; padding-bottom: 24px; }
+@media (max-width: 899px) { .edfull { display: flex; flex-direction: column; overflow: auto; } .edfull .edside { overflow: visible; } .edfull .stagewrap { height: auto; } }
+
+/* home: compact start, category chips, one grid */
+.homehead { margin: -6px 0 -12px; }
+.homehead h1 { font-size: clamp(26px, 5vw, 34px); letter-spacing: -0.03em; display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; }
+.homehead h1 small { font-family: var(--font-body); font-size: 15px; font-weight: 600; color: var(--muted); letter-spacing: 0; }
+.homelead { margin: 4px 0 0; color: var(--muted); font-size: 14.5px; }
+.cats { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: -10px; }
+.chip { border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 99px; padding: 7px 14px; font-size: 14px; font-weight: 600; min-height: 38px; }
+.chip:hover { border-color: var(--accent); }
+.chip.on { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.tcard[hidden] { display: none; }
+.tcard[data-cat="organize"] { --c: #E8590C; }
+.tcard[data-cat="optimize"] { --c: #0F9D84; }
+.tcard[data-cat="topdf"] { --c: #3B82F6; }
+.tcard[data-cat="frompdf"] { --c: #D97706; }
+.tcard[data-cat="edit"] { --c: #8B5CF6; }
+.tcard[data-cat="security"] { --c: #0E7490; }
+.tcard[data-cat="image"] { --c: #D6336C; }
+.tcard[data-cat="biz"] { --c: #0E9AA7; }
+.tcard[data-cat="code"] { --c: #475569; }
+/* desktop: PDF tools / Invoice tabs on the left side */
+@media (min-width: 900px) {
+  .modetabs { position: fixed; left: 0; top: 57px; bottom: 0; z-index: 25; width: 88px; max-width: none; margin: 0; display: flex; flex-direction: column; gap: 6px; padding: 12px 8px; border: 0; border-right: 1px solid var(--line); border-radius: 0; background: var(--surface); }
+  .modetabs a { flex-direction: column; gap: 5px; min-height: 68px; padding: 10px 2px; font-size: 12.5px; line-height: 1.2; }
+  .modetabs a svg { width: 26px; height: 26px; }
+  .wrap { --wmax: 1120px; max-width: var(--wmax); width: calc(100% - 88px); margin-left: calc(88px + max(0px, (100% - 88px - var(--wmax)) / 2)); margin-right: auto; }
+  body.bzpage .wrap, body.cvpage .wrap { --wmax: 1280px; }
+  .tabbar { display: none; }
+}
+@media (max-width: 899px) { .modetabs { display: none; } }
+
+/* ---- v4: full screen page tools, page cross marks, add pages ---- */
+.fswrap { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.fsbtn { align-self: flex-end; }
+.edfs.fsgen .fsbody { flex: 1; min-height: 0; overflow: auto; padding: 12px 14px 40px; display: flex; flex-direction: column; gap: 12px; }
+.edfs.fsgen .fsbody > * { width: 100%; max-width: 1200px; margin: 0 auto; }
+.thumbs.big { grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 16px; }
+.thumbs.big .timg { height: auto; min-height: 220px; padding: 6px; }
+.thumbs.big .timg img { max-width: 100%; max-height: 560px; width: 100%; height: auto; object-fit: contain; }
+.thumbs.big .thumb { padding: 12px; }
+.pgcell { position: relative; }
+.pgcell .timg { position: relative; }
+.pgx { position: absolute; top: 6px; right: 6px; z-index: 3; width: 38px; height: 38px; border-radius: 50%; border: 2px solid #fff; background: #d93025; color: #fff; font-size: 18px; font-weight: 800; line-height: 1; display: grid; place-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.35); }
+.pgcell.mk-rm .pgx { background: #555; }
+.pgcell.mk-ex .pgx { background: #555; }
+.pgbig { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; font-size: 84px; font-weight: 800; color: #d93025; pointer-events: none; text-shadow: 0 0 6px #fff; }
+.pgcell.mk-rm .pgbig { display: flex; }
+.pgcell.mk-rm .timg img { opacity: 0.3; }
+.pgcell.mk-rm { border-color: #d93025; box-shadow: 0 0 0 2px #d93025; }
+.pgcell.mk-ex { border-color: #1b8a3a; box-shadow: 0 0 0 3px #1b8a3a; background: color-mix(in srgb, #1b8a3a 10%, var(--bg)); }
+.pgcell.mk-ex .tlab { color: #1b8a3a; font-weight: 700; }
+.pgrid .timg img { cursor: pointer; }
+.cropstage.big { width: min(100%, 1000px); }
+.addlab { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; }
+.posin { width: 64px; min-height: 40px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--fg); font: inherit; text-align: center; }
+.blankpg { background: #fff; width: 100px; height: 140px; border: 1px dashed #bbb; }
+.thumbs.big .blankpg { width: 100%; height: 420px; }
+.edfs .enav { flex-wrap: wrap; }
+.thumbs.big .blankpg { height: auto; aspect-ratio: 210 / 297; }
+
+/* ---- v4: scan slider and looks ---- */
+.scanstudio { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.ssbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.sscount { flex: 1; text-align: center; min-width: 90px; }
+.sstools { display: flex; gap: 6px; margin-left: auto; }
+.slides { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; gap: 0; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); scrollbar-width: thin; }
+.slide { flex: 0 0 100%; scroll-snap-align: center; display: flex; align-items: center; justify-content: center; padding: 10px; min-height: 260px; position: relative; box-sizing: border-box; }
+.slide img { display: none; max-width: 100%; max-height: 70vh; width: auto; height: auto; box-shadow: 0 1px 8px rgba(0,0,0,0.3); background: #fff; }
+.slide.ready img { display: block; }
+.slide.ready .sswait { display: none; }
+.sswait { color: var(--muted); }
+.scanstudio.full .slide img { max-height: calc(100vh - 340px); }
+.ssdots { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+.ssdot { width: 10px; height: 10px; border-radius: 50%; border: 0; padding: 0; background: var(--line); }
+.ssdot.on { background: var(--accent); transform: scale(1.3); }
+.sslab { margin: 4px 0 0; font-weight: 700; }
+.sslooks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.look { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px; border: 2px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--fg); min-width: 0; }
+.look img { width: 100%; height: 92px; object-fit: contain; background: #fff; border-radius: 6px; }
+.look .lname { font-weight: 700; font-size: 13px; text-align: center; }
+.look .lsub { font-size: 11px; color: var(--muted); text-align: center; }
+.look.on { border-color: var(--accent); background: var(--accent-soft); box-shadow: 0 0 0 2px var(--accent); }
+.look.on .lname::before { content: "\2713 "; color: var(--accent); }
+@media (max-width: 520px) { .sslooks { grid-template-columns: repeat(2, minmax(0, 1fr)); } .look img { height: 110px; } }
+
+/* calculators */
+.cx{gap:16px}
+.cx h3{margin:0;font-family:var(--font-display);font-size:17px}
+.cx-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.cx-f{display:flex;flex-direction:column;gap:5px;min-width:0}
+.cx-f label,.cx-f .lab{font-size:13px;font-weight:600;color:var(--muted)}
+.cx input[type=text],.cx input[type=date],.cx select{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 12px;width:100%;min-width:0;font-size:16px;color:var(--fg)}
+.cx-two{display:grid;grid-template-columns:1fr 110px;gap:8px}
+.cx-res{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.cx-card{background:var(--accent-soft);border-radius:14px;padding:12px 14px;min-width:0}
+.cx-card span{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:2px}
+.cx-card b{font-family:var(--font-display);font-size:20px;letter-spacing:-.01em;word-break:break-word;line-height:1.2}
+.cx-big{grid-column:1/-1;background:var(--accent);color:var(--on-accent)}
+.cx-big span{color:inherit;opacity:.85}
+.cx-big b{font-size:clamp(24px,6vw,32px)}
+.cx-note{margin:0;font-size:13px;color:var(--muted)}
+.cx-note.warn{color:var(--warn);font-weight:600}
+.cx-res .cx-note{grid-column:1/-1}
+.cx-actions{display:flex;gap:8px;flex-wrap:wrap}
+.cx-chips{display:flex;flex-wrap:wrap;gap:8px}
+.cx-chips button,.cx-seg button{border:1px solid var(--line);background:var(--bg);border-radius:99px;padding:8px 14px;font-weight:600;font-size:14px;min-height:40px}
+.cx-chips button.on,.cx-seg button.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.cx-seg{display:flex;gap:6px;flex-wrap:wrap}
+.cx-seg button{border-radius:12px;flex:1 1 auto}
+.cx-disp{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:14px 16px;text-align:right;min-height:92px;display:flex;flex-direction:column;justify-content:flex-end;gap:2px}
+.cx-expr{font-family:var(--font-display);font-size:clamp(26px,7vw,36px);font-weight:700;word-break:break-all;line-height:1.15}
+.cx-prev{color:var(--muted);font-size:16px;min-height:22px}
+.cx-kp{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:440px;width:100%;margin-inline:auto}
+.cx-kp button{min-height:58px;border-radius:14px;border:1px solid var(--line);background:var(--bg);font-size:22px;font-weight:600}
+.cx-kp button:active{transform:scale(.97)}
+.cx-kp .op,.cx-kp .fn{background:var(--accent-soft);color:var(--accent)}
+.cx-kp .eq{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.cx-kp .wide{grid-column:1/-1;min-height:46px;font-size:15px}
+.cx-hist{display:flex;flex-direction:column;gap:8px;max-width:440px;width:100%;margin-inline:auto}
+.cx-hh{display:flex;justify-content:space-between;align-items:center}
+.cx-hist ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.cx-hist li.none{color:var(--muted);font-size:14px}
+.cx-hist li button{display:flex;justify-content:space-between;gap:10px;width:100%;text-align:left;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-size:15px}
+.cx-hist li button b{font-variant-numeric:tabular-nums}
+.cx-blocks{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.cx-b{border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--bg)}
+.cx-b .cx-sub{margin:-4px 0 0;font-size:13px;color:var(--muted)}
+.cx-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cx-line input{flex:1 1 70px;min-width:0!important;width:auto!important;background:var(--surface)!important}
+.cx-line span{font-size:14px;color:var(--muted);font-weight:600}
+.cx-ans{margin:0;font-size:18px;line-height:1.35;min-height:26px}
+.cx-ans small{color:var(--muted);font-size:13px}
+.cx-bar{display:flex;height:16px;border-radius:99px;overflow:hidden;background:var(--line)}
+.cx-bp{background:var(--accent)}.cx-bi{background:#E8590C}
+.cx-legend{display:flex;gap:16px;margin:0;font-size:13px;color:var(--muted)}
+.cx-legend i{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:6px;vertical-align:-1px}
+.cx-legend i.a{background:var(--accent)}.cx-legend i.b{background:#E8590C}
+.cx-sch summary{font-weight:700;cursor:pointer;padding:6px 0}
+.cx-tw{overflow-x:auto;margin-top:6px}
+.cx-tw table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+.cx-tw th,.cx-tw td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.cx-tw th:first-child,.cx-tw td:first-child{text-align:left}
+.cx-sh,.cx-sr{display:grid;grid-template-columns:1fr 1fr 1fr 40px;gap:8px;align-items:center}
+.cx-sh{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:-8px}
+#rows{display:flex;flex-direction:column;gap:8px}
+.cx-sr .v{font-variant-numeric:tabular-nums;font-size:14px;overflow:hidden;text-overflow:ellipsis}
+.cx-sr .x{border:1px solid var(--line);background:var(--bg);border-radius:10px;height:40px;font-size:20px;color:var(--muted)}
+.cx-sec{border-top:1px solid var(--line);padding-top:14px;display:flex;flex-direction:column;gap:12px}
+.cx-love{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:6px 0}
+.cx-heart{position:relative;width:110px;height:100px;flex:none;display:grid;place-items:center}
+.cx-heart svg{position:absolute;inset:0;width:100%;height:100%;fill:var(--accent);opacity:.9}
+.cx-heart b{position:relative;color:var(--on-accent);font-family:var(--font-display);font-size:26px}
+.cx-lt{margin:0;font-size:18px;font-weight:600;flex:1 1 200px}
+@media(max-width:480px){.cx-kp button{min-height:54px}.cx-sh,.cx-sr{grid-template-columns:1fr 1fr .9fr 36px}}
+
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Love Calculator", "url": "https://invatek.in/love-calculator", "description": "Free love calculator and FLAMES game. Enter two names to get a love percentage and a FLAMES result. Made for fun only, nothing is saved.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}, "inLanguage": "en", "publisher": {"@type": "Organization", "name": "Invatek"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is the love calculator accurate?", "acceptedAnswer": {"@type": "Answer", "text": "No. It is not a scientific test. The percentage is made from the letters in the names, so it only entertains."}}, {"@type": "Question", "name": "Why do I get the same result every time?", "acceptedAnswer": {"@type": "Answer", "text": "The result depends only on the letters in the two names, so repeating the same names gives the same answer."}}, {"@type": "Question", "name": "What does FLAMES stand for?", "acceptedAnswer": {"@type": "Answer", "text": "Friends, Love, Affection, Marriage, Enemies, Siblings."}}, {"@type": "Question", "name": "Are the names saved?", "acceptedAnswer": {"@type": "Answer", "text": "No. Everything happens in your browser and nothing is stored or sent."}}]}]}</script>
+
+</head><body>
+<div class="appbar">
+  <a class="brand" href="/" aria-label="Invatek home"><img src="icon-192.png" alt="" width="30" height="30"><span>Invatek</span></a>
+  <div class="barbtns">
+    <button type="button" class="btn sm" id="installBtn" hidden>Install app</button>
+    <button type="button" class="themebtn" id="searchBtn" aria-label="Search tools and guides" title="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><span class="tl">Search</span></button>
+    <button type="button" class="themebtn" id="shareBtn" aria-label="Share Invatek" title="Share Invatek"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.4M8.2 13.2l7.6 4.4"/></svg></button>
+    <button type="button" class="themebtn" id="themeBtn" aria-label="Switch theme" title="Switch theme"><span id="themeIcon"></span><span class="tl" id="themeLbl">Light</span></button>
+  </div>
+</div>
+<button type="button" class="totop" id="toTop" aria-label="Back to top" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg></button>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div class="wrap">
+  <nav class="modetabs" aria-label="Main sections"><a href="/" class="on" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5"/></svg>PDF tools</a><a href="/invoice-generator"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16l-3-2-2 2-2-2-2 2-2-2-3 2zM8 9h8M8 13h5"/></svg>Invoice</a></nav>
+  <header class="pg"><h1>Love Calculator</h1><p class="lead">Type two names for a love percentage and the old school FLAMES result. It is a game for fun and has no science behind it.</p><span class="privacy">Worked out on your device. Nothing is uploaded.</span></header>
+  <nav class="fnav topnav" aria-label="Sections"><a href="/">All tools</a><a href="/invoice-generator">Invoice</a><a href="/articles">Articles</a><a href="/#guides">Guides</a><a href="/about">About</a><a href="/privacy-policy">Privacy</a><a href="/contact">Contact</a></nav>
+  <section class="panel cx" id="calc" aria-label="Love Calculator">
+<div class="cx-g">
+<div class="cx-f"><label for="n1">Your name</label><input type="text" id="n1" placeholder="Aarav" autocomplete="off" maxlength="40"></div>
+<div class="cx-f"><label for="n2">Their name</label><input type="text" id="n2" placeholder="Diya" autocomplete="off" maxlength="40"></div>
+</div>
+<div class="cx-actions"><button type="button" class="btn" id="go">Check</button></div>
+<div id="out" aria-live="polite"></div>
+<p class="cx-note">For fun only. Names cannot predict love, and neither can this page.</p>
+</section>
+  <nav class="fnav" aria-label="Sections"><a href="/">All tools</a><a href="/invoice-generator">Invoice</a><a href="/articles">Articles</a><a href="/#guides">Guides</a><a href="/about">About</a><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms</a><a href="/contact">Contact</a></nav>
+  <section class="panel doc seo" id="about-tool"><h2>About the Love Calculator</h2><p>This page is a game, in the same spirit as the paper games from school days. It does not measure love, and a number on a screen cannot tell you if two people suit each other. If you take it as a laugh, you will enjoy it.</p><p>It gives two results. The first is a love percentage. The second is the old FLAMES game: cross out the letters the two names share, count what is left, and use that count to eliminate letters from F-L-A-M-E-S until one remains. The letters stand for Friends, Love, Affection, Marriage, Enemies and Siblings.</p><h3>How to use it</h3><ol><li>Type your name and the other person's name. Any spelling works.</li><li>Tap Check.</li><li>You get a love percentage with a one line comment, and the FLAMES result.</li><li>Tap Share result to send it to a friend, then read the note at the bottom again and laugh.</li></ol><h3>An example</h3><p><b>Example.</b> For the names Aman and Anita, the shared letters (a, n, a) are crossed out, leaving m, i, t. That is 3 letters. Now count 3 along F-L-A-M-E-S and cross out that letter, then keep counting 3 from where you stopped. The letters go out in this order: A, S, M, L, E. The one left is F, so the result is Friends. The page does this counting for you.</p><h3>Tips</h3><ul><li>The same two names always give the same answer, whichever name you type first.</li><li>Try nicknames, full names or film characters. It is a game.</li><li>Please do not use it to judge a real relationship.</li></ul><h3>Questions</h3><div class="faq"><h3>Is the love calculator accurate?</h3><p>No. It is not a scientific test. The percentage is made from the letters in the names, so it only entertains.</p><h3>Why do I get the same result every time?</h3><p>The result depends only on the letters in the two names, so repeating the same names gives the same answer.</p><h3>What does FLAMES stand for?</h3><p>Friends, Love, Affection, Marriage, Enemies, Siblings.</p><h3>Are the names saved?</h3><p>No. Everything happens in your browser and nothing is stored or sent.</p></div><h3>हिंदी में</h3><p lang="hi">दो नाम लिखें और मज़ेदार प्रेम प्रतिशत और FLAMES का नतीजा देखें। यह सिर्फ़ खेल है, इसका कोई वैज्ञानिक आधार नहीं है। एक ही दो नाम हमेशा एक जैसा जवाब देते हैं।</p><h3>Related guide</h3><ul><li><a href="/how-the-love-calculator-and-flames-game-work">How the Love Calculator and the FLAMES Game Work</a></li></ul><p>Everything is worked out in your browser and is not uploaded. Read the <a href="/privacy-policy">Privacy Policy</a>.</p></section>
+
+  
+
+  <section class="panel doc seo"><h2>PDF tools</h2><ul class="toolslist"><li><a href="/scan-to-pdf">Scan to PDF</a></li><li><a href="/text-to-pdf">Text to PDF</a></li><li><a href="/merge-pdf">Merge PDF</a></li><li><a href="/split-pdf">Split PDF</a></li><li><a href="/remove-pdf-pages">Remove pages</a></li><li><a href="/rotate-pdf">Rotate PDF</a></li><li><a href="/compress-pdf">Compress PDF</a></li><li><a href="/edit-pdf">Edit PDF</a></li><li><a href="/protect-pdf">Protect PDF</a></li><li><a href="/photos-to-pdf">Photos to PDF</a></li><li><a href="/word-to-pdf">Word to PDF</a></li><li><a href="/excel-to-pdf">Excel to PDF</a></li><li><a href="/pdf-to-excel">PDF to Excel</a></li><li><a href="/pdf-to-word">PDF to Word</a></li><li><a href="/qr-code-generator">QR Code</a></li><li><a href="/pdf-to-jpg">PDF to JPG</a></li><li><a href="/compress-image-to-kb">Compress image</a></li><li><a href="/resize-image">Resize image</a></li><li><a href="/add-page-numbers-to-pdf">Page numbers</a></li><li><a href="/watermark-pdf">Watermark PDF</a></li><li><a href="/organize-pdf">Organize PDF</a></li><li><a href="/crop-pdf">Crop PDF</a></li><li><a href="/unlock-pdf">Unlock PDF</a></li><li><a href="/ocr-pdf">OCR PDF</a></li><li><a href="/html-to-pdf">HTML to PDF</a></li><li><a href="/barcode-generator">Barcode Generator</a></li><li><a href="/html-code-viewer">HTML Code Viewer</a></li></ul></section>
+
+  <section class="panel doc seo" id="calcs"><h2>Calculators</h2><ul class="toolslist"><li><a href="/calculator">Calculator</a></li><li><a href="/age-calculator">Age Calculator</a></li><li><a href="/percentage-calculator">Percentage Calculator</a></li><li><a href="/gst-calculator">GST Calculator</a></li><li><a href="/emi-calculator">EMI Calculator</a></li><li><a href="/stock-average-calculator">Stock Average Calculator</a></li><li><a href="/love-calculator">Love Calculator</a></li></ul></section>
+
+  <nav class="fnav" aria-label="Sections"><a href="/">All tools</a><a href="/invoice-generator">Invoice</a><a href="/articles">Articles</a><a href="/#guides">Guides</a><a href="/about">About</a><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms</a><a href="/contact">Contact</a></nav>
+
+  <section class="support" aria-label="Support Invatek and advertise">
+<div class="scard"><p class="stitle">Support Invatek</p><p>If Invatek helped you, you can support it with any amount through UPI.</p><img class="upiqr" src="/upi-qr.jpg" alt="UPI QR code to support Invatek" width="220" height="220" loading="lazy" decoding="async"><small>Scan with any UPI app</small></div>
+<div class="scard sponsor" id="sponsor"><span class="adlbl">Sponsored</span><div id="sponsorbox" class="sponsorbox"><p class="stitle">Give your ads here</p><p>Reach people who work with PDF files every day.</p><a class="btn" href="mailto:vistavibes007@gmail.com?subject=Advertise%20on%20Invatek">Contact: vistavibes007@gmail.com</a></div></div>
+</section>
+<script>
+(function () {
+  var box = document.getElementById("sponsorbox"); if (!box || !window.fetch) return;
+  fetch("/sponsor.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+    if (!d || !d.image || !/^(\/|https:\/\/)/.test(d.image)) return;
+    var img = document.createElement("img"); img.src = d.image; img.alt = d.alt || "Sponsored"; img.className = "sponsorimg"; img.loading = "lazy";
+    var node = img;
+    if (d.link && /^https:\/\//.test(d.link)) { var a = document.createElement("a"); a.href = d.link; a.target = "_blank"; a.rel = "sponsored nofollow noopener"; a.appendChild(img); node = a; }
+    box.textContent = ""; box.appendChild(node);
+  }).catch(function () {});
+})();
+</script>
+  <p class="foot">Password-protected PDFs cannot be opened here. To open a locked PDF, remove its password in the app that locked it first.</p>
+</div>
+
+<nav class="tabbar" id="tabbar2" aria-label="Main"><a href="/" class="on" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h5"/></svg>PDF tools</a><a href="/invoice-generator"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16l-3-2-2 2-2-2-2 2-2-2-3 2zM8 9h8M8 13h5"/></svg>Invoice</a></nav>
+<script>
+window.INV_INDEX = [{"t": "Invatek home", "u": "/", "d": "All free PDF tools", "k": "home tools"}, {"t": "Scan to PDF", "u": "/scan-to-pdf", "d": "Scan documents to PDF with your phone camera. Removes shadows, keeps colour, lets you crop each page. Free, no sign up, files never uploaded.", "k": "camera scanner document photo scan tool"}, {"t": "Text to PDF", "u": "/text-to-pdf", "d": "Type or paste text and save it as a PDF. Works with English and Hindi. Free, no sign up, and nothing is uploaded.", "k": "type write note letter hindi tool"}, {"t": "Merge PDF", "u": "/merge-pdf", "d": "Combine several PDF files into one in the order you choose. Free, no sign up, and your files never leave your device.", "k": "combine join pdf files one tool"}, {"t": "Split PDF", "u": "/split-pdf", "d": "Extract chosen pages from a PDF, or save every page as its own file. Free, no sign up, and nothing is uploaded.", "k": "extract pages separate cut tool"}, {"t": "Remove pages", "u": "/remove-pdf-pages", "d": "Delete unwanted pages from a PDF in seconds. Free, no sign up, and your file is never uploaded.", "k": "delete pages blank tool"}, {"t": "Rotate PDF", "u": "/rotate-pdf", "d": "Turn PDF pages left or right with a preview of every page. Free, no sign up, and your file never leaves your device.", "k": "turn sideways upside down tool"}, {"t": "Compress PDF", "u": "/compress-pdf", "d": "Make a PDF smaller for email, WhatsApp or online forms. Three levels, shows the new size, free, no sign up, and your file is never uploaded.", "k": "reduce size smaller shrink kb mb 100kb 200kb 500kb upload form tool"}, {"t": "Edit PDF", "u": "/edit-pdf", "d": "Change text in a PDF, add your signature, write, draw, highlight or cover text. Free, no sign up, and your file stays on your device.", "k": "change text sign signature fill form draw highlight tool"}, {"t": "Protect PDF", "u": "/protect-pdf", "d": "Lock a PDF with a password so only people who know it can open it. Strong AES 256 encryption, free, no sign up, and your file never leaves your device.", "k": "password lock secure encrypt tool"}, {"t": "Photos to PDF", "u": "/photos-to-pdf", "d": "Turn JPG, PNG or WebP photos into one PDF, one photo per page. Free, no sign up, and nothing is uploaded.", "k": "jpg png image picture convert tool"}, {"t": "Word to PDF", "u": "/word-to-pdf", "d": "Convert a Word (.docx) file to PDF in your browser. Free, no sign up, and your document is never uploaded.", "k": "docx doc convert tool"}, {"t": "Excel to PDF", "u": "/excel-to-pdf", "d": "Convert Excel (.xlsx, .xls) or CSV files to PDF, one section per sheet. Free, no sign up, and nothing is uploaded.", "k": "xlsx csv sheet convert tool"}, {"t": "PDF to Excel", "u": "/pdf-to-excel", "d": "Pull tables and text from a PDF or a photo into an Excel file. Reads scanned pages with OCR in English and Hindi. Free and private.", "k": "table ocr convert xlsx tool"}, {"t": "PDF to Word", "u": "/pdf-to-word", "d": "Turn a PDF or a photo into an editable Word file. Reads scans with OCR in English and Hindi. Free, no sign up, and private.", "k": "docx ocr editable convert tool"}, {"t": "QR Code", "u": "/qr-code-generator", "d": "Make a QR code from any link or text and save it as PNG or SVG. Free, no sign up, and everything happens on your device.", "k": "qr link scan generate code tool"}, {"t": "PDF to JPG", "u": "/pdf-to-jpg", "d": "Turn every page of a PDF into a JPG or PNG picture. Free, no sign up, and your file stays on your device.", "k": "pdf to image picture png jpeg photo save pages tool"}, {"t": "Compress image", "u": "/compress-image-to-kb", "d": "Reduce a photo or signature to the exact size in KB that your form asks for. Free, no sign up, nothing is uploaded.", "k": "reduce photo size kb 20kb 50kb 100kb signature form exam upload image compress tool"}, {"t": "Resize image", "u": "/resize-image", "d": "Resize a photo to the width and height you need, or save it as JPG, PNG or WebP. Free and private, it works on your device.", "k": "photo width height pixels passport size change dimension jpg png webp tool"}, {"t": "Page numbers", "u": "/add-page-numbers-to-pdf", "d": "Put page numbers on every page of a PDF. Choose the place and the look. Free, no sign up, and your file stays on your device.", "k": "page number numbering pdf tool"}, {"t": "Watermark PDF", "u": "/watermark-pdf", "d": "Write a word such as CONFIDENTIAL or your name across every page of a PDF. Free, no sign up, and private.", "k": "watermark confidential draft stamp text pdf tool"}, {"t": "Organize PDF", "u": "/organize-pdf", "d": "Rearrange PDF pages by dragging them. Turn, copy or delete pages and save a new PDF. Free, no sign up, files never uploaded.", "k": "rearrange reorder pages arrange drag delete rotate copy sort tool"}, {"t": "Crop PDF", "u": "/crop-pdf", "d": "Crop PDF pages by dragging a box or typing the margins. Remove white borders from scans. Free, no sign up, private.", "k": "trim margin cut edges white border tool"}, {"t": "Unlock PDF", "u": "/unlock-pdf", "d": "Remove the password from a PDF you own. Type the password once and save a copy that opens without it. Free and private.", "k": "remove password decrypt open locked tool"}, {"t": "OCR PDF", "u": "/ocr-pdf", "d": "Turn a scanned PDF or photo into a searchable PDF with OCR. Find and copy text. English and Hindi. Free, private, no sign up.", "k": "searchable scanned text recognition find copy image to text tool"}, {"t": "HTML to PDF", "u": "/html-to-pdf", "d": "Convert HTML code or an .html file to PDF. Choose page size and margins, preview the page and save. Free and private.", "k": "web page code convert print webpage tool"}, {"t": "Barcode Generator", "u": "/barcode-generator", "d": "Make a barcode online and save it as PNG, SVG or PDF. Supports Code 128, EAN-13 and UPC-A. Free, no sign up, made on your device.", "k": "barcode ean upc code128 generate label product stock tool"}, {"t": "Invoice Generator", "u": "/invoice-generator", "d": "Make a GST or normal invoice and download it as a PDF. Add items, CGST, SGST, IGST, discount, notes and logo. Free, no sign up, saved on your device.", "k": "gst bill billing tax invoice cgst sgst igst vyapar invoice business bill"}, {"t": "Quotation Maker", "u": "/quotation-generator", "d": "Make a professional quotation or estimate with items, GST, discount and validity date. Download as PDF or share on WhatsApp. Free and private.", "k": "quote estimate price offer invoice business bill"}, {"t": "Sales Order Maker", "u": "/sales-order-generator", "d": "Make a sales order with items, quantity, GST and delivery date. Download as PDF or share on WhatsApp. Free, no sign up.", "k": "order confirm invoice business bill"}, {"t": "Proforma Invoice Maker", "u": "/proforma-invoice-generator", "d": "Make a proforma invoice with items, GST and advance amount. Download as PDF or share on WhatsApp. Free, private and no sign up.", "k": "advance pro forma invoice business bill"}, {"t": "Payment Receipt Maker", "u": "/payment-receipt-generator", "d": "Make a payment receipt for cash, UPI, bank transfer or cheque. Shows amount in words. Download as PDF or share on WhatsApp. Free and private.", "k": "cash upi receipt payment invoice business bill"}, {"t": "Rent Receipt Generator", "u": "/rent-receipt-generator", "d": "Make rent receipts for HRA claims. Pick the months, rent and landlord PAN and download all receipts in one PDF. Free, no sign up, private.", "k": "hra house rent allowance landlord tenant invoice business bill"}, {"t": "Salary Slip Generator", "u": "/salary-slip-generator", "d": "Make a monthly salary slip with earnings, deductions, net pay and amount in words. Download as PDF. Free, private, no sign up.", "k": "payslip pay slip salary employee invoice business bill"}, {"t": "HTML Code Viewer", "u": "/html-code-viewer", "d": "Write HTML, CSS and JavaScript and see the result live with a console. Also view code in Python, Java, C, SQL and more with colours. Free and private.", "k": "code editor javascript css run playground python java syntax highlight viewer console"}, {"t": "PDF guides and articles", "u": "/articles", "d": "How to guides for everyday PDF jobs", "k": "articles blog help how to"}, {"t": "How to merge PDF files on your phone", "u": "/how-to-merge-pdf-files-on-phone", "d": "Learn how to combine several PDF files into one on Android or iPhone without installing an app. Step by step, free, and private.", "k": "guide article how to"}, {"t": "How to compress a PDF without losing quality", "u": "/how-to-compress-pdf-without-losing-quality", "d": "Make a PDF smaller for email, WhatsApp or online forms. Learn what changes the size of a PDF and how to compress it free on your phone.", "k": "guide article how to"}, {"t": "Reduce PDF size for online forms and uploads", "u": "/reduce-pdf-size-for-online-forms", "d": "Upload failed because the file is too big? Learn how to bring a PDF under a form's size limit using free tools on your phone.", "k": "guide article how to"}, {"t": "How to convert photos to PDF on your phone", "u": "/convert-photos-to-pdf-on-android", "d": "Turn JPG or PNG photos into one PDF file on your phone. No app needed, free, and your photos stay private.", "k": "guide article how to"}, {"t": "How to scan documents to PDF with your phone", "u": "/scan-documents-to-pdf-with-phone", "d": "Use your phone camera as a scanner. Remove shadows, crop pages and save a clean PDF. Free and private, no app needed.", "k": "guide article how to"}, {"t": "How to password protect a PDF", "u": "/how-to-password-protect-a-pdf", "d": "Lock a PDF with a password before you share it. Learn how password protection works and how to do it free, without uploading your file.", "k": "guide article how to"}, {"t": "How to split a PDF and extract pages", "u": "/how-to-split-pdf-and-extract-pages", "d": "Pull out only the pages you need from a PDF, or save every page as its own file. Free, private and works on your phone.", "k": "guide article how to"}, {"t": "How to rotate PDF pages", "u": "/how-to-rotate-pdf-pages", "d": "Fix sideways or upside down PDF pages and save the corrected file. Free, with a preview of every page.", "k": "guide article how to"}, {"t": "How to convert Word to PDF", "u": "/how-to-convert-word-to-pdf", "d": "Turn a Word (.docx) file into a PDF that looks the same on every device. Free and private, nothing is uploaded.", "k": "guide article how to"}, {"t": "How to convert Excel to PDF", "u": "/how-to-convert-excel-to-pdf", "d": "Turn an Excel or CSV spreadsheet into a PDF anyone can open. Free, private and works on your phone.", "k": "guide article how to"}, {"t": "How to convert PDF to Word", "u": "/how-to-convert-pdf-to-word", "d": "Get the text out of a PDF, even a scan, into a Word file you can edit. Works in English and Hindi, free and private.", "k": "guide article how to"}, {"t": "How to sign a PDF on your phone", "u": "/how-to-sign-a-pdf-on-your-phone", "d": "Add your signature, text and dates to a PDF on your phone. No printer, no scanner and no app needed.", "k": "guide article how to"}, {"t": "How to remove pages from a PDF", "u": "/how-to-remove-pages-from-a-pdf", "d": "Delete blank, duplicate or private pages from a PDF and save a clean copy. Free and nothing is uploaded.", "k": "guide article how to"}, {"t": "Are online PDF tools safe to use?", "u": "/are-online-pdf-tools-safe", "d": "Many PDF websites upload your files to a server. Learn the risks, how to spot safer tools, and what to do with private documents.", "k": "guide article how to"}, {"t": "PDF vs JPG: which one should you use?", "u": "/pdf-vs-jpg-which-format-to-use", "d": "Understand the difference between PDF and JPG, when each is better, and how to convert between them for forms and sharing.", "k": "guide article how to"}, {"t": "How to make a resume PDF that looks professional", "u": "/how-to-make-a-resume-pdf", "d": "Save your resume as a clean PDF that opens the same on every phone and computer. Tips on file name, size and layout.", "k": "guide article how to"}, {"t": "How to send all documents as one PDF", "u": "/send-documents-as-one-pdf-for-job-applications", "d": "Combine resume, certificates and ID proof into a single tidy PDF for job and college applications. Free, on your phone.", "k": "guide article how to"}, {"t": "How to convert a PDF table to Excel", "u": "/how-to-convert-pdf-table-to-excel", "d": "Move a table from a PDF or a photo into Excel so you can sort and calculate. Reads scans with OCR, free and private.", "k": "guide article how to"}, {"t": "How to fill a PDF form on your phone", "u": "/how-to-add-text-to-a-pdf-form", "d": "Type your answers on top of a PDF form, add ticks and a date, and save the filled form. Free, no app needed.", "k": "guide article how to"}, {"t": "How to send a large PDF on WhatsApp and email", "u": "/how-to-send-large-pdf-on-whatsapp-and-email", "d": "PDF too big to send? Learn how to shrink it, split it or share it in parts so it goes through on WhatsApp and email.", "k": "guide article how to"}, {"t": "How to turn text into a PDF", "u": "/text-to-pdf-write-notes-and-letters", "d": "Type or paste text and save it as a neat A4 PDF. Works for English and Hindi. Free and private.", "k": "guide article how to"}, {"t": "How to edit text in a PDF", "u": "/how-to-edit-text-in-a-pdf", "d": "Change a name, date or number in a PDF without special software. Learn how to edit PDF text online for free and what limits to expect.", "k": "guide article how to"}, {"t": "How to make a QR code for a link", "u": "/how-to-make-a-qr-code-for-a-link", "d": "Create a QR code for a website, WhatsApp link or any text, test it, and print or share it. Simple steps and tips for scannable codes.", "k": "guide article how to"}, {"t": "How to convert a PDF to JPG", "u": "/how-to-convert-pdf-to-jpg", "d": "Save PDF pages as JPG or PNG pictures on your phone or computer. Simple steps, tips for good quality and small files.", "k": "guide article how to"}, {"t": "How to reduce image size to 50 KB", "u": "/how-to-reduce-image-size-to-50-kb", "d": "Make a photo or signature small enough for an exam or job form. Type the size in KB and save the smaller picture.", "k": "guide article how to"}, {"t": "How to resize a photo for a form", "u": "/how-to-resize-a-photo-for-a-form", "d": "Change the width and height of a photo for a form, ID or profile. Includes passport photo size and tips to avoid a stretched face.", "k": "guide article how to"}, {"t": "How to add page numbers to a PDF", "u": "/how-to-add-page-numbers-to-a-pdf", "d": "Put page numbers on a PDF report or assignment. Choose the place, the look and the first number.", "k": "guide article how to"}, {"t": "How to add a watermark to a PDF", "u": "/how-to-add-a-watermark-to-a-pdf", "d": "Write a word such as CONFIDENTIAL, DRAFT or your name across every page of a PDF, free and on your own device.", "k": "guide article how to"}, {"t": "How to make a GST invoice", "u": "/how-to-make-a-gst-invoice", "d": "Learn what a GST invoice should show, how CGST, SGST and IGST differ and how to make an invoice PDF free on your phone.", "k": "guide article how to"}, {"t": "How to make a rent receipt for an HRA claim", "u": "/how-to-make-a-rent-receipt-for-hra", "d": "Learn what a rent receipt should show for an HRA claim and make monthly rent receipts in one PDF, free on your phone.", "k": "guide article how to"}, {"t": "Quotation vs proforma invoice vs invoice", "u": "/quotation-vs-proforma-invoice-vs-invoice", "d": "Understand the difference between a quotation, a sales order, a proforma invoice and a tax invoice, and when to use each.", "k": "guide article how to"}, {"t": "How to unlock a PDF and remove its password", "u": "/how-to-unlock-a-pdf-with-password", "d": "Remove the password from a PDF you own so it opens without asking. Step by step, free, and your file stays on your device.", "k": "guide article how to"}, {"t": "How to make a scanned PDF searchable", "u": "/how-to-make-a-scanned-pdf-searchable", "d": "Turn a scanned PDF or photo into a PDF where you can search and copy text. Free OCR in your browser, English and Hindi.", "k": "guide article how to"}, {"t": "How to rearrange pages in a PDF", "u": "/how-to-rearrange-pdf-pages", "d": "Change the order of PDF pages, turn sideways pages and remove pages you do not need, all in one place. Free and private.", "k": "guide article how to"}, {"t": "How to convert HTML to PDF", "u": "/how-to-convert-html-to-pdf", "d": "Turn HTML code or an .html file into a PDF. Two ways: a picture PDF for any browser and a print method that keeps text selectable.", "k": "guide article how to"}, {"t": "About Invatek", "u": "/about", "d": "Invatek is a set of free PDF tools that work in your browser. Learn who we are and how your files stay private.", "k": "legal info"}, {"t": "Privacy Policy", "u": "/privacy-policy", "d": "How Invatek handles your files, cookies and advertising. Your files are processed in your browser and are not uploaded.", "k": "legal info"}, {"t": "Terms of Use", "u": "/terms", "d": "The terms for using Invatek's free PDF tools.", "k": "legal info"}, {"t": "Contact Invatek", "u": "/contact", "d": "How to reach Invatek for help, feedback or tool requests.", "k": "legal info"}, {"t": "Calculator", "u": "/calculator", "d": "Everyday sums with brackets, percent and history. Free, no sign up, worked out on your device.", "k": "calculator simple sum add subtract multiply divide percent brackets tool"}, {"t": "Age Calculator", "u": "/age-calculator", "d": "Exact age in years, months and days, next birthday. Free, no sign up, worked out on your device.", "k": "age calculator date of birth dob birthday years months days tool"}, {"t": "Percentage Calculator", "u": "/percentage-calculator", "d": "Percent of, percent change, marks and discounts. Free, no sign up, worked out on your device.", "k": "percentage percent calculator discount marks increase decrease profit tool"}, {"t": "GST Calculator", "u": "/gst-calculator", "d": "Add or remove GST, with CGST, SGST and IGST. Free, no sign up, worked out on your device.", "k": "gst calculator india cgst sgst igst inclusive exclusive tax invoice tool"}, {"t": "EMI Calculator", "u": "/emi-calculator", "d": "Monthly EMI, total interest and yearly schedule. Free, no sign up, worked out on your device.", "k": "emi calculator loan home car personal interest tenure monthly installment tool"}, {"t": "Stock Average Calculator", "u": "/stock-average-calculator", "d": "Average buy price of shares, plan buying more. Free, no sign up, worked out on your device.", "k": "stock average calculator share average price averaging down buy more profit loss tool"}, {"t": "Love Calculator", "u": "/love-calculator", "d": "Love percent and FLAMES game for two names (for fun). Free, no sign up, worked out on your device.", "k": "love calculator flames game names compatibility fun tool"}, {"t": "How to Use the Percent Key and Brackets on a Calculator", "u": "/how-to-use-the-percent-key-and-brackets-on-a-calculator", "d": "Learn how the percent key and brackets work on a calculator, with simple examples for discounts, margins and bills.", "k": "guide how to calculator"}, {"t": "How to Calculate Your Exact Age in Years, Months and Days", "u": "/how-to-calculate-your-exact-age", "d": "How to work out exact age from a date of birth, by hand or with a tool. Includes the borrowing method, age limits on forms and leap year birthdays.", "k": "guide how to age calculator"}, {"t": "How to Calculate Percentage Increase, Discount and Marks", "u": "/how-to-calculate-percentage-increase-discount-and-marks", "d": "Simple ways to calculate percent of a number, marks percentage, percentage increase or decrease, discounts and original price.", "k": "guide how to percentage calculator"}, {"t": "How to Calculate GST on a Bill: Adding It and Taking It Out", "u": "/how-to-calculate-gst-on-a-bill", "d": "How to add GST to a price and how to remove GST from a GST-inclusive total, with CGST, SGST and IGST explained for small business bills.", "k": "guide how to gst calculator"}, {"t": "How to Calculate EMI on a Loan and What It Means for Total Interest", "u": "/how-to-calculate-emi-on-a-loan", "d": "How EMI is calculated for home, car and personal loans, with a worked example and tips to reduce total interest.", "k": "guide how to emi calculator"}, {"t": "How to Average Down a Stock and Find Your Average Buy Price", "u": "/how-to-average-down-a-stock", "d": "How to calculate average buy price of shares, how averaging down changes it, and what to think about before buying more.", "k": "guide how to stock average calculator"}, {"t": "How the Love Calculator and the FLAMES Game Work", "u": "/how-the-love-calculator-and-flames-game-work", "d": "How the FLAMES game works step by step, what the letters mean, and how an online love calculator makes its percentage. Just for fun.", "k": "guide how to love calculator"}];
+
+(function () {
+  var D = window.INV_INDEX || [], btn = document.getElementById("searchBtn"); if (!btn) return;
+  var STOP = { a: 1, an: 1, the: 1, to: 1, of: 1, for: 1, in: 1, on: 1, my: 1, how: 1, do: 1, i: 1, and: 1, is: 1, it: 1, me: 1, with: 1 };
+  var box = null, inp = null, list = null, lastFocus = null;
+  function words(q) { return (q || "").toLowerCase().split(/[^a-z0-9\u0900-\u097f]+/).filter(function (w) { return w && !STOP[w]; }); }
+  function rank(q) {
+    var ws = words(q); if (!ws.length) return [];
+    return D.map(function (e) {
+      var t = e.t.toLowerCase(), h = t + " " + (e.k || "").toLowerCase() + " " + (e.d || "").toLowerCase(), sc = 0;
+      ws.forEach(function (w) { if (t.indexOf(w) >= 0) sc += 3; else if (h.indexOf(w) >= 0) sc += 1; });
+      return { e: e, s: sc };
+    }).filter(function (r) { return r.s > 0; }).sort(function (a, b) { return b.s - a.s; }).slice(0, 8).map(function (r) { return r.e; });
+  }
+  function show(q) {
+    list.innerHTML = "";
+    var items = q.trim() ? rank(q) : D.filter(function (e) { return ["/compress-pdf", "/merge-pdf", "/scan-to-pdf", "/qr-code-generator", "/protect-pdf"].indexOf(e.u) >= 0; });
+    if (!items.length) { var li0 = document.createElement("li"); li0.className = "srchhint"; li0.textContent = "No match. Try a word like compress, merge, scan, password or QR."; list.appendChild(li0); return; }
+    if (!q.trim()) { var h = document.createElement("li"); h.className = "srchhint"; h.textContent = "Popular tools"; list.appendChild(h); }
+    items.forEach(function (e) {
+      var li = document.createElement("li"), a = document.createElement("a"), b = document.createElement("b"), s = document.createElement("small");
+      a.href = e.u; b.textContent = e.t; s.textContent = e.d; a.appendChild(b); a.appendChild(s); li.appendChild(a); list.appendChild(li);
+    });
+  }
+  function close() { if (box) { box.remove(); box = null; document.body.style.overflow = ""; if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch (e) {} } } }
+  function open() {
+    if (box) return; lastFocus = document.activeElement;
+    box = document.createElement("div"); box.className = "srch"; box.setAttribute("role", "dialog"); box.setAttribute("aria-modal", "true"); box.setAttribute("aria-label", "Search");
+    var card = document.createElement("div"); card.className = "srchbox"; var row = document.createElement("div"); row.className = "srchrow";
+    inp = document.createElement("input"); inp.type = "search"; inp.setAttribute("aria-label", "Search tools and guides"); inp.autocomplete = "off"; inp.spellcheck = false; inp.setAttribute("enterkeyhint", "search");
+    inp.placeholder = "Search, e.g. compress pdf to 200 KB";
+    var x = document.createElement("button"); x.type = "button"; x.className = "btn ghost sm"; x.textContent = "Close"; x.addEventListener("click", close);
+    row.appendChild(inp); row.appendChild(x); list = document.createElement("ul"); list.className = "srchlist";
+    card.appendChild(row); card.appendChild(list); box.appendChild(card); document.body.appendChild(box); document.body.style.overflow = "hidden";
+    box.addEventListener("click", function (e) { if (e.target === box) close(); });
+    inp.addEventListener("input", function () { show(inp.value); });
+    inp.addEventListener("keydown", function (e) { if (e.key === "Enter") { var f = list.querySelector("a"); if (f) location.href = f.getAttribute("href"); } });
+    show(""); inp.focus();
+  }
+  btn.addEventListener("click", open);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") close();
+    else if (e.key === "/" && !box && !/^(INPUT|TEXTAREA|SELECT)$/.test((e.target && e.target.tagName) || "")) { e.preventDefault(); open(); }
+  });
+})();
+(function () {
+  function $(id) { return document.getElementById(id); }
+  var toastTimer;
+  function toast(t) { var e = $("toast"); e.textContent = t; e.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(function () { e.hidden = true; }, 2600); }
+/* share the site, back to top */
+  (function () {
+    var URL_SITE = "https://invatek.in/";
+    $("shareBtn").addEventListener("click", async function () {
+      var data = { title: "Invatek: Free PDF tools", text: "Free PDF tools: merge, split, scan, convert and edit PDFs. Your files never leave your phone.", url: URL_SITE };
+      try {
+        if (navigator.share) { await navigator.share(data); return; }
+        if (navigator.clipboard && navigator.clipboard.writeText) { await navigator.clipboard.writeText(URL_SITE); toast("Link copied"); return; }
+        toast(URL_SITE);
+      } catch (e) {
+        if (e && e.name === "AbortError") return;
+        try { await navigator.clipboard.writeText(URL_SITE); toast("Link copied"); } catch (e2) { toast(URL_SITE); }
+      }
+    });
+    var tt = $("toTop"), ticking = false;
+    function check() { ticking = false; tt.hidden = (window.scrollY || document.documentElement.scrollTop) < 500; }
+    window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(check); } }, { passive: true });
+    tt.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
+    check();
+  })();
+
+  /* theme: Light / Dark (first visit follows the phone setting, then remembers the choice) */
+  (function () {
+    var KEY = "inv-theme", names = { light: "Light", dark: "Dark" };
+    var ICONS = {
+      light: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>',
+      dark: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>' };
+    function system() { return window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; }
+    function get() { try { var m = localStorage.getItem(KEY); if (m === "light" || m === "dark") return m; } catch (e) {} return system(); }
+    function apply(m) {
+      document.documentElement.setAttribute("data-theme", m);
+      var t = document.querySelector('meta[name="theme-color"]'); if (t) t.setAttribute("content", m === "dark" ? "#0C1613" : "#0F6B5C");
+      var b = $("themeBtn"); if (!b) return;
+      $("themeIcon").innerHTML = ICONS[m]; $("themeLbl").textContent = names[m];
+      b.setAttribute("aria-label", "Theme: " + names[m] + ". Tap to switch.");
+    }
+    apply(get());
+    $("themeBtn").addEventListener("click", function () {
+      var m = get() === "dark" ? "light" : "dark";
+      try { localStorage.setItem(KEY, m); } catch (e) {}
+      apply(m);
+    });
+  })();
+
+  /* bottom tab highlight */
+  (function () {
+    var links = document.querySelectorAll("#tabbar a"); if (!links.length || !("IntersectionObserver" in window)) return;
+    function mark(id) { for (var i = 0; i < links.length; i++) links[i].classList.toggle("on", links[i].getAttribute("data-sec") === id); }
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) mark(e.target.id === "panel" ? "tools-top" : e.target.id); }); }, { rootMargin: "-40% 0px -50% 0px" });
+    ["panel", "guides", "about", "contact"].forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
+  })();
+})();
+</script>
+<script>
+(function(){
+
+var $=function(id){return document.getElementById(id)};
+function fmt(n,d){if(n==null||!isFinite(n))return "-";return new Intl.NumberFormat("en-IN",{minimumFractionDigits:d||0,maximumFractionDigits:d==null?2:d}).format(n)}
+function rs(n,d){return "₹"+fmt(n,d==null?2:d)}
+function fn(n,m){if(n==null||!isFinite(n))return "-";return new Intl.NumberFormat("en-IN",{minimumFractionDigits:0,maximumFractionDigits:m==null?2:m}).format(n)}
+function val(id){var v=parseFloat(String($(id).value).replace(/,/g,""));return isNaN(v)?null:v}
+function card(label,value,big){return '<div class="cx-card'+(big?' cx-big':'')+'"><span>'+label+'</span><b>'+value+'</b></div>'}
+
+
+function clean(s){return s.toLowerCase().replace(/[^a-zऀ-ॿ]/g,"")}
+function hash(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)>>>0}return h>>>0}
+var LINES=[[0,"Maybe just good friends. That is not a bad start."],[50,"A decent spark. Spend more time and see."],[65,"There is something nice here."],[80,"Strong match on paper. Say it with chai."],[92,"Wow. Go and tell them."]];
+var FL={F:["Friends","You would make good friends."],L:["Love","The game says love."],A:["Affection","Warm and caring."],M:["Marriage","The game says wedding bells."],E:["Enemies","Maybe a friendly rivalry."],S:["Siblings","More like brother and sister."]};
+function flames(a,b){
+  var x=a.split(""),y=b.split("");
+  for(var i=0;i<x.length;i++){var j=y.indexOf(x[i]);if(j>=0){x.splice(i,1);y.splice(j,1);i--}}
+  var n=x.length+y.length;if(n===0)return {n:0,k:"F"};
+  var f=["F","L","A","M","E","S"],p=0;
+  while(f.length>1){p=(p+n-1)%f.length;f.splice(p,1);if(p>=f.length)p=0}
+  return {n:n,k:f[0]};
+}
+function run(){
+  var a=clean($("n1").value),b=clean($("n2").value),out=$("out");
+  if(!a||!b){out.innerHTML='<p class="cx-note warn">Type both names first.</p>';return}
+  var key=[a,b].sort().join("|"),score=40+hash(key)%60,line=LINES[0][1];
+  LINES.forEach(function(l){if(score>=l[0])line=l[1]});
+  var fl=flames(a,b),F=FL[fl.k];
+  out.innerHTML='<div class="cx-love"><div class="cx-heart"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.7-7.5-10.6A4.3 4.3 0 0 1 12 7.8a4.3 4.3 0 0 1 7.5 2.6C19.5 16.3 12 21 12 21z"/></svg><b>'+score+'%</b></div><p class="cx-lt">'+line+'</p></div>'+
+    '<div class="cx-res">'+card("FLAMES result",F[0],true)+card("What it means",F[1])+'</div>'+
+    '<div class="cx-actions"><button type="button" class="btn ghost sm" id="sh">Share result</button></div>';
+  $("sh").addEventListener("click",function(){
+    var t="Our love score on Invatek is "+score+"% and FLAMES says "+F[0]+" (just for fun). https://invatek.in/love-calculator";
+    if(navigator.share){navigator.share({text:t}).catch(function(){})}
+    else if(navigator.clipboard){navigator.clipboard.writeText(t);$("sh").textContent="Copied"}
+  });
+}
+$("go").addEventListener("click",run);
+["n1","n2"].forEach(function(id){$(id).addEventListener("keydown",function(e){if(e.key==="Enter")run()})});
+
+})();
+</script>
+<script src="/site.js?v=11" defer></script>
+</body></html>
